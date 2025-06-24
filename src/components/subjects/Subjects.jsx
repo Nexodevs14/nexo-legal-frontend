@@ -402,6 +402,7 @@ export default function Subjects() {
             subjects: subjects,
             deleteSubjectsBatch: deleteSubjectsBatch,
             setSelectedKeys: setSelectedKeys,
+            setPage: setPage,
             check: check,
           }}
         />

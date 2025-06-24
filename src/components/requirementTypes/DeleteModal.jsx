@@ -43,6 +43,7 @@ function DeleteModal({ config }) {
     requirementTypes,
     deleteRequirementTypesBatch,
     setSelectedKeys,
+    setPage,
     check,
   } = config;
 
@@ -70,12 +71,24 @@ function DeleteModal({ config }) {
         setSelectedKeys(new Set());
         closeDeleteModal();
       } else {
-        toast.error(error);
+        toast.error(
+          <div
+            className="toast-scroll-red"
+            style={{
+              maxHeight: 200,
+              overflowY: "auto",
+              whiteSpace: "pre-wrap"
+            }}
+          >
+            {error}
+          </div>
+        );
       }
     } catch (err) {
       console.error(err);
       toast.error("Ocurrió un error al eliminar los tipos de requerimiento.");
     } finally {
+      setPage(1);
       setIsDeletingBatch(false);
     }
   }, [
@@ -85,6 +98,7 @@ function DeleteModal({ config }) {
     setIsDeletingBatch,
     setSelectedKeys,
     closeDeleteModal,
+    setPage,
     check,
   ]);
 
@@ -157,6 +171,7 @@ DeleteModal.propTypes = {
       PropTypes.string,
       PropTypes.instanceOf(Set),
     ]).isRequired,
+    setPage: PropTypes.func.isRequired,
     requirementTypes: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,

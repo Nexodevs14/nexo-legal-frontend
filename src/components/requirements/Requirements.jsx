@@ -1232,6 +1232,7 @@ export default function Requirements() {
             requirements: requirements,
             deleteRequirementBatch: removeRequirementBatch,
             setSelectedKeys: setSelectedKeys,
+            setPage: setPage,
             check: check,
           }}
         />

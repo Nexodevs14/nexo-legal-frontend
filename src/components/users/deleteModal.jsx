@@ -43,6 +43,7 @@ function DeleteModal({ config }) {
     users,
     deleteUsersBatch,
     setSelectedKeys,
+    setPage,
     check,
   } = config;
 
@@ -68,12 +69,24 @@ function DeleteModal({ config }) {
         setSelectedKeys(new Set());
         closeDeleteModal();
       } else {
-        toast.error(error);
+        toast.error(
+          <div
+            className="toast-scroll-red"
+            style={{
+              maxHeight: 200,
+              overflowY: "auto",
+              whiteSpace: "pre-wrap"
+            }}
+          >
+            {error}
+          </div>
+        );
       }
     } catch (error) {
       console.error(error);
       toast.error("Algo salió mal al eliminar los usuarios. Intente de nuevo");
     } finally {
+      setPage(1);
       setIsDeletingBatch(false);
     }
   }, [
@@ -83,6 +96,7 @@ function DeleteModal({ config }) {
     setIsDeletingBatch,
     setSelectedKeys,
     closeDeleteModal,
+    setPage,
     check,
   ]);
 
@@ -156,6 +170,7 @@ DeleteModal.propTypes = {
       PropTypes.string,
       PropTypes.instanceOf(Set),
     ]).isRequired,
+    setPage: PropTypes.func.isRequired,
     users: PropTypes.arrayOf(PropTypes.object).isRequired,
     deleteUsersBatch: PropTypes.func.isRequired,
     setSelectedKeys: PropTypes.func.isRequired,

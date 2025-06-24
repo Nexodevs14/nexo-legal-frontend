@@ -496,6 +496,7 @@ export default function LegalVerbs() {
                         legalVerbs: legalVerbs,
                         deleteLegalVerbsBatch: removeLegalVerbsBatch,
                         setSelectedKeys: setSelectedKeys,
+                        setPage: setPage,
                         check: check,
                     }}
                 />

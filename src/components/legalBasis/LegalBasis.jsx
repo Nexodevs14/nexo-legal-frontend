@@ -1426,6 +1426,7 @@ export default function LegalBasis() {
             legalBasis: legalBasis,
             deleteLegalBasisBatch: removeLegalBasisBatch,
             setSelectedKeys: setSelectedKeys,
+            setPage: setPage,
             check: check,
           }}
         />

@@ -483,6 +483,7 @@ export default function Users() {
           users: users,
           deleteUsersBatch: deleteUsersBatch,
           setSelectedKeys: setSelectedKeys,
+          setPage: setPage,
           check: check,
         }}
       />

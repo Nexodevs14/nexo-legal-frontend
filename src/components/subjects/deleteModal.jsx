@@ -43,6 +43,7 @@ function DeleteModal({ config }) {
     subjects,
     deleteSubjectsBatch,
     setSelectedKeys,
+    setPage,
     check,
   } = config;
 
@@ -68,12 +69,24 @@ function DeleteModal({ config }) {
         setSelectedKeys(new Set());
         closeDeleteModal();
       } else {
-        toast.error(error);
+        toast.error(
+          <div
+            className="toast-scroll-red"
+            style={{
+              maxHeight: 200,
+              overflowY: "auto",
+              whiteSpace: "pre-wrap"
+            }}
+          >
+            {error}
+          </div>
+        );
       }
     } catch (error) {
       console.error(error);
       toast.error("Algo salió mal al eliminar las materias. Intente de nuevo");
     } finally {
+      setPage(1);
       setIsDeletingBatch(false);
     }
   }, [
@@ -83,6 +96,7 @@ function DeleteModal({ config }) {
     setIsDeletingBatch,
     setSelectedKeys,
     closeDeleteModal,
+    setPage,
     check,
   ]);
 
@@ -156,6 +170,7 @@ DeleteModal.propTypes = {
       PropTypes.instanceOf(Set),
       PropTypes.string,
     ]).isRequired,
+    setPage: PropTypes.func.isRequired,
     subjects: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])

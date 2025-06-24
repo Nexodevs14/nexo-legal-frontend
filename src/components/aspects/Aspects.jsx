@@ -427,6 +427,7 @@ export default function Aspects() {
                 aspects: aspects,
                 deleteAspectsBatch: deleteAspectsBatch,
                 setSelectedKeys: setSelectedKeys,
+                setPage: setPage,
                 check: check,
               }}
             />

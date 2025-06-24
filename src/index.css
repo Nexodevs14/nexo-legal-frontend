@@ -29,6 +29,27 @@
   }
 }
 
+.toast-scroll-red::-webkit-scrollbar {
+  width: 4px;
+  background: #fff;
+}
+
+.toast-scroll-red::-webkit-scrollbar-track {
+  background: #fff;
+  border-radius: 10px;
+}
+
+.toast-scroll-red::-webkit-scrollbar-thumb {
+  background: #e53935;
+  border-radius: 10px;
+}
+
+.toast-scroll-red::-webkit-scrollbar-thumb:hover {
+  background: #b71c1c; 
+}
+
+
+
 .tox .tox-toolbar button,
 .tox .tox-button {
   background-color: #113c53 !important;

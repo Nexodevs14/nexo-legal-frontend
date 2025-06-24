@@ -496,6 +496,7 @@ export default function RequirementTypes() {
             requirementTypes: requirementTypes,
             deleteRequirementTypesBatch: removeRequirementTypesBatch,
             setSelectedKeys: setSelectedKeys,
+            setPage: setPage,
             check: check,
           }}
         />

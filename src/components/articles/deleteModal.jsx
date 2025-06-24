@@ -29,6 +29,7 @@ import { toast } from "react-toastify";
  * @param {Array} props.config.articles - Array of all article objects.
  * @param {Function} props.config.deleteArticlesBatch - Function to delete multiple articles by their IDs.
  * @param {Function} props.config.setSelectedKeys - Function to reset selected articles after deletion.
+ * @param {Function} props.config.setPage - Function to set the current page.
  * @param {string} props.config.check - URL or path for the success icon displayed on toast notifications.
  *
  * @returns {JSX.Element} Rendered DeleteModal component with deletion confirmation and feedback.
@@ -43,6 +44,7 @@ function DeleteModal({ config }) {
     articles,
     deleteArticlesBatch,
     setSelectedKeys,
+    setPage,
     check,
   } = config;
 
@@ -67,12 +69,24 @@ function DeleteModal({ config }) {
         setSelectedKeys(new Set());
         closeDeleteModal();
       } else {
-        toast.error(error);
+        toast.error(
+          <div
+            className="toast-scroll-red"
+            style={{
+              maxHeight: 200,
+              overflowY: "auto",
+              whiteSpace: "pre-wrap"
+            }}
+          >
+            {error}
+          </div>
+        );
       }
     } catch (error) {
       console.error(error);
       toast.error("Algo salió mal al eliminar los artículos. Intente de nuevo");
     } finally {
+      setPage(1);
       setIsDeletingBatch(false);
     }
   }, [
@@ -81,6 +95,7 @@ function DeleteModal({ config }) {
     articles,
     setIsDeletingBatch,
     setSelectedKeys,
+    setPage,
     closeDeleteModal,
     check,
   ]);
@@ -92,7 +107,7 @@ function DeleteModal({ config }) {
       backdrop="opaque"
       placement="center"
       hideCloseButton={true}
-      isDismissable={false} 
+      isDismissable={false}
       classNames={{
         closeButton: "hover:bg-primary/20 text-primary active:bg-primary/10",
       }}
@@ -104,8 +119,8 @@ function DeleteModal({ config }) {
               {selectedKeys === "all"
                 ? "¿Estás seguro de que deseas eliminar TODOS los artículos?"
                 : selectedKeys.size <= 1
-                ? "¿Estás seguro de que deseas eliminar este artículo?"
-                : "¿Estás seguro de que deseas eliminar estos artículos?"}
+                  ? "¿Estás seguro de que deseas eliminar este artículo?"
+                  : "¿Estás seguro de que deseas eliminar estos artículos?"}
             </ModalHeader>
             <ModalBody className="text-center">
               <p className="mb-5 text-lg font-normal text-primary">
@@ -155,6 +170,7 @@ DeleteModal.propTypes = {
       PropTypes.instanceOf(Set),
       PropTypes.string,
     ]).isRequired,
+    setPage: PropTypes.func.isRequired,
     articles: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])

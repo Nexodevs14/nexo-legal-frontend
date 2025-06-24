@@ -457,6 +457,7 @@ export default function Articles() {
                 articles: articles,
                 deleteArticlesBatch: deleteArticlesBatch,
                 setSelectedKeys: setSelectedKeys,
+                setPage: setPage,
                 check: check,
               }}
             />

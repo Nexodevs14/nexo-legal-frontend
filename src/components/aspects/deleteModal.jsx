@@ -29,6 +29,7 @@ import { toast } from "react-toastify";
  * @param {Array} props.config.aspects - Array of all aspect objects.
  * @param {Function} props.config.deleteAspectsBatch - Function to delete multiple aspects by their IDs.
  * @param {Function} props.config.setSelectedKeys - Function to reset selected aspects after deletion.
+ * @param {Function} props.config.setPage - Function to set the current page.
  * @param {string} props.config.check - URL or path for the success icon displayed on toast notifications.
  *
  * @returns {JSX.Element} Rendered DeleteModal component with deletion confirmation and feedback.
@@ -43,6 +44,7 @@ function DeleteModal({ config }) {
     aspects,
     deleteAspectsBatch,
     setSelectedKeys,
+    setPage,
     check,
   } = config;
 
@@ -69,12 +71,24 @@ function DeleteModal({ config }) {
         setSelectedKeys(new Set());
         closeDeleteModal();
       } else {
-        toast.error(error);
+        toast.error(
+          <div
+            className="toast-scroll-red"
+            style={{
+              maxHeight: 200,
+              overflowY: "auto",
+              whiteSpace: "pre-wrap"
+            }}
+          >
+            {error}
+          </div>
+        );
       }
     } catch (error) {
       console.error(error);
       toast.error("Algo salió mal al eliminar los aspectos. Intente de nuevo");
     } finally {
+      setPage(1);
       setIsDeletingBatch(false);
     }
   }, [
@@ -83,6 +97,7 @@ function DeleteModal({ config }) {
     aspects,
     setIsDeletingBatch,
     setSelectedKeys,
+    setPage,
     closeDeleteModal,
     check,
   ]);
@@ -157,6 +172,7 @@ DeleteModal.propTypes = {
       PropTypes.instanceOf(Set),
       PropTypes.string,
     ]).isRequired,
+    setPage: PropTypes.func.isRequired,
     aspects: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
