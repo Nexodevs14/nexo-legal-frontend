@@ -251,7 +251,9 @@ function Dashboard() {
             </li>
             <li>
               <Link
-                className={'flex items-center p-2 text-white rounded-lg hover:bg-white/15 group'}
+              to="/req-identifications"
+                className={`flex items-center p-2 text-white rounded-lg hover:bg-white/15 group ${location.pathname === "/req-identifications" ? "bg-white/20" : ""
+                  }`}
               >
                 <img
                   src={think_icon}
@@ -263,7 +265,7 @@ function Dashboard() {
             <li>
               <a
                 onClick={handleLogout}
-                className="flex items-center p-2 text-white hover:bg-white/15 rounded-lg group"
+                className="flex items-center p-2 text-white hover:bg-white/15 rounded-lg group "
               >
                 <img
                   src={left_arrow_icon}
