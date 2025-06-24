@@ -140,7 +140,18 @@ function CreateModal({ config }) {
         });
         closeModalCreate();
       } else {
-        toast.error(error);
+        toast.error(
+          <div
+            className="toast-scroll-red"
+            style={{
+              maxHeight: 200,
+              overflowY: "auto",
+              whiteSpace: "pre-wrap"
+            }}
+          >
+            {error}
+          </div>
+        );;
       }
     } catch (error) {
       console.error(error);
@@ -303,9 +314,8 @@ function CreateModal({ config }) {
                   >
                     <ListboxButton className="relative z-20 -mt-2 w-full appearance-none rounded-lg border border-stroke bg-transparent px-5 py-[10px] text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-black dark:border-dark-3">
                       <span
-                        className={`block truncate ${
-                          usertypeError ? "text-red" : ""
-                        }`}
+                        className={`block truncate ${usertypeError ? "text-red" : ""
+                          }`}
                       >
                         {usertypeError ||
                           getRoleName(formData.user_type, roles)}
@@ -332,10 +342,9 @@ function CreateModal({ config }) {
                           <ListboxOption
                             key={role.id}
                             className={({ active }) =>
-                              `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                active
-                                  ? "text-white bg-primary/90"
-                                  : "text-gray-900"
+                              `relative cursor-default select-none py-2 pl-10 pr-4 ${active
+                                ? "text-white bg-primary/90"
+                                : "text-gray-900"
                               }`
                             }
                             value={role.id}
@@ -343,9 +352,8 @@ function CreateModal({ config }) {
                             {({ selected }) => (
                               <>
                                 <span
-                                  className={`block truncate ${
-                                    selected ? "font-medium" : "font-normal"
-                                  }`}
+                                  className={`block truncate ${selected ? "font-medium" : "font-normal"
+                                    }`}
                                 >
                                   {translateRole(role.role)}
                                 </span>
@@ -368,18 +376,18 @@ function CreateModal({ config }) {
                   </Listbox>
                 </div>
                 <div>
-                <Button
-                  type="submit"
-                  color="primary"
-                  disabled={isLoading}
-                  className="w-full rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
-                >
-                  {isLoading ? (
-                    <Spinner size="sm" color="white" />
-                  ) : (
-                    "Registrar Usuario"
-                  )}
-                </Button>
+                  <Button
+                    type="submit"
+                    color="primary"
+                    disabled={isLoading}
+                    className="w-full rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
+                  >
+                    {isLoading ? (
+                      <Spinner size="sm" color="white" />
+                    ) : (
+                      "Registrar Usuario"
+                    )}
+                  </Button>
                 </div>
               </form>
             </ModalBody>

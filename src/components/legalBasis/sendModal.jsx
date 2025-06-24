@@ -40,7 +40,7 @@ function SendModal({ config }) {
         sendLegalBasis,
         selectedKeys,
         setSelectedKeys,
-        singleSendId, 
+        singleSendId,
         check
     } = config;
 
@@ -94,7 +94,18 @@ function SendModal({ config }) {
                 }
             }
             else {
-                toast.error(error);
+                toast.error(
+                    <div
+                        className="toast-scroll-red"
+                        style={{
+                            maxHeight: 200,
+                            overflowY: "auto",
+                            whiteSpace: "pre-wrap"
+                        }}
+                    >
+                        {error}
+                    </div>
+                );;
             }
         } catch (err) {
             console.error(err);

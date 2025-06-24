@@ -109,7 +109,18 @@ function CreateModal({ config }) {
         });
         closeModalCreate();
       } else {
-        toast.error(error);
+        toast.error(
+          <div
+            className="toast-scroll-red"
+            style={{
+              maxHeight: 200,
+              overflowY: "auto",
+              whiteSpace: "pre-wrap"
+            }}
+          >
+            {error}
+          </div>
+        );;
       }
     } catch (error) {
       console.error(error);

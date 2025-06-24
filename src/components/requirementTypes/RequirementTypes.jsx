@@ -299,8 +299,19 @@ export default function RequirementTypes() {
             autoClose: 3000,
           });
         } else {
-          toast.update(toastId, {
-            render: error,
+                   toast.update(toastId, {
+            render: (
+              <div
+                style={{
+                  maxHeight: 200,
+                  overflowY: "auto",
+                  whiteSpace: "pre-wrap"
+                }}
+              >
+                {error}
+              </div>
+            ),
+            className: "toast-scroll-red",
             type: "error",
             icon: null,
             progressStyle: {},

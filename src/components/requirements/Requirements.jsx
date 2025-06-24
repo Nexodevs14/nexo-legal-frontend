@@ -566,7 +566,7 @@ export default function Requirements() {
       periodicity: "",
       subject: "",
       aspects: [],
-      acceptanceCriteria:"",
+      acceptanceCriteria: "",
       mandatoryDescription: "",
       complementaryDescription: "",
       mandatorySentences: "",
@@ -918,7 +918,18 @@ export default function Requirements() {
           });
         } else {
           toast.update(toastId, {
-            render: error,
+            render: (
+              <div
+                style={{
+                  maxHeight: 200,
+                  overflowY: "auto",
+                  whiteSpace: "pre-wrap"
+                }}
+              >
+                {error}
+              </div>
+            ),
+            className: "toast-scroll-red",
             type: "error",
             icon: null,
             progressStyle: {},

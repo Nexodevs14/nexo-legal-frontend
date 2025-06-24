@@ -56,7 +56,7 @@ function EditModal({ config }) {
   } = config;
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isUploadingPicture, setIsUploadingPicture] = useState(false); 
+  const [isUploadingPicture, setIsUploadingPicture] = useState(false);
 
   useEffect(() => {
     if (selectedArticle) {
@@ -114,7 +114,18 @@ function EditModal({ config }) {
         });
         closeModalEdit();
       } else {
-        toast.error(error);
+        toast.error(
+          <div
+            className="toast-scroll-red"
+            style={{
+              maxHeight: 200,
+              overflowY: "auto",
+              whiteSpace: "pre-wrap"
+            }}
+          >
+            {error}
+          </div>
+        );;
       }
     } catch (error) {
       console.error(error);
@@ -196,13 +207,13 @@ function EditModal({ config }) {
                     }
                     placeholder="Ingrese la descripción(Opcional)"
                     setIsUploading={setIsUploadingPicture}
-                    />
+                  />
                 </div>
                 <div>
                   <Button
                     type="submit"
                     color="primary"
-                    disabled={isLoading || isUploadingPicture} 
+                    disabled={isLoading || isUploadingPicture}
                     className="w-full rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
                   >
                     {isLoading ? (
@@ -232,7 +243,7 @@ EditModal.propTypes = {
     }).isRequired,
     setFormData: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired,
-    updateArticle: PropTypes.func.isRequired, 
+    updateArticle: PropTypes.func.isRequired,
     closeModalEdit: PropTypes.func.isRequired,
     selectedArticle: PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

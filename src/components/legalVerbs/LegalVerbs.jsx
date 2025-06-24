@@ -300,7 +300,18 @@ export default function LegalVerbs() {
                     });
                 } else {
                     toast.update(toastId, {
-                        render: error,
+                        render: (
+                            <div
+                                style={{
+                                    maxHeight: 200,
+                                    overflowY: "auto",
+                                    whiteSpace: "pre-wrap"
+                                }}
+                            >
+                                {error}
+                            </div>
+                        ),
+                        className: "toast-scroll-red",
                         type: "error",
                         icon: null,
                         progressStyle: {},
