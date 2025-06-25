@@ -10,6 +10,7 @@ import {
 } from "@heroui/react";
 import { I18nProvider } from "@react-aria/i18n";
 import search_icon from "../../assets/busqueda_blue.png";
+import defaultAvatar from "../../assets/usuario.png";
 
 /**
  * TopContent component for Requirement Identifications
@@ -114,14 +115,14 @@ function TopContent({ config }) {
                     onSelectionChange={onFilterByStatus}
                 >
                     <AutocompleteItem key="Activo" startContent={<div className="w-2 h-2 rounded-full bg-green" />} >
-  Activo
-</AutocompleteItem>
-<AutocompleteItem key="Completado" startContent={<div className="w-2 h-2 rounded-full bg-blue-500" />} >
-  Completado
-</AutocompleteItem>
-<AutocompleteItem key="Fallido" startContent={<div className="w-2 h-2 rounded-full bg-red" />} >
-  Fallido
-</AutocompleteItem>
+                        Activo
+                    </AutocompleteItem>
+                    <AutocompleteItem key="Completado" startContent={<div className="w-2 h-2 rounded-full bg-blue-500" />} >
+                        Completado
+                    </AutocompleteItem>
+                    <AutocompleteItem key="Fallido" startContent={<div className="w-2 h-2 rounded-full bg-red" />} >
+                        Fallido
+                    </AutocompleteItem>
 
                 </Autocomplete>
 
@@ -149,17 +150,20 @@ function TopContent({ config }) {
                     {(user) => (
                         <AutocompleteItem key={user?.id} value={user?.id}>
                             <div className="flex items-center gap-3">
-                                {user?.profile_picture ? (
+                                {user?.profile_picture && user.profile_picture.trim() !== "" ? (
                                     <img
                                         src={user.profile_picture}
                                         alt={user.name || "Usuario"}
                                         className="w-8 h-8 rounded-full object-cover"
                                     />
                                 ) : (
-                                    <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-sm font-bold text-white">
-                                        {user?.name?.charAt(0)?.toUpperCase() || "?"}
-                                    </div>
+                                    <img
+                                        src={defaultAvatar}
+                                        alt="Avatar por defecto"
+                                        className="w-8 h-8 rounded-full object-cover"
+                                    />
                                 )}
+
                                 <div className="flex flex-col text-left">
                                     <span className="text-sm font-medium text-gray-800">
                                         {user?.name || "Usuario"}

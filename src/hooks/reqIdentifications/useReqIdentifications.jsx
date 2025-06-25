@@ -526,6 +526,9 @@ export default function useReqIdentifications() {
     async (id) => {
       try {
         await deleteReqIdentification({ id, token: jwt });
+        setReqIdentifications((prevReqIdentifications) =>
+          prevReqIdentifications.filter((ReqIdentification) => ReqIdentification.id !== id)
+        );
         return { success: true };
       } catch (error) {
         const errorCode = error.response?.status;
@@ -557,6 +560,11 @@ export default function useReqIdentifications() {
     async (reqIdentificationIds) => {
       try {
         await deleteReqIdentificationsBatch({ reqIdentificationIds, token: jwt });
+        setReqIdentifications((prevReqIdentifications) =>
+          prevReqIdentifications.filter(
+            (ReqIdentification) => !reqIdentificationIds.includes(ReqIdentification.id)
+          )
+        );
         return { success: true };
       } catch (error) {
         const errorCode = error.response?.status;

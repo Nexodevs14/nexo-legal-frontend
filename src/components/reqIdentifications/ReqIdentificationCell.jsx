@@ -6,17 +6,18 @@ import {
     Button,
     DropdownTrigger,
     DropdownMenu,
+    User
 } from "@heroui/react";
+import defaultAvatar from "../../assets/usuario.png";
 import menu_icon from "../../assets/aplicaciones.png";
 import watch_icon from "../../assets/ver.png";
 import update_icon from "../../assets/actualizar.png";
 import delete_icon from "../../assets/eliminar.png";
 
 const statusColors = {
-    Activo: "bg-green-500",
+    Activo: "bg-green",
     Completado: "bg-blue-500",
-    Fallido: "bg-red-500",
-    Pendiente: "bg-yellow-500", // opcional
+    Fallido: "bg-red",
 };
 
 const ReqIdentificationCell = ({
@@ -50,7 +51,7 @@ const ReqIdentificationCell = ({
                 return (
                     <div className="flex flex-col">
                         <p className="text-bold text-sm capitalize">
-                            {reqIdentification.subject?.subject_name || "N/A"}
+                            {reqIdentification.subject?.subject_name || "Estarán disponibles al completar la identificación"}
                         </p>
                     </div>
                 );
@@ -59,12 +60,14 @@ const ReqIdentificationCell = ({
                 return (
                     <div className="flex flex-col">
                         <p className="text-bold text-sm capitalize">
-                            {reqIdentification.aspects?.map((aspect, index) => (
-                                <span key={aspect.aspect_id}>
-                                    {aspect.aspect_name}
-                                    {index < reqIdentification.aspects.length - 1 ? ", " : ""}
-                                </span>
-                            )) || "N/A"}
+                            {reqIdentification.aspects && reqIdentification.aspects.length > 0
+                                ? reqIdentification.aspects.map((aspect, index) => (
+                                    <span key={aspect.aspect_id}>
+                                        {aspect.aspect_name}
+                                        {index < reqIdentification.aspects.length - 1 ? ", " : ""}
+                                    </span>
+                                ))
+                                : "Estarán disponibles al completar la identificación"}
                         </p>
                     </div>
                 );
@@ -73,7 +76,7 @@ const ReqIdentificationCell = ({
                 return (
                     <div className="flex flex-col">
                         <p className="text-sm capitalize">
-                            {reqIdentification.jurisdiction || "N/A"}
+                            {reqIdentification.jurisdiction || "Estarán disponibles al completar la identificación"}
                         </p>
                     </div>
                 );
@@ -82,7 +85,9 @@ const ReqIdentificationCell = ({
                 return (
                     <div className="flex flex-col">
                         <p className="text-bold text-sm capitalize">
-                            {reqIdentification.state || "N/A"}
+                            {!reqIdentification.jurisdiction
+                                ? "Estarán disponibles al completar la identificación"
+                                : reqIdentification.state || "N/A"}
                         </p>
                     </div>
                 );
@@ -91,7 +96,9 @@ const ReqIdentificationCell = ({
                 return (
                     <div className="flex flex-col">
                         <p className="text-bold text-sm capitalize">
-                            {reqIdentification.municipality || "N/A"}
+                            {!reqIdentification.jurisdiction
+                                ? "Estarán disponibles al completar la identificación"
+                                : reqIdentification.municipality || "N/A"}
                         </p>
                     </div>
                 );
@@ -120,28 +127,19 @@ const ReqIdentificationCell = ({
 
             case "user": {
                 const user = reqIdentification.user;
+
                 return (
-                    <div className="flex items-center gap-3">
-                        {user?.profile_picture ? (
-                            <img
-                                src={user.profile_picture}
-                                alt={user.name || "Usuario"}
-                                className="w-8 h-8 rounded-full object-cover"
-                            />
-                        ) : (
-                            <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-sm font-bold text-white">
-                                {user?.username?.charAt(0)?.toUpperCase() || "?"}
-                            </div>
-                        )}
-                        <div className="flex flex-col text-left">
-                            <span className="text-sm font-medium text-gray-800">
-                                {user?.name || "Usuario"}
-                            </span>
-                            <span className="text-xs text-gray-500">{user?.gmail || "Sin correo"}</span>
-                        </div>
-                    </div>
+                    <User
+                        avatarProps={{
+                            radius: "lg",
+                            src: user?.profile_picture || defaultAvatar,
+                        }}
+                        description={user?.gmail || "SIN DEFENIR"}
+                        name={user?.name || "SIN DEFENIR"}
+                    />
                 );
             }
+
 
 
             case "actions":
@@ -172,7 +170,7 @@ const ReqIdentificationCell = ({
                                     startContent={<img src={update_icon} alt="Edit" className="w-4 h-4" />}
                                     onPress={() => openEditModal(reqIdentification)}
                                 >
-                                    <p className="font-normal text-primary">Editar</p>
+                                    <p className="font-normal text-primary">Editar Identificación</p>
                                 </DropdownItem>
 
                                 <DropdownItem
@@ -181,7 +179,7 @@ const ReqIdentificationCell = ({
                                     onPress={() => handleDelete(reqIdentification.id)}
                                     className="hover:bg-red/20"
                                 >
-                                    <p className="font-normal text-red">Eliminar</p>
+                                    <p className="font-normal text-red">Eliminar Identificación</p>
                                 </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
@@ -218,6 +216,8 @@ ReqIdentificationCell.propTypes = {
         user: PropTypes.shape({
             username: PropTypes.string,
             gmail: PropTypes.string,
+            name: PropTypes.string,
+            profile_picture: PropTypes.string,
         }),
     }).isRequired,
     columnKey: PropTypes.string.isRequired,

@@ -46,16 +46,16 @@ export default function ReqIdentification() {
         loading,
         error,
         fetchReqIdentifications,
-        fetchReqIdentificationByName,
-        fetchReqIdentificationByDescription,
-        fetchReqIdentificationByUser,
-        fetchReqIdentificationBySubject,
-        fetchReqIdentificationBySubjectAndAspects,
-        fetchReqIdentificationByJurisdiction,
-        fetchReqIdentificationByState,
-        fetchReqIdentificationByStateAndMunicipalities,
-        fetchReqIdentificationByStatus,
-        fetchReqIdentificationByCreationRange,
+        fetchReqIdentificationsByName,
+        fetchReqIdentificationsByDescription,
+        fetchReqIdentificationsByUserId,
+        fetchReqIdentificationsBySubjectId,
+        fetchReqIdentificationsBySubjectAndAspects,
+        fetchReqIdentificationsByJurisdiction,
+        fetchReqIdentificationsByState,
+        fetchReqIdentificationsByStateAndMunicipalities,
+        fetchReqIdentificationsByStatus,
+        fetchReqIdentificationsByCreatedAt,
         modifyReqIdentification,
         removeReqIdentification,
         removeReqIdentificationsBatch,
@@ -179,40 +179,40 @@ export default function ReqIdentification() {
                 setIsSearching(true);
                 switch (field) {
                     case "name":
-                        await fetchReqIdentificationByName(value);
+                        await fetchReqIdentificationsByName(value);
                         break;
                     case "description":
-                        await fetchReqIdentificationByDescription(value);
+                        await fetchReqIdentificationsByDescription(value);
                         break;
                     case "user":
-                        await fetchReqIdentificationByUser(value);
+                        await fetchReqIdentificationsByUserId(value);
                         break;
                     case "subject":
-                        await fetchReqIdentificationBySubject(value);
+                        await fetchReqIdentificationsBySubjectId(value);
                         await fetchAspects(value);
                         break;
                     case "subjectAndAspects": {
                         const { subjectId, aspectsIds } = value;
-                        await fetchReqIdentificationBySubjectAndAspects(subjectId, aspectsIds);
+                        await fetchReqIdentificationsBySubjectAndAspects(subjectId, aspectsIds);
                         break;
                     }
                     case "jurisdiction":
-                        await fetchReqIdentificationByJurisdiction(value);
+                        await fetchReqIdentificationsByJurisdiction(value);
                         break;
                     case "state":
-                        await fetchReqIdentificationByState(value);
+                        await fetchReqIdentificationsByState(value);
                         await fetchMunicipalities(value);
                         break;
                     case "stateAndMunicipalities": {
                         const { state, municipalities } = value;
-                        await fetchReqIdentificationByStateAndMunicipalities(state, municipalities);
+                        await fetchReqIdentificationsByStateAndMunicipalities(state, municipalities);
                         break;
                     }
                     case "status":
-                        await fetchReqIdentificationByStatus(value);
+                        await fetchReqIdentificationsByStatus(value);
                         break;
                     case "creationRange":
-                        await fetchReqIdentificationByCreationRange(value);
+                        await fetchReqIdentificationsByCreatedAt(value);
                         break;
                     default:
                         break;
@@ -221,16 +221,16 @@ export default function ReqIdentification() {
             }, 500);
         },
         [
-            fetchReqIdentificationByName,
-            fetchReqIdentificationByDescription,
-            fetchReqIdentificationByUser,
-            fetchReqIdentificationBySubject,
-            fetchReqIdentificationBySubjectAndAspects,
-            fetchReqIdentificationByJurisdiction,
-            fetchReqIdentificationByState,
-            fetchReqIdentificationByStateAndMunicipalities,
-            fetchReqIdentificationByStatus,
-            fetchReqIdentificationByCreationRange,
+            fetchReqIdentificationsByName,
+            fetchReqIdentificationsByDescription,
+            fetchReqIdentificationsByUserId,
+            fetchReqIdentificationsBySubjectId,
+            fetchReqIdentificationsBySubjectAndAspects,
+            fetchReqIdentificationsByJurisdiction,
+            fetchReqIdentificationsByState,
+            fetchReqIdentificationsByStateAndMunicipalities,
+            fetchReqIdentificationsByStatus,
+            fetchReqIdentificationsByCreatedAt,
             fetchAspects,
             fetchMunicipalities,
         ]
@@ -447,7 +447,7 @@ export default function ReqIdentification() {
                 setCreationRangeError("");
             }
             const { start, end } = values;
-            fetchReqIdentificationByCreationRange(start.toString(), end.toString());
+            fetchReqIdentificationsByCreatedAt(start.toString(), end.toString());
             setCreationRange(values);
         } else {
             handleClear();
@@ -456,7 +456,7 @@ export default function ReqIdentification() {
             setCreationRangeError("");
         }
     },
-        [fetchReqIdentificationByCreationRange, handleClear]
+        [fetchReqIdentificationsByCreatedAt, handleClear]
     );
 
     const openEditModal = (reqIdentification) => {
@@ -876,138 +876,140 @@ export default function ReqIdentification() {
                     onClear: handleClear,
                 }}
             />
-            {isSearching || loading ? (
-                <div
-                    role="status"
-                    className="flex justify-center items-center w-full h-40"
-                >
-                    <Spinner className="h-10 w-10" color="secondary" />
-                </div>
-            ) : (
-                <Table
-                    aria-label="Tabla de Identificación de Requerimientos"
-                    selectionMode="multiple"
-                    selectedKeys={selectedKeys}
-                    onSelectionChange={setSelectedKeys}
-                    color="primary"
-                >
-                    <TableHeader columns={columns}>
-                        {(column) => (
-                            <TableColumn key={column.uid} align={column.align}>
-                                {column.name}
-                            </TableColumn>
-                        )}
-                    </TableHeader>
-                    <TableBody
-                        items={reqIdentifications.slice(
-                            (page - 1) * rowsPerPage,
-                            page * rowsPerPage
-                        )}
-                        emptyContent="No hay identificaciones disponibles"
+            <>
+                {isSearching || loading ? (
+                    <div
+                        role="status"
+                        className="flex justify-center items-center w-full h-40"
                     >
-                        {(reqIdentification) => (
-                            <TableRow key={reqIdentification.id}>
-                                {(columnKey) => (
-                                    <TableCell>
-                                        <ReqIdentificationCell
-                                            reqIdentification={reqIdentification}
-                                            columnKey={columnKey}
-                                            openEditModal={openEditModal}
-                                            handleDelete={handleDelete}
-                                        />
-                                    </TableCell>
-                                )}
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            )}
-            <div className="relative w-full">
-                {(selectedKeys.size > 0 || selectedKeys === "all") && (
-                    <>
-                        <Tooltip content="Eliminar" size="sm">
-                            <Button
-                                isIconOnly
-                                size="sm"
-                                className="absolute left-0 bottom-0 ml-5 bg-primary transform translate-y-32 sm:translate-y-24 md:translate-y-24 lg:translate-y-24 xl:translate-y-10"
-                                aria-label="Eliminar seleccionados"
-                                onPress={openDeleteModal}
-                            >
-                                <img src={trash_icon} alt="delete" className="w-5 h-5" />
-                            </Button>
-                        </Tooltip>
-                    </>
+                        <Spinner className="h-10 w-10" color="secondary" />
+                    </div>
+                ) : (
+                    <Table
+                        aria-label="Tabla de Identificación de Requerimientos"
+                        selectionMode="multiple"
+                        selectedKeys={selectedKeys}
+                        onSelectionChange={setSelectedKeys}
+                        color="primary"
+                    >
+                        <TableHeader columns={columns}>
+                            {(column) => (
+                                <TableColumn key={column.uid} align={column.align}>
+                                    {column.name}
+                                </TableColumn>
+                            )}
+                        </TableHeader>
+                        <TableBody
+                            items={reqIdentifications.slice(
+                                (page - 1) * rowsPerPage,
+                                page * rowsPerPage
+                            )}
+                            emptyContent="No hay identificaciones disponibles"
+                        >
+                            {(reqIdentification) => (
+                                <TableRow key={reqIdentification.id}>
+                                    {(columnKey) => (
+                                        <TableCell>
+                                            <ReqIdentificationCell
+                                                reqIdentification={reqIdentification}
+                                                columnKey={columnKey}
+                                                openEditModal={openEditModal}
+                                                handleDelete={handleDelete}
+                                            />
+                                        </TableCell>
+                                    )}
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
                 )}
-            </div>
-            <BottomContent
-                config={{
-                    page: page,
-                    totalPages: totalPages,
-                    onPageChange: onPageChange,
-                    onPreviousPage: onPreviousPage,
-                    onNextPage: onNextPage,
-                    selectedKeys: selectedKeys,
-                    filteredItems: reqIdentifications,
-                }}
-            />
-            {isEditModalOpen && (
-                <EditReqIdentification
+                <div className="relative w-full">
+                    {(selectedKeys.size > 0 || selectedKeys === "all") && (
+                        <>
+                            <Tooltip content="Eliminar" size="sm">
+                                <Button
+                                    isIconOnly
+                                    size="sm"
+                                    className="absolute left-0 bottom-0 ml-5 bg-primary transform translate-y-32 sm:translate-y-24 md:translate-y-24 lg:translate-y-24 xl:translate-y-10"
+                                    aria-label="Eliminar seleccionados"
+                                    onPress={openDeleteModal}
+                                >
+                                    <img src={trash_icon} alt="delete" className="w-5 h-5" />
+                                </Button>
+                            </Tooltip>
+                        </>
+                    )}
+                </div>
+                <BottomContent
                     config={{
-                        isOpen: isEditModalOpen,
-                        closeModalEdit: closeEditModal,
-                        formData: formData,
-                        setFormData: setFormData,
-                        editReqIdentification: modifyReqIdentification,
-                        selectedReqIdentification: selectedReqIdentification,
-                        setReqIdentifications: setReqIdentifications,
-                        nameError: nameInputError,
-                        setNameError: setNameInputError,
-                        handleNameChange: handleNameChange,
-                        users: users,
-                        userError: userInputError,
-                        setUserError: setUserInputError,
-                        handleUserChange: handleUserChange,
-                        descriptionError: descriptionInputError,
-                        setDescriptionError: setDescriptionInputError,
-                        handleDescriptionChange: handleDescriptionChange,
-                        jurisdictionError: jurisdictionInputError,
-                        setJurisdictionError: setJurisdictionInputError,
-                        handleJurisdictionChange: handleJurisdictionChange,
-                        states: states,
-                        stateError: stateInputError,
-                        setStateError: setStateInputError,
-                        isStateActive: isStateActive,
-                        handleStateChange: handleStateChange,
-                        clearMunicipalities: clearMunicipalities,
-                        municipalities: municipalities,
-                        municipalityError: municipalityInputError,
-                        setMunicipalityError: setMunicipalityInputError,
-                        isMunicipalityActive: isMunicipalityActive,
-                        loadingMunicipalities: loadingMunicipalities,
-                        errorMunicipalities: errorMunicipalities,
-                        handleMunicipalityChange: handleMunicipalityChange,
-                        subjects: subjects,
-                        subjectInputError: subjectInputError,
-                        setSubjectError: setSubjectInputError,
-                        handleSubjectChange: handleSubjectChange,
-                        aspects: aspects,
-                        aspectError: aspectInputError,
-                        setAspectInputError: setAspectInputError,
-                        isAspectsActive: isAspectsActive,
-                        aspectsLoading: aspectsLoading,
-                        errorAspects: aspectError,
-                        handleAspectsChange: handleAspectsChange,
-                        setIsStateActive: setIsStateActive,
-                        setIsMunicipalityActive: setIsMunicipalityActive,
-                        setIsAspectsActive: setIsAspectsActive,
-                        handleCreationRangeChange: handleCreationRangeChange,
-                        clearAspects: clearAspects,
-                        fetchMunicipalities: fetchMunicipalities,
-                        fetchAspects: fetchAspects,
-
+                        page: page,
+                        totalPages: totalPages,
+                        onPageChange: onPageChange,
+                        onPreviousPage: onPreviousPage,
+                        onNextPage: onNextPage,
+                        selectedKeys: selectedKeys,
+                        filteredItems: reqIdentifications,
                     }}
                 />
-            )}
+                {isEditModalOpen && (
+                    <EditReqIdentification
+                        config={{
+                            isOpen: isEditModalOpen,
+                            closeModalEdit: closeEditModal,
+                            formData: formData,
+                            setFormData: setFormData,
+                            editReqIdentification: modifyReqIdentification,
+                            selectedReqIdentification: selectedReqIdentification,
+                            setReqIdentifications: setReqIdentifications,
+                            nameError: nameInputError,
+                            setNameError: setNameInputError,
+                            handleNameChange: handleNameChange,
+                            users: users,
+                            userError: userInputError,
+                            setUserError: setUserInputError,
+                            handleUserChange: handleUserChange,
+                            descriptionError: descriptionInputError,
+                            setDescriptionError: setDescriptionInputError,
+                            handleDescriptionChange: handleDescriptionChange,
+                            jurisdictionError: jurisdictionInputError,
+                            setJurisdictionError: setJurisdictionInputError,
+                            handleJurisdictionChange: handleJurisdictionChange,
+                            states: states,
+                            stateError: stateInputError,
+                            setStateError: setStateInputError,
+                            isStateActive: isStateActive,
+                            handleStateChange: handleStateChange,
+                            clearMunicipalities: clearMunicipalities,
+                            municipalities: municipalities,
+                            municipalityError: municipalityInputError,
+                            setMunicipalityError: setMunicipalityInputError,
+                            isMunicipalityActive: isMunicipalityActive,
+                            loadingMunicipalities: loadingMunicipalities,
+                            errorMunicipalities: errorMunicipalities,
+                            handleMunicipalityChange: handleMunicipalityChange,
+                            subjects: subjects,
+                            subjectInputError: subjectInputError,
+                            setSubjectError: setSubjectInputError,
+                            handleSubjectChange: handleSubjectChange,
+                            aspects: aspects,
+                            aspectError: aspectInputError,
+                            setAspectInputError: setAspectInputError,
+                            isAspectsActive: isAspectsActive,
+                            aspectsLoading: aspectsLoading,
+                            errorAspects: aspectError,
+                            handleAspectsChange: handleAspectsChange,
+                            setIsStateActive: setIsStateActive,
+                            setIsMunicipalityActive: setIsMunicipalityActive,
+                            setIsAspectsActive: setIsAspectsActive,
+                            handleCreationRangeChange: handleCreationRangeChange,
+                            clearAspects: clearAspects,
+                            fetchMunicipalities: fetchMunicipalities,
+                            fetchAspects: fetchAspects,
+
+                        }}
+                    />
+                )}
+            </>
             {showDeleteModal && (
                 <DeleteModal
                     config={{
