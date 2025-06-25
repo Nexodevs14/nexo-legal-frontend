@@ -157,17 +157,36 @@ const ReqIdentificationCell = ({
                                     <img src={menu_icon} alt="Menu" className="w-6 h-6" />
                                 </Button>
                             </DropdownTrigger>
-                            <DropdownMenu aria-label="Opciones de identificación" variant="light">
+                            <DropdownMenu
+                                aria-label="Opciones de identificación"
+                                variant="light">
                                 <DropdownItem
-                                    aria-label="Ver Detalle"
-                                    startContent={<img src={watch_icon} alt="Watch" className="w-4 h-4" />}
+                                    aria-label="Ver Identificación"
+                                    startContent={
+                                        <img src={watch_icon}
+                                            alt="Watch"
+                                            className="w-4 h-4 flex-shrink-0"
+                                        />
+                                    }
+                                    className="hover:bg-primary/20"
+                                    key="watch"
+                                    textValue="Ver Articulos"
                                 >
                                     <p className="font-normal text-primary">Ver Identificación</p>
                                 </DropdownItem>
 
                                 <DropdownItem
-                                    aria-label="Editar"
-                                    startContent={<img src={update_icon} alt="Edit" className="w-4 h-4" />}
+                                    aria-label="Editar Identificación"
+                                    startContent={
+                                        <img
+                                            src={update_icon}
+                                            alt="Edit Icon"
+                                            className="w-4 h-4 flex-shrink-0"
+                                        />
+                                    }
+                                    className="hover:bg-primary/20"
+                                    key="update"
+                                    textValue="Editar Identificación"
                                     onPress={() => openEditModal(reqIdentification)}
                                 >
                                     <p className="font-normal text-primary">Editar Identificación</p>
