@@ -755,7 +755,7 @@ export default function ReqIdentification() {
 
     const handleDelete = useCallback(
         async (reqIdentificationId) => {
-            const toastId = toast.loading("Eliminando fundamento legal...", {
+            const toastId = toast.loading("Eliminando Requerimiento de identificación...", {
                 icon: <Spinner size="sm" />,
                 progressStyle: {
                     background: "#113c53",
@@ -765,7 +765,7 @@ export default function ReqIdentification() {
                 const { success, error } = await removeReqIdentification(reqIdentificationId);
                 if (success) {
                     toast.update(toastId, {
-                        render: "Fundamento legal eliminado con éxito",
+                        render: "Requerimiento de Identificación eliminado con éxito",
                         type: "info",
                         icon: <img src={check} alt="Success Icon" />,
                         progressStyle: {
@@ -788,7 +788,7 @@ export default function ReqIdentification() {
                 console.error(error);
                 toast.update(toastId, {
                     render:
-                        "Algo mal sucedió al eliminar el fundamento legal. Intente de nuevo.",
+                        "Algo mal sucedió al eliminar el Requerimiento de Identificación . Intente de nuevo.",
                     type: "error",
                     icon: null,
                     progressStyle: {},

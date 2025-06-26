@@ -357,7 +357,7 @@ const handleEdit = async (e) => {
                                 disabled={isLoading}
                                 className="w-full rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
                             >
-                                {isLoading ? <Spinner size="sm" color="white" /> : "Editar Fundamento"}
+                                {isLoading ? <Spinner size="sm" color="white" /> : "Editar Identificación"}
                             </Button>
                         </div>
                     </form>
