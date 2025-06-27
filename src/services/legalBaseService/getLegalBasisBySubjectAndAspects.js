@@ -1,4 +1,5 @@
 import server from "../../config/server.js";
+import qs from "qs";
 
 /**
  * Retrieves legal basis records by subjectId and aspects.
@@ -29,9 +30,10 @@ export default async function getLegalBasisBySubjectAndAspects({
         params: {
           aspectIds: aspectsIds,
         },
+        paramsSerializer: (params) =>
+          qs.stringify(params, { arrayFormat: "repeat" }),
       }
     );
-
     if (response.status !== 200) {
       throw new Error("Failed to retrieve legal basis by subject and aspects");
     }

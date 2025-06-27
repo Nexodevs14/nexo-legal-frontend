@@ -343,7 +343,7 @@ export default function ReqIdentification() {
     [handleFilter, handleClear, resetStatesAndMunicipalities]
   );
 
-  const handleFilterByAspects = useCallback(
+  const handleFilterBySubjectAndAspects = useCallback(
     (aspectIds) => {
       setSelectedAspects(aspectIds);
       if (aspectIds.size === 0) {
@@ -358,6 +358,7 @@ export default function ReqIdentification() {
         subjectId: selectedSubject,
         aspectsIds: Array.from(aspectIds),
       };
+      console.log(value);
       handleFilter("subjectAndAspects", value);
     },
     [handleFilter, handleClear, selectedSubject]
@@ -664,7 +665,7 @@ export default function ReqIdentification() {
           aspects: aspects,
           selectedAspects: selectedAspects,
           aspectsLoading: aspectsLoading,
-          onFilterByAspects: handleFilterByAspects,
+          onFilterBySubjectAndAspects: handleFilterBySubjectAndAspects,
           selectedJurisdiction: selectedJurisdiction,
           onFilterByJurisdiction: handleFilterByJurisdiction,
           states: states,

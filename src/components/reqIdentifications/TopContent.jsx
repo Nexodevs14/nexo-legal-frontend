@@ -46,7 +46,7 @@ import defaultAvatar from "../../assets/usuario.png";
  * @param {Array} props.config.aspects - List of available aspects.
  * @param {Array<string>} props.config.selectedAspects - List of selected aspects.
  * @param {boolean} props.config.aspectsLoading - Indicates if aspects are currently loading.
- * @param {Function} props.config.onFilterByAspects - Callback triggered when filtering by aspects.
+ * @param {Function} props.config.onFilterBySubjectAndAspects - Callback triggered when filtering by subject and aspects.
  * @param {string} props.config.selectedJurisdiction - Currently selected jurisdiction.
  * @param {Function} props.config.onFilterByJurisdiction - Callback triggered when filtering by jurisdiction.
  * @param {Array<string>} props.config.states - List of available states.
@@ -86,7 +86,7 @@ function TopContent({ config }) {
     aspects,
     selectedAspects,
     aspectsLoading,
-    onFilterByAspects,
+    onFilterBySubjectAndAspects,
     selectedJurisdiction,
     onFilterByJurisdiction,
     states,
@@ -296,7 +296,7 @@ function TopContent({ config }) {
                 emptyContent: "Aspectos no encontrados",
               }}
               isDisabled={!selectedSubject}
-              onSelectionChange={onFilterByAspects}
+              onSelectionChange={onFilterBySubjectAndAspects}
               renderValue={(selected) =>
                 !selected || selected.length === 0
                   ? "Buscar por aspecto..."
@@ -474,7 +474,7 @@ TopContent.propTypes = {
     ).isRequired,
     selectedAspects: PropTypes.arrayOf(PropTypes.string),
     aspectsLoading: PropTypes.bool.isRequired,
-    onFilterByAspects: PropTypes.func.isRequired,
+    onFilterBySubjectAndAspects: PropTypes.func.isRequired,
     selectedJurisdiction: PropTypes.string,
     onFilterByJurisdiction: PropTypes.func.isRequired,
     states: PropTypes.arrayOf(PropTypes.string).isRequired,

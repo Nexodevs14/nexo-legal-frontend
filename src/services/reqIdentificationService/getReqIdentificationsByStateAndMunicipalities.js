@@ -1,4 +1,5 @@
 import server from "../../config/server.js";
+import qs from "qs";
 
 /**
  * Retrieves requirement identifications filtered by state and municipalities.
@@ -29,6 +30,8 @@ export default async function getReqIdentificationsByStateAndMunicipalities({
           state,
           municipalities,
         },
+        paramsSerializer: (params) =>
+          qs.stringify(params, { arrayFormat: "repeat" }),
       }
     );
 

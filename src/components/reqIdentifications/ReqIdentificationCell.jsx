@@ -74,7 +74,7 @@ const ReqIdentificationCell = ({
           <div className="flex flex-col">
             <p className="text-bold text-sm capitalize">
               {reqIdentification.subject?.subject_name ||
-                "Estarán disponibles al completar la identificación"}
+                "Por definirse"}
             </p>
           </div>
         );
@@ -90,7 +90,7 @@ const ReqIdentificationCell = ({
                       {index < reqIdentification.aspects.length - 1 ? ", " : ""}
                     </span>
                   ))
-                : "Estarán disponibles al completar la identificación"}
+                : "Por definirse"}
             </p>
           </div>
         );
@@ -100,7 +100,7 @@ const ReqIdentificationCell = ({
           <div className="flex flex-col">
             <p className="text-sm capitalize">
               {reqIdentification.jurisdiction ||
-                "Estarán disponibles al completar la identificación"}
+                "Por definirse"}
             </p>
           </div>
         );
@@ -110,7 +110,7 @@ const ReqIdentificationCell = ({
           <div className="flex flex-col">
             <p className="text-bold text-sm capitalize">
               {!reqIdentification.jurisdiction
-                ? "Estarán disponibles al completar la identificación"
+                ? "Por definirse"
                 : reqIdentification.state || "N/A"}
             </p>
           </div>
@@ -121,7 +121,7 @@ const ReqIdentificationCell = ({
           <div className="flex flex-col">
             <p className="text-bold text-sm capitalize">
               {!reqIdentification.jurisdiction
-                ? "Estarán disponibles al completar la identificación"
+                ? "Por definirse"
                 : reqIdentification.municipality || "N/A"}
             </p>
           </div>

@@ -1,4 +1,5 @@
 import server from "../../config/server.js";
+import qs from "qs";
 
 /**
  * Retrieves legal basis records by state and municipalities.
@@ -27,9 +28,11 @@ export default async function getLegalBasisByStateAndMunicipalities({
           Authorization: `Bearer ${token}`,
         },
         params: {
-          state: state,
-          municipalities: municipalities,
+          state,
+          municipalities,
         },
+        paramsSerializer: (params) =>
+          qs.stringify(params, { arrayFormat: "repeat" }),
       }
     );
     if (response.status !== 200) {
@@ -40,7 +43,10 @@ export default async function getLegalBasisByStateAndMunicipalities({
     const { legalBasis } = response.data;
     return legalBasis;
   } catch (error) {
-    console.error("Error retrieving legal basis by state and municipalities:", error);
+    console.error(
+      "Error retrieving legal basis by state and municipalities:",
+      error
+    );
     throw error;
   }
 }

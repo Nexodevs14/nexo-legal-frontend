@@ -1,4 +1,5 @@
 import server from "../../config/server.js";
+import qs from "qs";
 
 /**
  * Retrieves requirement identifications filtered by subject ID and aspect IDs.
@@ -28,6 +29,8 @@ export default async function getReqIdentificationsBySubjectAndAspects({
         params: {
           aspectIds,
         },
+        paramsSerializer: (params) =>
+          qs.stringify(params, { arrayFormat: "repeat" }),
       }
     );
 

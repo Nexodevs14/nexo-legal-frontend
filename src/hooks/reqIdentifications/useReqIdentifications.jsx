@@ -311,7 +311,7 @@ export default function useReqIdentifications() {
    * @returns {Promise<void>} - Updates the list of identifications or sets an error.
    */
   const fetchReqIdentificationsByStateAndMunicipalities = useCallback(
-    async ({ state, municipalities }) => {
+    async (state, municipalities) => {
       setState({ loading: true, error: null });
       try {
         const reqIdentifications = await getReqIdentificationsByStateAndMunicipalities({
@@ -445,8 +445,9 @@ export default function useReqIdentifications() {
    * @returns {Promise<void>} - Updates the list of identifications or sets an error.
    */
   const fetchReqIdentificationsBySubjectAndAspects = useCallback(
-    async ({ subjectId, aspectIds }) => {
+    async (subjectId, aspectIds) => {
       setState({ loading: true, error: null });
+      console.log(subjectId, aspectIds);
       try {
         const reqIdentifications = await getReqIdentificationsBySubjectAndAspects({
           subjectId,
