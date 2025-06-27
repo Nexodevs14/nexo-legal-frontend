@@ -2,7 +2,7 @@ import server from "../../config/server.js";
 
 /**
  * Updates a requirement identification with the provided data.
- * Sends a PATCH request to the backend using multipart/form-data.
+ * Sends a PATCH request to the backend using JSON.
  *
  * @async
  * @function updateReqIdentification
@@ -24,33 +24,26 @@ export default async function updateReqIdentification({
   token,
 }) {
   try {
-    const formData = new FormData();
+    const request = {
+      ...(reqIdentificationName && { reqIdentificationName }),
+      ...(reqIdentificationDescription && { reqIdentificationDescription }),
+      ...(newUserId && { newUserId }),
+    };
 
-    if (reqIdentificationName) {
-      formData.append("reqIdentificationName", reqIdentificationName);
-    }
-    if (reqIdentificationDescription) {
-      formData.append("reqIdentificationDescription", reqIdentificationDescription);
-    }
-    if (newUserId) {
-      formData.append("newUserId", newUserId);
-    }
-
-    const response = await server.patch(`/req-identification/${id}`, formData, {
+    const response = await server.patch(`/req-identification/${id}`, request, {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
       },
     });
 
     if (response.status !== 200) {
-      throw new Error(`Failed to update requirement identification with ID ${id}`);
+      throw new Error('Failed to update requirement identification');
     }
 
     const { reqIdentification } = response.data;
     return reqIdentification;
   } catch (error) {
-    console.error(`Error updating requirement identification with ID ${id}:`, error);
+    console.error('Error updating requirement identification:', error);
     throw error;
   }
 }

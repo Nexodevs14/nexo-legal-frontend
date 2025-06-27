@@ -372,7 +372,7 @@ const EditModal = ({ config }) => {
         });
         closeModalEdit();
       } else {
-        toast.error(
+       toast.error(
           <div
             className="toast-scroll-red"
             style={{
@@ -383,7 +383,7 @@ const EditModal = ({ config }) => {
           >
             {error}
           </div>
-        );;
+        );
       }
     } catch (error) {
       console.error(error);

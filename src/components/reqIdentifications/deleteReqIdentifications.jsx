@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
 import {
-    Modal,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    Button,
-    Spinner,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Spinner,
 } from "@heroui/react";
 import { useCallback } from "react";
 import { toast } from "react-toastify";
@@ -35,134 +35,147 @@ import { toast } from "react-toastify";
  */
 
 function DeleteModal({ config }) {
-    const {
-        showDeleteModal,
-        closeDeleteModal,
-        setIsDeletingBatch,
-        isDeletingBatch,
-        selectedKeys,
-        reqIdentifications,
-        deleteReqIdentificationsBatch,
-        setSelectedKeys,
-        check,
-    } = config;
+  const {
+    showDeleteModal,
+    closeDeleteModal,
+    setIsDeletingBatch,
+    isDeletingBatch,
+    selectedKeys,
+    reqIdentifications,
+    deleteReqIdentificationsBatch,
+    setSelectedKeys,
+    check,
+  } = config;
 
-    const handleDeleteBatch = useCallback(async () => {
-        setIsDeletingBatch(true);
-        const reqIdentificationsIds =
-            selectedKeys === "all"
-                ? reqIdentifications.map((reqIdentification) => reqIdentification.id)
-                : Array.from(selectedKeys).map((id) => Number(id));
-        try {
-            const { success, error } = await deleteReqIdentificationsBatch(reqIdentificationsIds);
-            if (success) {
-                toast.info(
-                    reqIdentificationsIds.length <= 1
-                        ? "Identificación de requerimiento eliminado con éxito"
-                        : "Identificaciones de requerimientos eliminados con éxito",
-                    {
-                        icon: () => <img src={check} alt="Success Icon" />,
-                        progressStyle: { background: "#113c53" },
-                    }
-                );
-                setSelectedKeys(new Set());
-                closeDeleteModal();
-            } else {
-                toast.error(error);
-            }
-        } catch (error) {
-            console.error(error);
-            toast.error(
-                "Algo salió mal al eliminar las Identificaciones de requerimientos. Intente de nuevo"
-            );
-        } finally {
-            setIsDeletingBatch(false);
-        }
-    }, [
-        selectedKeys,
-        deleteReqIdentificationsBatch,
-        reqIdentifications,
-        setIsDeletingBatch,
-        setSelectedKeys,
-        closeDeleteModal,
-        check,
-    ]);
-
-    return (
-        <Modal
-            isOpen={showDeleteModal}
-            onOpenChange={closeDeleteModal}
-            backdrop="opaque"
-            placement="center"
-            hideCloseButton={true}
-            isDismissable={false}
-            classNames={{
-                closeButton: "hover:bg-primary/20 text-primary active:bg-primary/10",
+  const handleDeleteBatch = useCallback(async () => {
+    setIsDeletingBatch(true);
+    const reqIdentificationsIds =
+      selectedKeys === "all"
+        ? reqIdentifications.map((reqIdentification) => reqIdentification.id)
+        : Array.from(selectedKeys).map((id) => Number(id));
+    try {
+      const { success, error } = await deleteReqIdentificationsBatch(
+        reqIdentificationsIds
+      );
+      if (success) {
+        toast.info(
+          reqIdentificationsIds.length <= 1
+            ? "Identificación de requerimiento eliminado con éxito"
+            : "Identificaciones de requerimientos eliminados con éxito",
+          {
+            icon: () => <img src={check} alt="Success Icon" />,
+            progressStyle: { background: "#113c53" },
+          }
+        );
+        setSelectedKeys(new Set());
+        closeDeleteModal();
+      } else {
+        toast.error(
+          <div
+            className="toast-scroll-red"
+            style={{
+              maxHeight: 200,
+              overflowY: "auto",
+              whiteSpace: "pre-wrap",
             }}
-        >
-            <ModalContent>
-                {() => (
-                    <>
-                        <ModalHeader className="text-center">
-                            {selectedKeys === "all"
-                                ? "¿Estás seguro de que deseas eliminar TODOS las Identificaciones de requerimientos?"
-                                : selectedKeys.size <= 1
-                                    ? "¿Estás seguro de que deseas eliminar esta Identificación de requerimiento?"
-                                    : "¿Estás seguro de que deseas eliminar estas Identificaciones de requerimientos?"}
-                        </ModalHeader>
-                        <ModalBody className="text-center">
-                            <p className="mb-5 text-lg font-normal text-primary">
-                                Esta acción no se puede deshacer. Por favor, confirme si desea
-                                continuar.
-                            </p>
-                        </ModalBody>
-                        <ModalFooter className="flex justify-center">
-                            <Button
-                                onPress={handleDeleteBatch}
-                                color="primary"
-                                isDisabled={isDeletingBatch}
-                                className="text-white bg-primary hover:bg-primary/90 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 mr-3"
-                                auto
-                            >
-                                {isDeletingBatch ? (
-                                    <Spinner size="sm" color="white" />
-                                ) : (
-                                    "Sí, estoy seguro"
-                                )}
-                            </Button>
-                            <Button
-                                onPress={closeDeleteModal}
-                                color="default"
-                                variant="light"
-                                isDisabled={isDeletingBatch}
-                                className="py-2.5 px-5 text-sm font-medium text-primary bg-white rounded-lg border border-gray-200 hover:bg-primary/10 hover:text-primary"
-                                auto
-                            >
-                                No, cancelar
-                            </Button>
-                        </ModalFooter>
-                    </>
+          >
+            {error}
+          </div>
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        "Algo salió mal al eliminar las identificaciones de requerimientos. Intente de nuevo"
+      );
+    } finally {
+      setIsDeletingBatch(false);
+    }
+  }, [
+    selectedKeys,
+    deleteReqIdentificationsBatch,
+    reqIdentifications,
+    setIsDeletingBatch,
+    setSelectedKeys,
+    closeDeleteModal,
+    check,
+  ]);
+
+  return (
+    <Modal
+      isOpen={showDeleteModal}
+      onOpenChange={closeDeleteModal}
+      backdrop="opaque"
+      placement="center"
+      hideCloseButton={true}
+      isDismissable={false}
+      classNames={{
+        closeButton: "hover:bg-primary/20 text-primary active:bg-primary/10",
+      }}
+    >
+      <ModalContent>
+        {() => (
+          <>
+            <ModalHeader className="text-center">
+              {selectedKeys === "all"
+                ? "¿Estás seguro de que deseas eliminar TODAS las Identificaciones de requerimientos?"
+                : selectedKeys.size <= 1
+                ? "¿Estás seguro de que deseas eliminar esta Identificación de requerimiento?"
+                : "¿Estás seguro de que deseas eliminar estas Identificaciones de requerimientos?"}
+            </ModalHeader>
+            <ModalBody className="text-center">
+              <p className="mb-5 text-lg font-normal text-primary">
+                Esta acción no se puede deshacer. Por favor, confirme si desea
+                continuar.
+              </p>
+            </ModalBody>
+            <ModalFooter className="flex justify-center">
+              <Button
+                onPress={handleDeleteBatch}
+                color="primary"
+                isDisabled={isDeletingBatch}
+                className="text-white bg-primary hover:bg-primary/90 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 mr-3"
+                auto
+              >
+                {isDeletingBatch ? (
+                  <Spinner size="sm" color="white" />
+                ) : (
+                  "Sí, estoy seguro"
                 )}
-            </ModalContent>
-        </Modal>
-    );
+              </Button>
+              <Button
+                onPress={closeDeleteModal}
+                color="default"
+                variant="light"
+                isDisabled={isDeletingBatch}
+                className="py-2.5 px-5 text-sm font-medium text-primary bg-white rounded-lg border border-gray-200 hover:bg-primary/10 hover:text-primary"
+                auto
+              >
+                No, cancelar
+              </Button>
+            </ModalFooter>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
+  );
 }
 
 DeleteModal.propTypes = {
-    config: PropTypes.shape({
-        showDeleteModal: PropTypes.bool.isRequired,
-        closeDeleteModal: PropTypes.func.isRequired,
-        setIsDeletingBatch: PropTypes.func.isRequired,
-        isDeletingBatch: PropTypes.bool.isRequired,
-        selectedKeys: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.instanceOf(Set),
-        ]).isRequired,
-        reqIdentifications: PropTypes.array.isRequired,
-        deleteReqIdentificationsBatch: PropTypes.func.isRequired,
-        setSelectedKeys: PropTypes.func.isRequired,
-        check: PropTypes.string.isRequired,
-    }).isRequired,
+  config: PropTypes.shape({
+    showDeleteModal: PropTypes.bool.isRequired,
+    closeDeleteModal: PropTypes.func.isRequired,
+    setIsDeletingBatch: PropTypes.func.isRequired,
+    isDeletingBatch: PropTypes.bool.isRequired,
+    selectedKeys: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.instanceOf(Set),
+    ]).isRequired,
+    reqIdentifications: PropTypes.array.isRequired,
+    deleteReqIdentificationsBatch: PropTypes.func.isRequired,
+    setSelectedKeys: PropTypes.func.isRequired,
+    check: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default DeleteModal;

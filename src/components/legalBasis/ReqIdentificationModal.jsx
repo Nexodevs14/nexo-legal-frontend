@@ -156,7 +156,7 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
           setReqIdentificationId(reqIdentificationId);
         }
       } else {
-        toast.error(
+       toast.error(
           <div
             className="toast-scroll-red"
             style={{
@@ -167,7 +167,7 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
           >
             {error}
           </div>
-        );;
+        );
       }
     } catch (error) {
       console.error(error);

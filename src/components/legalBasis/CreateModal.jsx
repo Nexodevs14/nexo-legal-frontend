@@ -344,7 +344,7 @@ const CreateModal = ({ config }) => {
           setLegalBaseId(legalBasis.id);
         }
       } else {
-        toast.error(
+       toast.error(
           <div
             className="toast-scroll-red"
             style={{
@@ -355,7 +355,7 @@ const CreateModal = ({ config }) => {
           >
             {error}
           </div>
-        );;
+        );
       }
     } catch (error) {
       console.error(error);

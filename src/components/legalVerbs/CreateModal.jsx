@@ -104,7 +104,7 @@ function CreateModal({ config }) {
         });
         closeModalCreate();
       } else {
-        toast.error(
+       toast.error(
           <div
             className="toast-scroll-red"
             style={{
@@ -115,7 +115,7 @@ function CreateModal({ config }) {
           >
             {error}
           </div>
-        );;
+        );
       }
     } catch (err) {
       console.error(err);

@@ -487,15 +487,19 @@ export default function useReqIdentifications() {
   const editReqIdentification = useCallback(
     async ({ id, reqIdentificationName, reqIdentificationDescription, newUserId }) => {
       try {
-        const updated = await updateReqIdentification({
+        const reqIdentification = await updateReqIdentification({
           id,
           reqIdentificationName,
           reqIdentificationDescription,
           newUserId,
           token: jwt,
         });
-
-        return { success: true, reqIdentification: updated };
+        setReqIdentifications((prevReqIdentifications) =>
+          prevReqIdentifications.map((ReqIdentification) =>
+            ReqIdentification.id === id ? reqIdentification : ReqIdentification
+          )
+        );
+        return { success: true };
       } catch (error) {
         const errorCode = error.response?.status;
         const serverMessage = error.response?.data?.message;
