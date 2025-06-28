@@ -464,7 +464,6 @@ export default function ReqIdentification() {
           setCreationRangeError("");
         }
         const { start, end } = values;
-        console.log(start, end)
         fetchReqIdentificationsByCreatedAt(start.toString(), end.toString());
         setCreationRange(values);
       } else {
