@@ -177,30 +177,70 @@ function TopContent({ config }) {
           </AutocompleteItem>
         </Autocomplete>
         <Autocomplete
-          color="primary"
+          placeholder={!selectedUser ? "Buscar por usuario..." : ""}
           variant="faded"
+          color="primary"
           defaultItems={users}
           isLoading={usersLoading}
-          onClear={onClear}
-          placeholder="Buscar por usuario..."
-          startContent={
-            <img
-              src={search_icon}
-              alt="Search Icon"
-              className="w-4 h-4 flex-shrink-0"
-            />
-          }
+          selectedKey={selectedUser || null}
+          onSelectionChange={onFilterByUser}
+          allowsEmptyCollection
+          allowsCustomValue={false}
           className="w-full"
-          selectedKey={selectedUser}
+          classNames={{
+            inputWrapper: "pr-1.5 pl-2", 
+            input: "text-sm", 
+            clearButton: "mr-1", 
+          }}
           listboxProps={{
             emptyContent: "Usuario no encontrado",
           }}
-          onSelectionChange={onFilterByUser}
+          startContent={(() => {
+            const selected = users.find(
+              (u) => u.id.toString() === selectedUser?.toString()
+            );
+            if (!selected) {
+              return (
+                <img
+                  src={search_icon}
+                  alt="Search Icon"
+                  className="w-4 h-4 flex-shrink-0"
+                />
+              );
+            }
+
+            return (
+              <div className="flex items-center gap-2">
+                {selected.profile_picture && selected.profile_picture.trim() !== "" ? (
+                  <img
+                    src={selected.profile_picture}
+                    alt={selected.name || "Usuario"}
+                    className="w-6 h-6 rounded-full object-cover"
+                  />
+                ) : (
+                  <img
+                    src={defaultAvatar}
+                    alt="Avatar por defecto"
+                    className="w-6 h-6 rounded-full object-cover"
+                  />
+                )}
+                <div className="flex flex-col text-left leading-tight">
+                  <span className="text-sm font-medium text-gray-800 truncate max-w-[160px]">
+                    {selected.name || "Usuario"}
+                  </span>
+                  <span className="text-xs text-gray-500 truncate max-w-[160px]">
+                    {selected.gmail}
+                  </span>
+                </div>
+              </div>
+            );
+          })()}
+
         >
-          {(user) => (
-            <AutocompleteItem key={user?.id} value={user?.id}>
+          {users.map((user) => (
+            <AutocompleteItem key={user.id} value={user.id}>
               <div className="flex items-center gap-3">
-                {user?.profile_picture && user.profile_picture.trim() !== "" ? (
+                {user.profile_picture && user.profile_picture.trim() !== "" ? (
                   <img
                     src={user.profile_picture}
                     alt={user.name || "Usuario"}
@@ -213,16 +253,15 @@ function TopContent({ config }) {
                     className="w-8 h-8 rounded-full object-cover"
                   />
                 )}
-
                 <div className="flex flex-col text-left">
                   <span className="text-sm font-medium text-gray-800">
-                    {user?.name || "Usuario"}
+                    {user.name || "Usuario"}
                   </span>
-                  <span className="text-xs text-gray-500">{user?.gmail}</span>
+                  <span className="text-xs text-gray-500">{user.gmail}</span>
                 </div>
               </div>
             </AutocompleteItem>
-          )}
+          ))}
         </Autocomplete>
         <I18nProvider locale="es">
           <DateRangePicker
@@ -300,9 +339,8 @@ function TopContent({ config }) {
               renderValue={(selected) =>
                 !selected || selected.length === 0
                   ? "Buscar por aspecto..."
-                  : `${selected.length} aspecto${
-                      selected.length > 1 ? "s" : ""
-                    } seleccionado${selected.length > 1 ? "s" : ""}`
+                  : `${selected.length} aspecto${selected.length > 1 ? "s" : ""
+                  } seleccionado${selected.length > 1 ? "s" : ""}`
               }
             >
               {(aspect) => (
@@ -396,9 +434,8 @@ function TopContent({ config }) {
               renderValue={(selected) =>
                 !selected || selected.length === 0
                   ? "Buscar por municipio..."
-                  : `${selected.length} municipio${
-                      selected.length > 1 ? "s" : ""
-                    } seleccionado${selected.length > 1 ? "s" : ""}`
+                  : `${selected.length} municipio${selected.length > 1 ? "s" : ""
+                  } seleccionado${selected.length > 1 ? "s" : ""}`
               }
             >
               {(municipio) => (

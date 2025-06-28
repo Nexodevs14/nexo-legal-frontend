@@ -15,6 +15,7 @@ import {
 import { useState, useEffect } from "react";
 import check from "../../assets/check.png";
 import { toast } from "react-toastify";
+import defaultAvatar from "../../assets/usuario.png";
 
 /**
  * EditReqIdentification component
@@ -236,9 +237,10 @@ const EditReqIdentification = ({ config }) => {
             </div>
             <div className="col-span-2 w-full relative">
               <Autocomplete
+                label="
+                "
                 placeholder={!formData.user ? "Buscar usuario..." : ""}
                 variant="faded"
-                color="primary"
                 defaultItems={users}
                 isLoading={usersLoading}
                 selectedKey={formData.user || null}
@@ -255,23 +257,25 @@ const EditReqIdentification = ({ config }) => {
                   );
                   if (!selected) return null;
                   return (
-                    <div className="flex items-center gap-3">
-                      {selected.profile_picture ? (
+                    <div className="flex items-center gap-2">
+                      {selected.profile_picture && selected.profile_picture.trim() !== "" ? (
                         <img
                           src={selected.profile_picture}
                           alt={selected.name || "Usuario"}
-                          className="w-8 h-8 rounded-full object-cover"
+                          className="w-6 h-6 rounded-full object-cover"
                         />
                       ) : (
-                        <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-sm font-bold text-white">
-                          {selected.name?.charAt(0)?.toUpperCase() || "?"}
-                        </div>
+                        <img
+                          src={defaultAvatar}
+                          alt="Avatar por defecto"
+                          className="w-6 h-6 rounded-full object-cover"
+                        />
                       )}
-                      <div className="flex flex-col text-left">
-                        <span className="text-sm font-medium text-gray-800">
+                      <div className="flex flex-col text-left leading-tight">
+                        <span className="text-sm font-medium text-gray-800 truncate whitespace-nowrap max-w-[180px]">
                           {selected.name || "Usuario"}
                         </span>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-gray-500 truncate whitespace-nowrap max-w-[180px]">
                           {selected.gmail}
                         </span>
                       </div>
@@ -282,16 +286,18 @@ const EditReqIdentification = ({ config }) => {
                 {users.map((user) => (
                   <AutocompleteItem key={user.id} value={user.id}>
                     <div className="flex items-center gap-3">
-                      {user.profile_picture ? (
+                      {user.profile_picture && user.profile_picture.trim() !== "" ? (
                         <img
                           src={user.profile_picture}
                           alt={user.name || "Usuario"}
                           className="w-8 h-8 rounded-full object-cover"
                         />
                       ) : (
-                        <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-sm font-bold text-white">
-                          {user.name?.charAt(0)?.toUpperCase() || "?"}
-                        </div>
+                        <img
+                          src={defaultAvatar}
+                          alt="Avatar por defecto"
+                          className="w-8 h-8 rounded-full object-cover"
+                        />
                       )}
                       <div className="flex flex-col text-left">
                         <span className="text-sm font-medium text-gray-800">
@@ -324,20 +330,24 @@ const EditReqIdentification = ({ config }) => {
               variant="bordered"
               className="w-full"
             />
-            <Input
-              isReadOnly
-              label="Estado"
-              value={formData.state || ""}
-              variant="bordered"
-              className="w-full"
-            />
-            <Input
-              isReadOnly
-              label="Municipio"
-              value={formData.municipality || ""}
-              variant="bordered"
-              className="w-full"
-            />
+            {formData.state && (
+              <Input
+                isReadOnly
+                label="Estado"
+                value={formData.state}
+                variant="bordered"
+                className="w-full"
+              />
+            )}
+            {formData.municipality && (
+              <Input
+                isReadOnly
+                label="Municipio"
+                value={formData.municipality}
+                variant="bordered"
+                className="w-full"
+              />
+            )}
             <Input
               isReadOnly
               label="Materia"
