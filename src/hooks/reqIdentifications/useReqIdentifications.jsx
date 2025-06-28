@@ -447,7 +447,6 @@ export default function useReqIdentifications() {
   const fetchReqIdentificationsBySubjectAndAspects = useCallback(
     async (subjectId, aspectIds) => {
       setState({ loading: true, error: null });
-      console.log(subjectId, aspectIds);
       try {
         const reqIdentifications = await getReqIdentificationsBySubjectAndAspects({
           subjectId,

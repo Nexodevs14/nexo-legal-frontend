@@ -219,9 +219,6 @@ export default function ReqIdentification() {
           case "status":
             await fetchReqIdentificationsByStatus(value);
             break;
-          case "creationRange":
-            await fetchReqIdentificationsByCreatedAt(value);
-            break;
           default:
             break;
         }
@@ -238,7 +235,6 @@ export default function ReqIdentification() {
       fetchReqIdentificationsByState,
       fetchReqIdentificationsByStateAndMunicipalities,
       fetchReqIdentificationsByStatus,
-      fetchReqIdentificationsByCreatedAt,
       fetchAspects,
       fetchMunicipalities,
     ]
@@ -358,7 +354,6 @@ export default function ReqIdentification() {
         subjectId: selectedSubject,
         aspectsIds: Array.from(aspectIds),
       };
-      console.log(value);
       handleFilter("subjectAndAspects", value);
     },
     [handleFilter, handleClear, selectedSubject]
@@ -469,6 +464,7 @@ export default function ReqIdentification() {
           setCreationRangeError("");
         }
         const { start, end } = values;
+        console.log(start, end)
         fetchReqIdentificationsByCreatedAt(start.toString(), end.toString());
         setCreationRange(values);
       } else {
@@ -647,7 +643,6 @@ export default function ReqIdentification() {
     <div className="mt-24 mb-4 -ml-60 mr-4 lg:-ml-0 lg:mr-0 flex justify-center items-center flex-wrap">
       <TopContent
         config={{
-          isEditModalOpen: isEditModalOpen,
           onRowsPerPageChange: onRowsPerPageChange,
           totalReqIdentifications: reqIdentifications.length,
           filterByName: filterByName,

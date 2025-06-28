@@ -1,0 +1,535 @@
+{
+  "reqIdentificationRequirement": {
+    "reqIdentificationId": 73,
+    "requirementName": "Hola",
+    "requirement": {
+      "id": 57,
+      "subject": {
+        "subject_id": 127,
+        "subject_name": "Ambiental",
+        "abbreviation": "AMB",
+        "order_index": 1
+      },
+      "aspects": [
+        {
+          "aspect_id": 57,
+          "aspect_name": "Impacto Ambiental",
+          "abbreviation": "IA",
+          "order_index": 2
+        },
+        {
+          "aspect_id": 58,
+          "aspect_name": "Riesgo Ambiental",
+          "abbreviation": "RA",
+          "order_index": 2
+        },
+        {
+          "aspect_id": 68,
+          "aspect_name": "Uso Forestal",
+          "abbreviation": "UF",
+          "order_index": 12
+        }
+      ],
+      "requirement_number": 1,
+      "requirement_name": "Presentación del estudio de impacto ambiental ante la autoridad competente",
+      "mandatory_description": "La evaluación del impacto ambiental se realizará mediante los estudios que al efecto presenten los interesados en llevar a cabo alguna de las obras o actividades señaladas en el artículo anterior. Dichos estudios tendrán las modalidades del informe preventivo o manifestación de impacto ambiental.\n\nEl Reglamento de esta Ley determinará los contenidos y características que deberán contener dichas modalidades. Asimismo, determinará las obras o actividades, que por su ubicación, dimensiones, características o alcances no produzcan impactos ambientales significativos, ni rebasen los límites y condiciones establecidas en los ordenamientos referidos a la preservación y restauración del equilibrio ecológico y protección al ambiente en el Estado, y que por lo tanto no deban sujetarse al procedimiento de evaluación del impacto ambiental.\n\nPara los efectos a los que se refiere la fracción XI del Artículo anterior, la Secretaría notificará a los interesados su determinación para que se someta al procedimiento de evaluación del impacto ambiental, la obra o actividad que corresponda, explicando las razones que lo justifiquen con el propósito de que aquellos presenten los informes, dictámenes y consideraciones que juzguen convenientes, en un plazo no mayor a 10-diez días hábiles, contados a partir del día hábil siguiente a aquel en que surta efectos dicha notificación.\n\nUna vez recibida la documentación de los interesados, la Secretaría, en un plazo no mayor a 20-veinte días hábiles, comunicará si procede o no la presentación de una manifestación de impacto ambiental, así como la modalidad y el plazo para hacerlo. Transcurrido el plazo señalado, sin que la Secretaría emita la comunicación correspondiente, el interesado deberá formular una nueva petición, y en caso de que la Secretaría no emita su respuesta a dicha solicitud, dentro de un plazo no mayor a diez días hábiles, se entenderá que no es necesaria la presentación de una manifestación de impacto ambiental.",
+      "complementary_description": "Quienes pretendan llevar a cabo alguna de las siguientes obras o actividades, requerirán previamente la autorización de la Secretaría en materia de impacto ambiental:\n\nObras y actividades destinadas a la prestación de un servicio público o para el aprovechamiento de recursos naturales no reservados a la Federación;\n\nObras hidráulicas de competencia estatal y municipal; con excepción de las siguientes:\n\nObras de instalación y mantenimiento de drenajes sanitarios, cuando éstos correspondan a desarrollos urbanos preexistentes o formen parte de la infraestructura de nuevos desarrollos habitacionales.\n\nSistemas de abastecimiento de agua potable cuando éstos correspondan a desarrollos urbanos preexistentes o formen parte de la infraestructura de nuevos desarrollos habitacionales.\n\nUnidades hidroagrícolas o de temporal tecnificado de hasta 2.5 hectáreas, siempre que no se encuentren dentro de algún área natural protegida estatal.\n\nUnidades acuícolas, de cultivo de organismos acuáticos con superficies de hasta mil metros cuadrados o que manejen flujos menores de medio metro cúbico por segundo; o bien que sean unidades de producción para autoconsumo.\n\nInstalaciones de tratamiento, confinamiento o eliminación de aguas residuales, siempre y cuando no contengan lodos, sustancias o residuos peligrosos de competencia de la Federación;\n\nObras de dragado en cuerpos de agua que no sean competencia de la Federación;\n\nVías estatales y municipales de comunicación, incluidas carreteras estatales, puentes y caminos rurales, con las siguientes excepciones:\n\nCaminos rústicos o veredas perimetrales y de linderos en terrenos de propiedad privada, que no incluyan servicios urbanos de ninguna clase.\n\nConservación, reparación y mantenimiento de caminos y vías de comunicación.\n\nc. Modificación de vías de comunicaciones existentes, debidamente autorizadas, salvo en el caso de libramientos y vías alternas.\n\nIndustrias ubicadas fuera de parques, corredores y zonas industriales; que no sean de competencia de la Federación;\n\nExploración, explotación, extracción y beneficio de las sustancias minerales a excepción de las que competan a la Federación, que constituyan depósitos de naturaleza semejante a los componentes de los terrenos tales como roca y demás materiales pétreos o productos de su descomposición;\n\nInstalaciones en las que se realice el acopio, separación, compra venta de material reciclable en cantidades de 10 o más toneladas al año, o bien en los establecimientos en los que se lleven a cabo tratamientos en general de residuos de manejo especial y sólidos urbanos, así como de aquellos sitios de disposición final de residuos sólidos urbanos y de manejo especial, de conformidad con lo dispuesto en la Ley General para la Prevención y Gestión Integral de los Residuos, su Reglamento y demás disposiciones aplicables;-\n\nDesarrollos turísticos públicos o privados;\n\nParques, corredores y zonas industriales en donde no se prevea la realización de actividades altamente riesgosas;\n\nObras en áreas naturales protegidas competencia del Estado; excepto aquellas que realicen las comunidades asentadas en dichas áreas para el mantenimiento o mejoramiento de su calidad de vida, que no impliquen modificación al ecosistema y, en caso de aprovechamiento, sea de autoconsumo y sin afectar especies protegidas de flora o fauna, según o establezca la autoridad competente;\n\nObras y actividades que estando reservadas a la Federación, se descentralicen al Estado, mediante instrumento jurídico y que requieran de la evaluación del impacto ambiental;\n\nObras o actividades que su control no se encuentre reservado a la Federación, que puedan causar desequilibrios ecológicos, daños a la salud pública o a los ecosistemas, o rebasar los límites y condiciones establecidos en los ordenamientos relativos a la preservación del equilibrio ecológico y la protección del ambiente;\n\nConjuntos habitacionales, fraccionamientos y nuevos centros de población;\n\nExpendios de distribución de gasolinas, diesel, de gas y expendios de hidrocarburos o sus derivados;\n\nConstrucción de hospitales, centros hospitalarios, así como hoteles, moteles y centros de alojamiento;\n\nEstablecimientos comerciales y de servicio que estén incluidos en los planes parciales de desarrollo urbano; siempre y cuando se encuentre en alguno de los siguientes supuestos:\n\na. Se pretendan ubicar en áreas que presenten vegetación natural;\n\nb. Emitanalairealgúntipodesustanciaomaterial;\n\nc.Provoquen olores molestos o desagradables al exterior; o bien que genere vibraciones, energía térmica o lumínica;\n\nEmita ruido por encima de los niveles máximos permisibles;\n\nQue sus aguas residuales sean diversas a las domésticas o rebasen\n\nlos niveles máximos que establecen los ordenamientos aplicables;\n\nf. En los que se generen cantidades iguales o mayores a 400 kilogramos de residuos de manejo especial al año;\n\nQue distribuya aceites, combustibles, gas licuado o cualquier derivado\n\nde hidrocarburo;\n\nQue use materiales riesgosos que no sean competencia de la Federación o estén en el supuesto del artículo 208 de este Reglamento; y\n\ni. Aquellos que por complejidad, tamaño o características requiera del citado trámite.\n\nXVIII. Las demás que no sean competencia de la Federación.",
+      "mandatory_sentences": "Tratándose de las solicitudes para la evaluación de impacto ambiental el promovente deberá presentar a la Secretaría su solicitud, en el formato que para tal efecto designe la Secretaría, anexando:\n\nI. La manifestación de impacto ambiental en la modalidad que corresponda o el Informe Preventivo,\n\nII. Los archivos electrónicos de la manifestación de impacto ambiental o del Informe Preventivo, y de los estudios, planos, fotografías, mapas anexos y demás documentos que sirvieron para la elaboración de la manifestación de impacto ambiental o del Informe Preventivo.\n\nIII. Una copia sellada de la constancia del pago de derechos correspondientes, en su caso; y\n\nIV. Cuando la obra o actividad involucre el uso, manejo o almacenamiento de las sustancias consideradas por la Federación como altamente riesgosas, en cantidades inferiores a las de su reporte, se deberá anexar el estudio de riesgo correspondiente.",
+      "complementary_sentences": "Corresponde a la Secretaría, evaluar el impacto ambiental de las siguientes obras y actividades:\n\nI. Obras y actividades destinadas a la prestación de un servicio público o para el aprovechamiento de recursos naturales no reservados a la Federación;\n\nII. Obras hidráulicas de competencia estatal y municipal;\n\nIII. Vías estatales y municipales de comunicación, incluidos los caminos rurales;\n\nIV. Industrias ubicadas fuera de parques, corredores y zonas industriales;\n\nV. Exploración, explotación, extracción y beneficio de las sustancias minerales a excepción de las que competan a la Federación, que constituyan depósitos de naturaleza semejante a los componentes de los terrenos tales como roca y demás materiales pétreos o productos de su descomposición;\n\nVI. Instalaciones de tratamiento, recicladoras, y sitios de disposición final de residuos sólidos urbanos y de manejo especial, de conformidad con lo dispuesto en la Ley en la materia;\n\nVII. Desarrollos turísticos públicos o privados;\n\nVIII. Parques, corredores y zonas industriales donde no se prevea la realización de actividades altamente riesgosas;\n\nIX. Obras en áreas naturales protegidas competencia del Estado;\n\nX. Obras y actividades que estando reservadas a la Federación, se descentralicen al Estado, mediante instrumento jurídico y que requieran de la evaluación del impacto ambiental;\n\nXI. Obras o actividades que su control no se encuentre reservado a la Federación, que puedan causar desequilibrios ecológicos, daños a la salud pública o a los ecosistemas, o rebasar los límites y condiciones establecidos en los ordenamientos relativos a la preservación del equilibrio ecológico y la protección del ambiente;\n\nXII. Conjuntos habitacionales, fraccionamientos y nuevos centros de población;\n\nXIII. Establecimientos comerciales y de servicio que estén incluidos en los planes parciales de desarrollo urbano;\n\nXIV. Expendios de distribución de gasolinas, diesel y de gas; y\n\nXV. Las demás que no sean competencia de la Federación.\n\nEn la manifestación de impacto ambiental se indicará, cuando la obra o actividad involucre el uso, manejo o almacenamiento de las sustancias consideradas por la Federación como altamente riesgosas, en cantidades inferiores a las de su reporte, haciendo mención expresa del monto de las mismas.\n\nLa realización de obras o actividades a que se refieren el artículo 37, requerirán únicamente la presentación de un informe preventivo y no una manifestación de impacto ambiental cuando:\n\nI. Existan Normas Oficiales Mexicanas u otros ordenamientos que regulen las emisiones, las descargas, el aprovechamiento de recursos naturales y, en general, los impactos ambientales relevantes que puedan producir las obras o actividades;\n\nII. Las obras o actividades de que se trate estén expresamente previstas en un plan parcial de desarrollo urbano o en un programa de ordenamiento ecológico que haya sido evaluado por la Secretaría, en los términos del presente capítulo; y\n\nIII. Se trate de instalaciones industriales ubicadas en parques industriales autorizados, en los términos de esta Ley y otros ordenamientos aplicables.\n\nUna vez analizado el informe preventivo, la Secretaría determinará en un plazo no mayor de 20-veinte días hábiles si procede o no la presentación de una manifestación del impacto ambiental, así como la modalidad conforme a la que deba formularse. Transcurrido el plazo señalado, sin que la Secretaría emita la comunicación correspondiente, el interesado deberá formular una nueva petición, y en caso de que la Secretaría no emita su respuesta a dicha solicitud, dentro de un plazo no mayor a 10-diez días hábiles, se entenderá que no es necesaria la presentación de una manifestación de impacto ambiental. No se podrán iniciar las obras o actividades hasta en tanto se emita la resolución correspondiente.\n\nLas obras o actividades de competencia estatal no comprendidas en el Artículo 38 de esta Ley, cuando por su ubicación, dimensiones o características produzcan impactos ambientales significativos sobre el medio ambiente, en los términos previstos en la presente ley, serán evaluados por la Secretaría considerando la opinión de las autoridades municipales respectivas.\n\nEn estos casos, la evaluación de impacto ambiental se podrá efectuar dentro de los procedimientos de autorización de uso de suelo, construcciones, fraccionamientos u otros procedimientos que establezcan las leyes estatales y las disposiciones que de ellas se deriven.\n\nDichos ordenamientos proveerán lo necesario a fin de hacer compatibles la política ambiental con la de desarrollo urbano y de evitar la duplicidad innecesaria de procedimientos administrativos en la materia.\n\nLa Secretaría podrá regularizar, de acuerdo a lo que señale el Reglamento de esta Ley, las obras iniciadas que no cuenten con la autorización en materia de impacto ambiental, independientemente de las sanciones económicas a que hubiere lugar. En todo caso, podrá decretarse la suspensión de la obra o actividad, atendiendo al sitio y las condiciones que motivaron la actuación irregular, en los términos de esta Ley.\n\nEn las áreas naturales protegidas podrá determinarse la superficie o superficies mejor conservadas o no alteradas, donde existan ecosistemas o recursos naturales de especial importancia, o especies de flora y fauna que requieran protección especial que serán conceptuadas como zonas núcleo. En ellas únicamente podrá autorizarse la realización de actividades de preservación ecológica de los ecosistemas y sus elementos, de investigación y educación ambiental, prohibiéndose aprovechamientos que alteren ecosistemas.\n\nEn dichas áreas podrán determinarse la superficie o superficies que protejan la zona núcleo del impacto exterior, que serán conceptuadas como zonas de amortiguamiento, en donde solo podrán realizarse actividades productivas emprendidas por las comunidades y sectores productivos que ahí habiten al momento de la expedición de la declaratoria respectiva o con su participación, siempre que sean estrictamente compatibles con los objetivos del programa de manejo que se formule y expida, considerando las previsiones de los programas de ordenamiento ecológico que resulten aplicables.\n\nEn las zonas núcleo de las áreas naturales protegidas queda estrictamente prohibido:\n\nI. Verter o descargar contaminantes en el suelo y cualquier clase de cauce, vaso o acuífero, así como desarrollar cualquier actividad contaminante;\n\nII. Interrumpir, rellenar, desecar o desviar los flujos hidráulicos;\n\nIII. Realizar actividades cinegéticas o de explotación y aprovechamiento de especies de flora y fauna silvestres;\n\nIV. Cambiar el uso de suelo, a excepción de las actividades de repoblación forestal con especies nativas; y\n\nV. Ejecutar acciones que contravengan lo dispuesto por esta Ley, la declaratoria respectiva y los demás ordenamientos que de ellas se deriven.\n\nSe sujetarán al cumplimiento de las disposiciones señaladas dentro de la presente Ley, las personas físicas o morales, públicas o privadas, que pretendan realizar actividades de explotación y aprovechamiento de materiales no reservados a la Federación.",
+      "mandatory_keywords": "estudio de impacto ambiental, informe preventivo, manifestación de impacto ambiental, licencia ambiental integral",
+      "complementary_keywords": "formatos, guías, presentación de la solicitud, previo",
+      "condition": "Crítica",
+      "evidence": "Específica",
+      "specify_evidence": "Evidencia documental de la presentación del Estudio de Impacto Ambiental (acuse de ingreso, constancia de recibo por la autoridad)",
+      "formatted_evidence": "Específica - Evidencia documental de la presentación del Estudio de Impacto Ambiental (acuse de ingreso, constancia de recibo por la autoridad)",
+      "periodicity": "Específica",
+      "acceptance_criteria": "Los responsables de obras y actividades presentan evidencia documental de la presentación del estudio de impacto ambiental ante la autoridad competente."
+    },
+    "requirementTypes": [
+      {
+        "id": 51,
+        "name": "Requerimento compuesto de identificación",
+        "description": "Requerimiento compuesto es que contiene un conjunto de subrequerimientos que son obligaciones para sujetos obligados especificos (giro /actividad)",
+        "classification": "Las acciones a que se refiere el artículo anterior podrán ser las siguientes:\n\nI. Instalar equipos y sistemas que controlen las emisiones contaminantes a la atmósfera, para que éstas no rebasen los niveles máximos permisibles, conforme a lo que establece el Reglamento de esta Ley y las Normas Oficiales Mexicanas y Normas Ambientales Estatales;\n\nII. Integrar un inventario de sus emisiones contaminantes a la atmósfera, en el formato que determine la autoridad, y remitir el mismo a estas autoridades con la periodicidad que determinen;\n\nIII. Instalar plataformas y puertos de muestreo en chimeneas, tiros, ductos y descargas;\n\nIV. Medir las emisiones de contaminantes a la atmósfera de acuerdo a las Normas Oficiales Mexicanas y Normas Ambientales Estatales, en los períodos que determinen las autoridades, registrar los resultados en el formato que estas precisen y remitir los registros relativos cuando así lo soliciten;\n\nV. Efectuar el monitoreo perimetral de las emisiones contaminantes a la atmósfera en períodos que determinen las autoridades, así como cuando por sus características de operación o por sus materias primas o productos, puedan causar riesgos al ambiente o a la salud de los seres vivos;\n\nVI. Llevar una bitácora de operación y mantenimiento de los equipos de proceso y control;\n\nVII. Dar aviso anticipado a las autoridades correspondientes del inicio de la operación de sus procesos, en el caso de paros programados, y de inmediato cuando éstos sean circunstanciales, si ellos puedan provocar contaminación;\n\nVIII. Avisar de inmediato a las autoridades correspondientes, en el caso de falla del equipo de control para que éstos determinen lo conducente;\n\nIX. Establecer las medidas y acciones que deberán efectuarse en caso de contingencia;\n\nX. Elaborar y someter a la autoridad competente su programa de prevención, minimización, tratamiento, disposición y reutilización de contaminantes atmosféricos o reciclamiento para el caso de residuos, cuando éste se requiera por la cantidad o naturaleza de los contaminantes o residuos generados, de conformidad con los criterios establecidos en la presente Ley; y\n\nXI. Las demás que se establezcan en esta Ley, los ordenamientos que de ella se deriven o determinen las autoridades en el ámbito de sus respectivas competencias.\n\nLos responsables de la realización de actividades riesgosas están obligados a:\n\nI. Cumplir con las disposiciones previstas en esta ley, sus reglamentos y las normas aplicables;\n\nII. Tramitar, y en su caso, obtener autorización del estudio de riesgo ambiental y los programas para la prevención de accidentes y atención a contingencias, y presentarlos ante la autoridad competente;\n\nIII. Ubicarse en las zonas determinadas por el municipio como aptas para la instalación de actividades riesgosas, y en su caso, garantizar el establecimiento de la zona intermedia de salvaguarda;\n\nIV. Aplicar la mejor tecnología disponible para evitar y minimizar los riesgos ambientales;\n\nV. Dar aviso inmediato a la Secretaría, los cuerpos de bomberos y las unidades de protección civil, en caso accidentes que puedan ocasionar una contingencia ambiental o una emergencia ecológica; y\n\nVI. Cumplir con las condiciones de operación que le establezca la Secretaría, e instalar equipos o sistemas de seguridad.\n\nEn materia de residuos peligrosos, está prohibido:\n\nI. El transporte de residuos por vía aérea;\n\nII. El confinamiento de residuos líquidos o semisólidos, sin que hayan sido sometidos a tratamientos para eliminar la humedad, neutralizarlos o estabilizarlos y lograr su solidificación, de conformidad con las disposiciones de esta Ley y demás ordenamientos legales aplicables;\n\nIII. El confinamiento de compuestos orgánicos persistentes como los bifenilos policlorados, los compuestos hexaclorados y otros, así como de materiales contaminados con éstos, que contengan concentraciones superiores a 50 partes por millón de dichas sustancias, y la dilución de los residuos que los contienen con el fin de que se alcance este límite máximo;\n\nIV. La mezcla de bifenilos policlorados con aceites lubricantes usados o con otros materiales o residuos;\n\nV. El almacenamiento por más de seis meses en las fuentes generadoras;\n\nVI. El confinamiento en el mismo lugar o celda, de residuos peligrosos incompatibles o en cantidades que rebasen la capacidad instalada;\n\nVII. El uso de residuos peligrosos, tratados o sin tratar, para recubrimiento de suelos, de conformidad con las normas oficiales mexicanas sin perjuicio de las facultades de la Secretaría y de otros organismos competentes;\n\nVIII. La dilución de residuos peligrosos en cualquier medio, cuando no sea parte de un tratamiento autorizado, y\n\nIX. La incineración de residuos peligrosos que sean o contengan compuestos orgánicos persistentes y bioacumulables; plaguicidas organoclorados; así como baterías y acumuladores usados que contengan metales tóxicos; siempre y cuando exista en el país alguna otra tecnología disponible que cause menor impacto y riesgo ambiental.\n"
+      }
+    ],
+    "legalVerbs": [
+      {
+        "legalVerb": {
+          "id": 1,
+          "name": "Debe",
+          "description": "Obligación expresa",
+          "translation": "must"
+        },
+        "translation": "Ejecutar acción legal"
+      }
+    ],
+    "legalBasis": [
+      {
+        "legalBasis": {
+          "id": 512,
+          "legal_name": "Reglamento de Servicios Públicos Municipales de Cortazar, Guanajuato",
+          "subject": {
+            "subject_id": 127,
+            "subject_name": "Ambiental",
+            "abbreviation": "AMB",
+            "order_index": 1
+          },
+          "aspects": [
+            {
+              "aspect_id": 57,
+              "aspect_name": "Impacto Ambiental",
+              "abbreviation": "IA",
+              "order_index": 2
+            },
+            {
+              "aspect_id": 58,
+              "aspect_name": "Riesgo Ambiental",
+              "abbreviation": "RA",
+              "order_index": 2
+            }
+          ],
+          "abbreviation": "RSPMCG",
+          "classification": "Reglamento",
+          "jurisdiction": "Estatal",
+          "state": "Guanajuato",
+          "municipality": null
+        },
+        "articles": [
+          {
+            "article": {
+              "id": 108801,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 68",
+              "description": "<p style=\"text-align: justify;\">No se permitirá a los particulares, sin la autorización de la Dirección, modificar las áreas verdes de los bienes comunes en donde las autoridades municipales o Patronato del Vivero Municipal las hayan planeado.</p>\n<p style=\"text-align: justify;\">En esta autorización deberá considerarse lo señalado en el Programa Municipal de Desarrollo Urbano y Ordenamiento Ecológico Territorial para el Municipio de Cortazar, Guanajuato y los planes parciales que de este se deriven.</p>\n<p style=\"text-align: justify;\">Autorización de la tala</p>",
+              "article_order": 85,
+              "plain_description": "No se permitirá a los particulares, sin la autorización de la Dirección,\nmodificar las áreas verdes de los bienes comunes en donde las autoridades\nmunicipales o Patronato del Vivero Municipal las hayan planeado.\n\nEn esta autorización deberá considerarse lo señalado en el Programa Municipal de\nDesarrollo Urbano y Ordenamiento Ecológico Territorial para el Municipio de\nCortazar, Guanajuato y los planes parciales que de este se deriven.\n\nAutorización de la tala"
+            },
+            "articleType": "General",
+            "score": 8
+          },
+          {
+            "article": {
+              "id": 108805,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 72",
+              "description": "<p style=\"text-align: justify;\">Las podas necesarias de árboles públicos y privados en ramas menores a 7.5 centímetros de diámetro, podrán ser efectuadas por los particulares, con permiso gratuito por parte de la Jefatura de Medio Ambiente, obligándose a seguir los lineamientos técnicos que al respecto emita la misma, con la finalidad de que los árboles no tengan problemas de enfermedades por virus, bacterias o microorganismos dañinos.</p><p style=\"text-align: justify;\">De los residuos</p>",
+              "article_order": 89,
+              "plain_description": "Las podas necesarias de árboles públicos y privados en ramas menores a 7.5\ncentímetros de diámetro, podrán ser efectuadas por los particulares, con permiso\ngratuito por parte de la Jefatura de Medio Ambiente, obligándose a seguir los\nlineamientos técnicos que al respecto emita la misma, con la finalidad de que\nlos árboles no tengan problemas de enfermedades por virus, bacterias o\nmicroorganismos dañinos.\n\nDe los residuos"
+            },
+            "articleType": "General",
+            "score": 8
+          },
+          {
+            "article": {
+              "id": 108800,
+              "legal_basis_id": 512,
+              "article_name": "SECCIÓN OCTAVA",
+              "description": "Del Derribo y Poda de Árboles\nModificación de áreas verdes",
+              "article_order": 84,
+              "plain_description": "Del Derribo y Poda de Árboles Modificación de áreas verdes"
+            },
+            "articleType": "General",
+            "score": 3
+          },
+          {
+            "article": {
+              "id": 108783,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 54",
+              "description": "<p style=\"text-align: justify;\">Cuando se permitan actos públicos en dichos lugares, las dependencias de la Administración Municipal, en el ámbito de sus atribuciones, establecerán las medidas precautorias necesarias para su preservación, mantenimiento y limpieza así como para evitar cualquier clase de daño o deterioro de los mismos.</p>\n<p style=\"text-align: justify;\">El permiso deberá solicitarse como mínimo 15 hábiles días de antelación a la realización del acto, tiempo suficiente para que, tanto por el área responsable de la conservación del espacio, como por el usuario, se puedan adoptar las medidas necesarias en lo relativo a la protección de elementos, constitución de fianzas para la reparación de posibles daños, gastos de limpieza, y otros conceptos.</p>\n<p style=\"text-align: justify;\">Del respeto a las áreas verdes.</p>",
+              "article_order": 67,
+              "plain_description": "Cuando se permitan actos públicos en dichos lugares, las dependencias de la\nAdministración Municipal, en el ámbito de sus atribuciones, establecerán las\nmedidas precautorias necesarias para su preservación, mantenimiento y limpieza\nasí como para evitar cualquier clase de daño o deterioro de los mismos.\n\nEl permiso deberá solicitarse como mínimo 15 hábiles días de antelación a la\nrealización del acto, tiempo suficiente para que, tanto por el área responsable\nde la conservación del espacio, como por el usuario, se puedan adoptar las\nmedidas necesarias en lo relativo a la protección de elementos, constitución de\nfianzas para la reparación de posibles daños, gastos de limpieza, y otros\nconceptos.\n\nDel respeto a las áreas verdes."
+            },
+            "articleType": "General",
+            "score": 2
+          },
+          {
+            "article": {
+              "id": 108777,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 49",
+              "description": "<p style=\"text-align: justify;\">Los parques y jardines municipales, deberán ser diseñados por la Dirección, en coordinación con un paisajista, diseñador o arquitecto especializado en la materia y la Dirección de Obras Públicas; y en los proyectos ejecutivos al menos deberán contemplarse los siguientes elementos:</p>\n<ul style=\"text-align: justify;\">\n<li>I. La instalación de sistemas de riego con el objeto de hacer más eficiente el uso del agua, de conformidad con el tipo de vegetación que se plantará en los mismos;</li>\n<li>II. Accesos y servicios para personas con capacidades diferentes, y</li>\n<li>III. La construcción de sanitarios públicos para los proyectos en los que así se requiera, contemplando las necesidades de los mismos</li>\n</ul>\n<p style=\"text-align: justify;\">Restricciones a la concesión o arrendamiento</p>",
+              "article_order": 61,
+              "plain_description": "Los parques y jardines municipales, deberán ser diseñados por la Dirección, en\ncoordinación con un paisajista, diseñador o arquitecto especializado en la\nmateria y la Dirección de Obras Públicas; y en los proyectos ejecutivos al menos\ndeberán contemplarse los siguientes elementos:\n\n * I. La instalación de sistemas de riego con el objeto de hacer más eficiente\n   el uso del agua, de conformidad con el tipo de vegetación que se plantará en\n   los mismos;\n * II. Accesos y servicios para personas con capacidades diferentes, y\n * III. La construcción de sanitarios públicos para los proyectos en los que así\n   se requiera, contemplando las necesidades de los mismos\n\nRestricciones a la concesión o arrendamiento"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108778,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 50",
+              "description": "<p style=\"text-align: justify;\">En los parques y jardines municipales, no podrán otorgarse en concesión o arrendamiento a particulares, únicamente los servicios o áreas que establezca el Ayuntamiento.</p>\n<p style=\"text-align: justify;\">De la delimitación de las áreas</p>",
+              "article_order": 62,
+              "plain_description": "En los parques y jardines municipales, no podrán otorgarse en concesión o\narrendamiento a particulares, únicamente los servicios o áreas que establezca el\nAyuntamiento.\n\nDe la delimitación de las áreas"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108779,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 51",
+              "description": "<p style=\"text-align: justify;\">El Programa Municipal de Desarrollo Urbano y Ordenamiento Ecológico Territorial para el Municipio de Cortazar, Guanajuato y los programas que de él se deriven, señalarán en las normas de uso del suelo, las consideraciones relativas a los coeficientes de utilización y ocupación de suelo que indican los porcentajes de áreas libres de edificación y de áreas verdes mínimas que deben ser respetadas en los proyectos de construcción y que deberán ser reflejadas en los permisos que la dependencia municipal otorga.</p>",
+              "article_order": 63,
+              "plain_description": "El Programa Municipal de Desarrollo Urbano y Ordenamiento Ecológico Territorial\npara el Municipio de Cortazar, Guanajuato y los programas que de él se deriven,\nseñalarán en las normas de uso del suelo, las consideraciones relativas a los\ncoeficientes de utilización y ocupación de suelo que indican los porcentajes de\náreas libres de edificación y de áreas verdes mínimas que deben ser respetadas\nen los proyectos de construcción y que deberán ser reflejadas en los permisos\nque la dependencia municipal otorga."
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108780,
+              "legal_basis_id": 512,
+              "article_name": "SECCIÓN CUARTA",
+              "description": "Uso de Áreas Verdes y Jardines Públicos\nDel derecho al uso",
+              "article_order": 64,
+              "plain_description": "Uso de Áreas Verdes y Jardines Públicos Del derecho al uso"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108781,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 52",
+              "description": "<p style=\"text-align: justify;\">Toda persona tiene derecho al uso y disfrute de jardines y áreas verdes públicos, de acuerdo con lo establecido en el presente Reglamento y demás disposiciones aplicables.</p>\n<p style=\"text-align: justify;\">Uso exclusivo de acuerdo a la finalidad</p>",
+              "article_order": 65,
+              "plain_description": "Toda persona tiene derecho al uso y disfrute de jardines y áreas verdes\npúblicos, de acuerdo con lo establecido en el presente Reglamento y demás\ndisposiciones aplicables.\n\nUso exclusivo de acuerdo a la finalidad"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108782,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 53",
+              "description": "<p style=\"text-align: justify;\">Los espacios a que se refiere el presente ordenamiento, por ser bienes de dominio público y uso común, no podrán ser objeto de uso exclusivo en actos que, por su finalidad, contenido o características, impliquen la utilización de tales lugares con fines particulares en detrimento de su propia naturaleza y destino, salvo las excepciones expresamente autorizadas por la persona titular de la Presidencia Municipal.</p>\n<p style=\"text-align: justify;\">De los actos públicos</p>",
+              "article_order": 66,
+              "plain_description": "Los espacios a que se refiere el presente ordenamiento, por ser bienes de\ndominio público y uso común, no podrán ser objeto de uso exclusivo en actos que,\npor su finalidad, contenido o características, impliquen la utilización de tales\nlugares con fines particulares en detrimento de su propia naturaleza y destino,\nsalvo las excepciones expresamente autorizadas por la persona titular de la\nPresidencia Municipal.\n\nDe los actos públicos"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108784,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 55",
+              "description": "<p style=\"text-align: justify;\">Los usuarios de los jardines o áreas verdes y del mobiliario urbano instalado en los mismos, deberán cumplir las instrucciones que sobre su utilización, conservación y mantenimiento figuren en los letreros, anuncios, rótulos y señales.</p>\n<p style=\"text-align: justify;\">Horarios de uso</p>",
+              "article_order": 68,
+              "plain_description": "Los usuarios de los jardines o áreas verdes y del mobiliario urbano instalado en\nlos mismos, deberán cumplir las instrucciones que sobre su utilización,\nconservación y mantenimiento figuren en los letreros, anuncios, rótulos y\nseñales.\n\nHorarios de uso"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108785,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 56",
+              "description": "<p style=\"text-align: justify;\">Los parques y jardines con cerramiento y control de uso, permanecerán abiertos según los horarios determinados por la autoridad municipal y que figurarán en las puertas de acceso, no pudiendo accederse a los mismos, fuera de dicho horario; este podrá ser modificado según las épocas del año, necesidades del servicio, inclemencias meteorológicas u otras eventualidades.</p>",
+              "article_order": 69,
+              "plain_description": "Los parques y jardines con cerramiento y control de uso, permanecerán abiertos\nsegún los horarios determinados por la autoridad municipal y que figurarán en\nlas puertas de acceso, no pudiendo accederse a los mismos, fuera de dicho\nhorario; este podrá ser modificado según las épocas del año, necesidades del\nservicio, inclemencias meteorológicas u otras eventualidades."
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108786,
+              "legal_basis_id": 512,
+              "article_name": "SECCIÓN QUINTA",
+              "description": "Del Riego y de las Garantías de las Condiciones de Vida de las Plantaciones y su Conservación\nDisposiciones de riego",
+              "article_order": 70,
+              "plain_description": "Del Riego y de las Garantías de las Condiciones de Vida de las Plantaciones y su\nConservación Disposiciones de riego"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108787,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 57",
+              "description": "<p style=\"text-align: justify;\">En materia de riego de jardines y áreas verdes, se observarán las disposiciones siguientes:</p>\n<ul style=\"text-align: justify;\">\n  <li><b>I.</b> Todo proyecto de creación de zona ajardinada o implantación de arbolado incluirá el cálculo de necesidades de riego en función de especies elegidas, condiciones climáticas y edáficas;</li>\n  <li><b>II.</b> Dada la necesidad de considerar el agua como un bien escaso, las plantaciones estarán determinadas en cuanto a la elección de especies por criterios de máxima economía de agua, siendo lo ideal la elección de especies endémicas y de aquellas de probada adaptación;</li>\n  <li><b>III.</b> En las instalaciones de riego se atenderá preferentemente, a la implantación de sistemas de riego sustentables, por gravedad o a presión, con los mecanismos necesarios y suficientes que conlleven el máximo nivel de automatización, a fin de optimizar y racionalizar el gasto hídrico;</li>\n  <li><b>IV.</b> En las obras de ajardinamiento y ampliación de arbolado en el área urbana, se deberá garantizar el suministro de agua necesario;</li>\n  <li><b>V.</b> En ningún caso podrán realizarse tomas de las redes de riego municipales para el riego de jardines o predios privados, y</li>\n  <li><b>VI.</b> El uso del agua es exclusivo para el riego, y se establecerán anuncios del riesgo de consumo.</li>\n</ul>\n<p style=\"text-align: justify;\">Garantías de las plantaciones</p>",
+              "article_order": 71,
+              "plain_description": "En materia de riego de jardines y áreas verdes, se observarán las disposiciones\nsiguientes:\n\n * I. Todo proyecto de creación de zona ajardinada o implantación de arbolado\n   incluirá el cálculo de necesidades de riego en función de especies elegidas,\n   condiciones climáticas y edáficas;\n * II. Dada la necesidad de considerar el agua como un bien escaso, las\n   plantaciones estarán determinadas en cuanto a la elección de especies por\n   criterios de máxima economía de agua, siendo lo ideal la elección de especies\n   endémicas y de aquellas de probada adaptación;\n * III. En las instalaciones de riego se atenderá preferentemente, a la\n   implantación de sistemas de riego sustentables, por gravedad o a presión, con\n   los mecanismos necesarios y suficientes que conlleven el máximo nivel de\n   automatización, a fin de optimizar y racionalizar el gasto hídrico;\n * IV. En las obras de ajardinamiento y ampliación de arbolado en el área\n   urbana, se deberá garantizar el suministro de agua necesario;\n * V. En ningún caso podrán realizarse tomas de las redes de riego municipales\n   para el riego de jardines o predios privados, y\n * VI. El uso del agua es exclusivo para el riego, y se establecerán anuncios\n   del riesgo de consumo.\n\nGarantías de las plantaciones"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108788,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 58",
+              "description": "<p style=\"text-align: justify;\">Son garantías de las condiciones de vida de las plantaciones, las siguientes:</p>\n<ul style=\"text-align: justify;\">\n  <li>Toda plantación en espacios públicos deberá realizarse sobre un suelo que garantice el adecuado desarrollo del vegetal, y</li>\n  <li>El suelo que deberá prepararse, será en volumen y fertilidad tales que garanticen unas apropiadas condiciones para el óptimo desarrollo del vegetal durante su vida.</li>\n</ul>",
+              "article_order": 72,
+              "plain_description": "Son garantías de las condiciones de vida de las plantaciones, las siguientes:\n\n * Toda plantación en espacios públicos deberá realizarse sobre un suelo que\n   garantice el adecuado desarrollo del vegetal, y\n * El suelo que deberá prepararse, será en volumen y fertilidad tales que\n   garanticen unas apropiadas condiciones para el óptimo desarrollo del vegetal\n   durante su vida."
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108789,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 59",
+              "description": "<p style=\"text-align: justify;\">La conservación comprende tanto el mantenimiento de los elementos vegetales como el conjunto de acciones y normas destinadas a evitar su degradación e incrementar sus posibilidades de óptimo desarrollo, así como la periódica reposición y renovación de las plantas y elementos inertes.</p><p style=\"text-align: justify;\">De la condiciones y garantías</p>",
+              "article_order": 73,
+              "plain_description": "La conservación comprende tanto el mantenimiento de los elementos vegetales como\nel conjunto de acciones y normas destinadas a evitar su degradación e\nincrementar sus posibilidades de óptimo desarrollo, así como la periódica\nreposición y renovación de las plantas y elementos inertes.\n\nDe la condiciones y garantías"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108790,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 60",
+              "description": "<p style=\"text-align: justify;\">La Dirección está obligada a mantener las condiciones adecuadas de seguridad, salubridad y ornato de jardines y zonas verdes, debiendo acatar las siguientes condiciones mínimas:</p>\n<ul>\n  <li><b>I. Condiciones de seguridad:</b>\n    <ul>\n      <li>a) Se deberá controlar el crecimiento de la vegetación dentro de límites permisibles, de forma que no se ponga en riesgo la seguridad del tránsito, tanto peatonal como de vehículos en la vía pública, o que faciliten o sean utilizados como una fuente inminente para robos, asaltos o vandalismo;</li>\n      <li>b) Se deberá corregir toda situación con riesgo de causar daños a personas o bienes, originada por la vegetación, aún dentro de la propia finca, y</li>\n      <li>c) Se deberá suprimir aquella vegetación que por su estado y tamaño propicie una situación de elevado riesgo de incendio, debiendo realizarse labores de limpieza y desbroce, por lo menos 2 veces al año, en especial antes del inicio de la época estival.</li>\n    </ul>\n  </li>\n  <li><b>II. Condiciones de salubridad:</b>\n    <p style=\"text-align: justify;\">Se deberán mantener estos espacios, en un adecuado estado de limpieza, de forma que se impida la proliferación de agentes potencialmente causantes de enfermedades o que represente un riesgo para la salud.</p>\n  </li>\n  <li><b>III. Condiciones de ornato:</b>\n    <ul>\n      <li>a) Se deberán mantener estos espacios en un estado estético que no represente alteración ni deterioro del paisaje;</li>\n      <li>b) Estos espacios no albergarán ninguna clase de desperdicio, escombro, vehículo inservible, etc. así como tampoco se permitirá que se dejen, ni aun de forma temporal, materiales de obra sin la correspondiente autorización, y</li>\n      <li>c) Se deberán mantener los jardines y áreas verdes en condiciones tales que, de acuerdo a las características de diseño, mejoren la calidad de vida de la población.</li>\n    </ul>\n  </li>\n</ul>",
+              "article_order": 74,
+              "plain_description": "La Dirección está obligada a mantener las condiciones adecuadas de seguridad,\nsalubridad y ornato de jardines y zonas verdes, debiendo acatar las siguientes\ncondiciones mínimas:\n\n * I. Condiciones de seguridad:\n   * a) Se deberá controlar el crecimiento de la vegetación dentro de límites\n     permisibles, de forma que no se ponga en riesgo la seguridad del tránsito,\n     tanto peatonal como de vehículos en la vía pública, o que faciliten o sean\n     utilizados como una fuente inminente para robos, asaltos o vandalismo;\n   * b) Se deberá corregir toda situación con riesgo de causar daños a personas\n     o bienes, originada por la vegetación, aún dentro de la propia finca, y\n   * c) Se deberá suprimir aquella vegetación que por su estado y tamaño\n     propicie una situación de elevado riesgo de incendio, debiendo realizarse\n     labores de limpieza y desbroce, por lo menos 2 veces al año, en especial\n     antes del inicio de la época estival.\n * II. Condiciones de salubridad:\n   \n   Se deberán mantener estos espacios, en un adecuado estado de limpieza, de\n   forma que se impida la proliferación de agentes potencialmente causantes de\n   enfermedades o que represente un riesgo para la salud.\n\n * III. Condiciones de ornato:\n   * a) Se deberán mantener estos espacios en un estado estético que no\n     represente alteración ni deterioro del paisaje;\n   * b) Estos espacios no albergarán ninguna clase de desperdicio, escombro,\n     vehículo inservible, etc. así como tampoco se permitirá que se dejen, ni\n     aun de forma temporal, materiales de obra sin la correspondiente\n     autorización, y\n   * c) Se deberán mantener los jardines y áreas verdes en condiciones tales\n     que, de acuerdo a las características de diseño, mejoren la calidad de vida\n     de la población."
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108791,
+              "legal_basis_id": 512,
+              "article_name": "SECCIÓN SEXTA",
+              "description": "De la Forestación y Reforestación\nDe la forestación y reforestación",
+              "article_order": 75,
+              "plain_description": "De la Forestación y Reforestación De la forestación y reforestación"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108792,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 61",
+              "description": "<p style=\"text-align: justify;\">La forestación y reforestación son obligatorias en los espacios públicos municipales, incluyendo las áreas verdes de las banquetas.</p>\n<p style=\"text-align: justify;\">La Dirección, en coordinación con la ciudadanía, la Jefatura de Medio ambiente y el Patronato podrán forestar y reforestar aquellas zonas del Municipio en que la falta de vegetación provoque tolvaneras y erosión al suelo.</p>\n<p style=\"text-align: justify;\">La Dirección fomentará la plantación de árboles frutales con el objeto de impulsar unidades de producción económicamente costeables que produzcan el aumento y mejoramiento del consumo de frutos dentro del Municipio.</p>\n<p style=\"text-align: justify;\">De los viveros</p>",
+              "article_order": 76,
+              "plain_description": "La forestación y reforestación son obligatorias en los espacios públicos\nmunicipales, incluyendo las áreas verdes de las banquetas.\n\nLa Dirección, en coordinación con la ciudadanía, la Jefatura de Medio ambiente y\nel Patronato podrán forestar y reforestar aquellas zonas del Municipio en que la\nfalta de vegetación provoque tolvaneras y erosión al suelo.\n\nLa Dirección fomentará la plantación de árboles frutales con el objeto de\nimpulsar unidades de producción económicamente costeables que produzcan el\naumento y mejoramiento del consumo de frutos dentro del Municipio.\n\nDe los viveros"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108793,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 62",
+              "description": "<p style=\"text-align: justify;\">La Dirección en coordinación con la Jefatura de Medio ambiente, establecerán los viveros necesarios para realizar las funciones de repoblación forestal, quedando facultada para solicitar la cooperación de organismos públicos y privados.</p>\n<p style=\"text-align: justify;\">Cuando existan excedentes en la producción de los viveros, se faculta a la Dirección, en coordinación con el Patronato, a comercializar los mismos sobre la base de una relación de costos y con el único fin de recuperar gastos ocasionados por el mantenimiento de los viveros y su producción, así como también para distribuir tales excesos en la forma y términos que mejor convenga al municipio de Cortazar, siempre que no se afecten los programas de forestación y reforestación.</p>\n<p style=\"text-align: justify;\">De los programas</p>",
+              "article_order": 77,
+              "plain_description": "La Dirección en coordinación con la Jefatura de Medio ambiente, establecerán los\nviveros necesarios para realizar las funciones de repoblación forestal, quedando\nfacultada para solicitar la cooperación de organismos públicos y privados.\n\nCuando existan excedentes en la producción de los viveros, se faculta a la\nDirección, en coordinación con el Patronato, a comercializar los mismos sobre la\nbase de una relación de costos y con el único fin de recuperar gastos\nocasionados por el mantenimiento de los viveros y su producción, así como\ntambién para distribuir tales excesos en la forma y términos que mejor convenga\nal municipio de Cortazar, siempre que no se afecten los programas de forestación\ny reforestación.\n\nDe los programas"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108794,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 63",
+              "description": "<p style=\"text-align: justify;\">La Dirección, en coordinación con la Jefatura de Medio Ambiente y el Patronato del Vivero Municipal, elaborarán programas de forestación y reforestación en el municipio, involucrando a las demás autoridades municipales y promoviendo la participación de todos los sectores de la ciudadanía, en su respectiva colonia o comunidad, a fin de lograr un mejor aprovechamiento ecológico.</p>\n<p style=\"text-align: justify;\">Obligaciones a la conservación</p>",
+              "article_order": 78,
+              "plain_description": "La Dirección, en coordinación con la Jefatura de Medio Ambiente y el Patronato\ndel Vivero Municipal, elaborarán programas de forestación y reforestación en el\nmunicipio, involucrando a las demás autoridades municipales y promoviendo la\nparticipación de todos los sectores de la ciudadanía, en su respectiva colonia o\ncomunidad, a fin de lograr un mejor aprovechamiento ecológico.\n\nObligaciones a la conservación"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108795,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 64",
+              "description": "<p style=\"text-align: justify;\">Los poseedores por cualquier título de fincas ubicadas dentro del Municipio, tendrán la obligación de cuidar y conservar los árboles existentes en su banqueta o servidumbre.</p>\n<p style=\"text-align: justify;\">En las superficies de las aceras de los nuevos fraccionamientos, los constructores deberán forestar plantando árboles y darles el cuidado correspondiente hasta que sea entregado al Municipio, de acuerdo al presente Reglamento, al Reglamento de Protección Ambiental, al Código Territorial y demás normativas competentes.</p>",
+              "article_order": 79,
+              "plain_description": "Los poseedores por cualquier título de fincas ubicadas dentro del Municipio,\ntendrán la obligación de cuidar y conservar los árboles existentes en su\nbanqueta o servidumbre.\n\nEn las superficies de las aceras de los nuevos fraccionamientos, los\nconstructores deberán forestar plantando árboles y darles el cuidado\ncorrespondiente hasta que sea entregado al Municipio, de acuerdo al presente\nReglamento, al Reglamento de Protección Ambiental, al Código Territorial y demás\nnormativas competentes."
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108796,
+              "legal_basis_id": 512,
+              "article_name": "SECCIÓN SÉPTIMA",
+              "description": "DEL MANTENIMIENTO Y CONSERVACIÓN\nOBJETO DE LA CONSERVACIÓN Y MANTENIMIENTO",
+              "article_order": 80,
+              "plain_description": "DEL MANTENIMIENTO Y CONSERVACIÓN OBJETO DE LA CONSERVACIÓN Y MANTENIMIENTO"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108797,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 65",
+              "description": "<p style=\"text-align: justify;\">Realizar una gestión, eficaz y eficiente para la conservación y mantenimiento de los jardines y áreas verdes, exigiendo conseguir el valor estético, ornamental y la seguridad del espacio y de sus elementos, así como la realización de una serie de operaciones cuya base fundamental es el conocimiento de los elementos y el modo en que éstos se han fusionado para conformar dichos espacios.</p>\n<p style=\"text-align: justify;\">Asimismo, el mantenimiento y la conservación deberán de llevarse a cabo en función de su uso y necesidades.</p>\n<p style=\"text-align: justify;\">Tareas de conservación</p>",
+              "article_order": 81,
+              "plain_description": "Realizar una gestión, eficaz y eficiente para la conservación y mantenimiento de\nlos jardines y áreas verdes, exigiendo conseguir el valor estético, ornamental y\nla seguridad del espacio y de sus elementos, así como la realización de una\nserie de operaciones cuya base fundamental es el conocimiento de los elementos y\nel modo en que éstos se han fusionado para conformar dichos espacios.\n\nAsimismo, el mantenimiento y la conservación deberán de llevarse a cabo en\nfunción de su uso y necesidades.\n\nTareas de conservación"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108798,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 66",
+              "description": "<p style=\"text-align: justify;\">Las operaciones básicas de mantenimiento de jardines y áreas verdes, deberán de comprender al menos las siguientes tareas y operaciones básicas:</p>\n<ul style=\"text-align: justify;\">\n<li>Preparación del terreno;</li>\n<li>Plantación y reposición de elementos vegetales;</li>\n<li>Riego, conservación y reposición de la red y sus elementos;</li>\n<li>Conservación y siega de praderas;</li>\n<li>Conservación y laboreo del suelo;</li>\n<li>Nutrición y fertilización, preferentemente ecológicos;</li>\n<li>Recortes y podas de elementos vegetales;</li>\n<li>Poda, saneado, trasplante, y tala de arbolado;</li>\n<li>Tratamientos fitosanitarios, preferentemente ecológicos;</li>\n<li>Limpieza de elementos inertes, mobiliario, juegos y pavimentos;</li>\n<li>Conservación y renovación de pavimentos y suelo en áreas de juego infantil, y</li>\n<li>Reposición, saneado y mantenimiento de elementos de juego y mobiliario.</li>\n</ul>\n<p style=\"text-align: justify;\">De la ampliación del espacio vital</p>",
+              "article_order": 82,
+              "plain_description": "Las operaciones básicas de mantenimiento de jardines y áreas verdes, deberán de\ncomprender al menos las siguientes tareas y operaciones básicas:\n\n * Preparación del terreno;\n * Plantación y reposición de elementos vegetales;\n * Riego, conservación y reposición de la red y sus elementos;\n * Conservación y siega de praderas;\n * Conservación y laboreo del suelo;\n * Nutrición y fertilización, preferentemente ecológicos;\n * Recortes y podas de elementos vegetales;\n * Poda, saneado, trasplante, y tala de arbolado;\n * Tratamientos fitosanitarios, preferentemente ecológicos;\n * Limpieza de elementos inertes, mobiliario, juegos y pavimentos;\n * Conservación y renovación de pavimentos y suelo en áreas de juego infantil, y\n * Reposición, saneado y mantenimiento de elementos de juego y mobiliario.\n\nDe la ampliación del espacio vital"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108799,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 67",
+              "description": "<p style=\"text-align: justify;\">Cuando los árboles existentes en las banquetas, glorietas o plazuelas estén rodeados de pavimento, con el objeto de lograr su conservación y permanencia, la Dirección solicitará a la Dirección de Obras Públicas Municipales se proporcione la ampliación del espacio vital para el adecuado desarrollo del árbol a través de un pretil, arriate o rejilla, buscando siempre una calidad de vida óptima para el árbol.</p>",
+              "article_order": 83,
+              "plain_description": "Cuando los árboles existentes en las banquetas, glorietas o plazuelas estén\nrodeados de pavimento, con el objeto de lograr su conservación y permanencia, la\nDirección solicitará a la Dirección de Obras Públicas Municipales se proporcione\nla ampliación del espacio vital para el adecuado desarrollo del árbol a través\nde un pretil, arriate o rejilla, buscando siempre una calidad de vida óptima\npara el árbol."
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108802,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 69",
+              "description": "<p style=\"text-align: justify;\">La tala de arbolado público, deberá solicitarse a la Jefatura de Medio Ambiente, la que analizará y, en su caso, autorizará e indicará el procedimiento, mismo que será realizado y supervisado por personal de la Coordinación de Parques y Jardines.</p>\n<p style=\"text-align: justify;\">Determinantes para al derribo de árboles</p>",
+              "article_order": 86,
+              "plain_description": "La tala de arbolado público, deberá solicitarse a la Jefatura de Medio Ambiente,\nla que analizará y, en su caso, autorizará e indicará el procedimiento, mismo\nque será realizado y supervisado por personal de la Coordinación de Parques y\nJardines.\n\nDeterminantes para al derribo de árboles"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108803,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 70",
+              "description": "<p style=\"text-align: justify;\">El derribo de un árbol en áreas de propiedad municipal, sólo procederá mediante resolución emitida por la Jefatura de Medio Ambiente, que determinará:</p>\n<ul style=\"text-align: justify;\">\n<li>I. Cuando concluya su ciclo biológico;</li>\n<li>II. Cuando se considere peligroso para la integridad física de personas y bienes:</li>\n<li>III. Cuando sus raíces o ramas amenacen destruir las construcciones o deterioren las instalaciones o el ornato y no haya otra solución, y</li>\n<li>IV. Por otras circunstancias graves a juicio de la Jefatura de Medio Ambiente y el Reglamento de Protección Ambiental.</li>\n</ul>",
+              "article_order": 87,
+              "plain_description": "El derribo de un árbol en áreas de propiedad municipal, sólo procederá mediante\nresolución emitida por la Jefatura de Medio Ambiente, que determinará:\n\n * I. Cuando concluya su ciclo biológico;\n * II. Cuando se considere peligroso para la integridad física de personas y\n   bienes:\n * III. Cuando sus raíces o ramas amenacen destruir las construcciones o\n   deterioren las instalaciones o el ornato y no haya otra solución, y\n * IV. Por otras circunstancias graves a juicio de la Jefatura de Medio Ambiente\n   y el Reglamento de Protección Ambiental."
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108804,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 71",
+              "description": "<p style=\"text-align: justify;\">La autorización de las podas deberá de considerarse y en su caso otorgarse bajo alguna de las siguientes justificaciones:</p>\n<ul style=\"text-align: justify;\">\n<li><b>a) Poda de balanceo:</b> retiro de ramas o partes del árbol que desarrollaron fuera del contexto típico de su forma y que están en riesgo de desgajar, provocar la caída del árbol o irrumpe en la seguridad de particulares.</li>\n<li><b>b) Podas de despunte:</b> generalmente son preventivas y se aplican cuando la planta es joven para controlar su crecimiento.</li>\n<li><b>c) Poda de formación o jardinera:</b> los cortes de rama que se le hacen al árbol en su etapa de desarrollo para acelerar su crecimiento o para diseñar su estructura definitiva para configurar o mantener la altura deseada.</li>\n<li><b>d) Poda de rejuvenecimiento o drástica:</b> los cortes que se realizan a árboles desde la base en donde se insertan las ramas con el tallo principal, del cual surgen nuevos brotes, sin afectar la vida del árbol. Debe realizarse con profundo conocimiento de la época y la especie.</li>\n<li><b>e) Poda estética o de conservación:</b> son cortes mínimos de hasta 50 centímetros en las ramas para conservar una forma específica.</li>\n<li><b>f) Poda sanitaria:</b> la eliminación de ramas secas, enfermas, rasgadas o afectadas mecánicamente, que ponen en riesgo la sanidad del árbol por plagas y enfermedades.</li>\n</ul>\n<p style=\"text-align: justify;\">De la excepción del permiso</p>",
+              "article_order": 88,
+              "plain_description": "La autorización de las podas deberá de considerarse y en su caso otorgarse bajo\nalguna de las siguientes justificaciones:\n\n * a) Poda de balanceo: retiro de ramas o partes del árbol que desarrollaron\n   fuera del contexto típico de su forma y que están en riesgo de desgajar,\n   provocar la caída del árbol o irrumpe en la seguridad de particulares.\n * b) Podas de despunte: generalmente son preventivas y se aplican cuando la\n   planta es joven para controlar su crecimiento.\n * c) Poda de formación o jardinera: los cortes de rama que se le hacen al árbol\n   en su etapa de desarrollo para acelerar su crecimiento o para diseñar su\n   estructura definitiva para configurar o mantener la altura deseada.\n * d) Poda de rejuvenecimiento o drástica: los cortes que se realizan a árboles\n   desde la base en donde se insertan las ramas con el tallo principal, del cual\n   surgen nuevos brotes, sin afectar la vida del árbol. Debe realizarse con\n   profundo conocimiento de la época y la especie.\n * e) Poda estética o de conservación: son cortes mínimos de hasta 50\n   centímetros en las ramas para conservar una forma específica.\n * f) Poda sanitaria: la eliminación de ramas secas, enfermas, rasgadas o\n   afectadas mecánicamente, que ponen en riesgo la sanidad del árbol por plagas\n   y enfermedades.\n\nDe la excepción del permiso"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108806,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 73",
+              "description": "<p style=\"text-align: justify;\">Los residuos procedentes de las operaciones de mantenimiento y conservación de áreas verdes públicas del Municipio de Cortazar, no podrán en ningún caso, quemarse dentro de espacios urbanos, ni depositarse o almacenarse en lugares o recipientes que no se hallen expresamente habilitados para su acopio y gestión.</p>\n<p style=\"text-align: justify;\">Competencia de la Dirección para el derribo o poda</p>",
+              "article_order": 90,
+              "plain_description": "Los residuos procedentes de las operaciones de mantenimiento y conservación de\náreas verdes públicas del Municipio de Cortazar, no podrán en ningún caso,\nquemarse dentro de espacios urbanos, ni depositarse o almacenarse en lugares o\nrecipientes que no se hallen expresamente habilitados para su acopio y gestión.\n\nCompetencia de la Dirección para el derribo o poda"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108807,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 74",
+              "description": "<p style=\"text-align: justify;\">El derribo o poda de árboles cuyas ramas sean de un diámetro mayor a 7.5 centímetros, solamente podrá ser realizado por personal capacitado de la Dirección o por aquellos a quien la misma autorice como calificados, contando con el documento de acreditación expedido por el Patronato, para la efectuación del trabajo.</p>\n<p style=\"text-align: justify;\">Las personas autorizadas deberán sujetarse a las condiciones establecidas por la Jefatura de Medio Ambiente en el permiso expedido por escrito debiéndolo portar al momento de la ejecución; en caso de violación, se harán acreedores a las sanciones previstas en este Reglamento y el Reglamento de Protección Ambiental.</p>\n<p style=\"text-align: justify;\">De la solicitud</p>",
+              "article_order": 91,
+              "plain_description": "El derribo o poda de árboles cuyas ramas sean de un diámetro mayor a 7.5\ncentímetros, solamente podrá ser realizado por personal capacitado de la\nDirección o por aquellos a quien la misma autorice como calificados, contando\ncon el documento de acreditación expedido por el Patronato, para la efectuación\ndel trabajo.\n\nLas personas autorizadas deberán sujetarse a las condiciones establecidas por la\nJefatura de Medio Ambiente en el permiso expedido por escrito debiéndolo portar\nal momento de la ejecución; en caso de violación, se harán acreedores a las\nsanciones previstas en este Reglamento y el Reglamento de Protección Ambiental.\n\nDe la solicitud"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108808,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 75",
+              "description": "<p style=\"text-align: justify;\">Para efectos de lo previsto en el artículo anterior, los interesados deberán presentar una solicitud por escrito a la Jefatura de Medio Ambiente, la que practicará una inspección a fin de determinar técnicamente si procede el derribo o poda del árbol.</p>\n<p style=\"text-align: justify;\"><b>Procedencia de la tala o poda</b></p>",
+              "article_order": 92,
+              "plain_description": "Para efectos de lo previsto en el artículo anterior, los interesados deberán\npresentar una solicitud por escrito a la Jefatura de Medio Ambiente, la que\npracticará una inspección a fin de determinar técnicamente si procede el derribo\no poda del árbol.\n\nProcedencia de la tala o poda"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108809,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 76",
+              "description": "<p style=\"text-align: justify;\">Si procede el derribo o poda del árbol en estado riesgoso u otro, el servicio solamente se hará previo pago del costo del mismo, y bajo la autorización justificada de la acción, tomando en consideración los siguientes criterios:</p>\n<ul style=\"text-align: justify;\">\n<li>I. Especie y tamaño del árbol;</li>\n<li>II. Años de vida aproximada;</li>\n<li>III. Grado de dificultad para la poda o derribo, y</li>\n<li>IV. Las situaciones de emergencia que influyan en el servicio que se prestará.</li>\n</ul>\n<p style=\"text-align: justify;\">De la gratuidad del servicio</p>",
+              "article_order": 93,
+              "plain_description": "Si procede el derribo o poda del árbol en estado riesgoso u otro, el servicio\nsolamente se hará previo pago del costo del mismo, y bajo la autorización\njustificada de la acción, tomando en consideración los siguientes criterios:\n\n * I. Especie y tamaño del árbol;\n * II. Años de vida aproximada;\n * III. Grado de dificultad para la poda o derribo, y\n * IV. Las situaciones de emergencia que influyan en el servicio que se\n   prestará.\n\nDe la gratuidad del servicio"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108810,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 77",
+              "description": "<p style=\"text-align: justify;\">Cuando las circunstancias lo justifiquen, o se trate de una situación de emergencia, a juicio de la autoridad municipal, el servicio podrá ser gratuito.</p>\n<p style=\"text-align: justify;\">Facilidades del servicio</p>",
+              "article_order": 94,
+              "plain_description": "Cuando las circunstancias lo justifiquen, o se trate de una situación de\nemergencia, a juicio de la autoridad municipal, el servicio podrá ser gratuito.\n\nFacilidades del servicio"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108811,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 78",
+              "description": "<p style=\"text-align: justify;\">Si el derribo o poda se hace en un árbol plantado en propiedad particular, el propietario o poseedor del inmueble, deberá proporcionar las facilidades necesarias para la realización del servicio. Del permiso</p>",
+              "article_order": 95,
+              "plain_description": "Si el derribo o poda se hace en un árbol plantado en propiedad particular, el\npropietario o poseedor del inmueble, deberá proporcionar las facilidades\nnecesarias para la realización del servicio. Del permiso"
+            },
+            "articleType": "General",
+            "score": 1
+          },
+          {
+            "article": {
+              "id": 108812,
+              "legal_basis_id": 512,
+              "article_name": "ARTÍCULO 79",
+              "description": "<p style=\"text-align: justify;\">Las entidades de carácter público o privado, deberán solicitar a la Jefatura de Medio Ambiente, otorgue permiso cuando se haga necesario efectuar el derribo o poda de árboles, para la introducción o mantenimiento del servicio que presten.</p>\n<p style=\"text-align: justify;\">Del pago de derechos</p>",
+              "article_order": 96,
+              "plain_description": "Las entidades de carácter público o privado, deberán solicitar a la Jefatura de\nMedio Ambiente, otorgue permiso cuando se haga necesario efectuar el derribo o\npoda de árboles, para la introducción o mantenimiento del servicio que presten.\n\nDel pago de derechos"
+            },
+            "articleType": "General",
+            "score": 1
+          }
+        ]
+      }
+    ]
+  }
+}

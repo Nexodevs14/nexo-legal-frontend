@@ -149,7 +149,7 @@ function EditModal({ config }) {
           >
             {error}
           </div>
-        );;
+        );
       }
     } catch (error) {
       console.error(error);

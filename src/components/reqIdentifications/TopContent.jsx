@@ -35,10 +35,6 @@ import defaultAvatar from "../../assets/usuario.png";
  * @param {boolean} props.config.usersLoading - Indicates if users are currently loading.
  * @param {number} props.config.selectedUser - Currently selected user ID.
  * @param {Function} props.config.onFilterByUser - Callback triggered when filtering by user.
- * @param {Object} props.config.createdAtRange - Selected creation date range object.
- * @param {boolean} props.config.createdAtIsInvalid - Whether the selected date range is invalid.
- * @param {string} [props.config.createdAtError] - Optional error message for invalid date range.
- * @param {Function} props.config.onFilterByCreatedAtRange - Callback triggered when selecting a date range.
  * @param {Array} props.config.subjects - List of available subjects.
  * @param {string} props.config.selectedSubject - Currently selected subject.
  * @param {boolean} props.config.subjectLoading - Indicates if subjects are currently loading.
@@ -57,6 +53,10 @@ import defaultAvatar from "../../assets/usuario.png";
  * @param {Array<string>} props.config.selectedMunicipalities - List of selected municipalities.
  * @param {boolean} props.config.municipalitiesLoading - Indicates if municipalities are currently loading.
  * @param {Function} props.config.onFilterByMunicipalities - Callback triggered when filtering by municipalities.
+ * @param {Object} props.config.creationRange - Selected creation date range object.
+ * @param {boolean} props.config.creationRangeInvalid - Whether the selected date range is invalid.
+ * @param {string} [props.config.creationRangeError] - Optional error message for invalid date range.
+ * @param {Function} props.config.onFilterByCreationRange - Callback triggered when selecting a date range.
  * @param {Function} props.config.onClear - Callback to clear all filters.
  *
  * @returns {JSX.Element} Rendered TopContent component.
@@ -75,10 +75,6 @@ function TopContent({ config }) {
     usersLoading,
     selectedUser,
     onFilterByUser,
-    createdAtRange,
-    createdAtIsInvalid,
-    createdAtError,
-    onFilterByCreatedAtRange,
     subjects,
     selectedSubject,
     subjectLoading,
@@ -97,6 +93,10 @@ function TopContent({ config }) {
     selectedMunicipalities,
     municipalitiesLoading,
     onFilterByMunicipalities,
+    creationRange,
+    creationRangeInvalid,
+    creationRangeError,
+    onFilterByCreationRange,
     onClear,
   } = config;
 
@@ -186,11 +186,12 @@ function TopContent({ config }) {
           onSelectionChange={onFilterByUser}
           allowsEmptyCollection
           allowsCustomValue={false}
-          className="w-full"
+          className="w-full max-w-[280px]"
           classNames={{
-            inputWrapper: "pr-1.5 pl-2", 
-            input: "text-sm", 
-            clearButton: "mr-1", 
+            inputWrapper: "pr-1.5 pl-2 h-11",
+            input: "text-sm truncate",
+            clearButton: "mr-1",
+            base: "w-full max-w-[280px]",
           }}
           listboxProps={{
             emptyContent: "Usuario no encontrado",
@@ -211,7 +212,8 @@ function TopContent({ config }) {
 
             return (
               <div className="flex items-center gap-2">
-                {selected.profile_picture && selected.profile_picture.trim() !== "" ? (
+                {selected.profile_picture &&
+                selected.profile_picture.trim() !== "" ? (
                   <img
                     src={selected.profile_picture}
                     alt={selected.name || "Usuario"}
@@ -235,7 +237,6 @@ function TopContent({ config }) {
               </div>
             );
           })()}
-
         >
           {users.map((user) => (
             <AutocompleteItem key={user.id} value={user.id}>
@@ -265,16 +266,16 @@ function TopContent({ config }) {
         </Autocomplete>
         <I18nProvider locale="es">
           <DateRangePicker
-            value={createdAtRange}
+            value={creationRange}
             showMonthAndYearPickers
-            onChange={onFilterByCreatedAtRange}
+            onChange={onFilterByCreationRange}
             color="primary"
             radius="sm"
             variant="faded"
             aria-label="Buscar por fecha de creación"
             label="Fecha de creación"
-            isInvalid={createdAtIsInvalid}
-            errorMessage={createdAtIsInvalid ? createdAtError : " "}
+            isInvalid={creationRangeInvalid}
+            errorMessage={creationRangeInvalid ? creationRangeError : " "}
             classNames={{
               base: "h-12 relative",
               input: "text-xs",
@@ -339,8 +340,9 @@ function TopContent({ config }) {
               renderValue={(selected) =>
                 !selected || selected.length === 0
                   ? "Buscar por aspecto..."
-                  : `${selected.length} aspecto${selected.length > 1 ? "s" : ""
-                  } seleccionado${selected.length > 1 ? "s" : ""}`
+                  : `${selected.length} aspecto${
+                      selected.length > 1 ? "s" : ""
+                    } seleccionado${selected.length > 1 ? "s" : ""}`
               }
             >
               {(aspect) => (
@@ -434,8 +436,9 @@ function TopContent({ config }) {
               renderValue={(selected) =>
                 !selected || selected.length === 0
                   ? "Buscar por municipio..."
-                  : `${selected.length} municipio${selected.length > 1 ? "s" : ""
-                  } seleccionado${selected.length > 1 ? "s" : ""}`
+                  : `${selected.length} municipio${
+                      selected.length > 1 ? "s" : ""
+                    } seleccionado${selected.length > 1 ? "s" : ""}`
               }
             >
               {(municipio) => (
@@ -490,10 +493,6 @@ TopContent.propTypes = {
     selectedUser: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     usersLoading: PropTypes.bool.isRequired,
     onFilterByUser: PropTypes.func.isRequired,
-    createdAtRange: PropTypes.object.isRequired,
-    createdAtIsInvalid: PropTypes.bool.isRequired,
-    createdAtError: PropTypes.string,
-    onFilterByCreatedAtRange: PropTypes.func.isRequired,
     subjects: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -522,6 +521,13 @@ TopContent.propTypes = {
     selectedMunicipalities: PropTypes.array,
     municipalitiesLoading: PropTypes.bool.isRequired,
     onFilterByMunicipalities: PropTypes.func.isRequired,
+    creationRange : PropTypes.shape({
+      start: PropTypes.instanceOf(Date),
+      end: PropTypes.instanceOf(Date),
+    }),
+    creationRangeInvalid: PropTypes.bool.isRequired,
+    creationRangeError: PropTypes.string,
+    onFilterByCreationRange: PropTypes.func.isRequired,
     onClear: PropTypes.func.isRequired,
   }).isRequired,
 };
