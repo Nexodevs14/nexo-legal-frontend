@@ -69,6 +69,7 @@ function DeleteModal({ config }) {
                         progressStyle: { background: "#113c53" },
                     }
                 );
+                setPage(1);
                 setSelectedKeys(new Set());
                 closeDeleteModal();
             } else {
@@ -89,7 +90,6 @@ function DeleteModal({ config }) {
             console.error(err);
             toast.error("Ocurrió un error al eliminar los verbos legales.");
         } finally {
-            setPage(1);
             setIsDeletingBatch(false);
         }
     }, [

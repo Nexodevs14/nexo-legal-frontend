@@ -67,6 +67,7 @@ function DeleteModal({ config }) {
             progressStyle: { background: "#113c53" },
           }
         );
+        setPage(1);
         setSelectedKeys(new Set());
         closeDeleteModal();
       } else {
@@ -89,7 +90,6 @@ function DeleteModal({ config }) {
         "Algo salió mal al eliminar los requerimientos. Intente de nuevo"
       );
     } finally {
-      setPage(1);
       setIsDeletingBatch(false);
     }
   }, [
