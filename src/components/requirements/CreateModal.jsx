@@ -364,7 +364,7 @@ const CreateModal = ({ config }) => {
             onClose={closeModalCreate}
             isDismissable={false}
             placement="center"
-            size="4xl"
+            size="5xl"
             classNames={{
                 closeButton: "hover:bg-primary/20 text-primary active:bg-primary/10",
             }}
@@ -596,8 +596,7 @@ const CreateModal = ({ config }) => {
                                         value={formData.acceptanceCriteria}
                                         onChange={handleAcceptanceCriteriaChange}
                                         classNames={{
-                                            base: "max-w-4xl",
-                                            input: "resize-y min-h-[100px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                                            input: "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                                         }}
                                         label="Criterio de Aceptación"
                                         placeholder="Escribir el criterio..."
@@ -634,8 +633,7 @@ const CreateModal = ({ config }) => {
                                             value={formData.mandatoryDescription}
                                             onChange={handleMandatoryDescriptionChange}
                                             classNames={{
-                                                base: "max-w-lg",
-                                                input: "resize-y min-h-[80px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                                                input: "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                                             }}
                                             label="Descripción Obligatoria"
                                             placeholder="Escribir la descripción."
@@ -652,8 +650,7 @@ const CreateModal = ({ config }) => {
                                             value={formData.complementaryDescription}
                                             onChange={handleComplementaryDescriptionChange}
                                             classNames={{
-                                                base: "max-w",
-                                                input: "resize-y min-h-[80px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                                                input: "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                                             }}
                                             label="Descripción Complementaria"
                                             placeholder="Escribir la descripción."
@@ -671,8 +668,7 @@ const CreateModal = ({ config }) => {
                                             value={formData.mandatorySentences}
                                             onChange={handleMandatorySentencesChange}
                                             classNames={{
-                                                base: "max-w",
-                                                input: "resize-y min-h-[80px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                                                input: "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                                             }}
                                             label="Frases Obligatorias"
                                             placeholder="Escribir las frases separadas por espacio."
@@ -690,8 +686,7 @@ const CreateModal = ({ config }) => {
                                             value={formData.complementarySentences}
                                             onChange={handleComplementarySentencesChange}
                                             classNames={{
-                                                base: "max-w",
-                                                input: "resize-y min-h-[80px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                                                input: "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                                             }}
                                             label="Frases Complementarias"
                                             placeholder="Escribir las frases separadas por espacio."
@@ -709,8 +704,7 @@ const CreateModal = ({ config }) => {
                                             value={formData.mandatoryKeywords}
                                             onChange={handleMandatoryKeywordsChange}
                                             classNames={{
-                                                base: "max-w",
-                                                input: "resize-y min-h-[80px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                                                input: "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                                             }}
                                             label="Palabras Clave Obligatorias"
                                             placeholder="Escribir las palabras claves separadas por coma."
@@ -728,8 +722,7 @@ const CreateModal = ({ config }) => {
                                             value={formData.complementaryKeywords}
                                             onChange={handleComplementaryKeywordsChange}
                                             classNames={{
-                                                base: "max-w",
-                                                input: "resize-y min-h-[80px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                                                input: "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                                             }}
                                             label="Palabras Clave Complementarias"
                                             placeholder="Escribir las palabras claves separadas por coma."
