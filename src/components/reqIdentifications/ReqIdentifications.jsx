@@ -789,6 +789,7 @@ export default function ReqIdentification() {
             reqIdentifications: reqIdentifications,
             deleteReqIdentificationsBatch: removeReqIdentificationsBatch,
             setSelectedKeys: setSelectedKeys,
+            setPage: setPage,
             check: check,
           }}
         />

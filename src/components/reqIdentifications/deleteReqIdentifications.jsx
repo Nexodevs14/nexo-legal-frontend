@@ -29,6 +29,7 @@ import { toast } from "react-toastify";
  * @param {Array} props.config.reqIdentifications - Array of all reqIdentifications objects.
  * @param {Function} props.config.deleteReqIdentificationsBatch - Function to delete multiple reqIdentifications by their IDs.
  * @param {Function} props.config.setSelectedKeys - Function to reset selected reqIdentifications after deletion.
+ * @param {Function} props.config.setPage - Function to reset the page number after deletion.
  * @param {string} props.config.check - URL or path for the success icon displayed on toast notifications.
  *
  * @returns {JSX.Element} Rendered DeleteModal component with deletion confirmation and feedback.
@@ -44,6 +45,7 @@ function DeleteModal({ config }) {
     reqIdentifications,
     deleteReqIdentificationsBatch,
     setSelectedKeys,
+    setPage,
     check,
   } = config;
 
@@ -89,6 +91,7 @@ function DeleteModal({ config }) {
         "Algo salió mal al eliminar las identificaciones de requerimientos. Intente de nuevo"
       );
     } finally {
+      setPage(1); 
       setIsDeletingBatch(false);
     }
   }, [
@@ -98,6 +101,7 @@ function DeleteModal({ config }) {
     setIsDeletingBatch,
     setSelectedKeys,
     closeDeleteModal,
+    setPage,
     check,
   ]);
 
@@ -174,6 +178,7 @@ DeleteModal.propTypes = {
     reqIdentifications: PropTypes.array.isRequired,
     deleteReqIdentificationsBatch: PropTypes.func.isRequired,
     setSelectedKeys: PropTypes.func.isRequired,
+    setPage: PropTypes.func.isRequired,
     check: PropTypes.string.isRequired,
   }).isRequired,
 };
