@@ -178,6 +178,7 @@ const EditReqIdentification = ({ config }) => {
     <Modal
       isOpen={isOpen}
       onOpenChange={closeModalEdit}
+      size="lg"
       backdrop="opaque"
       placement="center"
       isDismissable={false}

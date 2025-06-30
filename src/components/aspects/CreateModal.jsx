@@ -137,6 +137,7 @@ function CreateModal({ config }) {
       isOpen={isOpen}
       onOpenChange={closeModalCreate}
       isDismissable={false}
+      size="lg"
       backdrop="opaque"
       placement="center"
       classNames={{

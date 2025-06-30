@@ -128,6 +128,7 @@ function CreateModal({ config }) {
       isDismissable={false}
       backdrop="opaque"
       placement="center"
+      size="5xl"
       classNames={{
         closeButton: "hover:bg-primary/20 text-primary active:bg-primary/10",
       }}

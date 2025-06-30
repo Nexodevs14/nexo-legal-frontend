@@ -364,7 +364,7 @@ const CreateModal = ({ config }) => {
             onClose={closeModalCreate}
             isDismissable={false}
             placement="center"
-            className="w-full sm:w-[90vw] md:w-[80vw] lg:w-[60vw] max-w-4xl"
+            size="4xl"
             classNames={{
                 closeButton: "hover:bg-primary/20 text-primary active:bg-primary/10",
             }}

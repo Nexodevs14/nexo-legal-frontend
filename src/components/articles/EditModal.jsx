@@ -143,6 +143,7 @@ function EditModal({ config }) {
       onOpenChange={closeModalEdit}
       isDismissable={false}
       backdrop="opaque"
+      size="5xl"
       placement="center"
       classNames={{
         closeButton: "hover:bg-primary/20 text-primary active:bg-primary/10",

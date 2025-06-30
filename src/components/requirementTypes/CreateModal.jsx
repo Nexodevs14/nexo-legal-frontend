@@ -130,6 +130,7 @@ function CreateModal({ config }) {
       isOpen={isOpen}
       onOpenChange={closeModalCreate}
       isDismissable={false}
+      size="4xl"
       backdrop="opaque"
       placement="center"
       classNames={{
@@ -172,8 +173,7 @@ function CreateModal({ config }) {
                     value={formData.description}
                     onChange={handleDescriptionChange}
                     classNames={{
-                      base: "max-w-lg",
-                      input: "resize-y min-h-[80px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                      input: "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                     }}
                     label="Descripción"
                     placeholder="Escribir la descripción."
@@ -191,8 +191,7 @@ function CreateModal({ config }) {
                     value={formData.classification}
                     onChange={handleClassificationChange}
                     classNames={{
-                      base: "max-w-lg",
-                      input: "resize-y min-h-[80px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                      input: "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                     }}
                     label="Clasificación"
                     placeholder="Escribir la clasificación."

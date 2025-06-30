@@ -369,6 +369,7 @@ const CreateModal = ({ config }) => {
     <Modal
       isOpen={isOpen}
       onOpenChange={onClose}
+      size="lg"
       backdrop="opaque"
       placement="center"
       hideCloseButton={showProgress}

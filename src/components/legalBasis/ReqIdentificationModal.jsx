@@ -183,6 +183,7 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
+      size="lg"
       backdrop="opaque"
       placement="center"
       isDismissable={false}

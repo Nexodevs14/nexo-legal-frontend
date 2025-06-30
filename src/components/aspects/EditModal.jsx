@@ -150,6 +150,7 @@ function EditModal({ config }) {
       isOpen={isOpen}
       onOpenChange={closeModalEdit}
       isDismissable={false}
+      size="lg"
       backdrop="opaque"
       placement="center"
       classNames={{
