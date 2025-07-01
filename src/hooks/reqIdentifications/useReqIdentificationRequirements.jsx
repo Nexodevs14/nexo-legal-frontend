@@ -15,7 +15,8 @@ import ReqIdentificationRequirementsErrors from "../../errors/reqIdentifications
  */
 export default function useReqIdentificationRequirements() {
   const { jwt } = useContext(Context);
-  const [reqIdentificationRequirements, setReqIdentificationRequirements] = useState([]);
+  const [reqIdentificationRequirements, setReqIdentificationRequirements] =
+    useState([]);
   const [state, setState] = useState({
     loading: false,
     error: null,
@@ -82,7 +83,8 @@ export default function useReqIdentificationRequirements() {
   const fetchRequirement = useCallback(
     async ({ reqIdentificationId, requirementId }) => {
       try {
-        const reqIdentificationRequirement = await getRequirementFromReqIdentification({
+        const reqIdentificationRequirement =
+          await getRequirementFromReqIdentification({
             reqIdentificationId,
             requirementId,
             token: jwt,
@@ -120,7 +122,8 @@ export default function useReqIdentificationRequirements() {
     async (reqIdentificationId) => {
       setState({ loading: true, error: null });
       try {
-        const reqIdentificationRequirements = await getAllRequirementsFromReqIdentification({
+        const reqIdentificationRequirements =
+          await getAllRequirementsFromReqIdentification({
             reqIdentificationId,
             token: jwt,
           });
@@ -253,7 +256,8 @@ export default function useReqIdentificationRequirements() {
       legalVerbs,
     }) => {
       try {
-        const reqIdentificationRequirements = await editRequirementFromReqIdentification({
+        const reqIdentificationRequirements =
+          await editRequirementFromReqIdentification({
             reqIdentificationId,
             requirementId,
             requirementName,
@@ -293,11 +297,12 @@ export default function useReqIdentificationRequirements() {
   const deleteRequirement = useCallback(
     async ({ reqIdentificationId, requirementId }) => {
       try {
-        const reqIdentificationRequirements = await deleteRequirementFromReqIdentification({
-          reqIdentificationId,
-          requirementId,
-          token: jwt,
-        });
+        const reqIdentificationRequirements =
+          await deleteRequirementFromReqIdentification({
+            reqIdentificationId,
+            requirementId,
+            token: jwt,
+          });
         setReqIdentificationRequirements(reqIdentificationRequirements);
         return { success: true };
       } catch (error) {
