@@ -11,7 +11,7 @@ import server from "../../../config/server.js";
  * @param {string} params.requirementName - The name of the requirement to search for.
  * @param {string} params.token - Authorization token for the request.
  *
- * @returns {Promise<Object[]>} Array of matched requirements.
+ * @returns {Promise<Object[]>} Array of associated requirements.
  * @throws {Error} If the request fails or no requirements are found.
  */
 export default async function getRequirementsFromReqIdentificationByName({
