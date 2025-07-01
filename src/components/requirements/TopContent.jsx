@@ -152,6 +152,7 @@ function TopContent({ config }) {
           <AutocompleteItem key="Registro">Registro</AutocompleteItem>
           <AutocompleteItem key="Específica">Específica</AutocompleteItem>
           <AutocompleteItem key="Documento">Documento</AutocompleteItem>
+          <AutocompleteItem key="Física">Física</AutocompleteItem>
         </Autocomplete>
         <Autocomplete
           color="primary"
