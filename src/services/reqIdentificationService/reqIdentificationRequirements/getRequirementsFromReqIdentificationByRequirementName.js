@@ -1,4 +1,4 @@
-import server from '../../../config/server.js'
+import server from "../../../config/server.js";
 
 /**
  * Retrieves requirements by their original name within a requirement identification.
@@ -11,13 +11,13 @@ import server from '../../../config/server.js'
  * @param {string} params.requirementName - The original name of the requirement to search for.
  * @param {string} params.token - Authorization token for the request.
  *
- * @returns {Promise<Object[]>} Array of matching requirements.
+ * @returns {Promise<Object[]>} Array of associated requirements.
  * @throws {Error} If the request fails or data cannot be retrieved.
  */
 export default async function getRequirementsFromReqIdentificationByRequirementName({
   reqIdentificationId,
   requirementName,
-  token
+  token,
 }) {
   try {
     const response = await server.get(
@@ -25,19 +25,19 @@ export default async function getRequirementsFromReqIdentificationByRequirementN
       {
         params: { requirementName },
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }
-    )
+    );
 
     if (response.status !== 200) {
-      throw new Error('Failed to retrieve requirements by original name')
+      throw new Error("Failed to retrieve requirements by original name");
     }
 
-    const { reqIdentificationRequirements } = response.data
-    return reqIdentificationRequirements
+    const { reqIdentificationRequirements } = response.data;
+    return reqIdentificationRequirements;
   } catch (error) {
-    console.error('Error fetching requirements by original name:', error)
-    throw error
+    console.error("Error fetching requirements by original name:", error);
+    throw error;
   }
 }

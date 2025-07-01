@@ -1,4 +1,4 @@
-import server from '../../../config/server.js'
+import server from "../../../config/server.js";
 
 /**
  * Retrieves requirements from a requirement identification by name.
@@ -17,7 +17,7 @@ import server from '../../../config/server.js'
 export default async function getRequirementsFromReqIdentificationByName({
   reqIdentificationId,
   requirementName,
-  token
+  token,
 }) {
   try {
     const response = await server.get(
@@ -25,19 +25,19 @@ export default async function getRequirementsFromReqIdentificationByName({
       {
         params: { requirementName },
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }
-    )
+    );
 
     if (response.status !== 200) {
-      throw new Error('Failed to retrieve requirements by name')
+      throw new Error("Failed to retrieve requirements by name");
     }
 
-    const { reqIdentificationRequirements } = response.data
-    return reqIdentificationRequirements
+    const { reqIdentificationRequirements } = response.data;
+    return reqIdentificationRequirements;
   } catch (error) {
-    console.error('Error searching requirements by name:', error)
-    throw error
+    console.error("Error searching requirements by name:", error);
+    throw error;
   }
 }

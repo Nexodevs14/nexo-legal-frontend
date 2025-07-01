@@ -1,4 +1,4 @@
-import server from '../../../config/server.js'
+import server from "../../../config/server.js";
 
 /**
  * Deletes a requirement from a specific requirement identification.
@@ -11,32 +11,36 @@ import server from '../../../config/server.js'
  * @param {number} params.requirementId - The ID of the requirement to delete.
  * @param {string} params.token - Authorization token for the request.
  *
- * @returns {Promise<Object>} The unlinked requirement from the requirement identification.
+ * @returns {Promise<Object[]>} The updated list of requirements associated with the requirement identification.
  * @throws {Error} If the request fails or deletion is not permitted.
  */
 export default async function deleteRequirementFromReqIdentification({
   reqIdentificationId,
   requirementId,
-  token
+  token,
 }) {
   try {
     const response = await server.delete(
       `/req-identification/${reqIdentificationId}/requirements/${requirementId}`,
       {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }
-    )
+    );
 
     if (response.status !== 200) {
-      throw new Error('Failed to delete requirement from requirement identification')
+      throw new Error(
+        "Failed to delete requirement from requirement identification"
+      );
     }
-
-    const { reqIdentificationRequirement } = response.data
-    return reqIdentificationRequirement
+    const { reqIdentificationRequirements } = response.data;
+    return reqIdentificationRequirements;
   } catch (error) {
-    console.error('Error deleting requirement from requirement identification:', error)
-    throw error
+    console.error(
+      "Error deleting requirement from requirement identification:",
+      error
+    );
+    throw error;
   }
 }

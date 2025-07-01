@@ -1,4 +1,4 @@
-import server from '../../config/server.js'
+import server from "../../../config/server.js";
 
 /**
  * Retrieves all requirements associated with a specific requirement identification.
@@ -15,26 +15,31 @@ import server from '../../config/server.js'
  */
 export default async function getAllRequirementsFromReqIdentification({
   reqIdentificationId,
-  token
+  token,
 }) {
   try {
     const response = await server.get(
       `/req-identification/${reqIdentificationId}/requirements`,
       {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }
-    )
+    );
 
     if (response.status !== 200) {
-      throw new Error('Failed to retrieve requirements from requirement identification')
+      throw new Error(
+        "Failed to retrieve requirements from requirement identification"
+      );
     }
 
-    const { reqIdentificationRequirements } = response.data
-    return reqIdentificationRequirements
+    const { reqIdentificationRequirements } = response.data;
+    return reqIdentificationRequirements;
   } catch (error) {
-    console.error('Error fetching all requirements from requirement identification:', error)
-    throw error
+    console.error(
+      "Error fetching all requirements from requirement identification:",
+      error
+    );
+    throw error;
   }
 }

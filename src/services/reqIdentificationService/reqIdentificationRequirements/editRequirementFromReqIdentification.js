@@ -1,4 +1,4 @@
-import server from '../../../config/server.js'
+import server from "../../../config/server.js";
 
 /**
  * Edits a requirement associated with a requirement identification.
@@ -14,7 +14,7 @@ import server from '../../../config/server.js'
  * @param {{ id: number, translation: string }[]} [params.legalVerbs] - Optional array of legal verbs with translations.
  * @param {string} params.token - Authorization token for the request.
  *
- * @returns {Promise<Object>} The updated requirement from the requirement identification.
+ * @returns {Promise<Object[]>} The updated list of requirements associated with the requirement identification.
  * @throws {Error} If the request fails or the update is invalid.
  */
 export default async function editRequirementFromReqIdentification({
@@ -23,7 +23,7 @@ export default async function editRequirementFromReqIdentification({
   requirementName,
   requirementTypeIds,
   legalVerbs,
-  token
+  token,
 }) {
   try {
     const response = await server.patch(
@@ -31,23 +31,28 @@ export default async function editRequirementFromReqIdentification({
       {
         requirementName,
         requirementTypeIds,
-        legalVerbs
+        legalVerbs,
       },
       {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }
-    )
+    );
 
     if (response.status !== 200) {
-      throw new Error('Failed to edit requirement from requirement identification')
+      throw new Error(
+        "Failed to edit requirement from requirement identification"
+      );
     }
 
-    const { reqIdentificationRequirement } = response.data
-    return reqIdentificationRequirement
+    const { reqIdentificationRequirements } = response.data;
+    return reqIdentificationRequirements;
   } catch (error) {
-    console.error('Error editing requirement from requirement identification:', error)
-    throw error
+    console.error(
+      "Error editing requirement from requirement identification:",
+      error
+    );
+    throw error;
   }
 }

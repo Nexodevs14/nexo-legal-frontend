@@ -1,4 +1,4 @@
-import server from '../../../config/server.js'
+import server from "../../../config/server.js";
 
 /**
  * Associates a requirement to a specific requirement identification.
@@ -14,7 +14,7 @@ import server from '../../../config/server.js'
  * @param {{ id: number, translation: string }[]} [params.legalVerbs] - Optional array of legal verbs with translations.
  * @param {string} params.token - Authorization token for the request.
  *
- * @returns {Promise<Object>} The associated requirement as stored in the identification.
+ * @returns {Promise<Object[]>} The updated list of requirements associated with the requirement identification.
  * @throws {Error} If the request fails or the response status is not 201.
  */
 export default async function addRequirementToReqIdentification({
@@ -23,7 +23,7 @@ export default async function addRequirementToReqIdentification({
   requirementName,
   requirementTypeIds,
   legalVerbs,
-  token
+  token,
 }) {
   try {
     const response = await server.post(
@@ -31,21 +31,23 @@ export default async function addRequirementToReqIdentification({
       {
         requirementName,
         requirementTypeIds,
-        legalVerbs
+        legalVerbs,
       },
       {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }
-    )
+    );
     if (response.status !== 201) {
-      throw new Error('Failed to associate requirement to requirement identification')
+      throw new Error(
+        "Failed to associate requirement to requirement identification"
+      );
     }
-    const { reqIdentificationRequirement } = response.data
-    return reqIdentificationRequirement
+    const { reqIdentificationRequirements } = response.data;
+    return reqIdentificationRequirements;
   } catch (error) {
-    console.error('Error associating requirement:', error)
-    throw error
+    console.error("Error associating requirement:", error);
+    throw error;
   }
 }
