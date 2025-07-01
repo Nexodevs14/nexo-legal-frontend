@@ -16,10 +16,7 @@ import ReqIdentificationRequirementsErrors from "../../errors/reqIdentifications
 export default function useReqIdentificationRequirements() {
   const { jwt } = useContext(Context);
   const [reqIdentificationRequirements, setReqIdentificationRequirements] = useState([]);
-  const [
-    stateReqIdentificationRequirements,
-    setStateReqIdentificationRequirements,
-  ] = useState({
+  const [state, setState] = useState({
     loading: false,
     error: null,
   });
@@ -80,7 +77,7 @@ export default function useReqIdentificationRequirements() {
    * @param {Object} params - Parameters to identify the requirement.
    * @param {number} params.reqIdentificationId - The ID of the requirement identification.
    * @param {number} params.requirementId - The ID of the requirement to fetch.
-   * @returns {Promise<{success: boolean, data?: Object, error?: Object}>}
+   * @returns {Promise<{ success: true, data: Object } | { success: false, error: Object }>}
    */
   const fetchRequirement = useCallback(
     async ({ reqIdentificationId, requirementId }) => {
@@ -117,19 +114,18 @@ export default function useReqIdentificationRequirements() {
    * @async
    * @function fetchAllRequirementsFromReqIdentification
    * @param {number} reqIdentificationId - The ID of the requirement identification.
-   * @returns {Promise<{ success: true } | { success: false, error: string }>}
+   * @returns {Promise<void>}
    */
   const fetchRequirements = useCallback(
     async (reqIdentificationId) => {
-      setStateReqIdentificationRequirements({ loading: true, error: null });
+      setState({ loading: true, error: null });
       try {
         const reqIdentificationRequirements = await getAllRequirementsFromReqIdentification({
             reqIdentificationId,
             token: jwt,
           });
         setReqIdentificationRequirements(reqIdentificationRequirements);
-        setStateReqIdentificationRequirements({ loading: false, error: null });
-        return { success: true };
+        setState({ loading: false, error: null });
       } catch (error) {
         const errorCode = error.response?.status;
         const serverMessage = error.response?.data?.message;
@@ -142,11 +138,10 @@ export default function useReqIdentificationRequirements() {
           items: [reqIdentificationId],
         });
 
-        setStateReqIdentificationRequirements({
+        setState({
           loading: false,
-          error: handledError.message,
+          error: handledError,
         });
-        return { success: false, error: handledError.message };
       }
     },
     [jwt]
@@ -160,11 +155,11 @@ export default function useReqIdentificationRequirements() {
    * @param {Object} params - Parameters for the request.
    * @param {number} params.reqIdentificationId - The ID of the requirement identification.
    * @param {string} params.requirementName - The name of the requirement to filter by.
-   * @returns {Promise<{ success: true } | { success: false, error: string }>}
+   * @returns {Promise<void>}
    */
   const fetchRequirementsByName = useCallback(
     async ({ reqIdentificationId, requirementName }) => {
-      setStateReqIdentificationRequirements({ loading: true, error: null });
+      setState({ loading: true, error: null });
       try {
         const reqIdentificationRequirements =
           await getRequirementsFromReqIdentificationByName({
@@ -173,8 +168,7 @@ export default function useReqIdentificationRequirements() {
             token: jwt,
           });
         setReqIdentificationRequirements(reqIdentificationRequirements);
-        setStateReqIdentificationRequirements({ loading: false, error: null });
-        return { success: true };
+        setState({ loading: false, error: null });
       } catch (error) {
         const errorCode = error.response?.status;
         const serverMessage = error.response?.data?.message;
@@ -185,11 +179,10 @@ export default function useReqIdentificationRequirements() {
           httpError: clientMessage,
           items: [reqIdentificationId],
         });
-        setStateReqIdentificationRequirements({
+        setState({
           loading: false,
-          error: handledError.message,
+          error: handledError,
         });
-        return { success: false, error: handledError.message };
       }
     },
     [jwt]
@@ -203,11 +196,11 @@ export default function useReqIdentificationRequirements() {
    * @param {Object} params - Parameters for the request.
    * @param {number} params.reqIdentificationId - The ID of the requirement identification.
    * @param {string} params.requirementName - The original name of the requirement to filter by.
-   * @returns {Promise<{ success: true } | { success: false, error: string }>}
+   * @returns {Promise<void>}
    */
   const fetchRequirementsByRequirementName = useCallback(
     async ({ reqIdentificationId, requirementName }) => {
-      setStateReqIdentificationRequirements({ loading: true, error: null });
+      setState({ loading: true, error: null });
       try {
         const reqIdentificationRequirements =
           await getRequirementsFromReqIdentificationByRequirementName({
@@ -217,8 +210,7 @@ export default function useReqIdentificationRequirements() {
           });
 
         setReqIdentificationRequirements(reqIdentificationRequirements);
-        setStateReqIdentificationRequirements({ loading: false, error: null });
-        return { success: true };
+        setState({ loading: false, error: null });
       } catch (error) {
         const errorCode = error.response?.status;
         const serverMessage = error.response?.data?.message;
@@ -230,11 +222,10 @@ export default function useReqIdentificationRequirements() {
           httpError: clientMessage,
           items: [reqIdentificationId],
         });
-        setStateReqIdentificationRequirements({
+        setState({
           loading: false,
-          error: handledError.message,
+          error: handledError,
         });
-        return { success: false, error: handledError.message };
       }
     },
     [jwt]
@@ -328,8 +319,8 @@ export default function useReqIdentificationRequirements() {
 
   return {
     reqIdentificationRequirements,
-    loading: stateReqIdentificationRequirements.loading,
-    error: stateReqIdentificationRequirements.error,
+    loading: state.loading,
+    error: state.error,
     setReqIdentificationRequirements,
     addRequirement,
     fetchRequirement,
