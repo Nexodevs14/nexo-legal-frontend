@@ -534,6 +534,7 @@ const EditModal = ({ config }) => {
                       <AutocompleteItem key="Documento">
                         Documento
                       </AutocompleteItem>
+                      <AutocompleteItem key="Física">Física</AutocompleteItem>
                     </Autocomplete>
                     {evidenceError && (
                       <p className="mt-2 text-sm text-red">{evidenceError}</p>
