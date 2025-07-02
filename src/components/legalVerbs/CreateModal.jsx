@@ -194,7 +194,7 @@ function CreateModal({ config }) {
                       input: "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                     }}
                     label="Traducción"
-                    placeholder="Escribir la Traduccíon."
+                    placeholder="Escribir la traducción."
                     variant="bordered"
                   />
                   {translationError && (
