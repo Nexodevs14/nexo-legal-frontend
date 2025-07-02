@@ -33,13 +33,37 @@ const columns = [
   { name: "Periodicidad", uid: "periodicity", align: "start" },
   { name: "Materia", uid: "subject", align: "start" },
   { name: "Aspectos", uid: "aspects", align: "start" },
-  { name: "Criterio de Aceptación", uid: "acceptance_criteria", align: "start" },
-  { name: "Descripción Obligatoria", uid: "mandatory_description", align: "start" },
-  { name: "Descripción Complementaria", uid: "complementary_description", align: "start" },
+  {
+    name: "Criterio de Aceptación",
+    uid: "acceptance_criteria",
+    align: "start",
+  },
+  {
+    name: "Descripción Obligatoria",
+    uid: "mandatory_description",
+    align: "start",
+  },
+  {
+    name: "Descripción Complementaria",
+    uid: "complementary_description",
+    align: "start",
+  },
   { name: "Frases Obligatorias", uid: "mandatory_sentences", align: "start" },
-  { name: "Frases Complementarias", uid: "complementary_sentences", align: "start" },
-  { name: "Palabras Clave Obligatorias", uid: "mandatory_keywords", align: "start" },
-  { name: "Palabras Clave Complementarias", uid: "complementary_keywords", align: "start" },
+  {
+    name: "Frases Complementarias",
+    uid: "complementary_sentences",
+    align: "start",
+  },
+  {
+    name: "Palabras Clave Obligatorias",
+    uid: "mandatory_keywords",
+    align: "start",
+  },
+  {
+    name: "Palabras Clave Complementarias",
+    uid: "complementary_keywords",
+    align: "start",
+  },
   { name: "Acciones", uid: "actions", align: "center" },
 ];
 
@@ -99,13 +123,22 @@ export default function Requirements() {
   const [selectedPeriodicity, setSelectedPeriodicity] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [selectedAspects, setSelectedAspects] = useState([]);
-  const [filterByAcceptanceCriteria, setfilterByAcceptanceCriteria] = useState("");
-  const [filterByMandatoryDescription, setFilterByMandatoryDescription] = useState("");
-  const [filterByComplementaryDescription, setFilterByComplementaryDescription] = useState("");
-  const [filterByMandatorySentences, setFilterByMandatorySentences] = useState("");
-  const [filterByComplementarySentences, setFilterByComplementarySentences] = useState("");
-  const [filterByMandatoryKeywords, setFilterByMandatoryKeywords] = useState("");
-  const [filterByComplementaryKeywords, setFilterByComplementaryKeywords] = useState("");
+  const [filterByAcceptanceCriteria, setfilterByAcceptanceCriteria] =
+    useState("");
+  const [filterByMandatoryDescription, setFilterByMandatoryDescription] =
+    useState("");
+  const [
+    filterByComplementaryDescription,
+    setFilterByComplementaryDescription,
+  ] = useState("");
+  const [filterByMandatorySentences, setFilterByMandatorySentences] =
+    useState("");
+  const [filterByComplementarySentences, setFilterByComplementarySentences] =
+    useState("");
+  const [filterByMandatoryKeywords, setFilterByMandatoryKeywords] =
+    useState("");
+  const [filterByComplementaryKeywords, setFilterByComplementaryKeywords] =
+    useState("");
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const debounceTimeout = useRef(null);
@@ -117,17 +150,29 @@ export default function Requirements() {
   const [conditionInputError, setConditionInputError] = useState("");
   const [evidenceInputError, setEvidenceInputError] = useState("");
   const [periodicityInputError, setPeriodicityInputError] = useState("");
-  const [specifyEvidenceInputError, setSpecifyEvidenceInputError] = useState("");
+  const [specifyEvidenceInputError, setSpecifyEvidenceInputError] =
+    useState("");
   const [subjectInputError, setSubjectInputError] = useState("");
   const [aspectInputError, setAspectInputError] = useState(null);
   const [isAspectsActive, setIsAspectsActive] = useState(false);
-  const [acceptanceCriteriaInputError, setAcceptanceCriteriaInputError] = useState("");
-  const [mandatoryDescriptionInputError, setMandatoryDescriptionInputError] = useState("");
-  const [complementaryDescriptionInputError, setComplementaryDescriptionInputError] = useState("");
-  const [mandatorySentencesInputError, setMandatorySentencesInputError] = useState("");
-  const [complementarySentencesInputError, setComplementarySentencesInputError] = useState("");
-  const [mandatoryKeywordsInputError, setMandatoryKeywordsInputError] = useState("");
-  const [complementaryKeywordsInputError, setComplementaryKeywordsInputError] = useState("");
+  const [acceptanceCriteriaInputError, setAcceptanceCriteriaInputError] =
+    useState("");
+  const [mandatoryDescriptionInputError, setMandatoryDescriptionInputError] =
+    useState("");
+  const [
+    complementaryDescriptionInputError,
+    setComplementaryDescriptionInputError,
+  ] = useState("");
+  const [mandatorySentencesInputError, setMandatorySentencesInputError] =
+    useState("");
+  const [
+    complementarySentencesInputError,
+    setComplementarySentencesInputError,
+  ] = useState("");
+  const [mandatoryKeywordsInputError, setMandatoryKeywordsInputError] =
+    useState("");
+  const [complementaryKeywordsInputError, setComplementaryKeywordsInputError] =
+    useState("");
   const [selectedKeys, setSelectedKeys] = useState(new Set());
   const [isDeletingBatch, setIsDeletingBatch] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -148,7 +193,6 @@ export default function Requirements() {
     complementarySentences: "",
     mandatoryKeywords: "",
     complementaryKeywords: "",
-
   });
 
   useEffect(() => {
@@ -188,7 +232,6 @@ export default function Requirements() {
     }
   }, [selectedSubject, clearAspects]);
 
-
   const handleFilter = useCallback(
     (field, value) => {
       if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
@@ -219,7 +262,6 @@ export default function Requirements() {
             const { subjectId, aspectsIds } = value;
             await fetchRequirementsBySubjectAndAspects(subjectId, aspectsIds);
             break;
-
           }
           case "mandatoryDescription":
             await fetchRequirementsByMandatoryDescription(value);
@@ -263,7 +305,6 @@ export default function Requirements() {
     ]
   );
 
-
   const handleFilterByName = useCallback(
     (value) => {
       if (value.trim() === "") {
@@ -284,11 +325,7 @@ export default function Requirements() {
       resetSubjectAndAspects();
       handleFilter("name", value);
     },
-    [
-      handleFilter,
-      handleClear,
-      resetSubjectAndAspects,
-    ]
+    [handleFilter, handleClear, resetSubjectAndAspects]
   );
 
   const handleFilterByCondition = useCallback(
@@ -462,7 +499,6 @@ export default function Requirements() {
     [handleFilter, handleClear, resetSubjectAndAspects]
   );
 
-
   const handleFilterByMandatorySentences = useCallback(
     (value) => {
       if (value.trim() === "") {
@@ -591,7 +627,7 @@ export default function Requirements() {
     setMandatoryDescriptionInputError("");
     setComplementaryDescriptionInputError("");
     setMandatorySentencesInputError("");
-    setAcceptanceCriteriaInputError("")
+    setAcceptanceCriteriaInputError("");
     setComplementarySentencesInputError("");
     setMandatoryKeywordsInputError("");
     setComplementaryKeywordsInputError("");
@@ -614,14 +650,14 @@ export default function Requirements() {
     setAspectInputError(null);
     setIsAspectsActive(false);
     clearAspects();
-    setAcceptanceCriteriaInputError("")
+    setAcceptanceCriteriaInputError("");
     setMandatoryDescriptionInputError("");
     setComplementaryDescriptionInputError("");
     setMandatorySentencesInputError("");
     setComplementarySentencesInputError("");
     setMandatoryKeywordsInputError("");
     setComplementaryKeywordsInputError("");
-  }
+  };
 
   const handleNumberChange = useCallback(
     (e) => {
@@ -636,7 +672,6 @@ export default function Requirements() {
     },
     [numberInputError, setFormData, setNumberInputError]
   );
-
 
   const handleNameChange = useCallback(
     (e) => {
@@ -660,7 +695,7 @@ export default function Requirements() {
           condition: "",
         }));
         if (conditionInputError) {
-          setConditionInputError(null)
+          setConditionInputError(null);
         }
         return;
       }
@@ -673,33 +708,37 @@ export default function Requirements() {
       }
     },
     [conditionInputError, setFormData, setConditionInputError]
-  )
-
+  );
 
   const handleEvidenceChange = useCallback(
     (value) => {
+      const newEvidence = value || "";
       setFormData((prev) => ({
         ...prev,
-        evidence: value,
-        specifyEvidence: value === "Específica" ? prev.specifyEvidence : "",
+        evidence: newEvidence,
+        specifyEvidence: newEvidence === "Específica" ? "" : "",
       }));
-      if (evidenceInputError && value.trim() !== "") {
+
+      if (evidenceInputError && newEvidence !== "") {
         setEvidenceInputError(null);
       }
     },
     [evidenceInputError, setFormData, setEvidenceInputError]
   );
 
-  const handlSpecifyEvidenceChange = useCallback((e) => {
-    const value = e.target.value;
-    setFormData((prev) => ({
-      ...prev,
-      specifyEvidence: value,
-    }));
-    if (specifyEvidenceInputError && value.trim() !== "") {
-      setSpecifyEvidenceInputError(null);
-    }
-  }, [specifyEvidenceInputError, setFormData, setSpecifyEvidenceInputError]);
+  const handlSpecifyEvidenceChange = useCallback(
+    (e) => {
+      const value = e.target.value;
+      setFormData((prev) => ({
+        ...prev,
+        specifyEvidence: value,
+      }));
+      if (specifyEvidenceInputError && value.trim() !== "") {
+        setSpecifyEvidenceInputError(null);
+      }
+    },
+    [specifyEvidenceInputError, setFormData, setSpecifyEvidenceInputError]
+  );
 
   const handlePeriodicityChange = useCallback(
     (value) => {
@@ -765,7 +804,6 @@ export default function Requirements() {
     [aspectInputError, setFormData, setAspectInputError]
   );
 
-
   const handleAcceptanceCriteriaChange = useCallback(
     (e) => {
       const { value } = e.target;
@@ -778,7 +816,7 @@ export default function Requirements() {
       }
     },
     [acceptanceCriteriaInputError, setFormData, setAcceptanceCriteriaInputError]
-  )
+  );
   const handleMandatoryDescriptionChange = useCallback(
     (e) => {
       const { value } = e.target;
@@ -790,8 +828,12 @@ export default function Requirements() {
         setMandatoryDescriptionInputError(null);
       }
     },
-    [mandatoryDescriptionInputError, setFormData, setMandatoryDescriptionInputError]
-  )
+    [
+      mandatoryDescriptionInputError,
+      setFormData,
+      setMandatoryDescriptionInputError,
+    ]
+  );
 
   const handleComplementaryDescriptionChange = useCallback(
     (e) => {
@@ -804,8 +846,12 @@ export default function Requirements() {
         setComplementaryDescriptionInputError(null);
       }
     },
-    [complementaryDescriptionInputError, setFormData, setComplementaryDescriptionInputError]
-  )
+    [
+      complementaryDescriptionInputError,
+      setFormData,
+      setComplementaryDescriptionInputError,
+    ]
+  );
 
   const handleMandatorySentencesChange = useCallback(
     (e) => {
@@ -819,7 +865,7 @@ export default function Requirements() {
       }
     },
     [mandatorySentencesInputError, setFormData, setMandatorySentencesInputError]
-  )
+  );
 
   const handleComplementarySentencesChange = useCallback(
     (e) => {
@@ -832,9 +878,12 @@ export default function Requirements() {
         setComplementarySentencesInputError(null);
       }
     },
-    [complementarySentencesInputError, setFormData, setComplementarySentencesInputError]
-  )
-
+    [
+      complementarySentencesInputError,
+      setFormData,
+      setComplementarySentencesInputError,
+    ]
+  );
 
   const handleMandatoryKeywordsChange = useCallback(
     (e) => {
@@ -848,7 +897,7 @@ export default function Requirements() {
       }
     },
     [mandatoryKeywordsInputError, setFormData, setMandatoryKeywordsInputError]
-  )
+  );
 
   const handleComplementaryKeywordsChange = useCallback(
     (e) => {
@@ -861,9 +910,12 @@ export default function Requirements() {
         setComplementaryKeywordsInputError(null);
       }
     },
-    [complementaryKeywordsInputError, setFormData, setComplementaryKeywordsInputError]
-  )
-
+    [
+      complementaryKeywordsInputError,
+      setFormData,
+      setComplementaryKeywordsInputError,
+    ]
+  );
 
   const totalPages = useMemo(
     () => Math.ceil(requirements.length / rowsPerPage),
@@ -878,11 +930,10 @@ export default function Requirements() {
   const openModalDescription = (requirement, field, title) => {
     setSelectedRequirement({
       title: title,
-      description: requirement[field]
+      description: requirement[field],
     });
     setShowDescriptionModal(true);
   };
-
 
   const closeModalDescription = () => {
     setShowDescriptionModal(false);
@@ -923,7 +974,7 @@ export default function Requirements() {
                 style={{
                   maxHeight: 200,
                   overflowY: "auto",
-                  whiteSpace: "pre-wrap"
+                  whiteSpace: "pre-wrap",
                 }}
               >
                 {error}
@@ -1004,11 +1055,13 @@ export default function Requirements() {
           onFilterByMandatoryDescription: handleFilterByMandatoryDescription,
           filterByMandatoryDescription: filterByMandatoryDescription,
           filterByComplementaryDescription: filterByComplementaryDescription,
-          onFilterByComplementaryDescription: handleFilterByComplementaryDescription,
+          onFilterByComplementaryDescription:
+            handleFilterByComplementaryDescription,
           filterByMandatorySentences: filterByMandatorySentences,
           onFilterByMandatorySentences: handleFilterByMandatorySentences,
           filterByComplementarySentences: filterByComplementarySentences,
-          onFilterByComplementarySentences: handleFilterByComplementarySentences,
+          onFilterByComplementarySentences:
+            handleFilterByComplementarySentences,
           filterByMandatoryKeywords: filterByMandatoryKeywords,
           onFilterByMandatoryKeywords: handleFilterByMandatoryKeywords,
           filterByComplementaryKeywords: filterByComplementaryKeywords,
@@ -1081,7 +1134,6 @@ export default function Requirements() {
           )}
         </div>
 
-
         <BottomContent
           config={{
             page: page,
@@ -1144,22 +1196,28 @@ export default function Requirements() {
               handleAcceptanceCriteriaChange: handleAcceptanceCriteriaChange,
               setAcceptanceCriteriaError: setAcceptanceCriteriaInputError,
               mandatoryDescriptionError: mandatoryDescriptionInputError,
-              handleMandatoryDescriptionChange: handleMandatoryDescriptionChange,
+              handleMandatoryDescriptionChange:
+                handleMandatoryDescriptionChange,
               setMandatoryDescriptionError: setMandatoryDescriptionInputError,
               complementaryDescriptionError: complementaryDescriptionInputError,
-              handleComplementaryDescriptionChange: handleComplementaryDescriptionChange,
-              setComplementaryDescriptionError: setComplementaryDescriptionInputError,
+              handleComplementaryDescriptionChange:
+                handleComplementaryDescriptionChange,
+              setComplementaryDescriptionError:
+                setComplementaryDescriptionInputError,
               mandatorySentencesError: mandatorySentencesInputError,
               handleMandatorySentencesChange: handleMandatorySentencesChange,
               setMandatorySentencesError: setMandatorySentencesInputError,
               complementarySentencesError: complementarySentencesInputError,
-              handleComplementarySentencesChange: handleComplementarySentencesChange,
-              setComplementarySentencesError: setComplementarySentencesInputError,
+              handleComplementarySentencesChange:
+                handleComplementarySentencesChange,
+              setComplementarySentencesError:
+                setComplementarySentencesInputError,
               mandatoryKeywordsError: mandatoryKeywordsInputError,
               handleMandatoryKeywordsChange: handleMandatoryKeywordsChange,
               setMandatoryKeywordsError: setMandatoryKeywordsInputError,
               complementaryKeywordsError: complementaryKeywordsInputError,
-              handleComplementaryKeywordsChange: handleComplementaryKeywordsChange,
+              handleComplementaryKeywordsChange:
+                handleComplementaryKeywordsChange,
               setComplementaryKeywordsError: setComplementaryKeywordsInputError,
             }}
           />
@@ -1210,26 +1268,31 @@ export default function Requirements() {
               handleAcceptanceCriteriaChange: handleAcceptanceCriteriaChange,
               setAcceptanceCriteriaError: setAcceptanceCriteriaInputError,
               mandatoryDescriptionError: mandatoryDescriptionInputError,
-              handleMandatoryDescriptionChange: handleMandatoryDescriptionChange,
+              handleMandatoryDescriptionChange:
+                handleMandatoryDescriptionChange,
               setMandatoryDescriptionError: setMandatoryDescriptionInputError,
               complementaryDescriptionError: complementaryDescriptionInputError,
-              handleComplementaryDescriptionChange: handleComplementaryDescriptionChange,
-              setComplementaryDescriptionError: setComplementaryDescriptionInputError,
+              handleComplementaryDescriptionChange:
+                handleComplementaryDescriptionChange,
+              setComplementaryDescriptionError:
+                setComplementaryDescriptionInputError,
               mandatorySentencesError: mandatorySentencesInputError,
               handleMandatorySentencesChange: handleMandatorySentencesChange,
               setMandatorySentencesError: setMandatorySentencesInputError,
               complementarySentencesError: complementarySentencesInputError,
-              handleComplementarySentencesChange: handleComplementarySentencesChange,
-              setComplementarySentencesError: setComplementarySentencesInputError,
+              handleComplementarySentencesChange:
+                handleComplementarySentencesChange,
+              setComplementarySentencesError:
+                setComplementarySentencesInputError,
               mandatoryKeywordsError: mandatoryKeywordsInputError,
               handleMandatoryKeywordsChange: handleMandatoryKeywordsChange,
               setMandatoryKeywordsError: setMandatoryKeywordsInputError,
               complementaryKeywordsError: complementaryKeywordsInputError,
-              handleComplementaryKeywordsChange: handleComplementaryKeywordsChange,
+              handleComplementaryKeywordsChange:
+                handleComplementaryKeywordsChange,
               setComplementaryKeywordsError: setComplementaryKeywordsInputError,
-
-
-            }} />
+            }}
+          />
         )}
       </>
       {showDeleteModal && (

@@ -541,8 +541,7 @@ const EditModal = ({ config }) => {
                     )}
                   </div>
 
-                  {(formData.evidence === "Específica" ||
-                    formData.specifyEvidence) && (
+                  {formData.evidence === "Específica" && (
                     <div className="relative z-0 w-full group">
                       <input
                         type="text"
