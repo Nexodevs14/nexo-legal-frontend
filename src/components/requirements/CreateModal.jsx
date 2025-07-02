@@ -44,7 +44,7 @@ import go_back from "../../assets/volver.png";
  * @param {Function} props.config.handleEvidenceChange - Handler for changes in the "Evidence" autocomplete field.
  * @param {string|null} props.config.specifyEvidenceError - Error message for the "Specify Evidence" input field (shown when evidence is set to "Específica").
  * @param {Function} props.config.setSpecifyEvidenceError - Setter function for the "Specify Evidence" input error.
- * @param {Function} props.config.handlSpecifyEvidenceChange - Handler for changes in the "Specify Evidence" input field.
+ * @param {Function} props.config.handleSpecifyEvidenceChange - Handler for changes in the "Specify Evidence" input field.
  * @param {string|null} props.config.periodicityError - Error message for the "Periodicity" autocomplete field.
  * @param {Function} props.config.handlePeriodicityChange - Handler for changes in the "Periodicity" autocomplete field.
  * @param {Function} props.config.setConditionError - Setter for the "Condition" field error.
@@ -102,7 +102,7 @@ const CreateModal = ({ config }) => {
     handleConditionChange,
     evidenceError,
     handleEvidenceChange,
-    handlSpecifyEvidenceChange,
+    handleSpecifyEvidenceChange,
     specifyEvidenceError,
     setSpecifyEvidenceError,
     periodicityError,
@@ -497,7 +497,7 @@ const CreateModal = ({ config }) => {
                         name="specifyEvidence"
                         id="floating_specify_evidence"
                         value={formData.specifyEvidence}
-                        onChange={handlSpecifyEvidenceChange}
+                        onChange={handleSpecifyEvidenceChange}
                         className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
                         placeholder=""
                       />
@@ -807,7 +807,7 @@ CreateModal.propTypes = {
     handleConditionChange: PropTypes.func.isRequired,
     evidenceError: PropTypes.string,
     handleEvidenceChange: PropTypes.func.isRequired,
-    handlSpecifyEvidenceChange: PropTypes.func.isRequired,
+    handleSpecifyEvidenceChange: PropTypes.func.isRequired,
     periodicityError: PropTypes.string,
     handlePeriodicityChange: PropTypes.func.isRequired,
     setConditionError: PropTypes.func.isRequired,

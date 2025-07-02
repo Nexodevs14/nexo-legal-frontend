@@ -48,7 +48,7 @@ import go_back from "../../assets/volver.png";
  * @param {Function} props.config.handleEvidenceChange - Change handler for the "Evidence" dropdown.
  * @param {string|null} props.config.specifyEvidenceError - Error message for the "Specify Evidence" input field (shown when evidence is set to "Específica").
  * @param {Function} props.config.setSpecifyEvidenceError - Setter function for the "Specify Evidence" input error.
- * @param {Function} props.config.handlSpecifyEvidenceChange - Handler for changes in the "Specify Evidence" input field.
+ * @param {Function} props.config.handleSpecifyEvidenceChange - Handler for changes in the "Specify Evidence" input field.
  * @param {string|null} props.config.periodicityError - Error message for the "Periodicity" dropdown.
  * @param {Function} props.config.setPeriodicityError - Setter for "Periodicity" field error.
  * @param {Function} props.config.handlePeriodicityChange - Change handler for the "Periodicity" dropdown.
@@ -111,7 +111,7 @@ const EditModal = ({ config }) => {
     setEvidenceError,
     handleEvidenceChange,
     specifyEvidenceError,
-    handlSpecifyEvidenceChange,
+    handleSpecifyEvidenceChange,
     setSpecifyEvidenceError,
     periodicityError,
     setPeriodicityError,
@@ -164,7 +164,10 @@ const EditModal = ({ config }) => {
         name: selectedRequirement.requirement_name,
         condition: selectedRequirement.condition,
         evidence: selectedRequirement.evidence,
-        specifyEvidence: selectedRequirement.specify_evidence || "",
+        specifyEvidence:
+          selectedRequirement?.evidence === "Específica"
+            ? selectedRequirement?.specifyEvidence || ""
+            : null,
         periodicity: selectedRequirement.periodicity,
         acceptanceCriteria: selectedRequirement.acceptance_criteria,
         subject: selectedRequirement.subject?.subject_id.toString(),
@@ -548,7 +551,7 @@ const EditModal = ({ config }) => {
                         name="specifyEvidence"
                         id="floating_specify_evidence"
                         value={formData.specifyEvidence}
-                        onChange={handlSpecifyEvidenceChange}
+                        onChange={handleSpecifyEvidenceChange}
                         className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
                         placeholder=""
                       />
@@ -868,7 +871,7 @@ EditModal.propTypes = {
 
     specifyEvidenceError: PropTypes.string,
     setSpecifyEvidenceError: PropTypes.func.isRequired,
-    handlSpecifyEvidenceChange: PropTypes.func.isRequired,
+    handleSpecifyEvidenceChange: PropTypes.func.isRequired,
 
     periodicityError: PropTypes.string,
     setPeriodicityError: PropTypes.func.isRequired,

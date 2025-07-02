@@ -710,13 +710,13 @@ export default function Requirements() {
     [conditionInputError, setFormData, setConditionInputError]
   );
 
-  const handleEvidenceChange = useCallback(
+    const handleEvidenceChange = useCallback(
     (value) => {
       const newEvidence = value || "";
       setFormData((prev) => ({
         ...prev,
         evidence: newEvidence,
-        specifyEvidence: newEvidence === "Específica" ? "" : "",
+        specifyEvidence: newEvidence === "Específica" ? "" : null,
       }));
 
       if (evidenceInputError && newEvidence !== "") {
@@ -726,7 +726,7 @@ export default function Requirements() {
     [evidenceInputError, setFormData, setEvidenceInputError]
   );
 
-  const handlSpecifyEvidenceChange = useCallback(
+  const handleSpecifyEvidenceChange = useCallback(
     (e) => {
       const value = e.target.value;
       setFormData((prev) => ({
@@ -1178,7 +1178,7 @@ export default function Requirements() {
               handlePeriodicityChange: handlePeriodicityChange,
               specifyEvidenceError: specifyEvidenceInputError,
               setSpecifyEvidenceError: setSpecifyEvidenceInputError,
-              handlSpecifyEvidenceChange: handlSpecifyEvidenceChange,
+              handleSpecifyEvidenceChange: handleSpecifyEvidenceChange,
               specifyEvidence: formData.specifyEvidence,
               fetchRequirements: fetchRequirements,
               subjects: subjects,
@@ -1248,7 +1248,7 @@ export default function Requirements() {
               handlePeriodicityChange: handlePeriodicityChange,
               specifyEvidenceError: specifyEvidenceInputError,
               setSpecifyEvidenceError: setSpecifyEvidenceInputError,
-              handlSpecifyEvidenceChange: handlSpecifyEvidenceChange,
+              handleSpecifyEvidenceChange: handleSpecifyEvidenceChange,
               specifyEvidence: formData.specifyEvidence,
               subjects: subjects,
               subjectInputError: subjectInputError,
