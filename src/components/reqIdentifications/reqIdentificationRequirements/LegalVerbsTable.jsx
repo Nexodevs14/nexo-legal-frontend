@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
  * @returns {JSX.Element|null} A styled table displaying legal verbs or null if empty.
  */
 export default function LegalVerbsTable({ legalVerbs = [] }) {
-  if (!legalVerbs.length) return <p className="text-sm italic text-gray-500">No hay verbos legales disponibles.</p>
+  if (!legalVerbs.length) return <p className="text-base text-gray-500">No hay verbos legales disponibles.</p>
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full text-sm border rounded-md">

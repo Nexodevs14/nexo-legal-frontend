@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 
 export default function RequirementTypesTable({ requirementTypes = [] }) {
-  if (!requirementTypes.length) return <p className="text-sm italic text-gray-500">No hay tipos de requerimiento disponibles.</p>
+  if (!requirementTypes.length) return <p className="text-base text-gray-500">No hay tipos de requerimiento disponibles.</p>
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full text-sm border rounded-md">

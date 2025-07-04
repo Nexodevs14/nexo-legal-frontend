@@ -219,7 +219,7 @@ export default function ReqIdentificationRequirements() {
                       <tr>
                         <td
                           colSpan={columns.length}
-                          className="text-center py-6 text-sm italic text-gray-500"
+                          className="text-center py-24 text-base text-gray-500"
                         >
                           No hay requerimientos disponibles.
                         </td>
