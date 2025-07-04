@@ -1,4 +1,4 @@
-import server from "../../../config/server.js";
+import server from '../../../config/server.js'
 
 /**
  * Retrieves a specific requirement associated with a requirement identification.
@@ -8,38 +8,35 @@ import server from "../../../config/server.js";
  * @function getRequirementFromReqIdentification
  * @param {Object} params - Parameters for the request.
  * @param {number} params.reqIdentificationId - The ID of the requirement identification.
- * @param {number} params.requirementId - The ID of the requirement to retrieve.
+ * @param {number} params.requirementId - The ID of the specific requirement to retrieve.
  * @param {string} params.token - Authorization token for the request.
  *
- * @returns {Promise<Object>} The retrieved requirement object.
- * @throws {Error} If the request fails or the requirement cannot be retrieved.
+ * @returns {Promise<Object>} The requirement associated with the requirement identification.
+ * @throws {Error} If the request fails or data cannot be retrieved.
  */
 export default async function getRequirementFromReqIdentification({
   reqIdentificationId,
   requirementId,
-  token,
+  token
 }) {
   try {
     const response = await server.get(
       `/req-identification/${reqIdentificationId}/requirements/${requirementId}`,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
-        },
+          Authorization: `Bearer ${token}`
+        }
       }
-    );
+    )
 
     if (response.status !== 200) {
-      throw new Error("Failed to retrieve the specific requirement");
+      throw new Error('Failed to retrieve the specific requirement from the requirement identification')
     }
 
-    const { reqIdentificationRequirement } = response.data;
-    return reqIdentificationRequirement;
+    const { reqIdentificationRequirement } = response.data
+    return reqIdentificationRequirement
   } catch (error) {
-    console.error(
-      "Error fetching the specific requirement from requirement identification:",
-      error
-    );
-    throw error;
+    console.error('Error retrieving specific requirement from requirement identification:', error)
+    throw error
   }
 }

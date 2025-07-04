@@ -99,7 +99,7 @@ class ReqIdentificationRequirementsErrors {
    */
     static ErrorMessagesMap = {
     'Network Error': ReqIdentificationRequirementsErrors.NETWORK_ERROR,
-    'Requirement Identification not found': ReqIdentificationRequirementsErrors.REQ_IDENTIFICATION_NOT_FOUND,
+    'Requirement identification not found': ReqIdentificationRequirementsErrors.REQ_IDENTIFICATION_NOT_FOUND,
     'Requirement not found': ReqIdentificationRequirementsErrors.NOT_FOUND,
     'Requirement types not found for IDs': ReqIdentificationRequirementsErrors.REQUIREMENT_TYPES_NOT_FOUND,
     'Legal verbs not found for IDs': ReqIdentificationRequirementsErrors.LEGAL_VERBS_NOT_FOUND,

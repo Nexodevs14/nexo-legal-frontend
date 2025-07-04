@@ -603,7 +603,6 @@ export default function useReqIdentifications() {
     error: state.error,
     addReqIdentification,
     fetchReqIdentifications,
-    setReqIdentifications,
     fetchReqIdentificationById,
     fetchReqIdentificationsByName,
     fetchReqIdentificationsByDescription,

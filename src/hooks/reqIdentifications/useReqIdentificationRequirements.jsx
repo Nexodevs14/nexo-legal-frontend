@@ -18,7 +18,7 @@ export default function useReqIdentificationRequirements() {
   const [reqIdentificationRequirements, setReqIdentificationRequirements] =
     useState([]);
   const [state, setState] = useState({
-    loading: false,
+    loading: true,
     error: null,
   });
 
@@ -75,13 +75,12 @@ export default function useReqIdentificationRequirements() {
    * Fetches a specific requirement by its ID from a requirement identification.
    * @async
    * @function fetchRequirement
-   * @param {Object} params - Parameters to identify the requirement.
-   * @param {number} params.reqIdentificationId - The ID of the requirement identification.
-   * @param {number} params.requirementId - The ID of the requirement to fetch.
+   * @param {number} reqIdentificationId - The ID of the requirement identification.
+   * @param {number} requirementId - The ID of the requirement to fetch.
    * @returns {Promise<{ success: true, data: Object } | { success: false, error: Object }>}
    */
   const fetchRequirement = useCallback(
-    async ({ reqIdentificationId, requirementId }) => {
+    async (reqIdentificationId, requirementId) => {
       try {
         const reqIdentificationRequirement =
           await getRequirementFromReqIdentification({
@@ -155,13 +154,12 @@ export default function useReqIdentificationRequirements() {
    *
    * @async
    * @function fetchRequirementsByName
-   * @param {Object} params - Parameters for the request.
-   * @param {number} params.reqIdentificationId - The ID of the requirement identification.
-   * @param {string} params.requirementName - The name of the requirement to filter by.
+   * @param {number} reqIdentificationId - The ID of the requirement identification.
+   * @param {string} requirementName - The name of the requirement to filter by.
    * @returns {Promise<void>}
    */
   const fetchRequirementsByName = useCallback(
-    async ({ reqIdentificationId, requirementName }) => {
+    async (reqIdentificationId, requirementName) => {
       setState({ loading: true, error: null });
       try {
         const reqIdentificationRequirements =
@@ -196,13 +194,12 @@ export default function useReqIdentificationRequirements() {
    *
    * @async
    * @function fetchRequirementsByRequirementName
-   * @param {Object} params - Parameters for the request.
-   * @param {number} params.reqIdentificationId - The ID of the requirement identification.
-   * @param {string} params.requirementName - The original name of the requirement to filter by.
+   * @param {number} reqIdentificationId - The ID of the requirement identification.
+   * @param {string} requirementName - The original name of the requirement to filter by.
    * @returns {Promise<void>}
    */
   const fetchRequirementsByRequirementName = useCallback(
-    async ({ reqIdentificationId, requirementName }) => {
+    async (reqIdentificationId, requirementName) => {
       setState({ loading: true, error: null });
       try {
         const reqIdentificationRequirements =
@@ -326,7 +323,6 @@ export default function useReqIdentificationRequirements() {
     reqIdentificationRequirements,
     loading: state.loading,
     error: state.error,
-    setReqIdentificationRequirements,
     addRequirement,
     fetchRequirement,
     fetchRequirements,

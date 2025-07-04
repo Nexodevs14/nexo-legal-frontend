@@ -10,7 +10,7 @@ import {
   Button,
   Tooltip,
 } from "@heroui/react";
-import useReqIdentification from "../../hooks/reqIdentifications/useReqIdentifications.jsx";
+import useReqIdentifications from "../../hooks/reqIdentifications/useReqIdentifications.jsx";
 import useSubjects from "../../hooks/subject/useSubjects";
 import useAspects from "../../hooks/aspect/useAspects";
 import useCopomex from "../../hooks/copomex/useCopomex";
@@ -24,6 +24,7 @@ import Error from "../utils/Error.jsx";
 import { toast } from "react-toastify";
 import check from "../../assets/check.png";
 import trash_icon from "../../assets/papelera-mas.png";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   { name: "Nombre", uid: "name", align: "start" },
@@ -69,7 +70,7 @@ export default function ReqIdentification() {
     editReqIdentification,
     removeReqIdentification,
     removeReqIdentificationsBatch,
-  } = useReqIdentification();
+  } = useReqIdentifications();
   const {
     subjects,
     loading: subjectLoading,
@@ -93,7 +94,7 @@ export default function ReqIdentification() {
     errorMunicipalities,
     clearMunicipalities,
   } = useCopomex();
-
+  const navigate = useNavigate();
   const [filterByName, setFilterByName] = useState("");
   const [filterByDescription, setFilterByDescription] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
@@ -531,6 +532,9 @@ export default function ReqIdentification() {
     [userInputError, setFormData, setUserInputError]
   );
 
+  const viewRequirementDetails = (reqIdentificationId) => {
+    navigate(`/req-identifications/${reqIdentificationId}/requirements`);
+  };
   const totalPages = useMemo(
     () => Math.ceil(reqIdentifications.length / rowsPerPage),
     [reqIdentifications, rowsPerPage]
@@ -716,6 +720,7 @@ export default function ReqIdentification() {
                       <ReqIdentificationCell
                         reqIdentification={reqIdentification}
                         columnKey={columnKey}
+                        viewRequirementDetails={viewRequirementDetails}
                         openEditModal={openEditModal}
                         handleDelete={handleDelete}
                       />
