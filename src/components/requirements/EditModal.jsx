@@ -23,7 +23,7 @@ import go_back from "../../assets/volver.png";
  *
  * This component allows users to edit a requirement.
  * It includes dynamic validations based on jurisdiction, management of
- * aspects, states, and municipalities, and supports file uploads.
+ * aspects, and supports file uploads.
  *
  * @component
  * @param {Object} props - Component properties.
@@ -87,7 +87,6 @@ import go_back from "../../assets/volver.png";
  * @param {Function} props.config.setIsMunicipalityActive - Setter to enable/disable municipality input.
  * @param {Function} props.config.setIsAspectsActive - Setter to enable/disable aspect input.
  * @param {Function} props.config.clearAspects - Clears the aspect list.
- * @param {Function} props.config.fetchMunicipalities - Fetches municipalities based on the state.
  * @param {Function} props.config.fetchAspects - Fetches aspects based on the subject.
  */
 const EditModal = ({ config }) => {
@@ -852,87 +851,58 @@ EditModal.propTypes = {
     setFormData: PropTypes.func.isRequired,
     formData: PropTypes.object.isRequired,
     editRequirement: PropTypes.func.isRequired,
-
     numberError: PropTypes.string,
     setNumberError: PropTypes.func.isRequired,
     handleNumberChange: PropTypes.func.isRequired,
-
     nameError: PropTypes.string,
     setNameError: PropTypes.func.isRequired,
     handleNameChange: PropTypes.func.isRequired,
-
     conditionError: PropTypes.string,
     setConditionError: PropTypes.func.isRequired,
     handleConditionChange: PropTypes.func.isRequired,
-
     evidenceError: PropTypes.string,
     setEvidenceError: PropTypes.func.isRequired,
     handleEvidenceChange: PropTypes.func.isRequired,
-
     specifyEvidenceError: PropTypes.string,
     setSpecifyEvidenceError: PropTypes.func.isRequired,
     handleSpecifyEvidenceChange: PropTypes.func.isRequired,
-
     periodicityError: PropTypes.string,
     setPeriodicityError: PropTypes.func.isRequired,
     handlePeriodicityChange: PropTypes.func.isRequired,
-
     subjectInputError: PropTypes.string,
     setSubjectError: PropTypes.func.isRequired,
     handleSubjectChange: PropTypes.func.isRequired,
-
     aspectError: PropTypes.string,
     setAspectInputError: PropTypes.func.isRequired,
     handleAspectsChange: PropTypes.func.isRequired,
-
     acceptanceCriteriaError: PropTypes.string,
     setAcceptanceCriteriaError: PropTypes.func.isRequired,
     handleAcceptanceCriteriaChange: PropTypes.func.isRequired,
-
     mandatoryDescriptionError: PropTypes.string,
     setMandatoryDescriptionError: PropTypes.func.isRequired,
     handleMandatoryDescriptionChange: PropTypes.func.isRequired,
-
     complementaryDescriptionError: PropTypes.string,
     setComplementaryDescriptionError: PropTypes.func.isRequired,
     handleComplementaryDescriptionChange: PropTypes.func.isRequired,
-
     mandatorySentencesError: PropTypes.string,
     setMandatorySentencesError: PropTypes.func.isRequired,
     handleMandatorySentencesChange: PropTypes.func.isRequired,
-
     complementarySentencesError: PropTypes.string,
     setComplementarySentencesError: PropTypes.func.isRequired,
     handleComplementarySentencesChange: PropTypes.func.isRequired,
-
     mandatoryKeywordsError: PropTypes.string,
     setMandatoryKeywordsError: PropTypes.func.isRequired,
     handleMandatoryKeywordsChange: PropTypes.func.isRequired,
-
     complementaryKeywordsError: PropTypes.string,
     setComplementaryKeywordsError: PropTypes.func.isRequired,
     handleComplementaryKeywordsChange: PropTypes.func.isRequired,
-
-    states: PropTypes.array.isRequired,
-    isStateActive: PropTypes.bool.isRequired,
-    clearMunicipalities: PropTypes.func.isRequired,
-
-    municipalities: PropTypes.array.isRequired,
-    isMunicipalityActive: PropTypes.bool.isRequired,
-    loadingMunicipalities: PropTypes.bool.isRequired,
-    errorMunicipalities: PropTypes.object,
-
     subjects: PropTypes.array.isRequired,
     isAspectsActive: PropTypes.bool.isRequired,
     aspectsLoading: PropTypes.bool.isRequired,
     aspects: PropTypes.array.isRequired,
     errorAspects: PropTypes.object,
-
-    setIsStateActive: PropTypes.func.isRequired,
-    setIsMunicipalityActive: PropTypes.func.isRequired,
     setIsAspectsActive: PropTypes.func.isRequired,
     clearAspects: PropTypes.func.isRequired,
-    fetchMunicipalities: PropTypes.func.isRequired,
     fetchAspects: PropTypes.func.isRequired,
   }).isRequired,
 };

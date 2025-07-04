@@ -107,7 +107,7 @@ function TopContent({ config }) {
           isClearable
           value={filterByName}
           className="w-full"
-          placeholder="Buscar por Requerimiento..."
+          placeholder="Buscar por requerimiento..."
           startContent={
             <img
               src={search_icon}
@@ -381,8 +381,6 @@ TopContent.propTypes = {
     onRowsPerPageChange: PropTypes.func.isRequired,
     totalRequirements: PropTypes.number.isRequired,
     openModalCreate: PropTypes.func.isRequired,
-    filterByNumber: PropTypes.string.isRequired,
-    onFilterByNumber: PropTypes.func.isRequired,
     filterByName: PropTypes.string.isRequired,
     onFilterByName: PropTypes.func.isRequired,
     selectedCondition: PropTypes.string,

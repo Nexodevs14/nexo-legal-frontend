@@ -259,7 +259,8 @@ const EditReqIdentification = ({ config }) => {
                   if (!selected) return null;
                   return (
                     <div className="flex items-center gap-2">
-                      {selected.profile_picture && selected.profile_picture.trim() !== "" ? (
+                      {selected.profile_picture &&
+                      selected.profile_picture.trim() !== "" ? (
                         <img
                           src={selected.profile_picture}
                           alt={selected.name || "Usuario"}
@@ -287,7 +288,8 @@ const EditReqIdentification = ({ config }) => {
                 {users.map((user) => (
                   <AutocompleteItem key={user.id} value={user.id}>
                     <div className="flex items-center gap-3">
-                      {user.profile_picture && user.profile_picture.trim() !== "" ? (
+                      {user.profile_picture &&
+                      user.profile_picture.trim() !== "" ? (
                         <img
                           src={user.profile_picture}
                           alt={user.name || "Usuario"}
@@ -397,10 +399,13 @@ EditReqIdentification.propTypes = {
       jurisdiction: PropTypes.string,
       state: PropTypes.string,
       municipality: PropTypes.string,
-      subject: PropTypes.shape({
-        id: PropTypes.string,
-        name: PropTypes.string,
-      }),
+      subject: PropTypes.oneOfType([
+        PropTypes.shape({
+          id: PropTypes.string,
+          name: PropTypes.string,
+        }),
+        PropTypes.string,
+      ]),
       aspects: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.string,

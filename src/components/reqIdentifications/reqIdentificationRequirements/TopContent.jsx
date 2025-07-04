@@ -31,9 +31,10 @@ function TopContent({ config }) {
         onFilterByRequirement,
         onFilterByName,
         onClear,
-        totalReqIdentificationRequirementsTypes,
-        openModalCreate,
+        totalRequirements,
     } = config;
+
+    console.log(reqIdentification)
 
     const navigate = useNavigate();
 
@@ -96,7 +97,6 @@ function TopContent({ config }) {
 
                     <Button
                         color="primary"
-                        onPress={openModalCreate}
                         className="w-full"
                         endContent={
                             <img
@@ -112,7 +112,7 @@ function TopContent({ config }) {
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <span className="text-default-400">
-                        Requerimientos totales: {totalReqIdentificationRequirementsTypes}
+                        Requerimientos totales: {totalRequirements}
                     </span>
                 </div>
             </div>
@@ -122,14 +122,13 @@ function TopContent({ config }) {
 
 TopContent.propTypes = {
     config: PropTypes.shape({
-        reqIdentification: PropTypes.string,
+        reqIdentification: PropTypes.object.isRequired,
         filterByName: PropTypes.string.isRequired,
         filterByRequirement: PropTypes.string.isRequired,
         onFilterByName: PropTypes.func.isRequired,
         onFilterByRequirement: PropTypes.func.isRequired,
         onClear: PropTypes.func.isRequired,
-        totalReqIdentificationRequirementsTypes: PropTypes.number.isRequired,
-        openModalCreate: PropTypes.func.isRequired
+        totalRequirements: PropTypes.number.isRequired,
     }).isRequired,
 };
 

@@ -1,8 +1,6 @@
 import { useCallback, useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import {
-  Spinner,
-} from "@heroui/react";
+import { Spinner } from "@heroui/react";
 import TopContent from "./TopContent";
 import useReqIdentifications from "../../../hooks/reqIdentifications/useReqIdentifications";
 import useReqIdentificationRequirements from "../../../hooks/reqIdentifications/useReqIdentificationRequirements";
@@ -20,16 +18,28 @@ const columns = [
   { name: "Periodicidad", uid: "periodicity", align: "start" },
   { name: "Materia", uid: "subject", align: "start" },
   { name: "Aspectos", uid: "aspects", align: "start" },
-  { name: "Criterio de Aceptación", uid: "acceptance_criteria", align: "start" },
+  {
+    name: "Criterio de Aceptación",
+    uid: "acceptance_criteria",
+    align: "start",
+  },
   { name: "Acciones", uid: "actions", align: "center" },
-
 ];
 
+/**
+ * Requirements Identification Requirements component
+ *
+ * This component provides a Requirements Identification Requirements management interface, including features for listing, filtering,
+ * pagination, role-based filtering, and CRUD operations. Requirements can be created, edited or deleted,
+ * with appropriate feedback displayed for each action.
+ *
+ * @returns {JSX.Element} Rendered Requirements Identification Requirements component, displaying the requirements management interface with
+ * filters, pagination, and modals for adding, editing, and deleting Requirements.
+ *
+ */
 export default function ReqIdentificationRequirements() {
   const { id } = useParams();
-  const {
-    fetchReqIdentificationById,
-  } = useReqIdentifications();
+  const { fetchReqIdentificationById } = useReqIdentifications();
   const {
     reqIdentificationRequirements,
     loading,
@@ -58,20 +68,18 @@ export default function ReqIdentificationRequirements() {
           setReqIdentificationError(null);
         } else {
           setReqIdentification(null);
-          setReqIdentificationError(error)
+          setReqIdentificationError(error);
         }
       }
     };
     fetchData();
   }, [id, fetchRequirements, fetchReqIdentificationById]);
 
-
   useEffect(() => {
     if (!loading && isFirstRender) {
       setIsFirstRender(false);
     }
   }, [loading, isFirstRender]);
-
 
   const handleClear = useCallback(() => {
     setFilterByName("");
@@ -83,7 +91,6 @@ export default function ReqIdentificationRequirements() {
     (type, value) => {
       if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
       debounceTimeout.current = setTimeout(async () => {
-        console.log(id, value)
         setIsSearching(true);
         switch (type) {
           case "name":
@@ -98,11 +105,7 @@ export default function ReqIdentificationRequirements() {
         setIsSearching(false);
       }, 500);
     },
-    [
-      id,
-      fetchRequirementsByName,
-      fetchRequirementsByRequirementName,
-    ]
+    [id, fetchRequirementsByName, fetchRequirementsByRequirementName]
   );
 
   const handleFilterByName = useCallback(
@@ -115,10 +118,7 @@ export default function ReqIdentificationRequirements() {
       setFilterByName(value);
       handleFilter("name", value);
     },
-    [
-      handleFilter,
-      handleClear,
-    ]
+    [handleFilter, handleClear]
   );
 
   const handleFilterByRequirement = useCallback(
@@ -131,21 +131,16 @@ export default function ReqIdentificationRequirements() {
       setFilterByRequirement(value);
       handleFilter("requirementName", value);
     },
-    [
-      handleFilter,
-      handleClear,
-    ]
+    [handleFilter, handleClear]
   );
-
 
   const openModalDescription = (requirement, field, title) => {
     setSelectedRequirement({
       title: title,
-      description: requirement[field]
+      description: requirement[field],
     });
     setShowDescriptionModal(true);
   };
-
 
   const closeModalDescription = () => {
     setShowDescriptionModal(false);
@@ -165,9 +160,9 @@ export default function ReqIdentificationRequirements() {
       </div>
     );
   }
-  if (error) return <Error title={error.title} message={error.message} />;
-  if (reqIdentificationError) return <Error title={reqIdentificationError.title} message={reqIdentificationError.message} />;
 
+  console.log(error, reqIdentificationError)
+  if (error) return <Error title={error.title} message={error.message} />;
 
   return (
     <div className="mt-24 mb-4 -ml-60 mr-4 lg:-ml-0 lg:mr-0 xl:-ml-0 xl:mr-0 flex justify-center items-center flex-wrap">
@@ -181,12 +176,12 @@ export default function ReqIdentificationRequirements() {
           <TopContent
             config={{
               reqIdentification: reqIdentification,
-              totalReqIdentificationRequirementsTypes: reqIdentificationRequirements.length,
-              filterByName: filterByName,
-              onFilterByName: handleFilterByName,
-              filterByRequirement: filterByRequirement,
+              filterByRequirement,
+              filterByName,
               onFilterByRequirement: handleFilterByRequirement,
+              onFilterByName: handleFilterByName,
               onClear: handleClear,
+              totalRequirements: reqIdentificationRequirements.length,
             }}
           />
 
@@ -235,7 +230,6 @@ export default function ReqIdentificationRequirements() {
                       ))
                     )}
                   </tbody>
-
                 </table>
               </div>
             </div>
@@ -249,9 +243,7 @@ export default function ReqIdentificationRequirements() {
             />
           )}
         </>
-
       )}
     </div>
-  )
-
+  );
 }

@@ -22,6 +22,46 @@ export default function useReqIdentificationRequirements() {
     error: null,
   });
 
+    /**
+   * Fetches all requirements associated with a given requirement identification.
+   *
+   * @async
+   * @function fetchAllRequirementsFromReqIdentification
+   * @param {number} reqIdentificationId - The ID of the requirement identification.
+   * @returns {Promise<void>}
+   */
+  const fetchRequirements = useCallback(
+    async (reqIdentificationId) => {
+      setState({ loading: true, error: null });
+      try {
+        const reqIdentificationRequirements =
+          await getAllRequirementsFromReqIdentification({
+            reqIdentificationId,
+            token: jwt,
+          });
+        setReqIdentificationRequirements(reqIdentificationRequirements);
+        setState({ loading: false, error: null });
+      } catch (error) {
+        const errorCode = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+        const clientMessage = error.message;
+
+        const handledError = ReqIdentificationRequirementsErrors.handleError({
+          code: errorCode,
+          error: serverMessage,
+          httpError: clientMessage,
+          items: [reqIdentificationId],
+        });
+
+        setState({
+          loading: false,
+          error: handledError,
+        });
+      }
+    },
+    [jwt]
+  );
+
   /**
    * Adds a requirement to a specific requirement identification.
    *
@@ -108,45 +148,6 @@ export default function useReqIdentificationRequirements() {
     [jwt]
   );
 
-  /**
-   * Fetches all requirements associated with a given requirement identification.
-   *
-   * @async
-   * @function fetchAllRequirementsFromReqIdentification
-   * @param {number} reqIdentificationId - The ID of the requirement identification.
-   * @returns {Promise<void>}
-   */
-  const fetchRequirements = useCallback(
-    async (reqIdentificationId) => {
-      setState({ loading: true, error: null });
-      try {
-        const reqIdentificationRequirements =
-          await getAllRequirementsFromReqIdentification({
-            reqIdentificationId,
-            token: jwt,
-          });
-        setReqIdentificationRequirements(reqIdentificationRequirements);
-        setState({ loading: false, error: null });
-      } catch (error) {
-        const errorCode = error.response?.status;
-        const serverMessage = error.response?.data?.message;
-        const clientMessage = error.message;
-
-        const handledError = ReqIdentificationRequirementsErrors.handleError({
-          code: errorCode,
-          error: serverMessage,
-          httpError: clientMessage,
-          items: [reqIdentificationId],
-        });
-
-        setState({
-          loading: false,
-          error: handledError,
-        });
-      }
-    },
-    [jwt]
-  );
 
   /**
    * Fetches requirements from a requirement identification filtered by requirement name.
