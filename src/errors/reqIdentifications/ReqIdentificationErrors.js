@@ -49,12 +49,12 @@ class ReqIdentificationErrors {
         "Revisa los datos introducidos. Uno o más campos no son válidos.",
     },
     [ReqIdentificationErrors.NOT_FOUND]: {
-      title: "Identificación no encontrada",
+      title: "Identificación de requerimientos no encontrada",
       message:
         "La identificación de requerimientos no fue encontrada. Verifique su existencia recargando la app e intente de nuevo.",
     },
     [ReqIdentificationErrors.MULTIPLE_NOT_FOUND]: {
-      title: "Identificaciones no encontradas",
+      title: "Identificaciones de requerimientos no encontradas",
       message:
         "Una o más identificaciones de requerimientos no fueron encontradas. Verifique su existencia recargando la app e intente de nuevo.",
     },

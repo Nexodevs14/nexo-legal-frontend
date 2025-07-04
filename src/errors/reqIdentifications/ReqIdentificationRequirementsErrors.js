@@ -65,7 +65,7 @@ class ReqIdentificationRequirementsErrors {
     },
     [ReqIdentificationRequirementsErrors.REQ_IDENTIFICATION_NOT_FOUND]: {
       title: "Identificación de requerimiento no encontrada",
-      message: "La identificación de requerimiento no fue encontrada. Verifique su existencia recargando la app e intente de nuevo.",
+      message: "La identificación de requerimientos no fue encontrada. Verifique su existencia recargando la app e intente de nuevo.",
     },
     [ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_FOUND]: {
       title: "Requerimiento no encontrado",

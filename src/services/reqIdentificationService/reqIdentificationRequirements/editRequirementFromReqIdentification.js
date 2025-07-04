@@ -14,7 +14,7 @@ import server from "../../../config/server.js";
  * @param {{ id: number, translation: string }[]} [params.legalVerbs] - Optional array of legal verbs with translations.
  * @param {string} params.token - Authorization token for the request.
  *
- * @returns {Promise<Object[]>} The updated list of requirements associated with the requirement identification.
+  * @returns {Promise<void>} A promise that resolves when the requirement is successfully updated.
  * @throws {Error} If the request fails or the update is invalid.
  */
 export default async function editRequirementFromReqIdentification({
@@ -40,14 +40,11 @@ export default async function editRequirementFromReqIdentification({
       }
     );
 
-    if (response.status !== 200) {
+    if (response.status !== 204) {
       throw new Error(
         "Failed to edit requirement from requirement identification"
       );
     }
-
-    const { reqIdentificationRequirements } = response.data;
-    return reqIdentificationRequirements;
   } catch (error) {
     console.error(
       "Error editing requirement from requirement identification:",

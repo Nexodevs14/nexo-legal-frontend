@@ -44,16 +44,15 @@ export default function useReqIdentificationRequirements() {
       legalVerbs,
     }) => {
       try {
-        const reqIdentificationRequirements =
-          await addRequirementToReqIdentification({
-            reqIdentificationId,
-            requirementId,
-            requirementName,
-            requirementTypeIds,
-            legalVerbs,
+        await addRequirementToReqIdentification({
+          reqIdentificationId,
+          requirementId,
+          requirementName,
+          requirementTypeIds,
+          legalVerbs,
             token: jwt,
           });
-        setReqIdentificationRequirements(reqIdentificationRequirements);
+        await fetchRequirements(reqIdentificationId);
         return { success: true };
       } catch (error) {
         const errorCode = error.response?.status;
@@ -68,7 +67,7 @@ export default function useReqIdentificationRequirements() {
         return { success: false, error: handledError.message };
       }
     },
-    [jwt]
+    [jwt, fetchRequirements]
   );
 
   /**
@@ -256,7 +255,6 @@ export default function useReqIdentificationRequirements() {
       legalVerbs,
     }) => {
       try {
-        const reqIdentificationRequirements =
           await editRequirementFromReqIdentification({
             reqIdentificationId,
             requirementId,
@@ -265,7 +263,7 @@ export default function useReqIdentificationRequirements() {
             legalVerbs,
             token: jwt,
           });
-        setReqIdentificationRequirements(reqIdentificationRequirements);
+        await fetchRequirements(reqIdentificationId);
         return { success: true };
       } catch (error) {
         const errorCode = error.response?.status;
@@ -281,7 +279,7 @@ export default function useReqIdentificationRequirements() {
         return { success: false, error: handledError.message };
       }
     },
-    [jwt, setReqIdentificationRequirements]
+    [jwt, fetchRequirements]
   );
 
   /**
@@ -297,13 +295,12 @@ export default function useReqIdentificationRequirements() {
   const deleteRequirement = useCallback(
     async ({ reqIdentificationId, requirementId }) => {
       try {
-        const reqIdentificationRequirements =
           await deleteRequirementFromReqIdentification({
             reqIdentificationId,
             requirementId,
             token: jwt,
           });
-        setReqIdentificationRequirements(reqIdentificationRequirements);
+        await fetchRequirements(reqIdentificationId);
         return { success: true };
       } catch (error) {
         const errorCode = error.response?.status;
@@ -319,7 +316,7 @@ export default function useReqIdentificationRequirements() {
         return { success: false, error: handledError.message };
       }
     },
-    [jwt, setReqIdentificationRequirements]
+    [jwt, fetchRequirements]
   );
 
   return {

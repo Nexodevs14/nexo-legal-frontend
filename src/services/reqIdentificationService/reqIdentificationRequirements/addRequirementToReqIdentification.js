@@ -14,7 +14,7 @@ import server from "../../../config/server.js";
  * @param {{ id: number, translation: string }[]} [params.legalVerbs] - Optional array of legal verbs with translations.
  * @param {string} params.token - Authorization token for the request.
  *
- * @returns {Promise<Object[]>} The updated list of requirements associated with the requirement identification.
+ * @returns {Promise<void>} A promise that resolves when the requirement is added.
  * @throws {Error} If the request fails or the response status is not 201.
  */
 export default async function addRequirementToReqIdentification({
@@ -39,13 +39,11 @@ export default async function addRequirementToReqIdentification({
         },
       }
     );
-    if (response.status !== 201) {
+    if (response.status !== 204) {
       throw new Error(
         "Failed to associate requirement to requirement identification"
       );
     }
-    const { reqIdentificationRequirements } = response.data;
-    return reqIdentificationRequirements;
   } catch (error) {
     console.error("Error associating requirement:", error);
     throw error;

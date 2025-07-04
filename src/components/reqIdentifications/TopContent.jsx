@@ -45,6 +45,10 @@ import defaultAvatar from "../../assets/usuario.png";
  * @param {Function} props.config.onFilterBySubjectAndAspects - Callback triggered when filtering by subject and aspects.
  * @param {string} props.config.selectedJurisdiction - Currently selected jurisdiction.
  * @param {Function} props.config.onFilterByJurisdiction - Callback triggered when filtering by jurisdiction.
+ * @param {string} props.config.filterByLegalBasisName - Current filter value for legal basis name.
+ * @param {Function} props.config.onFilterByLegalBasisName - Callback triggered when filtering by legal basis name.
+ * @param {string} props.config.filterByRequirementName - Current filter value for requirement name.
+ * @param {Function} props.config.onFilterByRequirementName - Callback triggered when filtering by requirement name.
  * @param {Array<string>} props.config.states - List of available states.
  * @param {string} props.config.selectedState - Currently selected state.
  * @param {boolean} props.config.stateLoading - Indicates if states are currently loading.
@@ -85,6 +89,10 @@ function TopContent({ config }) {
     onFilterBySubjectAndAspects,
     selectedJurisdiction,
     onFilterByJurisdiction,
+    filterByLegalBasisName,
+    onFilterByLegalBasisName,
+    filterByRequirementName,
+    onFilterByRequirementName,
     states,
     selectedState,
     stateLoading,
@@ -449,6 +457,41 @@ function TopContent({ config }) {
             </Select>
           </div>
         </Tooltip>
+         <Input
+          color="primary"
+          variant="faded"
+          isClearable
+          value={filterByLegalBasisName}
+          className="w-full"
+          placeholder="Buscar por fundamento legal..."
+          startContent={
+            <img
+              src={search_icon}
+              alt="Search Icon"
+              className="w-4 h-4 flex-shrink-0"
+            />
+          }
+          onClear={onClear}
+          onValueChange={onFilterByLegalBasisName}
+        />
+
+        <Input
+          color="primary"
+          variant="faded"
+          isClearable
+          value={filterByRequirementName}
+          className="w-full"
+          placeholder="Buscar por requerimiento..."
+          startContent={
+            <img
+              src={search_icon}
+              alt="Search"
+              className="w-4 h-4 flex-shrink-0"
+            />
+          }
+          onClear={onClear}
+          onValueChange={onFilterByRequirementName}
+        />
       </div>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <span className="text-default-400">
@@ -513,6 +556,10 @@ TopContent.propTypes = {
     onFilterBySubjectAndAspects: PropTypes.func.isRequired,
     selectedJurisdiction: PropTypes.string,
     onFilterByJurisdiction: PropTypes.func.isRequired,
+    filterByLegalBasisName: PropTypes.string.isRequired,
+    onFilterByLegalBasisName: PropTypes.func.isRequired,
+    filterByRequirementName: PropTypes.string.isRequired,
+    onFilterByRequirementName: PropTypes.func.isRequired,
     states: PropTypes.arrayOf(PropTypes.string).isRequired,
     selectedState: PropTypes.string,
     stateLoading: PropTypes.bool.isRequired,

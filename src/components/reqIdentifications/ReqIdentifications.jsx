@@ -62,6 +62,8 @@ export default function ReqIdentification() {
     fetchReqIdentificationsBySubjectId,
     fetchReqIdentificationsBySubjectAndAspects,
     fetchReqIdentificationsByJurisdiction,
+    fetchReqIdentificationsByLegalBasisName,
+    fetchReqIdentificationsByRequirementName,
     fetchReqIdentificationsByState,
     fetchReqIdentificationsByStateAndMunicipalities,
     fetchReqIdentificationsByStatus,
@@ -100,6 +102,8 @@ export default function ReqIdentification() {
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [selectedAspects, setSelectedAspects] = useState([]);
   const [selectedJurisdiction, setSelectedJurisdiction] = useState("");
+  const [filterByLegalBasisName, setFilterByLegalBasisName] = useState("");
+  const [filterByRequirementName, setFilterByRequirementName] = useState("");
   const [selectedState, setSelectedState] = useState(null);
   const [selectedMunicipalities, setSelectedMunicipalities] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("");
@@ -146,6 +150,8 @@ export default function ReqIdentification() {
     setSelectedSubject(null);
     setSelectedAspects([]);
     setSelectedJurisdiction("");
+    setFilterByLegalBasisName("");
+    setFilterByRequirementName("");
     setSelectedState(null);
     setSelectedMunicipalities([]);
     setSelectedStatus("");
@@ -204,6 +210,12 @@ export default function ReqIdentification() {
           case "jurisdiction":
             await fetchReqIdentificationsByJurisdiction(value);
             break;
+          case "legalBasisName":
+            await fetchReqIdentificationsByLegalBasisName(value);
+            break;
+          case "requirementName":
+            await fetchReqIdentificationsByRequirementName(value);
+            break;
           case "state":
             await fetchReqIdentificationsByState(value);
             await fetchMunicipalities(value);
@@ -232,6 +244,8 @@ export default function ReqIdentification() {
       fetchReqIdentificationsBySubjectId,
       fetchReqIdentificationsBySubjectAndAspects,
       fetchReqIdentificationsByJurisdiction,
+      fetchReqIdentificationsByLegalBasisName,
+      fetchReqIdentificationsByRequirementName,
       fetchReqIdentificationsByState,
       fetchReqIdentificationsByStateAndMunicipalities,
       fetchReqIdentificationsByStatus,
@@ -250,6 +264,8 @@ export default function ReqIdentification() {
       setFilterByDescription("");
       setSelectedUser(null);
       setSelectedJurisdiction("");
+      setFilterByLegalBasisName("");
+      setFilterByRequirementName("");
       setSelectedStatus("");
       resetSubjectAndAspects();
       resetStatesAndMunicipalities();
@@ -276,6 +292,8 @@ export default function ReqIdentification() {
       setFilterByName("");
       setSelectedUser(null);
       setSelectedJurisdiction("");
+      setFilterByLegalBasisName("");
+      setFilterByRequirementName("");
       setSelectedStatus("");
       resetSubjectAndAspects();
       resetStatesAndMunicipalities();
@@ -302,6 +320,8 @@ export default function ReqIdentification() {
       setFilterByName("");
       setFilterByDescription("");
       setSelectedJurisdiction("");
+      setFilterByLegalBasisName("");
+      setFilterByRequirementName("");
       setSelectedStatus("");
       resetSubjectAndAspects();
       resetStatesAndMunicipalities();
@@ -328,6 +348,8 @@ export default function ReqIdentification() {
       setFilterByDescription("");
       setSelectedUser(null);
       setSelectedJurisdiction("");
+      setFilterByLegalBasisName("");
+      setFilterByRequirementName("");
       setSelectedStatus("");
       resetStatesAndMunicipalities();
       setCreationRange(null);
@@ -369,6 +391,8 @@ export default function ReqIdentification() {
       setFilterByDescription("");
       setSelectedUser(null);
       setSelectedStatus("");
+      setFilterByLegalBasisName("");
+      setFilterByRequirementName("");
       resetSubjectAndAspects();
       resetStatesAndMunicipalities();
       setCreationRange(null);
@@ -376,6 +400,62 @@ export default function ReqIdentification() {
       setCreationRangeError("");
       setSelectedJurisdiction(jurisdiction);
       handleFilter("jurisdiction", jurisdiction);
+    },
+    [
+      handleFilter,
+      handleClear,
+      resetSubjectAndAspects,
+      resetStatesAndMunicipalities,
+    ]
+  );
+
+  const handleFilterByLegalBasisName = useCallback(
+    (legalBasisName) => {
+      if (!legalBasisName) {
+        handleClear();
+        return;
+      }
+      setFilterByName("");
+      setFilterByDescription("");
+      setSelectedUser(null);
+      setSelectedStatus("");
+      setFilterByLegalBasisName(legalBasisName);
+      setFilterByRequirementName("");
+      resetSubjectAndAspects();
+      resetStatesAndMunicipalities();
+      setCreationRange(null);
+      setCreationRangeInvalid(false);
+      setCreationRangeError("");
+      setSelectedJurisdiction();
+      handleFilter("legalBasisName", legalBasisName);
+    },
+    [
+      handleFilter,
+      handleClear,
+      resetSubjectAndAspects,
+      resetStatesAndMunicipalities,
+    ]
+  );
+
+  const handleFilterByRequirementName = useCallback(
+    (requirementName) => {
+      if (!requirementName) {
+        handleClear();
+        return;
+      }
+      setFilterByName("");
+      setFilterByDescription("");
+      setSelectedUser(null);
+      setSelectedStatus("");
+      setFilterByLegalBasisName("");
+      setFilterByRequirementName(requirementName);
+      resetSubjectAndAspects();
+      resetStatesAndMunicipalities();
+      setCreationRange(null);
+      setCreationRangeInvalid(false);
+      setCreationRangeError("");
+      setSelectedJurisdiction("");
+      handleFilter("requirementName", requirementName);
     },
     [
       handleFilter,
@@ -395,6 +475,8 @@ export default function ReqIdentification() {
       setFilterByDescription("");
       setSelectedUser(null);
       setSelectedStatus("");
+      setFilterByLegalBasisName("");
+      setFilterByRequirementName("");
       resetSubjectAndAspects();
       setCreationRange(null);
       setCreationRangeInvalid(false);
@@ -438,6 +520,8 @@ export default function ReqIdentification() {
       setFilterByDescription("");
       setSelectedUser(null);
       setSelectedJurisdiction("");
+      setFilterByLegalBasisName("");
+      setFilterByRequirementName("");
       resetSubjectAndAspects();
       resetStatesAndMunicipalities();
       setCreationRange(null);
@@ -662,6 +746,10 @@ export default function ReqIdentification() {
           onFilterBySubjectAndAspects: handleFilterBySubjectAndAspects,
           selectedJurisdiction: selectedJurisdiction,
           onFilterByJurisdiction: handleFilterByJurisdiction,
+          filterByLegalBasisName: filterByLegalBasisName,
+          onFilterByLegalBasisName: handleFilterByLegalBasisName,
+          filterByRequirementName: filterByRequirementName,
+          onFilterByRequirementName: handleFilterByRequirementName,
           states: states,
           selectedState: selectedState,
           stateLoading: loadingStates,

@@ -11,7 +11,7 @@ import server from "../../../config/server.js";
  * @param {number} params.requirementId - The ID of the requirement to delete.
  * @param {string} params.token - Authorization token for the request.
  *
- * @returns {Promise<Object[]>} The updated list of requirements associated with the requirement identification.
+  * @returns {Promise<void>} A promise that resolves when the requirement is successfully deleted.
  * @throws {Error} If the request fails or deletion is not permitted.
  */
 export default async function deleteRequirementFromReqIdentification({
@@ -28,14 +28,11 @@ export default async function deleteRequirementFromReqIdentification({
         },
       }
     );
-
-    if (response.status !== 200) {
+    if (response.status !== 204) {
       throw new Error(
         "Failed to delete requirement from requirement identification"
       );
     }
-    const { reqIdentificationRequirements } = response.data;
-    return reqIdentificationRequirements;
   } catch (error) {
     console.error(
       "Error deleting requirement from requirement identification:",
