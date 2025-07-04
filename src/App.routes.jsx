@@ -47,8 +47,8 @@ const AppRoutes = () => {
         <Route path='/requirements' element={<Requirements />} />
         <Route path='/requirement_types' element={<RequirementTypes />} />
         <Route path='/legal_verbs' element={<LegalVerbs />} />
-        <Route path='/req-identifications' element={<ReqIdentifications />} />
-        <Route path='/req-identifications/:id/requirements' element={<ReqIdentificationRequirements />} />
+        <Route path='/req_identifications' element={<ReqIdentifications />} />
+        <Route path='/req_identifications/:id/requirements' element={<ReqIdentificationRequirements />} />
       </Route>
 
       {/* Error and Unauthorized routes */}

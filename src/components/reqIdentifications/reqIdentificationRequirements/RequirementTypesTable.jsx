@@ -35,8 +35,8 @@ RequirementTypesTable.propTypes = {
     PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
+      description: PropTypes.string,
       classification: PropTypes.string
     })
   ).isRequired
-}
+};

@@ -44,7 +44,7 @@ LegalVerbsTable.propTypes = {
         description: PropTypes.string,
         translation: PropTypes.string,
       }).isRequired,
-      translation: PropTypes.string.isRequired,
+      translation: PropTypes.string,
     })
   ).isRequired,
 };

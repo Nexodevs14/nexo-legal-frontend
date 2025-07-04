@@ -39,7 +39,7 @@ function TopContent({ config }) {
     const navigate = useNavigate();
 
     const handleBack = () => {
-        navigate("/req-identifications");
+        navigate("/req_identifications");
     };
 
     return (

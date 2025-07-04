@@ -617,7 +617,7 @@ export default function ReqIdentification() {
   );
 
   const viewRequirementDetails = (reqIdentificationId) => {
-    navigate(`/req-identifications/${reqIdentificationId}/requirements`);
+    navigate(`/req_identifications/${reqIdentificationId}/requirements`);
   };
   const totalPages = useMemo(
     () => Math.ceil(reqIdentifications.length / rowsPerPage),
