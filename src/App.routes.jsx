@@ -18,6 +18,7 @@ import RequirementTypes from './components/requirementTypes/RequirementTypes.jsx
 import LegalVerbs from './components/legalVerbs/LegalVerbs.jsx'
 import Articles from './components/articles/Articles.jsx'
 import ReqIdentifications from './components/reqIdentifications/ReqIdentifications.jsx'
+import ReqIdentificationRequirements from './components/reqIdentifications/reqIdentificationRequirements/ReqIdentificationRequirements.jsx'
 
 /**
  * Application routing component.
@@ -47,6 +48,7 @@ const AppRoutes = () => {
         <Route path='/requirement_types' element={<RequirementTypes />} />
         <Route path='/legal_verbs' element={<LegalVerbs />} />
         <Route path='/req-identifications' element={<ReqIdentifications />} />
+        <Route path='/req-identifications/:id/requirements' element={<ReqIdentificationRequirements />} />
       </Route>
 
       {/* Error and Unauthorized routes */}

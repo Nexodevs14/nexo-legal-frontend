@@ -46,6 +46,7 @@ const statusColors = {
 const ReqIdentificationCell = ({
   reqIdentification,
   columnKey,
+  viewRequirementDetails,
   openEditModal,
   handleDelete,
 }) => {
@@ -193,7 +194,8 @@ const ReqIdentificationCell = ({
                   }
                   className="hover:bg-primary/20"
                   key="watch"
-                  textValue="Ver Articulos"
+                  onPress={() => viewRequirementDetails(reqIdentification.id)}
+                  textValue="Ver Identificación"
                 >
                   <p className="font-normal text-primary">Ver Identificación</p>
                 </DropdownItem>
@@ -237,7 +239,7 @@ const ReqIdentificationCell = ({
       default:
         return null;
     }
-  }, [columnKey, reqIdentification, openEditModal, handleDelete]);
+  }, [columnKey, reqIdentification,viewRequirementDetails,  openEditModal, handleDelete]);
 
   return renderCell();
 };
@@ -270,6 +272,7 @@ ReqIdentificationCell.propTypes = {
     }),
   }).isRequired,
   columnKey: PropTypes.string.isRequired,
+  viewRequirementDetails: PropTypes.func.isRequired, 
   openEditModal: PropTypes.func.isRequired,
   goToDetails: PropTypes.func,
   handleDelete: PropTypes.func.isRequired,

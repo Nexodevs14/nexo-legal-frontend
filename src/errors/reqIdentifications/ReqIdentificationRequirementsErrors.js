@@ -64,7 +64,7 @@ class ReqIdentificationRequirementsErrors {
         "Ocurrió un error inesperado. Por favor, intente nuevamente más tarde.",
     },
     [ReqIdentificationRequirementsErrors.REQ_IDENTIFICATION_NOT_FOUND]: {
-      title: "Identificación de requerimiento no encontrada",
+      title: "Identificación de requerimientos no encontrada",
       message: "La identificación de requerimientos no fue encontrada. Verifique su existencia recargando la app e intente de nuevo.",
     },
     [ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_FOUND]: {
