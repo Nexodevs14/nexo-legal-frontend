@@ -8,6 +8,8 @@ import getRequirementsFromReqIdentificationByRequirementName from "../../service
 import getRequirementsFromReqIdentificationByLegalBasisName from "../../services/reqIdentificationService/reqIdentificationRequirements/getRequirementsFromReqIdentificationByLegalBasisName.js";
 import editRequirementFromReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/editRequirementFromReqIdentification.js";
 import deleteRequirementFromReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/deleteRequirementFromReqIdentification.js";
+import addLegalBasisToRequirementInReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/addLegalBasisToRequirementInReqIdentification.js";
+import deleteLegalBasisFromRequirementInReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/deleteLegalBasisFromRequirementInReqIdentification.js";
 import ReqIdentificationRequirementsErrors from "../../errors/reqIdentifications/ReqIdentificationRequirementsErrors.js";
 
 /**
@@ -51,8 +53,8 @@ export default function useReqIdentificationRequirements() {
           requirementName,
           requirementTypeIds,
           legalVerbs,
-            token: jwt,
-          });
+          token: jwt,
+        });
         setReqIdentificationRequirements((prev) => [
           reqIdentificationRequirement,
           ...prev,
@@ -112,14 +114,14 @@ export default function useReqIdentificationRequirements() {
     [jwt]
   );
 
-    /**
-   * Fetches all requirements associated with a given requirement identification.
-   *
-   * @async
-   * @function fetchAllRequirementsFromReqIdentification
-   * @param {number} reqIdentificationId - The ID of the requirement identification.
-   * @returns {Promise<void>}
-   */
+  /**
+ * Fetches all requirements associated with a given requirement identification.
+ *
+ * @async
+ * @function fetchAllRequirementsFromReqIdentification
+ * @param {number} reqIdentificationId - The ID of the requirement identification.
+ * @returns {Promise<void>}
+ */
   const fetchRequirements = useCallback(
     async (reqIdentificationId) => {
       setState({ loading: true, error: null });
@@ -298,14 +300,14 @@ export default function useReqIdentificationRequirements() {
       legalVerbs,
     }) => {
       try {
-          const reqIdentificationRequirement = await editRequirementFromReqIdentification({
-            reqIdentificationId,
-            requirementId,
-            requirementName,
-            requirementTypeIds,
-            legalVerbs,
-            token: jwt,
-          });
+        const reqIdentificationRequirement = await editRequirementFromReqIdentification({
+          reqIdentificationId,
+          requirementId,
+          requirementName,
+          requirementTypeIds,
+          legalVerbs,
+          token: jwt,
+        });
         setReqIdentificationRequirements((prev) =>
           prev.map((req) =>
             req.requirement.id === requirementId ? reqIdentificationRequirement : req
@@ -342,11 +344,11 @@ export default function useReqIdentificationRequirements() {
   const deleteRequirement = useCallback(
     async (reqIdentificationId, requirementId) => {
       try {
-          await deleteRequirementFromReqIdentification({
-            reqIdentificationId,
-            requirementId,
-            token: jwt,
-          });
+        await deleteRequirementFromReqIdentification({
+          reqIdentificationId,
+          requirementId,
+          token: jwt,
+        });
         setReqIdentificationRequirements((prev) =>
           prev.filter((req) => req.requirement.id !== requirementId)
         );
@@ -368,6 +370,106 @@ export default function useReqIdentificationRequirements() {
     [jwt]
   );
 
+  /**
+ * Adds a legal basis to a specific requirement in a requirement identification.
+ *
+ * @async
+ * @function addLegalBasis
+ * @param {Object} params - Parameters for the association.
+ * @param {number} params.reqIdentificationId - The ID of the requirement identification.
+ * @param {number} params.requirementId - The ID of the requirement.
+ * @param {number} params.legalBasisId - The ID of the legal basis to associate.
+ * @returns {Promise<{ success: true, data: Object } | { success: false, error: string }>}
+ */
+  const addLegalBasis = useCallback(
+    async ({ reqIdentificationId, requirementId, legalBasisId }) => {
+      try {
+        const updatedRequirement =
+          await addLegalBasisToRequirementInReqIdentification({
+            reqIdentificationId,
+            requirementId,
+            legalBasisId,
+            token: jwt,
+          });
+
+        setReqIdentificationRequirements((prev) =>
+          prev.map((req) =>
+            req.requirement.id === requirementId ? updatedRequirement : req
+          )
+        );
+
+        return { success: true, data: updatedRequirement };
+      } catch (error) {
+        const errorCode = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+        const clientMessage = error.message;
+
+        const handledError = ReqIdentificationRequirementsErrors.handleError({
+          code: errorCode,
+          error: serverMessage,
+          httpError: clientMessage,
+          items: [reqIdentificationId, requirementId],
+        });
+
+        return { success: false, error: handledError.message };
+      }
+    },
+    [jwt]
+  );
+  /**
+   * Deletes a legal basis from a specific requirement in a requirement identification.
+   *
+   * @async
+   * @function deleteLegalBasis
+   * @param {Object} params - Parameters for the deletion.
+   * @param {number} params.reqIdentificationId - The ID of the requirement identification.
+   * @param {number} params.requirementId - The ID of the requirement.
+   * @param {number} params.legalBasisId - The ID of the legal basis to remove.
+   * @returns {Promise<{ success: true } | { success: false, error: string }>}
+   */
+  const deleteLegalBasis = useCallback(
+    async ({ reqIdentificationId, requirementId, legalBasisId }) => {
+      try {
+        await deleteLegalBasisFromRequirementInReqIdentification({
+          reqIdentificationId,
+          requirementId,
+          legalBasisId,
+          token: jwt,
+        });
+
+        // Puedes volver a cargar el requirement completo si deseas mantenerlo actualizado
+        const { success, data } = await fetchRequirement(
+          reqIdentificationId,
+          requirementId
+        );
+
+        if (success) {
+          setReqIdentificationRequirements((prev) =>
+            prev.map((req) =>
+              req.requirement.id === requirementId ? data : req
+            )
+          );
+        }
+
+        return { success: true };
+      } catch (error) {
+        const errorCode = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+        const clientMessage = error.message;
+
+        const handledError = ReqIdentificationRequirementsErrors.handleError({
+          code: errorCode,
+          error: serverMessage,
+          httpError: clientMessage,
+          items: [reqIdentificationId, requirementId],
+        });
+
+        return { success: false, error: handledError.message };
+      }
+    },
+    [jwt, fetchRequirement]
+  );
+
   return {
     reqIdentificationRequirements,
     loading: state.loading,
@@ -380,5 +482,7 @@ export default function useReqIdentificationRequirements() {
     fetchRequirementsByLegalBasisName,
     editRequirement,
     deleteRequirement,
+    addLegalBasis,
+    deleteLegalBasis,
   };
 }
