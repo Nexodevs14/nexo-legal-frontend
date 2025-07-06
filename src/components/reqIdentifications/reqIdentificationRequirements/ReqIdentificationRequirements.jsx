@@ -7,6 +7,7 @@ import useReqIdentificationRequirements from "../../../hooks/reqIdentifications/
 import useRequirements from "../../../hooks/requirement/useRequirements";
 import useRequirementTypes from "../../../hooks/requirementTypes/useRequirementTypes";
 import useLegalVerbs from "../../../hooks/legalVerbs/useLegalVerbs";
+import useLegalBasis from "../../../hooks/legalBasis/useLegalBasis"
 import DescriptionModal from "../../requirements/TextArea/DescriptionModal";
 import Error from "../../utils/Error";
 import ReqIdentificationCell from "./ReqIdentificationCell";
@@ -14,6 +15,7 @@ import check from "../../../assets/check.png";
 import { toast } from "react-toastify";
 import CreateReqIdentificationRequirementModal from "./CreateRequirementModal";
 import EditReqIdentificationRequirementModal from "./EditRequirementModal";
+import CreateReqIdentificationLegalBasisModal from "./CreateLegalBasisModal";
 
 const columns = [
   { name: "", uid: "expand", align: "center" },
@@ -58,6 +60,7 @@ export default function ReqIdentificationRequirements() {
     fetchRequirementsByLegalBasisName,
     editRequirement,
     deleteRequirement,
+    addLegalBasis,
   } = useReqIdentificationRequirements();
   const {
     requirements,
@@ -74,6 +77,11 @@ export default function ReqIdentificationRequirements() {
     loading: legalVerbsLoading,
     error: legalVerbsError,
   } = useLegalVerbs();
+  const {
+    legalBasis,
+    loading: legalBasisLoading,
+    error: legalBasisError,
+  } = useLegalBasis()
   const [reqIdentification, setReqIdentification] = useState(null);
   const [reqIdentificationError, setReqIdentificationError] = useState(null);
   const [isFirstRender, setIsFirstRender] = useState(true);
@@ -90,6 +98,8 @@ export default function ReqIdentificationRequirements() {
   const debounceTimeout = useRef(null);
   const [isCreateModalRequirementOpen, setIsCreateModalRequirementOpen] = useState(false);
   const [isEditModalRequirementOpen, setIsEditModalRequirementOpen] = useState(false);
+  const [isCreateLegalBasisModalOpen, setIsCreateLegalBasisModalOpen] = useState(false);
+  const [legalBasisInputError, setLegalBasisInputError] = useState(null);
   const [selectedRequirement, setSelectedRequirement] = useState(null);
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [formDataRequirement, setFormDataRequirement] = useState({
@@ -99,6 +109,12 @@ export default function ReqIdentificationRequirements() {
     requirementTypeIds: [],
     legalVerbs: [],
   });
+  const [formDataLegalBasis, setFormDataLegalBasis] = useState({
+    reqIdentificationId: null,
+    requirementId: null,
+    legalBasisId: null,
+  });
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -344,6 +360,48 @@ export default function ReqIdentificationRequirements() {
     setSelectedRequirement(null);
   };
 
+  const openCreateLegalBasisModal = (requirementId) => {
+    setFormDataLegalBasis({
+      reqIdentificationId: id,
+      requirementId: requirementId,
+      legalBasisId: null,
+    });
+    setIsCreateLegalBasisModalOpen(true);
+  };
+
+  const closeCreateLegalBasisModal = () => {
+    setIsCreateLegalBasisModalOpen(false);
+    setFormDataLegalBasis({
+      reqIdentificationId: null,
+      requirementId: null,
+      legalBasisId: null,
+    });
+  };
+
+  const handleLegalBasisChange = useCallback(
+    (value) => {
+      if (!value) {
+        setFormDataLegalBasis((prevFormData) => ({
+          ...prevFormData,
+          legalBasisId: null,
+        }));
+        if (legalBasisInputError) {
+          setLegalBasisInputError(null);
+        }
+        return;
+      }
+      setFormDataLegalBasis((prevFormData) => ({
+        ...prevFormData,
+        legalBasisId: value,
+      }));
+      if (legalBasisInputError && value.trim() !== "") {
+        setLegalBasisInputError(null);
+      }
+    },
+    [legalBasisInputError, setLegalBasisInputError, setFormDataLegalBasis]
+  );
+
+
   const handleDelete = useCallback(
     async (requirementId) => {
       const toastId = toast.loading("Eliminando requerimiento...", {
@@ -406,7 +464,8 @@ export default function ReqIdentificationRequirements() {
     (loading && isFirstRender) ||
     requirementsLoading ||
     requirementTypesLoading ||
-    legalVerbsLoading
+    legalVerbsLoading ||
+    legalBasisLoading
   ) {
     return (
       <div
@@ -439,6 +498,10 @@ export default function ReqIdentificationRequirements() {
   if (legalVerbsError)
     return (
       <Error title={legalVerbsError.title} message={legalVerbsError.message} />
+    );
+  if (legalBasisError)
+    return (
+      <Error title={legalBasisError.title} message={legalBasisError.message} />
     );
   if (reqIdentificationError)
     return (
@@ -509,6 +572,7 @@ export default function ReqIdentificationRequirements() {
                         columns={columns}
                         openModalDescription={openModalDescription}
                         openEditRequirmentModal={openEditRequirmentModal}
+                        openCreateLegalBasisModal={openCreateLegalBasisModal}
                         handleDelete={handleDelete}
                       />
                     ))
@@ -576,6 +640,20 @@ export default function ReqIdentificationRequirements() {
               handleRemoveLegalVerb: handleRemoveLegalVerb,
 
 
+            }}
+          />
+        )}
+        {isCreateLegalBasisModalOpen && (
+          <CreateReqIdentificationLegalBasisModal
+            config={{
+              isOpen: isCreateLegalBasisModalOpen,
+              closeModalCreate: closeCreateLegalBasisModal,
+              formData: formDataLegalBasis,
+              addLegalBasis: addLegalBasis,
+              legalBasis: legalBasis,
+              legalBasisInputError: legalBasisInputError,
+              setLegalBasisInputError: setLegalBasisInputError,
+              handleLegalBasisChange: handleLegalBasisChange,
             }}
           />
         )}
