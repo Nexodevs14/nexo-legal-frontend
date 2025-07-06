@@ -20,6 +20,7 @@ import menu_icon from "../../../assets/aplicaciones.png";
 import update_icon from "../../../assets/actualizar.png";
 import delete_icon from "../../../assets/eliminar.png";
 import watch_icon from "../../../assets/ver.png";
+import link_blue_icon from "../../../assets/enlace_blue.png";
 
 /**
  * ReqIdentificationCell component
@@ -180,11 +181,28 @@ export default function ReqIdentificationCell({
                   </Button>
                 </DropdownTrigger>
                 <DropdownMenu
-                  aria-label="Opciones de identificación"
+                  aria-label="Opciones de requerimiento"
                   variant="light"
                 >
+                   <DropdownItem
+                    aria-label="Asociar Fundamento Legal"
+                    startContent={
+                      <img
+                        src={link_blue_icon}
+                        alt="Edit Icon"
+                        className="w-4 h-4 flex-shrink-0"
+                      />
+                    }
+                    className="hover:bg-primary/20"
+                    key="update"
+                    textValue="Asociar Fundamento Legal"
+                  >
+                    <p className="font-normal text-primary">
+                      Asociar Fundamento Legal
+                    </p>
+                  </DropdownItem>
                   <DropdownItem
-                    aria-label="Editar Identificación"
+                    aria-label="Editar Requerimiento"
                     startContent={
                       <img
                         src={update_icon}
@@ -194,14 +212,13 @@ export default function ReqIdentificationCell({
                     }
                     className="hover:bg-primary/20"
                     key="update"
-                    textValue="Editar Identificación"
+                    textValue="Editar Requerimiento"
                     onPress={() => openEditModal(reqIdentificatioRequirement)}
                   >
                     <p className="font-normal text-primary">
-                      Editar Identificación
+                      Editar Requerimiento
                     </p>
                   </DropdownItem>
-
                   <DropdownItem
                     aria-label="Eliminar"
                     startContent={
@@ -211,7 +228,7 @@ export default function ReqIdentificationCell({
                     className="hover:bg-red/20"
                   >
                     <p className="font-normal text-red">
-                      Eliminar Identificación
+                      Eliminar Requerimiento
                     </p>
                   </DropdownItem>
                 </DropdownMenu>

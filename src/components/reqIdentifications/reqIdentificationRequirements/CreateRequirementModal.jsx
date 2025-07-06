@@ -111,7 +111,7 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
         legalVerbs: formData.legalVerbs
           .filter((verb) => verb.translation.trim() !== "")
           .map((verb) => ({
-            id: verb.id,
+            id: Number(verb.id),
             translation: verb.translation,
           })),
       };

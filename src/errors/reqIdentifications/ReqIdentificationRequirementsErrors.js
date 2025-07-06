@@ -74,11 +74,11 @@ class ReqIdentificationRequirementsErrors {
     },
     [ReqIdentificationRequirementsErrors.REQUIREMENT_TYPES_NOT_FOUND]: {
       title: "Tipos de requerimiento no encontrados",
-      message: "Los tipos de requerimiento no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
+      message: "Uno o más tipos de requerimiento no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
     },
     [ReqIdentificationRequirementsErrors.LEGAL_VERBS_NOT_FOUND]: {
       title: "Verbos legales no encontrados",
-      message: "Los verbos legales no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
+      message: "Uno o más verbos legales no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
     },
     [ReqIdentificationRequirementsErrors.REQUIREMENT_NAME_CONFLICT]: {
       title: "Conflicto de nombre de requerimiento",
@@ -90,7 +90,7 @@ class ReqIdentificationRequirementsErrors {
     },
     [ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION]: {
       title: "Requerimiento no vinculado en la identificación",
-      message: "El requerimiento no está vinculado a la identificación actual. Verifique su existencia recargando la app e intente de nuevo.",
+      message: "El requerimiento no está vinculado a la identificación actual. Verifique su asociación recargando la app e intente de nuevo.",
     },
     [ReqIdentificationRequirementsErrors.REQ_IDENTIFICATION_JOBS_CONFLICT]: {
       title: "Conflicto con trabajos pendientes",

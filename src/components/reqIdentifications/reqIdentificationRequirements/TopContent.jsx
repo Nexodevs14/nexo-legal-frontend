@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Input, Button, ScrollShadow } from "@heroui/react";
 import { useNavigate } from "react-router-dom";
 import search_icon from "../../../assets/busqueda_blue.png";
-import mas_icon from "../../../assets/mas.png";
+import link_white_icon from "../../../assets/enlace_white.png";
 import flecha_icon from "../../../assets/flecha_izquierda.png";
 import download_icon from "../../../assets/descargar_white.png";
 
@@ -129,7 +129,7 @@ function TopContent({ config }) {
               className="w-full sm:w-auto"
               endContent={
                 <img
-                  src={mas_icon}
+                  src={link_white_icon}
                   alt="Add Icon"
                   className="w-4 h-4 flex-shrink-0"
                 />
