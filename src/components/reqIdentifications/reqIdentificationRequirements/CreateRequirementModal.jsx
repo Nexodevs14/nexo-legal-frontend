@@ -152,7 +152,8 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
           <ModalHeader className="flex items-center gap-2">
             Asociar nuevo requerimiento
           </ModalHeader>
-          <ModalBody>
+          <ModalBody className="overflow-y-auto max-h-[50vh] px-6">
+
             <form className="flex flex-col gap-6" onSubmit={handleCreate}>
               <div className="col-span-2 relative z-0 w-full group">
                 <input
@@ -257,12 +258,12 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
                   </button>
                 </div>
               ))}
-              <div className="flex justify-end">
+             <div className="sticky bottom-2  z-10 bg-whit px-0">
                 <Button
                   type="submit"
                   color="primary"
                   disabled={isLoading}
-                  className="w-full rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
+                  className="w-full rounded border mb-0 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
                 >
                   {isLoading ? (
                     <Spinner size="sm" color="white" />
