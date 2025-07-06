@@ -12,6 +12,7 @@ import {
   AutocompleteItem,
   Select,
   SelectItem,
+  Textarea,
 } from "@heroui/react";
 import { toast } from "react-toastify";
 import check from "../../../assets/check.png";
@@ -57,6 +58,9 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
     handleRequirementNameChange,
     requirementInputError,
     setRequirementInputError,
+    legalVerbsInputErrors,
+    setLegalVerbsInputErrors,
+    handleLegalVerbTranslationChange,
     handleRequirementChange,
     handleRequirementTypesChange,
     requirements,
@@ -64,7 +68,10 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
     requirementError,
     requirementTypes,
     requirementTypesLoading,
-    requirementTypeError
+    requirementTypeError,
+    legalVerbsLoading,
+    legalVerbsError,
+    setFormDataRequirement
   } = config;
   const [isLoading, setIsLoading] = useState(false);
 
@@ -85,6 +92,14 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
     } else {
       setRequirementInputError(null);
     }
+    if (!formData.legalVerbs) {
+      setLegalVerbsInputErrors("Debes seleccionar un requerimiento.");
+      setIsLoading(false);
+      return;
+    } else {
+      setLegalVerbsInputErrors(null);
+    }
+
     try {
       const requirementData = {
         reqIdentificationId: Number(formData.reqIdentificationId),
@@ -128,6 +143,15 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
     window.location.reload();
   };
 
+  const handleRemoveLegalVerb = (id) => {
+    setFormDataRequirement((prev) => ({
+      ...prev,
+      legalVerbs: prev.legalVerbs.filter((verb) => verb.id !== id),
+    }));
+  };
+
+
+
 
   return (
     <Modal
@@ -141,19 +165,21 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
       }}
     >
       <ModalContent>
-        {requirementsLoading || requirementTypesLoading ? (
+        {requirementsLoading || requirementTypesLoading || legalVerbsLoading ? (
           <div role="status" className="flex items-center justify-center h-96">
             <Spinner color="secondary" />
           </div>
-        ) : requirementError || requirementTypeError ? (
+        ) : requirementError || requirementTypeError || legalVerbsError ? (
           <Alert
             color="warning"
             title="Error al cargar datos"
             description={
               requirementError?.message ||
-              requirementTypeError?.message
+              requirementTypeError?.message ||
+              legalVerbsError?.message
             }
             variant="faded"
+
             classNames={{
               base: "bg-red/10 border-red",
               title: "text-red text-md",
@@ -176,7 +202,7 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
         ) : (
           <>
             <ModalHeader className="flex items-center gap-2">Asociar nuevo requerimiento</ModalHeader>
-            <ModalBody>
+            <ModalBody className="max-h-[50vh] overflow-y-auto">
               <form className="flex flex-col gap-6" onSubmit={handleCreate}>
                 <div className="col-span-2 relative z-0 w-full group">
                   <input
@@ -238,7 +264,38 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
                     )}
                   </Select>
                 </div>
-
+                {formData.legalVerbs.map((verb) => (
+                  <div key={verb.id} className="relative col-span-2 w-full group">
+                    <Textarea
+                      value={verb.translation}
+                      onChange={(e) =>
+                        handleLegalVerbTranslationChange(verb.id, e.target.value)
+                      }
+                      label={`Traducción del Verbo Legal: ${verb.name}`}
+                      placeholder="Escribir traducción"
+                      variant="bordered"
+                      minRows={2}
+                      maxRows={4}
+                      classNames={{
+                        input:
+                          "resize-y min-h-[80px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                      }}
+                    />
+                    {legalVerbsInputErrors?.[verb.id] && (
+                      <p className="mt-1 text-xs text-red">
+                        {legalVerbsInputErrors[verb.id]}
+                      </p>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveLegalVerb(verb.id)}
+                      className="absolute right-1 top-1 text-gray-400 hover:text-red text-lg"
+                      title="Eliminar este verbo"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                ))}
                 <div className="flex justify-end">
                   <Button
                     type="submit"
@@ -273,6 +330,13 @@ CreateReqIdentificationRequirementModal.propTypes = {
       requirementTypeIds: PropTypes.arrayOf(
         PropTypes.oneOfType([PropTypes.string, PropTypes.number])
       ),
+      legalVerbs: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired,
+          translation: PropTypes.string.isRequired,
+        })
+      ),
     }).isRequired,
     addRequirement: PropTypes.func.isRequired,
     requirementNameInputError: PropTypes.string,
@@ -280,6 +344,8 @@ CreateReqIdentificationRequirementModal.propTypes = {
     handleRequirementNameChange: PropTypes.func.isRequired,
     requirementInputError: PropTypes.string,
     setRequirementInputError: PropTypes.func.isRequired,
+    legalVerbsInputErrors: PropTypes.string,
+    setLegalVerbsInputErrors: PropTypes.func.isRequired,
     handleRequirementChange: PropTypes.func.isRequired,
     handleRequirementTypesChange: PropTypes.func.isRequired,
     requirements: PropTypes.array,
@@ -294,6 +360,13 @@ CreateReqIdentificationRequirementModal.propTypes = {
       message: PropTypes.string,
       title: PropTypes.string,
     }),
+    setFormDataRequirement: PropTypes.func.isRequired,
+    handleLegalVerbTranslationChange: PropTypes.func.isRequired,
+    legalVerbsLoading: PropTypes.bool,
+    legalVerbsError: PropTypes.shape({
+      message: PropTypes.string,
+    }),
+
   }).isRequired,
 };
 

@@ -6,6 +6,7 @@ import useReqIdentifications from "../../../hooks/reqIdentifications/useReqIdent
 import useReqIdentificationRequirements from "../../../hooks/reqIdentifications/useReqIdentificationRequirements";
 import useRequirements from "../../../hooks/requirement/useRequirements";
 import useRequirementTypes from "../../../hooks/requirementTypes/useRequirementTypes";
+import useLegalVerbs from "../../../hooks/legalVerbs/useLegalVerbs";
 import DescriptionModal from "../../requirements/TextArea/DescriptionModal";
 import Error from "../../utils/Error";
 import ReqIdentificationCell from "./ReqIdentificationCell";
@@ -66,12 +67,18 @@ export default function ReqIdentificationRequirements() {
     loading: requirementTypesLoading,
     error: requirementTypeError,
   } = useRequirementTypes();
+  const {
+    legalVerbs,
+    loading: legalVerbsLoading,
+    error: legalVerbsError,
+  } = useLegalVerbs();
   const [reqIdentification, setReqIdentification] = useState(null);
   const [reqIdentificationError, setReqIdentificationError] = useState(null);
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [requirementNameInputError, setRequirementNameInputError] = useState(null)
   const [requirementInputError, setRequirementInputError] = useState(null)
   const [requirementTypesInputError, setRequirementTypesInputError] = useState(null);
+  const [legalVerbsInputErrors, setLegalVerbsInputErrors] = useState(null);
   const [filterByName, setFilterByName] = useState("");
   const [filterByRequirementName, setFilterByRequirementName] = useState("");
   const [filterByLegalBasisName, setFilterByLegalBasisName] = useState("");
@@ -85,7 +92,7 @@ export default function ReqIdentificationRequirements() {
     requirement: null,
     requirementName: "",
     requirementTypeIds: [],
-    legalVerbs: new Set()
+    legalVerbs: [],
 
   });
 
@@ -189,17 +196,25 @@ export default function ReqIdentificationRequirements() {
     },
     [handleClear, handleFilter]
   );
-  
+
   const openModalCreateRequirement = () => {
+    const initialVerbs = legalVerbs.map((verb) => ({
+      id: verb.id,
+      name: verb.name,
+      translation: "",
+    }));
+
     setFormDataRequirement({
       reqIdentificationId: id,
       requirement: null,
       requirementName: "",
       requirementTypeIds: [],
-      legalVerbs: new Set()
+      legalVerbs: initialVerbs,
     });
+
     setIsCreateModalRequirementOpen(true);
   };
+
 
   const closeModalCreateRequirement = () => {
     setIsCreateModalRequirementOpen(false);
@@ -260,6 +275,27 @@ export default function ReqIdentificationRequirements() {
     },
     [requirementTypesInputError, setFormDataRequirement, setRequirementTypesInputError]
   );
+
+  const handleLegalVerbTranslationChange = useCallback((id, value) => {
+    setFormDataRequirement((prev) => ({
+      ...prev,
+      legalVerbs: prev.legalVerbs.map((verb) =>
+        verb.id === id ? { ...verb, translation: value } : verb
+      ),
+    }));
+
+    setLegalVerbsInputErrors((prevErrors) => {
+      if (prevErrors?.[id] && value.trim() !== "") {
+        const newErrors = { ...prevErrors };
+        delete newErrors[id];
+        return Object.keys(newErrors).length > 0 ? newErrors : null;
+      }
+      return prevErrors;
+    });
+  }, [setFormDataRequirement, setLegalVerbsInputErrors]);
+
+
+
 
   const openModalDescription = (requirement, field, title) => {
     setSelectedRequirement({
@@ -413,7 +449,6 @@ export default function ReqIdentificationRequirements() {
                           reqIdentificatioRequirement={requirement}
                           columns={columns}
                           openModalDescription={openModalDescription}
-                          openEditModal={console.log("Editando...")}
                           handleDelete={handleDelete}
                         />
                       ))
@@ -438,19 +473,25 @@ export default function ReqIdentificationRequirements() {
                 closeModalCreate: closeModalCreateRequirement,
                 formData: formDataRequirement,
                 addRequirement: addRequirement,
+                setFormDataRequirement: setFormDataRequirement,
                 requirementNameInputError: requirementNameInputError,
                 setRequirementNameInputError: setRequirementNameInputError,
                 handleRequirementNameChange: handleRequirementNameChange,
                 requirementInputError: requirementInputError,
                 setRequirementInputError: setRequirementInputError,
-                handleRequirementChange: handleRequirementChange, 
+                legalVerbsInputErrors: legalVerbsInputErrors,
+                setLegalVerbsInputErrors: legalVerbsInputErrors,
+                handleRequirementChange: handleRequirementChange,
                 handleRequirementTypesChange: handleRequirementTypesChange,
+                handleLegalVerbTranslationChange: handleLegalVerbTranslationChange,
                 requirements: requirements,
                 requirementsLoading: requirementsLoading,
                 requirementError: requirementError,
                 requirementTypes: requirementTypes,
                 requirementTypesLoading: requirementTypesLoading,
                 requirementTypeError: requirementTypeError,
+                legalVerbsLoading: legalVerbsLoading,
+                legalVerbsError: legalVerbsError,
               }}
             />
           )}
