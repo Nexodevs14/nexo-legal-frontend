@@ -136,7 +136,7 @@ function TopContent({ config }) {
               }
               onPress={openModalCreateRequirement}
             >
-              Nuevo Requerimiento
+              Asociar Requerimiento
             </Button>
 
             <Button

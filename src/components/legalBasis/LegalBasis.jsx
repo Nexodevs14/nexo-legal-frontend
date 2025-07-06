@@ -460,6 +460,12 @@ export default function LegalBasis() {
         }
 
         const { start, end } = values;
+        setFilterByName("");
+        setFilterByAbbreviation("");
+        setSelectedClassification("");
+        setSelectedJurisdiction("");
+        resetSubjectAndAspects();
+        resetStatesAndMunicipalities();
         fetchLegalBasisByLastReform(start.toString(), end.toString());
         setLastReformRange(values);
       } else {
@@ -469,7 +475,7 @@ export default function LegalBasis() {
         setLastReformError("");
       }
     },
-    [fetchLegalBasisByLastReform, handleClear]
+    [fetchLegalBasisByLastReform, handleClear , resetSubjectAndAspects, resetStatesAndMunicipalities]
   );
 
   const openModalCreate = () => {

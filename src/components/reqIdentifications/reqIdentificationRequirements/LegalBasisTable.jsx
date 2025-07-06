@@ -51,12 +51,7 @@ export default function LegalBasisTable({ legalBasis }) {
               <span className="text-sm font-semibold text-gray-700">
                 {item.legalBasis.legal_name}
               </span>
-              <Button
-                isIconOnly
-                size="sm"
-                variant="light"
-                color="danger"
-              >
+              <Button isIconOnly size="sm" variant="light" color="danger">
                 ❌
               </Button>
             </div>
@@ -143,11 +138,7 @@ export default function LegalBasisTable({ legalBasis }) {
                   </table>
 
                   <div className="flex justify-end mt-2">
-                    <Button
-                      color="primary"
-                      variant="solid"
-                      size="sm"
-                    >
+                    <Button color="primary" variant="solid" size="sm">
                       Asociar nuevo artículo
                     </Button>
                   </div>
@@ -158,11 +149,7 @@ export default function LegalBasisTable({ legalBasis }) {
                     No hay artículos disponibles.
                   </p>
                   <div className="flex justify-end mt-2">
-                    <Button
-                      color="primary"
-                      variant="solid"
-                      size="sm"
-                    >
+                    <Button color="primary" variant="solid" size="sm">
                       Asociar nuevo artículo
                     </Button>
                   </div>

@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 
-
 /**
  * Renders a table displaying a list of legal verbs and their translations.
  *
@@ -10,14 +9,23 @@ import PropTypes from "prop-types";
  * @returns {JSX.Element} A table of legal verbs and their translations, or a message if none are available.
  */
 export default function LegalVerbsTable({ legalVerbs }) {
-  if (!legalVerbs.length) return <p className="text-base text-gray-500">No hay verbos legales disponibles.</p>
+  if (!legalVerbs.length)
+    return (
+      <p className="text-base text-gray-500">
+        No hay verbos legales disponibles.
+      </p>
+    );
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full text-sm border rounded-md">
         <thead className="bg-gray-100 text-gray-500 text-left">
           <tr>
-            <th className=" font-semibold text-sm px-3 py-2 border-b">Nombre</th>
-            <th className=" font-semibold text-sm px-3 py-2 border-b">Traducción</th>
+            <th className=" font-semibold text-sm px-3 py-2 border-b">
+              Nombre
+            </th>
+            <th className=" font-semibold text-sm px-3 py-2 border-b">
+              Traducción
+            </th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -29,11 +37,9 @@ export default function LegalVerbsTable({ legalVerbs }) {
           ))}
         </tbody>
       </table>
-
     </div>
-  )
+  );
 }
-
 
 LegalVerbsTable.propTypes = {
   legalVerbs: PropTypes.arrayOf(

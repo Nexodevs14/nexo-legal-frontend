@@ -11,7 +11,7 @@ import Error from "../../utils/Error";
 import ReqIdentificationCell from "./ReqIdentificationCell";
 import check from "../../../assets/check.png";
 import { toast } from "react-toastify";
-import CreateReqIdentificationRequirementModal from "./CreateRequirementModal"
+import CreateReqIdentificationRequirementModal from "./CreateRequirementModal";
 
 const columns = [
   { name: "", uid: "expand", align: "center" },
@@ -54,7 +54,7 @@ export default function ReqIdentificationRequirements() {
     fetchRequirementsByName,
     fetchRequirementsByRequirementName,
     fetchRequirementsByLegalBasisName,
-    deleteRequirement
+    deleteRequirement,
   } = useReqIdentificationRequirements();
   const {
     requirements,
@@ -69,15 +69,18 @@ export default function ReqIdentificationRequirements() {
   const [reqIdentification, setReqIdentification] = useState(null);
   const [reqIdentificationError, setReqIdentificationError] = useState(null);
   const [isFirstRender, setIsFirstRender] = useState(true);
-  const [requirementNameInputError, setRequirementNameInputError] = useState(null)
-  const [requirementInputError, setRequirementInputError] = useState(null)
-  const [requirementTypesInputError, setRequirementTypesInputError] = useState(null);
+  const [requirementNameInputError, setRequirementNameInputError] =
+    useState(null);
+  const [requirementInputError, setRequirementInputError] = useState(null);
+  const [requirementTypesInputError, setRequirementTypesInputError] =
+    useState(null);
   const [filterByName, setFilterByName] = useState("");
   const [filterByRequirementName, setFilterByRequirementName] = useState("");
   const [filterByLegalBasisName, setFilterByLegalBasisName] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const debounceTimeout = useRef(null);
-  const [isCreateModalRequirementOpen, setIsCreateModalRequirementOpen] = useState(false);
+  const [isCreateModalRequirementOpen, setIsCreateModalRequirementOpen] =
+    useState(false);
   const [selectedRequirement, setSelectedRequirement] = useState(null);
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [formDataRequirement, setFormDataRequirement] = useState({
@@ -85,8 +88,7 @@ export default function ReqIdentificationRequirements() {
     requirement: null,
     requirementName: "",
     requirementTypeIds: [],
-    legalVerbs: new Set()
-
+    legalVerbs: new Set(),
   });
 
   useEffect(() => {
@@ -189,14 +191,14 @@ export default function ReqIdentificationRequirements() {
     },
     [handleClear, handleFilter]
   );
-  
+
   const openModalCreateRequirement = () => {
     setFormDataRequirement({
       reqIdentificationId: id,
       requirement: null,
       requirementName: "",
       requirementTypeIds: [],
-      legalVerbs: new Set()
+      legalVerbs: new Set(),
     });
     setIsCreateModalRequirementOpen(true);
   };
@@ -218,33 +220,34 @@ export default function ReqIdentificationRequirements() {
         setRequirementNameInputError(null);
       }
     },
-    [requirementNameInputError, setRequirementNameInputError, setFormDataRequirement]
+    [
+      requirementNameInputError,
+      setRequirementNameInputError,
+      setFormDataRequirement,
+    ]
   );
 
-  const handleRequirementChange = useCallback((value) => {
-    if (!value) {
+  const handleRequirementChange = useCallback(
+    (value) => {
+      if (!value) {
+        setFormDataRequirement((prevFormData) => ({
+          ...prevFormData,
+          requirement: null,
+        }));
+        if (requirementInputError) {
+          setRequirementInputError(null);
+        }
+        return;
+      }
       setFormDataRequirement((prevFormData) => ({
         ...prevFormData,
-        requirement: null
+        requirement: value,
       }));
-      if (requirementInputError) {
+      if (requirementInputError && value.trim() !== "") {
         setRequirementInputError(null);
       }
-      return;
-    }
-    setFormDataRequirement((prevFormData) => ({
-      ...prevFormData,
-      requirement: value
-    }));
-    if (requirementInputError && value.trim() !== "") {
-      setRequirementInputError(null);
-    }
-  },
-    [
-      requirementInputError,
-      setRequirementInputError,
-      setFormDataRequirement
-    ]
+    },
+    [requirementInputError, setRequirementInputError, setFormDataRequirement]
   );
 
   const handleRequirementTypesChange = useCallback(
@@ -258,7 +261,11 @@ export default function ReqIdentificationRequirements() {
         setRequirementTypesInputError(null);
       }
     },
-    [requirementTypesInputError, setFormDataRequirement, setRequirementTypesInputError]
+    [
+      requirementTypesInputError,
+      setFormDataRequirement,
+      setRequirementTypesInputError,
+    ]
   );
 
   const openModalDescription = (requirement, field, title) => {
@@ -332,7 +339,7 @@ export default function ReqIdentificationRequirements() {
     [id, deleteRequirement]
   );
 
-  if (loading && isFirstRender) {
+  if (loading && isFirstRender || requirementsLoading || requirementTypesLoading) {
     return (
       <div
         role="status"
@@ -347,15 +354,21 @@ export default function ReqIdentificationRequirements() {
   }
 
   if (error) return <Error title={error.title} message={error.message} />;
+  if (requirementError)
+    return <Error title={requirementError.title} message={requirementError.message} />;
+  if (requirementTypeError)
+    return <Error title={requirementTypeError.title} message={requirementTypeError.message
+    } />;
+  if (reqIdentificationError)
+    return (
+      <Error
+        title={reqIdentificationError.title}
+        message={reqIdentificationError.message}
+      />
+    );
 
   return (
     <div className="mt-24 mb-4 -ml-60 mr-4 lg:-ml-0 lg:mr-0 xl:-ml-0 xl:mr-0 flex justify-center items-center flex-wrap">
-      {reqIdentificationError ? (
-        <Error
-          title={reqIdentificationError.title}
-          message={reqIdentificationError.message}
-        />
-      ) : (
         <>
           <TopContent
             config={{
@@ -368,7 +381,7 @@ export default function ReqIdentificationRequirements() {
               onFilterByLegalBasisName: handleFilterByLegalBasisName,
               onClear: handleClear,
               totalRequirements: reqIdentificationRequirements.length,
-              openModalCreateRequirement: openModalCreateRequirement
+              openModalCreateRequirement: openModalCreateRequirement,
             }}
           />
 
@@ -443,19 +456,14 @@ export default function ReqIdentificationRequirements() {
                 handleRequirementNameChange: handleRequirementNameChange,
                 requirementInputError: requirementInputError,
                 setRequirementInputError: setRequirementInputError,
-                handleRequirementChange: handleRequirementChange, 
+                handleRequirementChange: handleRequirementChange,
                 handleRequirementTypesChange: handleRequirementTypesChange,
                 requirements: requirements,
-                requirementsLoading: requirementsLoading,
-                requirementError: requirementError,
-                requirementTypes: requirementTypes,
-                requirementTypesLoading: requirementTypesLoading,
-                requirementTypeError: requirementTypeError,
+                requirementTypes: requirementTypes
               }}
             />
           )}
         </>
-      )}
     </div>
   );
 }

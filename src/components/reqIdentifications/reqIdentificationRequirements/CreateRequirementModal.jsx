@@ -7,7 +7,6 @@ import {
   ModalBody,
   Button,
   Spinner,
-  Alert,
   Autocomplete,
   AutocompleteItem,
   Select,
@@ -37,11 +36,7 @@ import check from "../../../assets/check.png";
  * @param {Function} props.config.handleRequirementChange - Handler for selecting a requirement.
  * @param {Function} props.config.handleRequirementTypesChange - Handler for selecting requirement types.
  * @param {Array<Object>} props.config.requirements - List of available base requirements.
- * @param {boolean} props.config.requirementsLoading - Indicates if base requirements are loading.
- * @param {Object|null} props.config.requirementError - Error object for base requirement loading.
  * @param {Array<Object>} props.config.requirementTypes - List of available requirement types.
- * @param {boolean} props.config.requirementTypesLoading - Indicates if requirement types are loading.
- * @param {Object|null} props.config.requirementTypeError - Error object for requirement type loading.
  *
  * @returns {JSX.Element} Rendered modal component.
  */
@@ -60,11 +55,7 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
     handleRequirementChange,
     handleRequirementTypesChange,
     requirements,
-    requirementsLoading,
-    requirementError,
     requirementTypes,
-    requirementTypesLoading,
-    requirementTypeError
   } = config;
   const [isLoading, setIsLoading] = useState(false);
 
@@ -124,11 +115,6 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
     }
   };
 
-  const handleReload = () => {
-    window.location.reload();
-  };
-
-
   return (
     <Modal
       isOpen={isOpen}
@@ -141,41 +127,10 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
       }}
     >
       <ModalContent>
-        {requirementsLoading || requirementTypesLoading ? (
-          <div role="status" className="flex items-center justify-center h-96">
-            <Spinner color="secondary" />
-          </div>
-        ) : requirementError || requirementTypeError ? (
-          <Alert
-            color="warning"
-            title="Error al cargar datos"
-            description={
-              requirementError?.message ||
-              requirementTypeError?.message
-            }
-            variant="faded"
-            classNames={{
-              base: "bg-red/10 border-red",
-              title: "text-red text-md",
-              description: "text-red text-sm",
-              iconWrapper: "bg-red/20",
-              alertIcon: "text-red",
-            }}
-            endContent={
-              <Button
-                color="danger"
-                size="sm"
-                variant="faded"
-                className="mt-20 w-full"
-                onPress={handleReload}
-              >
-                Intentar de nuevo
-              </Button>
-            }
-          />
-        ) : (
           <>
-            <ModalHeader className="flex items-center gap-2">Asociar nuevo requerimiento</ModalHeader>
+            <ModalHeader className="flex items-center gap-2">
+              Asociar nuevo requerimiento
+            </ModalHeader>
             <ModalBody>
               <form className="flex flex-col gap-6" onSubmit={handleCreate}>
                 <div className="col-span-2 relative z-0 w-full group">
@@ -195,7 +150,9 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
                     Nombre
                   </label>
                   {requirementNameInputError && (
-                    <p className="mt-2 text-sm text-red">{requirementNameInputError}</p>
+                    <p className="mt-2 text-sm text-red">
+                      {requirementNameInputError}
+                    </p>
                   )}
                 </div>
 
@@ -203,20 +160,27 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
                   <Autocomplete
                     size="sm"
                     variant="bordered"
-                    label="Requerimiento base"
+                    label="Requerimiento"
                     selectedKey={formData.requirement}
                     onSelectionChange={handleRequirementChange}
-                    listboxProps={{ emptyContent: "No se encontró el requerimiento" }}
+                    listboxProps={{
+                      emptyContent: "No se encontró el requerimiento",
+                    }}
                     defaultItems={requirements}
                   >
                     {(requirement) => (
-                      <AutocompleteItem key={requirement.id} value={requirement.id}>
+                      <AutocompleteItem
+                        key={requirement.id}
+                        value={requirement.id}
+                      >
                         {requirement.requirement_name}
                       </AutocompleteItem>
                     )}
                   </Autocomplete>
                   {requirementInputError && (
-                    <p className="mt-2 text-sm text-red">{requirementInputError}</p>
+                    <p className="mt-2 text-sm text-red">
+                      {requirementInputError}
+                    </p>
                   )}
                 </div>
 
@@ -229,7 +193,9 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
                     selectedKeys={formData.requirementTypeIds}
                     onSelectionChange={handleRequirementTypesChange}
                     items={requirementTypes}
-                    listboxProps={{ emptyContent: "No se encontraron tipos de requerimiento" }}
+                    listboxProps={{
+                      emptyContent: "No se encontraron tipos de requerimiento",
+                    }}
                   >
                     {(type) => (
                       <SelectItem key={type.id} value={type.name}>
@@ -256,7 +222,6 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
               </form>
             </ModalBody>
           </>
-        )}
       </ModalContent>
     </Modal>
   );
@@ -267,7 +232,10 @@ CreateReqIdentificationRequirementModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     closeModalCreate: PropTypes.func.isRequired,
     formData: PropTypes.shape({
-      reqIdentificationId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      reqIdentificationId: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]).isRequired,
       requirement: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       requirementName: PropTypes.string,
       requirementTypeIds: PropTypes.arrayOf(
@@ -283,19 +251,8 @@ CreateReqIdentificationRequirementModal.propTypes = {
     handleRequirementChange: PropTypes.func.isRequired,
     handleRequirementTypesChange: PropTypes.func.isRequired,
     requirements: PropTypes.array,
-    requirementsLoading: PropTypes.bool.isRequired,
-    requirementError: PropTypes.shape({
-      message: PropTypes.string,
-      title: PropTypes.string,
-    }),
     requirementTypes: PropTypes.array,
-    requirementTypesLoading: PropTypes.bool.isRequired,
-    requirementTypeError: PropTypes.shape({
-      message: PropTypes.string,
-      title: PropTypes.string,
-    }),
   }).isRequired,
 };
-
 
 export default CreateReqIdentificationRequirementModal;
