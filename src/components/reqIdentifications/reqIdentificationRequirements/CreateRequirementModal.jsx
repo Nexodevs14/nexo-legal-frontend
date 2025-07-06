@@ -152,7 +152,7 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
       onClose={closeModalCreate}
       isDismissable={false}
       placement="center"
-      size="lg"
+      size="4xl"
       classNames={{
         closeButton: "hover:bg-primary/20 text-primary active:bg-primary/10",
       }}
