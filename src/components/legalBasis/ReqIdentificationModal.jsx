@@ -15,6 +15,7 @@ import {
 import { toast } from "react-toastify";
 import check from "../../assets/check.png";
 import Progress from "./reqIdentificationProgress/Progress";
+import { useNavigate } from "react-router-dom";
 import useReqIdentifications from "../../hooks/reqIdentifications/useReqIdentifications";
 
 /**
@@ -53,6 +54,7 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
   const [showProgress, setShowProgress] = useState(false);
   const [reqIdentificationId, setReqIdentificationId] = useState(null);
   const [jobId, setJobId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -95,9 +97,7 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
     setJobId(null);
     setShowProgress(false);
     closeModal();
-    toast.error(
-      `SE DEBE IMPLEMENTAR LA REDIRECCIÓN A LA PÁGINA DE LA IDENTIFICACIÓN DE REQUERIMIENTO (ID: ${reqIdentificationId})`
-    );
+    navigate(`/req_identifications/${reqIdentificationId}/requirements`);
   };
 
   const handleSubmit = async () => {
@@ -156,7 +156,7 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
           setReqIdentificationId(reqIdentificationId);
         }
       } else {
-       toast.error(
+        toast.error(
           <div
             className="toast-scroll-red"
             style={{
