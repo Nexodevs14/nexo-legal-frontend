@@ -385,7 +385,7 @@ export default function useReqIdentificationRequirements() {
    * @returns {Promise<{ success: true, data: Object } | { success: false, error: string }>}
    */
   const addLegalBasis = useCallback(
-    async ({ reqIdentificationId, requirementId, legalBasisId }) => {
+    async (reqIdentificationId, requirementId, legalBasisId) => {
       try {
         const reqIdentificationRequirement =
           await addLegalBasisToRequirementInReqIdentification({
@@ -433,7 +433,7 @@ export default function useReqIdentificationRequirements() {
    * @returns {Promise<{ success: true } | { success: false, error: string }>}
    */
   const deleteLegalBasis = useCallback(
-    async ({ reqIdentificationId, requirementId, legalBasisId }) => {
+    async (reqIdentificationId, requirementId, legalBasisId ) => {
       try {
         await deleteLegalBasisFromRequirementInReqIdentification({
           reqIdentificationId,

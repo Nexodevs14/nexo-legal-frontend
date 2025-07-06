@@ -18,7 +18,11 @@ class ReqIdentificationRequirementsErrors {
   static REQUIREMENT_NAME_CONFLICT = 'REQUIREMENT_NAME_CONFLICT';
   static REQUIREMENT_ALREADY_LINKED = 'REQUIREMENT_ALREADY_LINKED';
   static REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION = 'REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION';
-  static REQ_IDENTIFICATION_JOBS_CONFLICT = "REQ_IDENTIFICATION_JOBS_CONFLICT";
+  static REQUIREMENT_REQ_IDENTIFICATION_JOBS_CONFLICT = "REQUIREMENT_REQ_IDENTIFICATION_JOBS_CONFLICT";
+  static LEGAL_BASIS_NOT_FOUND = 'LEGAL_BASIS_NOT_FOUND';
+  static LEGAL_BASIS_ALREADY_LINKED = 'LEGAL_BASIS_ALREADY_LINKED';
+  static LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT = 'LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT';
+  static LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT = "LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT";
 
   /**
    * A map of error constants to user-friendly error objects.
@@ -92,10 +96,27 @@ class ReqIdentificationRequirementsErrors {
       title: "Requerimiento no vinculado en la identificación",
       message: "El requerimiento no está vinculado a la identificación actual. Verifique su asociación recargando la app e intente de nuevo.",
     },
-    [ReqIdentificationRequirementsErrors.REQ_IDENTIFICATION_JOBS_CONFLICT]: {
+    [ReqIdentificationRequirementsErrors.REQUIREMENT_REQ_IDENTIFICATION_JOBS_CONFLICT]: {
       title: "Conflicto con trabajos pendientes",
       message:
         "Este requerimiento no puede ser eliminado porque actualmente se están identificando requerimientos. Por favor, espere a que se complete la identificación e intente nuevamente.",
+    },
+    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_NOT_FOUND]: {
+      title: "Fundamento legal no encontrado",
+      message: "El fundamento legal no fue encontrado. Verifique su existencia recargando la app e intente de nuevo.",
+    },
+    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_ALREADY_LINKED]: {
+      title: "Fundamento legal ya vinculado",
+      message: "El fundamento legal ya está vinculado a este requerimiento. No se puede agregar nuevamente.",
+    },
+    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT]: {
+      title: "Fundamento legal no vinculado en el requerimiento",
+      message: "El fundamento legal no está vinculado al requerimiento actual. Verifique su asociación recargando la app e intente de nuevo.",
+    },
+    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT]: {
+      title: "Conflicto con trabajos pendientes",
+      message:
+        "Este fundamento legal no puede ser eliminado porque actualmente se están identificando requerimientos. Por favor, espere a que se complete la identificación e intente nuevamente.",
     },
   };
 
@@ -112,8 +133,12 @@ class ReqIdentificationRequirementsErrors {
     'Requirement name already exists in the requirement identification': ReqIdentificationRequirementsErrors.REQUIREMENT_NAME_CONFLICT,
     'Requirement is already linked to the requirement identification': ReqIdentificationRequirementsErrors.REQUIREMENT_ALREADY_LINKED,
     'Requirement is not linked to the requirement identification': ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION,
-    'Cannot delete Requirement with pending Requirement Identification jobs' : ReqIdentificationRequirementsErrors.REQ_IDENTIFICATION_JOBS_CONFLICT,
-    };
+    'Cannot delete Requirement with pending Requirement Identification jobs' : ReqIdentificationRequirementsErrors.REQUIREMENT_REQ_IDENTIFICATION_JOBS_CONFLICT,
+    'LegalBasis not found': ReqIdentificationRequirementsErrors.LEGAL_BASIS_NOT_FOUND,
+    'LegalBasis is already linked to this requirement in the requirement identification': ReqIdentificationRequirementsErrors.LEGAL_BASIS_ALREADY_LINKED,
+    'LegalBasis is not linked to this requirement in the requirement identification': ReqIdentificationRequirementsErrors.LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT,
+    'Cannot delete LegalBasis with pending Requirement Identification jobs': ReqIdentificationRequirementsErrors.LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT,
+  };
 
 
   /**

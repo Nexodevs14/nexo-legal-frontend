@@ -91,7 +91,7 @@ const EditRequirementModal = ({ config }) => {
       setFormData({
         reqIdentificationId: selectedRequirement.reqIdentificationId,
         requirement: selectedRequirement.requirement.id.toString(),
-        requirementName: selectedRequirement.requirement.requirement_name,
+        requirementName: selectedRequirement.requirementName,
         requirementTypeIds: selectedRequirement.requirementTypes?.map((type) =>
           type.id.toString()
         ),
@@ -137,7 +137,6 @@ const EditRequirementModal = ({ config }) => {
     }
     try {
       const requirementData = {
-        id: formData.id,
         reqIdentificationId: Number(formData.reqIdentificationId),
         requirementId: Number(formData.requirement),
         requirementName: formData.requirementName,

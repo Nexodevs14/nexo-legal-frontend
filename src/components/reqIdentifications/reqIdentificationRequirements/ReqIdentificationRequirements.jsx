@@ -58,6 +58,7 @@ export default function ReqIdentificationRequirements() {
     fetchRequirementsByLegalBasisName,
     editRequirement,
     deleteRequirement,
+    deleteLegalBasis
   } = useReqIdentificationRequirements();
   const {
     requirements,
@@ -344,7 +345,7 @@ export default function ReqIdentificationRequirements() {
     setSelectedRequirement(null);
   };
 
-  const handleDelete = useCallback(
+  const handleDeleteRequirement = useCallback(
     async (requirementId) => {
       const toastId = toast.loading("Eliminando requerimiento...", {
         icon: <Spinner size="sm" />,
@@ -400,6 +401,65 @@ export default function ReqIdentificationRequirements() {
       }
     },
     [id, deleteRequirement]
+  );
+
+
+  const handleDeleteLegalBasis = useCallback(
+    async (requirementId, legalBasisId) => {
+      const toastId = toast.loading("Eliminando fundamento legal...", {
+        icon: <Spinner size="sm" />,
+        progressStyle: {
+          background: "#113c53",
+        },
+      });
+      try {
+        const { success, error } = await deleteLegalBasis(id, requirementId, legalBasisId);
+        if (success) {
+          toast.update(toastId, {
+            render: "Fundamento legal eliminado con éxito",
+            type: "info",
+            icon: <img src={check} alt="Success Icon" />,
+            progressStyle: {
+              background: "#113c53",
+            },
+            isLoading: false,
+            autoClose: 3000,
+          });
+        } else {
+          toast.update(toastId, {
+            render: (
+              <div
+                style={{
+                  maxHeight: 200,
+                  overflowY: "auto",
+                  whiteSpace: "pre-wrap",
+                }}
+              >
+                {error}
+              </div>
+            ),
+            className: "toast-scroll-red",
+            type: "error",
+            icon: null,
+            progressStyle: {},
+            isLoading: false,
+            autoClose: 5000,
+          });
+        }
+      } catch (error) {
+        console.error(error);
+        toast.update(toastId, {
+          render:
+            "Algo mal sucedió al eliminar el fundamento legal. Intente de nuevo.",
+          type: "error",
+          icon: null,
+          progressStyle: {},
+          isLoading: false,
+          autoClose: 5000,
+        });
+      }
+    },
+    [id, deleteLegalBasis]
   );
 
   if (
@@ -509,7 +569,8 @@ export default function ReqIdentificationRequirements() {
                         columns={columns}
                         openModalDescription={openModalDescription}
                         openEditRequirmentModal={openEditRequirmentModal}
-                        handleDelete={handleDelete}
+                        handleDeleteRequirement={handleDeleteRequirement}
+                        handleDeleteLegalBasis={handleDeleteLegalBasis}
                       />
                     ))
                   )}

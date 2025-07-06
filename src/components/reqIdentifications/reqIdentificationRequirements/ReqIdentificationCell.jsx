@@ -34,7 +34,8 @@ import link_blue_icon from "../../../assets/enlace_blue.png";
  * @param {Array} props.columns - The table column configuration.
  * @param {Function} props.openModalDescription - Callback to open a modal showing description content.
  * @param {Function} props.openEditRequirmentModal - Callback to open the edit modal.
- * @param {Function} props.handleDelete - Callback to handle delete action.
+ * @param {Function} props.handleDeleteRequirement - Callback to handle delete requirement action.
+ * @param {Function} props.handleDeleteLegalBasis - Callback to handle delete legal basis action.
  * @returns {JSX.Element} Rendered table row with collapsible content.
  */
 export default function ReqIdentificationCell({
@@ -42,7 +43,8 @@ export default function ReqIdentificationCell({
   columns,
   openModalDescription,
   openEditRequirmentModal,
-  handleDelete,
+  handleDeleteRequirement,
+  handleDeleteLegalBasis
 }) {
   const {
     requirement,
@@ -224,7 +226,7 @@ export default function ReqIdentificationCell({
                     startContent={
                       <img src={delete_icon} alt="Delete" className="w-4 h-4" />
                     }
-                    onPress={() => handleDelete(requirement.id)}
+                    onPress={() => handleDeleteRequirement(requirement.id)}
                     className="hover:bg-red/20"
                   >
                     <p className="font-normal text-red">
@@ -248,7 +250,7 @@ export default function ReqIdentificationCell({
       openModalDescription,
       isExpanded,
       openEditRequirmentModal,
-      handleDelete,
+      handleDeleteRequirement,
     ]
   );
 
@@ -314,7 +316,7 @@ export default function ReqIdentificationCell({
               </div>
               <Collapse in={showLegalBasis} timeout="auto" unmountOnExit>
                 <Box sx={{ marginTop: 2 }}>
-                  <LegalBasisTable legalBasis={legalBasis} />
+                  <LegalBasisTable requirement={requirement} legalBasis={legalBasis} handleDeleteLegalBasis={handleDeleteLegalBasis} />
                 </Box>
               </Collapse>
             </Box>
@@ -337,5 +339,6 @@ ReqIdentificationCell.propTypes = {
   columns: PropTypes.array.isRequired,
   openModalDescription: PropTypes.func.isRequired,
   openEditRequirmentModal: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func.isRequired,
+  handleDeleteRequirement: PropTypes.func.isRequired,
+  handleDeleteLegalBasis: PropTypes.func.isRequired
 };
