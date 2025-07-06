@@ -32,7 +32,9 @@ export default async function deleteLegalBasisFromRequirementInReqIdentification
     );
 
     if (response.status !== 204) {
-      throw new Error("Failed to delete legal basis from requirement identification");
+      throw new Error(
+        "Failed to delete legal basis from requirement identification"
+      );
     }
   } catch (error) {
     console.error("Error deleting legal basis:", error);

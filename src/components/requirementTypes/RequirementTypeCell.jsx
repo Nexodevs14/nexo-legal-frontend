@@ -84,7 +84,7 @@ const RequirementTypeCell = ({
                   className="hover:bg-primary/20"
                   onPress={() => openEditModal(requirement_type)}
                 >
-                  <span className="text-primary">Editar tipo de requerimiento</span>
+                  <span className="text-primary">Editar Tipo de Requerimiento</span>
                 </DropdownItem>
                 <DropdownItem
                   key="delete"
@@ -93,7 +93,7 @@ const RequirementTypeCell = ({
                   className="hover:bg-red/20"
                   onPress={() => handleDelete(requirement_type.id)}
                 >
-                  <span className="text-red">Eliminar tipo de requerimiento</span>
+                  <span className="text-red">Eliminar Tipo de Requerimiento</span>
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>

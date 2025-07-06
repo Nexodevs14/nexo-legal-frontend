@@ -47,14 +47,15 @@ export default function useReqIdentificationRequirements() {
       legalVerbs,
     }) => {
       try {
-        const reqIdentificationRequirement = await addRequirementToReqIdentification({
-          reqIdentificationId,
-          requirementId,
-          requirementName,
-          requirementTypeIds,
-          legalVerbs,
-          token: jwt,
-        });
+        const reqIdentificationRequirement =
+          await addRequirementToReqIdentification({
+            reqIdentificationId,
+            requirementId,
+            requirementName,
+            requirementTypeIds,
+            legalVerbs,
+            token: jwt,
+          });
         setReqIdentificationRequirements((prev) => [
           reqIdentificationRequirement,
           ...prev,
@@ -115,13 +116,13 @@ export default function useReqIdentificationRequirements() {
   );
 
   /**
- * Fetches all requirements associated with a given requirement identification.
- *
- * @async
- * @function fetchAllRequirementsFromReqIdentification
- * @param {number} reqIdentificationId - The ID of the requirement identification.
- * @returns {Promise<void>}
- */
+   * Fetches all requirements associated with a given requirement identification.
+   *
+   * @async
+   * @function fetchAllRequirementsFromReqIdentification
+   * @param {number} reqIdentificationId - The ID of the requirement identification.
+   * @returns {Promise<void>}
+   */
   const fetchRequirements = useCallback(
     async (reqIdentificationId) => {
       setState({ loading: true, error: null });
@@ -153,7 +154,6 @@ export default function useReqIdentificationRequirements() {
     },
     [jwt]
   );
-
 
   /**
    * Fetches requirements from a requirement identification filtered by requirement name.
@@ -300,17 +300,20 @@ export default function useReqIdentificationRequirements() {
       legalVerbs,
     }) => {
       try {
-        const reqIdentificationRequirement = await editRequirementFromReqIdentification({
-          reqIdentificationId,
-          requirementId,
-          requirementName,
-          requirementTypeIds,
-          legalVerbs,
-          token: jwt,
-        });
+        const reqIdentificationRequirement =
+          await editRequirementFromReqIdentification({
+            reqIdentificationId,
+            requirementId,
+            requirementName,
+            requirementTypeIds,
+            legalVerbs,
+            token: jwt,
+          });
         setReqIdentificationRequirements((prev) =>
           prev.map((req) =>
-            req.requirement.id === requirementId ? reqIdentificationRequirement : req
+            req.requirement.id === requirementId
+              ? reqIdentificationRequirement
+              : req
           )
         );
         return { success: true };
@@ -371,20 +374,20 @@ export default function useReqIdentificationRequirements() {
   );
 
   /**
- * Adds a legal basis to a specific requirement in a requirement identification.
- *
- * @async
- * @function addLegalBasis
- * @param {Object} params - Parameters for the association.
- * @param {number} params.reqIdentificationId - The ID of the requirement identification.
- * @param {number} params.requirementId - The ID of the requirement.
- * @param {number} params.legalBasisId - The ID of the legal basis to associate.
- * @returns {Promise<{ success: true, data: Object } | { success: false, error: string }>}
- */
+   * Adds a legal basis to a specific requirement in a requirement identification.
+   *
+   * @async
+   * @function addLegalBasis
+   * @param {Object} params - Parameters for the association.
+   * @param {number} params.reqIdentificationId - The ID of the requirement identification.
+   * @param {number} params.requirementId - The ID of the requirement.
+   * @param {number} params.legalBasisId - The ID of the legal basis to associate.
+   * @returns {Promise<{ success: true, data: Object } | { success: false, error: string }>}
+   */
   const addLegalBasis = useCallback(
     async ({ reqIdentificationId, requirementId, legalBasisId }) => {
       try {
-        const updatedRequirement =
+        const reqIdentificationRequirement =
           await addLegalBasisToRequirementInReqIdentification({
             reqIdentificationId,
             requirementId,
@@ -394,11 +397,12 @@ export default function useReqIdentificationRequirements() {
 
         setReqIdentificationRequirements((prev) =>
           prev.map((req) =>
-            req.requirement.id === requirementId ? updatedRequirement : req
+            req.requirement.id === requirementId
+              ? reqIdentificationRequirement
+              : req
           )
         );
-
-        return { success: true, data: updatedRequirement };
+        return { success: true, data: reqIdentificationRequirement };
       } catch (error) {
         const errorCode = error.response?.status;
         const serverMessage = error.response?.data?.message;
@@ -416,6 +420,7 @@ export default function useReqIdentificationRequirements() {
     },
     [jwt]
   );
+
   /**
    * Deletes a legal basis from a specific requirement in a requirement identification.
    *
@@ -436,21 +441,18 @@ export default function useReqIdentificationRequirements() {
           legalBasisId,
           token: jwt,
         });
-
-        // Puedes volver a cargar el requirement completo si deseas mantenerlo actualizado
-        const { success, data } = await fetchRequirement(
-          reqIdentificationId,
-          requirementId
+        setReqIdentificationRequirements((prev) =>
+          prev.map((req) =>
+            req.requirement.id === requirementId
+              ? {
+                  ...req,
+                  legalBasis: req.legalBasis.filter(
+                    (lb) => lb.legalBasis.id !== legalBasisId
+                  ),
+                }
+              : req
+          )
         );
-
-        if (success) {
-          setReqIdentificationRequirements((prev) =>
-            prev.map((req) =>
-              req.requirement.id === requirementId ? data : req
-            )
-          );
-        }
-
         return { success: true };
       } catch (error) {
         const errorCode = error.response?.status;
@@ -467,7 +469,7 @@ export default function useReqIdentificationRequirements() {
         return { success: false, error: handledError.message };
       }
     },
-    [jwt, fetchRequirement]
+    [jwt]
   );
 
   return {

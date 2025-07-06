@@ -198,7 +198,7 @@ export default function ReqIdentificationCell({
                     textValue="Asociar Fundamento Legal"
                   >
                     <p className="font-normal text-primary">
-                      Asociar Fundamento Legal
+                      Asociar Fundamento
                     </p>
                   </DropdownItem>
                   <DropdownItem
