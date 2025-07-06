@@ -36,9 +36,12 @@ import check from "../../../assets/check.png";
  * @param {Function} props.config.setRequirementInputError - Setter for requirement field error.
  * @param {Function} props.config.handleRequirementChange - Handler for selecting a requirement.
  * @param {Function} props.config.handleRequirementTypesChange - Handler for selecting requirement types.
+ * @param {Object} props.config.legalVerbsInputErrors - Object containing errors for legal verb translations.
+ * @param {Function} props.config.setLegalVerbsInputErrors - Setter for legal verb
  * @param {Array<Object>} props.config.requirements - List of available base requirements.
  * @param {Array<Object>} props.config.requirementTypes - List of available requirement types.
- * @param {Function} props.config.setFormDataRequirement - Setter for form data related to requirements.
+ * @param {Function} props.config.handleRemoveLegalVerb - Handler to remove a legal verb from the form.
+ *
  *
  * @returns {JSX.Element} Rendered modal component.
  */
@@ -61,7 +64,7 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
     handleLegalVerbTranslationChange,
     requirements,
     requirementTypes,
-    setFormDataRequirement,
+    handleRemoveLegalVerb,
   } = config;
   const [isLoading, setIsLoading] = useState(false);
 
@@ -82,21 +85,35 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
     } else {
       setRequirementInputError(null);
     }
-    if (!formData.legalVerbs) {
-      setLegalVerbsInputErrors("Debes seleccionar un requerimiento.");
+
+    const newLegalVerbsInputErrors = {}; 
+    formData.legalVerbs.forEach((verb) => {
+      if (verb.translation.trim() === "") {
+        newLegalVerbsInputErrors[verb.id] = "Este campo es obligatorio. Si no aplica, Por favor, elimína este campo.";
+      } else {
+        if (legalVerbsInputErrors?.[verb.id]) {
+          delete newLegalVerbsInputErrors[verb.id];
+        }
+      }
+    });
+
+    if (Object.keys(newLegalVerbsInputErrors).length > 0) {
+      setLegalVerbsInputErrors(newLegalVerbsInputErrors);
       setIsLoading(false);
       return;
-    } else {
-      setLegalVerbsInputErrors(null);
     }
-
     try {
       const requirementData = {
         reqIdentificationId: Number(formData.reqIdentificationId),
         requirementId: Number(formData.requirement),
         requirementName: formData.requirementName,
         requirementTypeIds: formData.requirementTypeIds.map(Number),
-        legalVerbs: [],
+        legalVerbs: formData.legalVerbs
+          .filter((verb) => verb.translation.trim() !== "")
+          .map((verb) => ({
+            id: verb.id,
+            translation: verb.translation,
+          })),
       };
       const { success, error } = await addRequirement(requirementData);
       if (success) {
@@ -127,13 +144,6 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleRemoveLegalVerb = (id) => {
-    setFormDataRequirement((prev) => ({
-      ...prev,
-      legalVerbs: prev.legalVerbs.filter((verb) => verb.id !== id),
-    }));
   };
 
   return (
@@ -311,12 +321,12 @@ CreateReqIdentificationRequirementModal.propTypes = {
     setRequirementInputError: PropTypes.func.isRequired,
     handleRequirementChange: PropTypes.func.isRequired,
     handleRequirementTypesChange: PropTypes.func.isRequired,
-    legalVerbsInputErrors: PropTypes.string,
+    legalVerbsInputErrors: PropTypes.object,
     setLegalVerbsInputErrors: PropTypes.func.isRequired,
     handleLegalVerbTranslationChange: PropTypes.func.isRequired,
     requirements: PropTypes.array,
     requirementTypes: PropTypes.array,
-    setFormDataRequirement: PropTypes.func.isRequired,
+    handleRemoveLegalVerb: PropTypes.func.isRequired,
   }).isRequired,
 };
 

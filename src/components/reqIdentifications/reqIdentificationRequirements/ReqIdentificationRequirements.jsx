@@ -96,7 +96,6 @@ export default function ReqIdentificationRequirements() {
     requirementName: "",
     requirementTypeIds: [],
     legalVerbs: [],
-
   });
 
   useEffect(() => {
@@ -201,7 +200,7 @@ export default function ReqIdentificationRequirements() {
   );
 
   const openModalCreateRequirement = () => {
-    const initialVerbs = legalVerbs.map((verb) => ({
+    const initialLegalVerbs = legalVerbs.map((verb) => ({
       id: verb.id,
       name: verb.name,
       translation: "",
@@ -212,17 +211,29 @@ export default function ReqIdentificationRequirements() {
       requirement: null,
       requirementName: "",
       requirementTypeIds: [],
-      legalVerbs: initialVerbs,
+      legalVerbs: initialLegalVerbs,
     });
 
     setIsCreateModalRequirementOpen(true);
   };
 
+  const handleRemoveLegalVerb = (id) => {
+    setFormDataRequirement((prev) => ({
+      ...prev,
+      legalVerbs: prev.legalVerbs.filter((verb) => verb.id !== id),
+    }));
+    setLegalVerbsInputErrors((prevErrors) => {
+      const newErrors = { ...prevErrors };
+      delete newErrors[id];
+      return Object.keys(newErrors).length > 0 ? newErrors : null;
+    });
+  };
 
   const closeModalCreateRequirement = () => {
     setIsCreateModalRequirementOpen(false);
     setRequirementNameInputError(null);
     setRequirementTypesInputError(null);
+    setLegalVerbsInputErrors(null);
   };
 
   const handleRequirementNameChange = useCallback(
@@ -284,26 +295,26 @@ export default function ReqIdentificationRequirements() {
     ]
   );
 
-  const handleLegalVerbTranslationChange = useCallback((id, value) => {
-    setFormDataRequirement((prev) => ({
-      ...prev,
-      legalVerbs: prev.legalVerbs.map((verb) =>
-        verb.id === id ? { ...verb, translation: value } : verb
-      ),
-    }));
+  const handleLegalVerbTranslationChange = useCallback(
+    (id, value) => {
+      setFormDataRequirement((prev) => ({
+        ...prev,
+        legalVerbs: prev.legalVerbs.map((verb) =>
+          verb.id === id ? { ...verb, translation: value } : verb
+        ),
+      }));
 
-    setLegalVerbsInputErrors((prevErrors) => {
-      if (prevErrors?.[id] && value.trim() !== "") {
-        const newErrors = { ...prevErrors };
-        delete newErrors[id];
-        return Object.keys(newErrors).length > 0 ? newErrors : null;
-      }
-      return prevErrors;
-    });
-  }, [setFormDataRequirement, setLegalVerbsInputErrors]);
-
-
-
+      setLegalVerbsInputErrors((prevErrors) => {
+        if (prevErrors?.[id] && value.trim() !== "") {
+          const newErrors = { ...prevErrors };
+          delete newErrors[id];
+          return Object.keys(newErrors).length > 0 ? newErrors : null;
+        }
+        return prevErrors;
+      });
+    },
+    [setFormDataRequirement, setLegalVerbsInputErrors]
+  );
 
   const openModalDescription = (requirement, field, title) => {
     setSelectedRequirement({
@@ -376,7 +387,12 @@ export default function ReqIdentificationRequirements() {
     [id, deleteRequirement]
   );
 
-  if (loading && isFirstRender || requirementsLoading || requirementTypesLoading) {
+  if (
+    (loading && isFirstRender) ||
+    requirementsLoading ||
+    requirementTypesLoading ||
+    legalVerbsLoading
+  ) {
     return (
       <div
         role="status"
@@ -392,10 +408,23 @@ export default function ReqIdentificationRequirements() {
 
   if (error) return <Error title={error.title} message={error.message} />;
   if (requirementError)
-    return <Error title={requirementError.title} message={requirementError.message} />;
+    return (
+      <Error
+        title={requirementError.title}
+        message={requirementError.message}
+      />
+    );
   if (requirementTypeError)
-    return <Error title={requirementTypeError.title} message={requirementTypeError.message
-    } />;
+    return (
+      <Error
+        title={requirementTypeError.title}
+        message={requirementTypeError.message}
+      />
+    );
+  if (legalVerbsError)
+    return (
+      <Error title={legalVerbsError.title} message={legalVerbsError.message} />
+    );
   if (reqIdentificationError)
     return (
       <Error
@@ -406,110 +435,105 @@ export default function ReqIdentificationRequirements() {
 
   return (
     <div className="mt-24 mb-4 -ml-60 mr-4 lg:-ml-0 lg:mr-0 xl:-ml-0 xl:mr-0 flex justify-center items-center flex-wrap">
-        <>
-          <TopContent
+      <>
+        <TopContent
+          config={{
+            reqIdentification: reqIdentification,
+            filterByRequirementName: filterByRequirementName,
+            filterByLegalBasisName: filterByLegalBasisName,
+            filterByName: filterByName,
+            onFilterByRequirementName: handleFilterByRequirementName,
+            onFilterByName: handleFilterByName,
+            onFilterByLegalBasisName: handleFilterByLegalBasisName,
+            onClear: handleClear,
+            totalRequirements: reqIdentificationRequirements.length,
+            openModalCreateRequirement: openModalCreateRequirement,
+          }}
+        />
+
+        {isSearching || loading ? (
+          <div
+            role="status"
+            className="flex justify-center items-center w-full h-40"
+          >
+            <Spinner className="h-10 w-10" color="secondary" />
+          </div>
+        ) : (
+          <div className="w-full rounded-xl border border-gray-200 shadow-sm overflow-x-hidden overflow-y-hidden">
+            <div className="w-full overflow-x-auto overflow-y-hidden rounded-xl border border-gray-200 shadow-sm">
+              <table className="min-w-full text-sm text-left divide-y divide-gray-200">
+                <thead className="bg-gray-100 text-gray-500">
+                  <tr>
+                    {columns.map((col) => (
+                      <th
+                        key={col.uid}
+                        className={`px-4 py-3 font-semibold text-xs tracking-wide whitespace-nowrap text-${col.align}`}
+                      >
+                        {col.name}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {reqIdentificationRequirements.length === 0 ? (
+                    <tr>
+                      <td
+                        colSpan={columns.length}
+                        className="text-center py-24 text-base text-gray-500"
+                      >
+                        No hay requerimientos disponibles.
+                      </td>
+                    </tr>
+                  ) : (
+                    reqIdentificationRequirements.map((requirement) => (
+                      <ReqIdentificationCell
+                        key={requirement.requirement.id}
+                        reqIdentificatioRequirement={requirement}
+                        columns={columns}
+                        openModalDescription={openModalDescription}
+                        handleDelete={handleDelete}
+                      />
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+        {selectedRequirement && (
+          <DescriptionModal
+            isOpen={showDescriptionModal}
+            onClose={closeModalDescription}
+            title={selectedRequirement?.title || ""}
+            description={selectedRequirement?.description || ""}
+          />
+        )}
+        {isCreateModalRequirementOpen && (
+          <CreateReqIdentificationRequirementModal
             config={{
-              reqIdentification: reqIdentification,
-              filterByRequirementName: filterByRequirementName,
-              filterByLegalBasisName: filterByLegalBasisName,
-              filterByName: filterByName,
-              onFilterByRequirementName: handleFilterByRequirementName,
-              onFilterByName: handleFilterByName,
-              onFilterByLegalBasisName: handleFilterByLegalBasisName,
-              onClear: handleClear,
-              totalRequirements: reqIdentificationRequirements.length,
-              openModalCreateRequirement: openModalCreateRequirement,
+              isOpen: isCreateModalRequirementOpen,
+              closeModalCreate: closeModalCreateRequirement,
+              formData: formDataRequirement,
+              addRequirement: addRequirement,
+              requirementNameInputError: requirementNameInputError,
+              setRequirementNameInputError: setRequirementNameInputError,
+              handleRequirementNameChange: handleRequirementNameChange,
+              requirementInputError: requirementInputError,
+              setRequirementInputError: setRequirementInputError,
+              handleRequirementChange: handleRequirementChange,
+              handleRequirementTypesChange: handleRequirementTypesChange,
+              legalVerbsInputErrors: legalVerbsInputErrors,
+              setLegalVerbsInputErrors: setLegalVerbsInputErrors,
+              handleLegalVerbTranslationChange:
+                handleLegalVerbTranslationChange,
+              requirements: requirements,
+              requirementTypes: requirementTypes,
+              handleRemoveLegalVerb: handleRemoveLegalVerb,
             }}
           />
-
-          {isSearching || loading ? (
-            <div
-              role="status"
-              className="flex justify-center items-center w-full h-40"
-            >
-              <Spinner className="h-10 w-10" color="secondary" />
-            </div>
-          ) : (
-            <div className="w-full rounded-xl border border-gray-200 shadow-sm overflow-x-hidden overflow-y-hidden">
-              <div className="w-full overflow-x-auto overflow-y-hidden rounded-xl border border-gray-200 shadow-sm">
-                <table className="min-w-full text-sm text-left divide-y divide-gray-200">
-                  <thead className="bg-gray-100 text-gray-500">
-                    <tr>
-                      {columns.map((col) => (
-                        <th
-                          key={col.uid}
-                          className={`px-4 py-3 font-semibold text-xs tracking-wide whitespace-nowrap text-${col.align}`}
-                        >
-                          {col.name}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {reqIdentificationRequirements.length === 0 ? (
-                      <tr>
-                        <td
-                          colSpan={columns.length}
-                          className="text-center py-24 text-base text-gray-500"
-                        >
-                          No hay requerimientos disponibles.
-                        </td>
-                      </tr>
-                    ) : (
-                      reqIdentificationRequirements.map((requirement) => (
-                        <ReqIdentificationCell
-                          key={requirement.requirement.id}
-                          reqIdentificatioRequirement={requirement}
-                          columns={columns}
-                          openModalDescription={openModalDescription}
-                          handleDelete={handleDelete}
-                        />
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-          {selectedRequirement && (
-            <DescriptionModal
-              isOpen={showDescriptionModal}
-              onClose={closeModalDescription}
-              title={selectedRequirement?.title || ""}
-              description={selectedRequirement?.description || ""}
-            />
-          )}
-          {isCreateModalRequirementOpen && (
-            <CreateReqIdentificationRequirementModal
-              config={{
-                isOpen: isCreateModalRequirementOpen,
-                closeModalCreate: closeModalCreateRequirement,
-                formData: formDataRequirement,
-                addRequirement: addRequirement,
-                setFormDataRequirement: setFormDataRequirement,
-                requirementNameInputError: requirementNameInputError,
-                setRequirementNameInputError: setRequirementNameInputError,
-                handleRequirementNameChange: handleRequirementNameChange,
-                requirementInputError: requirementInputError,
-                setRequirementInputError: setRequirementInputError,
-                legalVerbsInputErrors: legalVerbsInputErrors,
-                setLegalVerbsInputErrors: setLegalVerbsInputErrors,
-                handleRequirementChange: handleRequirementChange,
-                handleRequirementTypesChange: handleRequirementTypesChange,
-                handleLegalVerbTranslationChange: handleLegalVerbTranslationChange,
-                requirements: requirements,
-                requirementsLoading: requirementsLoading,
-                requirementError: requirementError,
-                requirementTypes: requirementTypes,
-                requirementTypesLoading: requirementTypesLoading,
-                requirementTypeError: requirementTypeError,
-                legalVerbsLoading: legalVerbsLoading,
-                legalVerbsError: legalVerbsError,
-              }}
-            />
-          )}
-        </>
+        )}
+      </>
     </div>
   );
 }
