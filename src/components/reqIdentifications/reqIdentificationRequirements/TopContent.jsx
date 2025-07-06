@@ -23,6 +23,7 @@ import download_icon from "../../../assets/descargar_white.png";
  * @param {Function} props.config.onFilterByLegalBasisName - Handler for changing legal basis name filter.
  * @param {Function} props.config.onClear - Clears all filters.
  * @param {number} props.config.totalRequirements - Total number of filtered requirements.
+ * @param  {Function} props.config.openModalCreateRequirement - Function to open the create requirement modal.
  *
  * @returns {JSX.Element} Rendered TopContent component.
  */
@@ -37,6 +38,7 @@ function TopContent({ config }) {
     onFilterByLegalBasisName,
     onClear,
     totalRequirements,
+    openModalCreateRequirement
   } = config;
   const navigate = useNavigate();
 
@@ -132,6 +134,7 @@ function TopContent({ config }) {
                   className="w-4 h-4 flex-shrink-0"
                 />
               }
+              onPress={openModalCreateRequirement}
             >
               Nuevo Requerimiento
             </Button>
@@ -166,6 +169,7 @@ TopContent.propTypes = {
     onFilterByLegalBasisName: PropTypes.func.isRequired,
     onClear: PropTypes.func.isRequired,
     totalRequirements: PropTypes.number.isRequired,
+    openModalCreateRequirement: PropTypes.func.isRequired,
   }).isRequired,
 };
 

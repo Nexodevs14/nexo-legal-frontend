@@ -319,6 +319,6 @@ ReqIdentificationCell.propTypes = {
   }).isRequired,
   columns: PropTypes.array.isRequired,
   openModalDescription: PropTypes.func.isRequired,
-  openEditModal: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func.isRequired,
+  //openEditModal: PropTypes.func.isRequired,
+  //handleDelete: PropTypes.func.isRequired,
 };

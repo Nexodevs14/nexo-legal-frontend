@@ -4,11 +4,14 @@ import { Spinner } from "@heroui/react";
 import TopContent from "./TopContent";
 import useReqIdentifications from "../../../hooks/reqIdentifications/useReqIdentifications";
 import useReqIdentificationRequirements from "../../../hooks/reqIdentifications/useReqIdentificationRequirements";
+import useRequirements from "../../../hooks/requirement/useRequirements";
+import useRequirementTypes from "../../../hooks/requirementTypes/useRequirementTypes";
 import DescriptionModal from "../../requirements/TextArea/DescriptionModal";
 import Error from "../../utils/Error";
 import ReqIdentificationCell from "./ReqIdentificationCell";
 import check from "../../../assets/check.png";
 import { toast } from "react-toastify";
+import CreateReqIdentificationRequirementModal from "./CreateRequirementModal"
 
 const columns = [
   { name: "", uid: "expand", align: "center" },
@@ -46,22 +49,45 @@ export default function ReqIdentificationRequirements() {
     reqIdentificationRequirements,
     loading,
     error,
+    addRequirement,
     fetchRequirements,
     fetchRequirementsByName,
     fetchRequirementsByRequirementName,
     fetchRequirementsByLegalBasisName,
-    deleteRequirement,
+    deleteRequirement
   } = useReqIdentificationRequirements();
+  const {
+    requirements,
+    loading: requirementsLoading,
+    error: requirementError,
+  } = useRequirements();
+  const {
+    requirementTypes,
+    loading: requirementTypesLoading,
+    error: requirementTypeError,
+  } = useRequirementTypes();
   const [reqIdentification, setReqIdentification] = useState(null);
   const [reqIdentificationError, setReqIdentificationError] = useState(null);
   const [isFirstRender, setIsFirstRender] = useState(true);
+  const [requirementNameInputError, setRequirementNameInputError] = useState(null)
+  const [requirementInputError, setRequirementInputError] = useState(null)
+  const [requirementTypesInputError, setRequirementTypesInputError] = useState(null);
   const [filterByName, setFilterByName] = useState("");
   const [filterByRequirementName, setFilterByRequirementName] = useState("");
   const [filterByLegalBasisName, setFilterByLegalBasisName] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const debounceTimeout = useRef(null);
+  const [isCreateModalRequirementOpen, setIsCreateModalRequirementOpen] = useState(false);
   const [selectedRequirement, setSelectedRequirement] = useState(null);
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
+  const [formDataRequirement, setFormDataRequirement] = useState({
+    reqIdentificationId: null,
+    requirement: null,
+    requirementName: "",
+    requirementTypeIds: [],
+    legalVerbs: new Set()
+
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -162,6 +188,77 @@ export default function ReqIdentificationRequirements() {
       handleFilter("legalBasisName", value);
     },
     [handleClear, handleFilter]
+  );
+  
+  const openModalCreateRequirement = () => {
+    setFormDataRequirement({
+      reqIdentificationId: id,
+      requirement: null,
+      requirementName: "",
+      requirementTypeIds: [],
+      legalVerbs: new Set()
+    });
+    setIsCreateModalRequirementOpen(true);
+  };
+
+  const closeModalCreateRequirement = () => {
+    setIsCreateModalRequirementOpen(false);
+    setRequirementNameInputError(null);
+    setRequirementTypesInputError(null);
+  };
+
+  const handleRequirementNameChange = useCallback(
+    (e) => {
+      const { value } = e.target;
+      setFormDataRequirement((prevFormData) => ({
+        ...prevFormData,
+        requirementName: value,
+      }));
+      if (requirementNameInputError && value.trim() !== "") {
+        setRequirementNameInputError(null);
+      }
+    },
+    [requirementNameInputError, setRequirementNameInputError, setFormDataRequirement]
+  );
+
+  const handleRequirementChange = useCallback((value) => {
+    if (!value) {
+      setFormDataRequirement((prevFormData) => ({
+        ...prevFormData,
+        requirement: null
+      }));
+      if (requirementInputError) {
+        setRequirementInputError(null);
+      }
+      return;
+    }
+    setFormDataRequirement((prevFormData) => ({
+      ...prevFormData,
+      requirement: value
+    }));
+    if (requirementInputError && value.trim() !== "") {
+      setRequirementInputError(null);
+    }
+  },
+    [
+      requirementInputError,
+      setRequirementInputError,
+      setFormDataRequirement
+    ]
+  );
+
+  const handleRequirementTypesChange = useCallback(
+    (selectedIds) => {
+      setFormDataRequirement((prevFormData) => ({
+        ...prevFormData,
+        requirementTypeIds: Array.from(selectedIds),
+      }));
+
+      if (requirementTypesInputError && selectedIds.size > 0) {
+        setRequirementTypesInputError(null);
+      }
+    },
+    [requirementTypesInputError, setFormDataRequirement, setRequirementTypesInputError]
   );
 
   const openModalDescription = (requirement, field, title) => {
@@ -271,6 +368,7 @@ export default function ReqIdentificationRequirements() {
               onFilterByLegalBasisName: handleFilterByLegalBasisName,
               onClear: handleClear,
               totalRequirements: reqIdentificationRequirements.length,
+              openModalCreateRequirement: openModalCreateRequirement
             }}
           />
 
@@ -331,6 +429,29 @@ export default function ReqIdentificationRequirements() {
               onClose={closeModalDescription}
               title={selectedRequirement?.title || ""}
               description={selectedRequirement?.description || ""}
+            />
+          )}
+          {isCreateModalRequirementOpen && (
+            <CreateReqIdentificationRequirementModal
+              config={{
+                isOpen: isCreateModalRequirementOpen,
+                closeModalCreate: closeModalCreateRequirement,
+                formData: formDataRequirement,
+                addRequirement: addRequirement,
+                requirementNameInputError: requirementNameInputError,
+                setRequirementNameInputError: setRequirementNameInputError,
+                handleRequirementNameChange: handleRequirementNameChange,
+                requirementInputError: requirementInputError,
+                setRequirementInputError: setRequirementInputError,
+                handleRequirementChange: handleRequirementChange, 
+                handleRequirementTypesChange: handleRequirementTypesChange,
+                requirements: requirements,
+                requirementsLoading: requirementsLoading,
+                requirementError: requirementError,
+                requirementTypes: requirementTypes,
+                requirementTypesLoading: requirementTypesLoading,
+                requirementTypeError: requirementTypeError,
+              }}
             />
           )}
         </>
