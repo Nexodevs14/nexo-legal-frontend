@@ -86,7 +86,7 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
       setRequirementInputError(null);
     }
 
-    const newLegalVerbsInputErrors = {}; 
+    const newLegalVerbsInputErrors = {};
     formData.legalVerbs.forEach((verb) => {
       if (verb.translation.trim() === "") {
         newLegalVerbsInputErrors[verb.id] = "Este campo es obligatorio. Si no aplica, Por favor, elimína este campo.";
@@ -117,7 +117,7 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
       };
       const { success, error } = await addRequirement(requirementData);
       if (success) {
-        toast.info("El requerimiento ha sido asociado correctamente", {
+        toast.info("El requerimiento asociado ha sido creado correctamente", {
           icon: () => <img src={check} alt="Success Icon" />,
           progressStyle: { background: "#113c53" },
         });
@@ -139,7 +139,7 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
     } catch (error) {
       console.error(error);
       toast.error(
-        "Hubo un error al asociado el requerimiento. Intente de nuevo."
+        "Hubo un error al crear el requerimiento asociado. Intente de nuevo."
       );
     } finally {
       setIsLoading(false);
@@ -243,7 +243,11 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
                     onChange={(e) =>
                       handleLegalVerbTranslationChange(verb.id, e.target.value)
                     }
-                    label={`Traducción del Verbo Legal: ${verb.name}`}
+                    label={
+                      <>
+                        Traducción del Verbo Legal: <strong>{verb.name}</strong>
+                      </>
+                    }
                     placeholder="Escribir traducción"
                     variant="bordered"
                     minRows={2}
@@ -253,6 +257,7 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
                         "resize-y min-h-[80px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                     }}
                   />
+
                   {legalVerbsInputErrors?.[verb.id] && (
                     <p className="mt-1 text-xs text-red">
                       {legalVerbsInputErrors[verb.id]}
@@ -268,7 +273,7 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
                   </button>
                 </div>
               ))}
-             <div className="sticky bottom-2  z-10 bg-whit px-0">
+              <div className="sticky bottom-2  z-10 bg-whit px-0">
                 <Button
                   type="submit"
                   color="primary"

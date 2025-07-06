@@ -150,7 +150,7 @@ const EditRequirementModal = ({ config }) => {
             };
             const { success, error } = await editRequirement(requirementData);
             if (success) {
-                toast.info("El requerimiento ha sido asociado correctamente", {
+                toast.info("El requerimiento asociado ha sido editado correctamente", {
                     icon: () => <img src={check} alt="Success Icon" />,
                     progressStyle: { background: "#113c53" },
                 });
@@ -172,7 +172,7 @@ const EditRequirementModal = ({ config }) => {
         } catch (error) {
             console.error(error);
             toast.error(
-                "Hubo un error al asociado el requerimiento. Intente de nuevo."
+                "Hubo un error al editar el requerimiento asociado. Intente de nuevo."
             );
         } finally {
             setIsLoading(false);
@@ -275,7 +275,11 @@ const EditRequirementModal = ({ config }) => {
                                         onChange={(e) =>
                                             handleLegalVerbTranslationChange(verb.id, e.target.value)
                                         }
-                                        label={`Traducción del Verbo Legal: ${verb.name}`}
+                                        label={
+                                            <>
+                                                Traducción del Verbo Legal: <strong>{verb.name}</strong>
+                                            </>
+                                        }
                                         placeholder="Escribir traducción"
                                         variant="bordered"
                                         minRows={2}
