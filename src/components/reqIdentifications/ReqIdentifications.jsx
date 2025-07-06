@@ -549,6 +549,15 @@ export default function ReqIdentification() {
           setCreationRangeError("");
         }
         const { start, end } = values;
+        setFilterByName("");
+        setFilterByDescription("");
+        setSelectedUser(null);
+        setSelectedStatus("");
+        setSelectedJurisdiction("");
+        setFilterByLegalBasisName("");
+        setFilterByRequirementName("");
+        resetSubjectAndAspects();
+        resetStatesAndMunicipalities();
         fetchReqIdentificationsByCreatedAt(start.toString(), end.toString());
         setCreationRange(values);
       } else {
@@ -558,7 +567,7 @@ export default function ReqIdentification() {
         setCreationRangeError("");
       }
     },
-    [fetchReqIdentificationsByCreatedAt, handleClear]
+    [fetchReqIdentificationsByCreatedAt, handleClear, resetSubjectAndAspects, resetStatesAndMunicipalities, setSelectedStatus]
   );
 
   const openEditModal = (reqIdentification) => {
@@ -619,14 +628,17 @@ export default function ReqIdentification() {
   const viewRequirementDetails = (reqIdentificationId) => {
     navigate(`/req_identifications/${reqIdentificationId}/requirements`);
   };
+
   const totalPages = useMemo(
     () => Math.ceil(reqIdentifications.length / rowsPerPage),
     [reqIdentifications, rowsPerPage]
   );
+
   const onRowsPerPageChange = useCallback((e) => {
     setRowsPerPage(Number(e.target.value));
     setPage(1);
   }, []);
+
   const openDeleteModal = () => setShowDeleteModal(true);
   const closeDeleteModal = () => setShowDeleteModal(false);
   const onPageChange = (newPage) => setPage(newPage);

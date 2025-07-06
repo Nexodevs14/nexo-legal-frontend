@@ -7,11 +7,13 @@ import useReqIdentificationRequirements from "../../../hooks/reqIdentifications/
 import DescriptionModal from "../../requirements/TextArea/DescriptionModal";
 import Error from "../../utils/Error";
 import ReqIdentificationCell from "./ReqIdentificationCell";
+import check from "../../../assets/check.png";
+import { toast } from "react-toastify";
 
 const columns = [
   { name: "", uid: "expand", align: "center" },
   { name: "Orden", uid: "requirement_number", align: "start" },
-  { name: "Nombre de Requerimiento", uid: "requirementName", align: "start" },
+  { name: "Nombre del Requerimiento", uid: "requirementName", align: "start" },
   { name: "Requerimiento", uid: "requirement_name", align: "start" },
   { name: "Condición", uid: "requirement_condition", align: "start" },
   { name: "Evidencia", uid: "evidence", align: "start" },
@@ -21,7 +23,7 @@ const columns = [
   {
     name: "Criterio de Aceptación",
     uid: "acceptance_criteria",
-    align: "start",
+    align: "center",
   },
   { name: "Acciones", uid: "actions", align: "center" },
 ];
@@ -47,12 +49,15 @@ export default function ReqIdentificationRequirements() {
     fetchRequirements,
     fetchRequirementsByName,
     fetchRequirementsByRequirementName,
+    fetchRequirementsByLegalBasisName,
+    deleteRequirement,
   } = useReqIdentificationRequirements();
   const [reqIdentification, setReqIdentification] = useState(null);
   const [reqIdentificationError, setReqIdentificationError] = useState(null);
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [filterByName, setFilterByName] = useState("");
-  const [filterByRequirement, setFilterByRequirement] = useState("");
+  const [filterByRequirementName, setFilterByRequirementName] = useState("");
+  const [filterByLegalBasisName, setFilterByLegalBasisName] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const debounceTimeout = useRef(null);
   const [selectedRequirement, setSelectedRequirement] = useState(null);
@@ -83,7 +88,8 @@ export default function ReqIdentificationRequirements() {
 
   const handleClear = useCallback(() => {
     setFilterByName("");
-    setFilterByRequirement("");
+    setFilterByRequirementName("");
+    setFilterByLegalBasisName("");
     fetchRequirements(id);
   }, [id, fetchRequirements]);
 
@@ -99,13 +105,21 @@ export default function ReqIdentificationRequirements() {
           case "requirementName":
             await fetchRequirementsByRequirementName(id, value);
             break;
+          case "legalBasisName":
+            await fetchRequirementsByLegalBasisName(id, value);
+            break;
           default:
             break;
         }
         setIsSearching(false);
       }, 500);
     },
-    [id, fetchRequirementsByName, fetchRequirementsByRequirementName]
+    [
+      id,
+      fetchRequirementsByName,
+      fetchRequirementsByRequirementName,
+      fetchRequirementsByLegalBasisName,
+    ]
   );
 
   const handleFilterByName = useCallback(
@@ -114,24 +128,40 @@ export default function ReqIdentificationRequirements() {
         handleClear();
         return;
       }
-      setFilterByRequirement("");
+      setFilterByRequirementName("");
+      setFilterByLegalBasisName("");
       setFilterByName(value);
       handleFilter("name", value);
     },
     [handleFilter, handleClear]
   );
 
-  const handleFilterByRequirement = useCallback(
+  const handleFilterByRequirementName = useCallback(
     (value) => {
       if (value.trim() === "") {
         handleClear();
         return;
       }
       setFilterByName("");
-      setFilterByRequirement(value);
+      setFilterByLegalBasisName("");
+      setFilterByRequirementName(value);
       handleFilter("requirementName", value);
     },
     [handleFilter, handleClear]
+  );
+
+  const handleFilterByLegalBasisName = useCallback(
+    (value) => {
+      if (value.trim() === "") {
+        handleClear();
+        return;
+      }
+      setFilterByName("");
+      setFilterByRequirementName("");
+      setFilterByLegalBasisName(value);
+      handleFilter("legalBasisName", value);
+    },
+    [handleClear, handleFilter]
   );
 
   const openModalDescription = (requirement, field, title) => {
@@ -147,6 +177,64 @@ export default function ReqIdentificationRequirements() {
     setSelectedRequirement(null);
   };
 
+  const handleDelete = useCallback(
+    async (requirementId) => {
+      const toastId = toast.loading("Eliminando requerimiento...", {
+        icon: <Spinner size="sm" />,
+        progressStyle: {
+          background: "#113c53",
+        },
+      });
+      try {
+        const { success, error } = await deleteRequirement(id, requirementId);
+        if (success) {
+          toast.update(toastId, {
+            render: "Requerimiento eliminado con éxito",
+            type: "info",
+            icon: <img src={check} alt="Success Icon" />,
+            progressStyle: {
+              background: "#113c53",
+            },
+            isLoading: false,
+            autoClose: 3000,
+          });
+        } else {
+          toast.update(toastId, {
+            render: (
+              <div
+                style={{
+                  maxHeight: 200,
+                  overflowY: "auto",
+                  whiteSpace: "pre-wrap",
+                }}
+              >
+                {error}
+              </div>
+            ),
+            className: "toast-scroll-red",
+            type: "error",
+            icon: null,
+            progressStyle: {},
+            isLoading: false,
+            autoClose: 5000,
+          });
+        }
+      } catch (error) {
+        console.error(error);
+        toast.update(toastId, {
+          render:
+            "Algo mal sucedió al eliminar el requerimiento. Intente de nuevo.",
+          type: "error",
+          icon: null,
+          progressStyle: {},
+          isLoading: false,
+          autoClose: 5000,
+        });
+      }
+    },
+    [id, deleteRequirement]
+  );
+
   if (loading && isFirstRender) {
     return (
       <div
@@ -161,7 +249,6 @@ export default function ReqIdentificationRequirements() {
     );
   }
 
-  console.log(error, reqIdentificationError)
   if (error) return <Error title={error.title} message={error.message} />;
 
   return (
@@ -176,10 +263,12 @@ export default function ReqIdentificationRequirements() {
           <TopContent
             config={{
               reqIdentification: reqIdentification,
-              filterByRequirement,
-              filterByName,
-              onFilterByRequirement: handleFilterByRequirement,
+              filterByRequirementName: filterByRequirementName,
+              filterByLegalBasisName: filterByLegalBasisName,
+              filterByName: filterByName,
+              onFilterByRequirementName: handleFilterByRequirementName,
               onFilterByName: handleFilterByName,
+              onFilterByLegalBasisName: handleFilterByLegalBasisName,
               onClear: handleClear,
               totalRequirements: reqIdentificationRequirements.length,
             }}
@@ -223,9 +312,11 @@ export default function ReqIdentificationRequirements() {
                       reqIdentificationRequirements.map((requirement) => (
                         <ReqIdentificationCell
                           key={requirement.requirement.id}
-                          item={requirement}
+                          reqIdentificatioRequirement={requirement}
                           columns={columns}
                           openModalDescription={openModalDescription}
+                          openEditModal={console.log("Editando...")}
+                          handleDelete={handleDelete}
                         />
                       ))
                     )}

@@ -165,7 +165,7 @@ const EditModal = ({ config }) => {
         evidence: selectedRequirement.evidence,
         specifyEvidence:
           selectedRequirement?.evidence === "Específica"
-            ? selectedRequirement?.specifyEvidence || ""
+            ? selectedRequirement?.specify_evidence || ""
             : null,
         periodicity: selectedRequirement.periodicity,
         acceptanceCriteria: selectedRequirement.acceptance_criteria,

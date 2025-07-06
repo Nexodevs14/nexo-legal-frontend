@@ -5,6 +5,7 @@ import getRequirementFromReqIdentification from "../../services/reqIdentificatio
 import getAllRequirementsFromReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/getAllRequirementsFromReqIdentification.js";
 import getRequirementsFromReqIdentificationByName from "../../services/reqIdentificationService/reqIdentificationRequirements/getRequirementsFromReqIdentificationByName.js";
 import getRequirementsFromReqIdentificationByRequirementName from "../../services/reqIdentificationService/reqIdentificationRequirements/getRequirementsFromReqIdentificationByRequirementName.js";
+import getRequirementsFromReqIdentificationByLegalBasisName from "../../services/reqIdentificationService/reqIdentificationRequirements/getRequirementsFromReqIdentificationByLegalBasisName.js";
 import editRequirementFromReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/editRequirementFromReqIdentification.js";
 import deleteRequirementFromReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/deleteRequirementFromReqIdentification.js";
 import ReqIdentificationRequirementsErrors from "../../errors/reqIdentifications/ReqIdentificationRequirementsErrors.js";
@@ -21,6 +22,95 @@ export default function useReqIdentificationRequirements() {
     loading: true,
     error: null,
   });
+
+  /**
+   * Adds a requirement to a specific requirement identification.
+   *
+   * @async
+   * @function addRequirement
+   * @param {Object} params - Data to associate the requirement.
+   * @param {number} params.reqIdentificationId - The ID of the requirement identification.
+   * @param {number} params.requirementId - The ID of the requirement to associate.
+   * @param {string} params.requirementName - Custom name of the requirement in the identification.
+   * @param {number[]} [params.requirementTypeIds] - Optional array of requirement type IDs.
+   * @param {{ id: number, translation: string }[]} [params.legalVerbs] - Optional array of legal verbs with translations.
+   * @returns {Promise<{ success: true } | { success: false, error: string }>}
+   */
+  const addRequirement = useCallback(
+    async ({
+      reqIdentificationId,
+      requirementId,
+      requirementName,
+      requirementTypeIds,
+      legalVerbs,
+    }) => {
+      try {
+        const reqIdentificationRequirement = await addRequirementToReqIdentification({
+          reqIdentificationId,
+          requirementId,
+          requirementName,
+          requirementTypeIds,
+          legalVerbs,
+            token: jwt,
+          });
+        setReqIdentificationRequirements((prev) => [
+          reqIdentificationRequirement,
+          ...prev,
+        ]);
+        return { success: true };
+      } catch (error) {
+        const errorCode = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+        const clientMessage = error.message;
+        const handledError = ReqIdentificationRequirementsErrors.handleError({
+          code: errorCode,
+          error: serverMessage,
+          httpError: clientMessage,
+          items: [reqIdentificationId, requirementId],
+        });
+        return { success: false, error: handledError.message };
+      }
+    },
+    [jwt]
+  );
+
+  /**
+   * Fetches a specific requirement by its ID from a requirement identification.
+   * @async
+   * @function fetchRequirement
+   * @param {number} reqIdentificationId - The ID of the requirement identification.
+   * @param {number} requirementId - The ID of the requirement to fetch.
+   * @returns {Promise<{ success: true, data: Object } | { success: false, error: Object }>}
+   */
+  const fetchRequirement = useCallback(
+    async (reqIdentificationId, requirementId) => {
+      try {
+        const reqIdentificationRequirement =
+          await getRequirementFromReqIdentification({
+            reqIdentificationId,
+            requirementId,
+            token: jwt,
+          });
+        return { success: true, data: reqIdentificationRequirement };
+      } catch (error) {
+        const errorCode = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+        const clientMessage = error.message;
+
+        const handledError = ReqIdentificationRequirementsErrors.handleError({
+          code: errorCode,
+          error: serverMessage,
+          httpError: clientMessage,
+          items: [reqIdentificationId, requirementId],
+        });
+        return {
+          success: false,
+          error: handledError,
+        };
+      }
+    },
+    [jwt]
+  );
 
     /**
    * Fetches all requirements associated with a given requirement identification.
@@ -57,92 +147,6 @@ export default function useReqIdentificationRequirements() {
           loading: false,
           error: handledError,
         });
-      }
-    },
-    [jwt]
-  );
-
-  /**
-   * Adds a requirement to a specific requirement identification.
-   *
-   * @async
-   * @function addRequirement
-   * @param {Object} params - Data to associate the requirement.
-   * @param {number} params.reqIdentificationId - The ID of the requirement identification.
-   * @param {number} params.requirementId - The ID of the requirement to associate.
-   * @param {string} params.requirementName - Custom name of the requirement in the identification.
-   * @param {number[]} [params.requirementTypeIds] - Optional array of requirement type IDs.
-   * @param {{ id: number, translation: string }[]} [params.legalVerbs] - Optional array of legal verbs with translations.
-   * @returns {Promise<{ success: true } | { success: false, error: string }>}
-   */
-  const addRequirement = useCallback(
-    async ({
-      reqIdentificationId,
-      requirementId,
-      requirementName,
-      requirementTypeIds,
-      legalVerbs,
-    }) => {
-      try {
-        await addRequirementToReqIdentification({
-          reqIdentificationId,
-          requirementId,
-          requirementName,
-          requirementTypeIds,
-          legalVerbs,
-            token: jwt,
-          });
-        await fetchRequirements(reqIdentificationId);
-        return { success: true };
-      } catch (error) {
-        const errorCode = error.response?.status;
-        const serverMessage = error.response?.data?.message;
-        const clientMessage = error.message;
-        const handledError = ReqIdentificationRequirementsErrors.handleError({
-          code: errorCode,
-          error: serverMessage,
-          httpError: clientMessage,
-          items: [reqIdentificationId, requirementId],
-        });
-        return { success: false, error: handledError.message };
-      }
-    },
-    [jwt, fetchRequirements]
-  );
-
-  /**
-   * Fetches a specific requirement by its ID from a requirement identification.
-   * @async
-   * @function fetchRequirement
-   * @param {number} reqIdentificationId - The ID of the requirement identification.
-   * @param {number} requirementId - The ID of the requirement to fetch.
-   * @returns {Promise<{ success: true, data: Object } | { success: false, error: Object }>}
-   */
-  const fetchRequirement = useCallback(
-    async (reqIdentificationId, requirementId) => {
-      try {
-        const reqIdentificationRequirement =
-          await getRequirementFromReqIdentification({
-            reqIdentificationId,
-            requirementId,
-            token: jwt,
-          });
-        return { success: true, data: reqIdentificationRequirement };
-      } catch (error) {
-        const errorCode = error.response?.status;
-        const serverMessage = error.response?.data?.message;
-        const clientMessage = error.message;
-
-        const handledError = ReqIdentificationRequirementsErrors.handleError({
-          code: errorCode,
-          error: serverMessage,
-          httpError: clientMessage,
-          items: [reqIdentificationId, requirementId],
-        });
-        return {
-          success: false,
-          error: handledError,
-        };
       }
     },
     [jwt]
@@ -232,6 +236,47 @@ export default function useReqIdentificationRequirements() {
   );
 
   /**
+   * Fetches requirements from a requirement identification filtered by legal basis name.
+   *
+   * @async
+   * @function fetchRequirementsByLegalBasisName
+   * @param {number} reqIdentificationId - The ID of the requirement identification.
+   * @param {string} legalBasisName - The legal basis name to filter by.
+   * @returns {Promise<void>}
+   */
+  const fetchRequirementsByLegalBasisName = useCallback(
+    async (reqIdentificationId, legalBasisName) => {
+      setState({ loading: true, error: null });
+      try {
+        const reqIdentificationRequirements =
+          await getRequirementsFromReqIdentificationByLegalBasisName({
+            reqIdentificationId,
+            legalBasisName,
+            token: jwt,
+          });
+        setReqIdentificationRequirements(reqIdentificationRequirements);
+        setState({ loading: false, error: null });
+      } catch (error) {
+        const errorCode = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+        const clientMessage = error.message;
+
+        const handledError = ReqIdentificationRequirementsErrors.handleError({
+          code: errorCode,
+          error: serverMessage,
+          httpError: clientMessage,
+          items: [reqIdentificationId],
+        });
+        setState({
+          loading: false,
+          error: handledError,
+        });
+      }
+    },
+    [jwt]
+  );
+
+  /**
    * Edits a requirement associated with a specific requirement identification.
    *
    * @async
@@ -253,7 +298,7 @@ export default function useReqIdentificationRequirements() {
       legalVerbs,
     }) => {
       try {
-          await editRequirementFromReqIdentification({
+          const reqIdentificationRequirement = await editRequirementFromReqIdentification({
             reqIdentificationId,
             requirementId,
             requirementName,
@@ -261,7 +306,11 @@ export default function useReqIdentificationRequirements() {
             legalVerbs,
             token: jwt,
           });
-        await fetchRequirements(reqIdentificationId);
+        setReqIdentificationRequirements((prev) =>
+          prev.map((req) =>
+            req.requirement.id === requirementId ? reqIdentificationRequirement : req
+          )
+        );
         return { success: true };
       } catch (error) {
         const errorCode = error.response?.status;
@@ -277,7 +326,7 @@ export default function useReqIdentificationRequirements() {
         return { success: false, error: handledError.message };
       }
     },
-    [jwt, fetchRequirements]
+    [jwt]
   );
 
   /**
@@ -291,14 +340,16 @@ export default function useReqIdentificationRequirements() {
    * @returns {Promise<{ success: true } | { success: false, error: string }>}
    */
   const deleteRequirement = useCallback(
-    async ({ reqIdentificationId, requirementId }) => {
+    async (reqIdentificationId, requirementId) => {
       try {
           await deleteRequirementFromReqIdentification({
             reqIdentificationId,
             requirementId,
             token: jwt,
           });
-        await fetchRequirements(reqIdentificationId);
+        setReqIdentificationRequirements((prev) =>
+          prev.filter((req) => req.requirement.id !== requirementId)
+        );
         return { success: true };
       } catch (error) {
         const errorCode = error.response?.status;
@@ -314,7 +365,7 @@ export default function useReqIdentificationRequirements() {
         return { success: false, error: handledError.message };
       }
     },
-    [jwt, fetchRequirements]
+    [jwt]
   );
 
   return {
@@ -326,6 +377,7 @@ export default function useReqIdentificationRequirements() {
     fetchRequirements,
     fetchRequirementsByName,
     fetchRequirementsByRequirementName,
+    fetchRequirementsByLegalBasisName,
     editRequirement,
     deleteRequirement,
   };

@@ -619,6 +619,7 @@ export default function Requirements() {
     setNameInputError("");
     setConditionInputError("");
     setEvidenceInputError("");
+    setSpecifyEvidenceInputError("");
     setPeriodicityInputError("");
     setSubjectInputError(null);
     setAspectInputError(null);
@@ -645,6 +646,7 @@ export default function Requirements() {
     setNameInputError("");
     setConditionInputError("");
     setEvidenceInputError("");
+    setSpecifyEvidenceInputError("");
     setPeriodicityInputError("");
     setSubjectInputError(null);
     setAspectInputError(null);

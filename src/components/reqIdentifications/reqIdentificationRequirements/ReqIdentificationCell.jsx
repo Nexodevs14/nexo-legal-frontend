@@ -15,6 +15,7 @@ import {
 } from "@heroui/react";
 import LegalVerbsTable from "./LegalVerbsTable";
 import RequirementTypesTable from "./RequirementTypesTable";
+import LegalBasisTable from "./LegalBasisTable";
 import menu_icon from "../../../assets/aplicaciones.png";
 import update_icon from "../../../assets/actualizar.png";
 import delete_icon from "../../../assets/eliminar.png";
@@ -28,7 +29,7 @@ import watch_icon from "../../../assets/ver.png";
  *
  * @component
  * @param {Object} props - Component properties.
- * @param {Object} props.item - The requirement identification object with nested requirement, types, verbs and identifiers.
+ * @param {Object} props.reqIdentificatioRequirement - The requirement identification object with nested requirements.
  * @param {Array} props.columns - The table column configuration.
  * @param {Function} props.openModalDescription - Callback to open a modal showing description content.
  * @param {Function} props.openEditModal - Callback to open the edit modal.
@@ -36,23 +37,25 @@ import watch_icon from "../../../assets/ver.png";
  * @returns {JSX.Element} Rendered table row with collapsible content.
  */
 export default function ReqIdentificationCell({
-  item,
+  reqIdentificatioRequirement,
   columns,
   openModalDescription,
-  //openEditModal,
-  //handleDelete,
+  openEditModal,
+  handleDelete,
 }) {
   const {
     requirement,
     legalVerbs,
     requirementTypes,
+    legalBasis,
     reqIdentificationId,
     requirementName,
-  } = item;
+  } = reqIdentificatioRequirement;
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [showLegalVerbs, setShowLegalVerbs] = useState(false);
   const [showRequirementTypes, setShowRequirementTypes] = useState(false);
+  const [showLegalBasis, setShowLegalBasis] = useState(false);
 
   const toggleExpansion = () => setIsExpanded((prev) => !prev);
 
@@ -176,20 +179,40 @@ export default function ReqIdentificationCell({
                     <img src={menu_icon} alt="Menu" className="w-6 h-6" />
                   </Button>
                 </DropdownTrigger>
-                <DropdownMenu aria-label="Opciones de requerimiento">
+                <DropdownMenu
+                  aria-label="Opciones de identificación"
+                  variant="light"
+                >
                   <DropdownItem
+                    aria-label="Editar Identificación"
                     startContent={
-                      <img src={update_icon} alt="Edit" className="w-4 h-4" />
+                      <img
+                        src={update_icon}
+                        alt="Edit Icon"
+                        className="w-4 h-4 flex-shrink-0"
+                      />
                     }
+                    className="hover:bg-primary/20"
+                    key="update"
+                    textValue="Editar Identificación"
+                    onPress={() => openEditModal(reqIdentificatioRequirement)}
                   >
-                    <p className="font-normal text-primary">Editar Requerimiento</p>
+                    <p className="font-normal text-primary">
+                      Editar Identificación
+                    </p>
                   </DropdownItem>
+
                   <DropdownItem
+                    aria-label="Eliminar"
                     startContent={
                       <img src={delete_icon} alt="Delete" className="w-4 h-4" />
                     }
+                    onPress={() => handleDelete(requirement.id)}
+                    className="hover:bg-red/20"
                   >
-                    <p className="font-normal text-red">Eliminar Requerimiento</p>
+                    <p className="font-normal text-red">
+                      Eliminar Identificación
+                    </p>
                   </DropdownItem>
                 </DropdownMenu>
               </Dropdown>
@@ -206,6 +229,9 @@ export default function ReqIdentificationCell({
       requirementName,
       openModalDescription,
       isExpanded,
+      reqIdentificatioRequirement,
+      openEditModal,
+      handleDelete,
     ]
   );
 
@@ -258,6 +284,22 @@ export default function ReqIdentificationCell({
                   <LegalVerbsTable legalVerbs={legalVerbs} />
                 </Box>
               </Collapse>
+              <div
+                className="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-t font-semibold text-xs text-gray-500 mt-4 flex items-center gap-2"
+                onClick={() => setShowLegalBasis((prev) => !prev)}
+              >
+                {showLegalBasis ? (
+                  <KeyboardArrowDownIcon fontSize="small" />
+                ) : (
+                  <KeyboardArrowRightIcon fontSize="small" />
+                )}
+                Fundamentos legales
+              </div>
+              <Collapse in={showLegalBasis} timeout="auto" unmountOnExit>
+                <Box sx={{ marginTop: 2 }}>
+                  <LegalBasisTable legalBasis={legalBasis} />
+                </Box>
+              </Collapse>
             </Box>
           </Collapse>
         </td>
@@ -267,10 +309,11 @@ export default function ReqIdentificationCell({
 }
 
 ReqIdentificationCell.propTypes = {
-  item: PropTypes.shape({
+  reqIdentificatioRequirement: PropTypes.shape({
     requirement: PropTypes.object.isRequired,
     legalVerbs: PropTypes.array,
     requirementTypes: PropTypes.array,
+    legalBasis: PropTypes.array,
     reqIdentificationId: PropTypes.number,
     requirementName: PropTypes.string,
   }).isRequired,

@@ -17,7 +17,8 @@ class ReqIdentificationRequirementsErrors {
   static LEGAL_VERBS_NOT_FOUND = 'LEGAL_VERBS_NOT_FOUND';
   static REQUIREMENT_NAME_CONFLICT = 'REQUIREMENT_NAME_CONFLICT';
   static REQUIREMENT_ALREADY_LINKED = 'REQUIREMENT_ALREADY_LINKED';
-  static REQUIREMENT_NOT_FOUND_IN_IDENTIFICATION = 'REQUIREMENT_NOT_FOUND_IN_IDENTIFICATION';
+  static REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION = 'REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION';
+  static REQ_IDENTIFICATION_JOBS_CONFLICT = "REQ_IDENTIFICATION_JOBS_CONFLICT";
 
   /**
    * A map of error constants to user-friendly error objects.
@@ -87,9 +88,14 @@ class ReqIdentificationRequirementsErrors {
       title: "Requerimiento ya vinculado",
       message: "El requerimiento ya está vinculado a esta identificación. No se puede agregar nuevamente.",
     },
-    [ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_FOUND_IN_IDENTIFICATION]: {
-      title: "Requerimiento no encontrado en la identificación",
-      message: "El requerimiento no fue encontrado en la identificación actual. Verifique su existencia recargando la app e intente de nuevo.",
+    [ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION]: {
+      title: "Requerimiento no vinculado en la identificación",
+      message: "El requerimiento no está vinculado a la identificación actual. Verifique su existencia recargando la app e intente de nuevo.",
+    },
+    [ReqIdentificationRequirementsErrors.REQ_IDENTIFICATION_JOBS_CONFLICT]: {
+      title: "Conflicto con trabajos pendientes",
+      message:
+        "Este requerimiento no puede ser eliminado porque actualmente se están identificando requerimientos. Por favor, espere a que se complete la identificación e intente nuevamente.",
     },
   };
 
@@ -100,12 +106,13 @@ class ReqIdentificationRequirementsErrors {
     static ErrorMessagesMap = {
     'Network Error': ReqIdentificationRequirementsErrors.NETWORK_ERROR,
     'Requirement identification not found': ReqIdentificationRequirementsErrors.REQ_IDENTIFICATION_NOT_FOUND,
-    'Requirement not found': ReqIdentificationRequirementsErrors.NOT_FOUND,
+    'Requirement not found': ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_FOUND,
     'Requirement types not found for IDs': ReqIdentificationRequirementsErrors.REQUIREMENT_TYPES_NOT_FOUND,
     'Legal verbs not found for IDs': ReqIdentificationRequirementsErrors.LEGAL_VERBS_NOT_FOUND,
     'Requirement name already exists in the requirement identification': ReqIdentificationRequirementsErrors.REQUIREMENT_NAME_CONFLICT,
     'Requirement is already linked to the requirement identification': ReqIdentificationRequirementsErrors.REQUIREMENT_ALREADY_LINKED,
-    'Requirement not found in the requirement identification': ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_FOUND_IN_IDENTIFICATION,
+    'Requirement is not linked to the requirement identification': ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION,
+    'Cannot delete Requirement with pending Requirement Identification jobs' : ReqIdentificationRequirementsErrors.REQ_IDENTIFICATION_JOBS_CONFLICT,
     };
 
 
@@ -121,7 +128,6 @@ class ReqIdentificationRequirementsErrors {
    */
   static handleError({ code, error, httpError, items }) {
      const message = error || httpError;
-     console.log(message, code, items);
       if (message && ReqIdentificationRequirementsErrors.ErrorMessagesMap[message]) {
         const key = ReqIdentificationRequirementsErrors.ErrorMessagesMap[message];
         return ReqIdentificationRequirementsErrors.errorMap[key];
