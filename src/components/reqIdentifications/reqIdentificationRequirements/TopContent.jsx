@@ -20,6 +20,7 @@ import flecha_icon from "../../../assets/flecha_izquierda.png";
  * @param {Function} props.config.onFilterByRequirement - Handler for changing original requirement name filter.
  * @param {Function} props.config.onClear - Clears all filters.
  * @param {number} props.config.totalRequirements - Total number of filtered requirements.
+ * @param  {Function} props.config.openModalCreateRequirement - Function to open the create requirement modal.
  *
  * @returns {JSX.Element} Rendered TopContent component.
  */
@@ -32,9 +33,9 @@ function TopContent({ config }) {
         onFilterByName,
         onClear,
         totalRequirements,
+        openModalCreateRequirement,
     } = config;
 
-    console.log(reqIdentification)
 
     const navigate = useNavigate();
 
@@ -97,6 +98,7 @@ function TopContent({ config }) {
 
                     <Button
                         color="primary"
+                        onPress={openModalCreateRequirement}
                         className="w-full"
                         endContent={
                             <img
@@ -106,7 +108,7 @@ function TopContent({ config }) {
                             />
                         }
                     >
-                        Nuevo Requerimiento
+                        Asociar Requerimiento
                     </Button>
                 </div>
 
@@ -129,6 +131,7 @@ TopContent.propTypes = {
         onFilterByRequirement: PropTypes.func.isRequired,
         onClear: PropTypes.func.isRequired,
         totalRequirements: PropTypes.number.isRequired,
+        openModalCreateRequirement: PropTypes.func.isRequired,
     }).isRequired,
 };
 

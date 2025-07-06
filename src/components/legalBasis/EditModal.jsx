@@ -749,7 +749,7 @@ function EditModal({ config }) {
                       selectedKey={formData.subject}
                       onSelectionChange={handleSubjectChange}
                       listboxProps={{
-                        emptyContent: "Materia no encontrado",
+                        emptyContent: "Materia no encontrada",
                       }}
                       defaultItems={subjects}
                     >

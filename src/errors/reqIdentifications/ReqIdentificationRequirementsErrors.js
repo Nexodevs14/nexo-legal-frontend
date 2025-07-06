@@ -121,7 +121,6 @@ class ReqIdentificationRequirementsErrors {
    */
   static handleError({ code, error, httpError, items }) {
      const message = error || httpError;
-     console.log(message, code, items);
       if (message && ReqIdentificationRequirementsErrors.ErrorMessagesMap[message]) {
         const key = ReqIdentificationRequirementsErrors.ErrorMessagesMap[message];
         return ReqIdentificationRequirementsErrors.errorMap[key];
