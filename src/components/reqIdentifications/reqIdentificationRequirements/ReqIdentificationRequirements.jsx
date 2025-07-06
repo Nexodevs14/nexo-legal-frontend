@@ -13,6 +13,7 @@ import ReqIdentificationCell from "./ReqIdentificationCell";
 import check from "../../../assets/check.png";
 import { toast } from "react-toastify";
 import CreateReqIdentificationRequirementModal from "./CreateRequirementModal";
+import EditReqIdentificationRequirementModal from "./EditRequirementModal";
 
 const columns = [
   { name: "", uid: "expand", align: "center" },
@@ -55,6 +56,7 @@ export default function ReqIdentificationRequirements() {
     fetchRequirementsByName,
     fetchRequirementsByRequirementName,
     fetchRequirementsByLegalBasisName,
+    editRequirement,
     deleteRequirement,
   } = useReqIdentificationRequirements();
   const {
@@ -86,8 +88,8 @@ export default function ReqIdentificationRequirements() {
   const [filterByLegalBasisName, setFilterByLegalBasisName] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const debounceTimeout = useRef(null);
-  const [isCreateModalRequirementOpen, setIsCreateModalRequirementOpen] =
-    useState(false);
+  const [isCreateModalRequirementOpen, setIsCreateModalRequirementOpen] = useState(false);
+  const [isEditModalRequirementOpen, setIsEditModalRequirementOpen] = useState(false);
   const [selectedRequirement, setSelectedRequirement] = useState(null);
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [formDataRequirement, setFormDataRequirement] = useState({
@@ -324,6 +326,19 @@ export default function ReqIdentificationRequirements() {
     setShowDescriptionModal(true);
   };
 
+  const openEditRequirmentModal = (reqIdentificatioRequirement) => {
+    setSelectedRequirement(reqIdentificatioRequirement);
+    setIsEditModalRequirementOpen(true);
+  };
+
+  const closeEditRequirementModal = () => {
+    setIsEditModalRequirementOpen(false);
+    setSelectedRequirement(null);
+    setRequirementNameInputError("");
+    setRequirementInputError("");
+    setLegalVerbsInputErrors("");
+  }
+
   const closeModalDescription = () => {
     setShowDescriptionModal(false);
     setSelectedRequirement(null);
@@ -439,6 +454,7 @@ export default function ReqIdentificationRequirements() {
         <TopContent
           config={{
             reqIdentification: reqIdentification,
+            isEditModalRequirementOpen: isEditModalRequirementOpen,
             filterByRequirementName: filterByRequirementName,
             filterByLegalBasisName: filterByLegalBasisName,
             filterByName: filterByName,
@@ -492,6 +508,7 @@ export default function ReqIdentificationRequirements() {
                         reqIdentificatioRequirement={requirement}
                         columns={columns}
                         openModalDescription={openModalDescription}
+                        openEditRequirmentModal={openEditRequirmentModal}
                         handleDelete={handleDelete}
                       />
                     ))
@@ -530,6 +547,35 @@ export default function ReqIdentificationRequirements() {
               requirements: requirements,
               requirementTypes: requirementTypes,
               handleRemoveLegalVerb: handleRemoveLegalVerb,
+            }}
+          />
+        )}
+        {isEditModalRequirementOpen && (
+          <EditReqIdentificationRequirementModal
+            config={{
+              isOpen: isEditModalRequirementOpen,
+              closeModalEdit: closeEditRequirementModal,
+              formData: formDataRequirement,
+              setFormData: setFormDataRequirement,
+              editRequirement: editRequirement,
+              selectedRequirement: selectedRequirement,
+              requirementNameInputError: requirementNameInputError,
+              setRequirementNameInputError: setRequirementNameInputError,
+              handleRequirementNameChange: handleRequirementNameChange,
+              requirementInputError: requirementInputError,
+              setRequirementInputError: setRequirementInputError,
+              handleRequirementChange: handleRequirementChange,
+              handleRequirementTypesChange: handleRequirementTypesChange,
+              legalVerbsInputErrors: legalVerbsInputErrors,
+              setLegalVerbsInputErrors: setLegalVerbsInputErrors,
+              handleLegalVerbTranslationChange:
+                handleLegalVerbTranslationChange,
+              requirements: requirements,
+              requirementTypes: requirementTypes,
+              legalVerbs: legalVerbs,
+              handleRemoveLegalVerb: handleRemoveLegalVerb,
+
+
             }}
           />
         )}

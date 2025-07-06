@@ -33,7 +33,7 @@ import link_blue_icon from "../../../assets/enlace_blue.png";
  * @param {Object} props.reqIdentificatioRequirement - The requirement identification object with nested requirements.
  * @param {Array} props.columns - The table column configuration.
  * @param {Function} props.openModalDescription - Callback to open a modal showing description content.
- * @param {Function} props.openEditModal - Callback to open the edit modal.
+ * @param {Function} props.openEditRequirmentModal - Callback to open the edit modal.
  * @param {Function} props.handleDelete - Callback to handle delete action.
  * @returns {JSX.Element} Rendered table row with collapsible content.
  */
@@ -41,7 +41,7 @@ export default function ReqIdentificationCell({
   reqIdentificatioRequirement,
   columns,
   openModalDescription,
-  openEditModal,
+  openEditRequirmentModal,
   handleDelete,
 }) {
   const {
@@ -212,8 +212,8 @@ export default function ReqIdentificationCell({
                     }
                     className="hover:bg-primary/20"
                     key="update"
-                    textValue="Editar Requerimiento"
-                    onPress={() => openEditModal(reqIdentificatioRequirement)}
+                    textValue="Editar Identificación"
+                    onPress={() => openEditRequirmentModal(reqIdentificatioRequirement)}
                   >
                     <p className="font-normal text-primary">
                       Editar Requerimiento
@@ -242,12 +242,12 @@ export default function ReqIdentificationCell({
     },
     [
       requirement,
+      reqIdentificatioRequirement,
       reqIdentificationId,
       requirementName,
       openModalDescription,
       isExpanded,
-      reqIdentificatioRequirement,
-      openEditModal,
+      openEditRequirmentModal,
       handleDelete,
     ]
   );
@@ -336,6 +336,6 @@ ReqIdentificationCell.propTypes = {
   }).isRequired,
   columns: PropTypes.array.isRequired,
   openModalDescription: PropTypes.func.isRequired,
-  openEditModal: PropTypes.func.isRequired,
+  openEditRequirmentModal: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
 };

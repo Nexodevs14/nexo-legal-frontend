@@ -322,7 +322,7 @@ CreateReqIdentificationRequirementModal.propTypes = {
     setRequirementInputError: PropTypes.func.isRequired,
     handleRequirementChange: PropTypes.func.isRequired,
     handleRequirementTypesChange: PropTypes.func.isRequired,
-    legalVerbsInputErrors: PropTypes.object,
+    legalVerbsInputErrors: PropTypes.string,
     setLegalVerbsInputErrors: PropTypes.func.isRequired,
     handleLegalVerbTranslationChange: PropTypes.func.isRequired,
     requirements: PropTypes.array,
