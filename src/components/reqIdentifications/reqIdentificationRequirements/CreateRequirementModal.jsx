@@ -11,6 +11,7 @@ import {
   AutocompleteItem,
   Select,
   SelectItem,
+  Textarea,
 } from "@heroui/react";
 import { toast } from "react-toastify";
 import check from "../../../assets/check.png";
@@ -37,6 +38,7 @@ import check from "../../../assets/check.png";
  * @param {Function} props.config.handleRequirementTypesChange - Handler for selecting requirement types.
  * @param {Array<Object>} props.config.requirements - List of available base requirements.
  * @param {Array<Object>} props.config.requirementTypes - List of available requirement types.
+ * @param {Function} props.config.setFormDataRequirement - Setter for form data related to requirements.
  *
  * @returns {JSX.Element} Rendered modal component.
  */
@@ -54,8 +56,12 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
     setRequirementInputError,
     handleRequirementChange,
     handleRequirementTypesChange,
+    legalVerbsInputErrors,
+    setLegalVerbsInputErrors,
+    handleLegalVerbTranslationChange,
     requirements,
     requirementTypes,
+    setFormDataRequirement,
   } = config;
   const [isLoading, setIsLoading] = useState(false);
 
@@ -76,6 +82,14 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
     } else {
       setRequirementInputError(null);
     }
+    if (!formData.legalVerbs) {
+      setLegalVerbsInputErrors("Debes seleccionar un requerimiento.");
+      setIsLoading(false);
+      return;
+    } else {
+      setLegalVerbsInputErrors(null);
+    }
+
     try {
       const requirementData = {
         reqIdentificationId: Number(formData.reqIdentificationId),
@@ -115,6 +129,13 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
     }
   };
 
+  const handleRemoveLegalVerb = (id) => {
+    setFormDataRequirement((prev) => ({
+      ...prev,
+      legalVerbs: prev.legalVerbs.filter((verb) => verb.id !== id),
+    }));
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -127,101 +148,132 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
       }}
     >
       <ModalContent>
-          <>
-            <ModalHeader className="flex items-center gap-2">
-              Asociar nuevo requerimiento
-            </ModalHeader>
-            <ModalBody>
-              <form className="flex flex-col gap-6" onSubmit={handleCreate}>
-                <div className="col-span-2 relative z-0 w-full group">
-                  <input
-                    type="text"
-                    name="nombre"
-                    id="floating_nombre"
-                    value={formData.requirementName}
-                    onChange={handleRequirementNameChange}
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
-                    placeholder=""
+        <>
+          <ModalHeader className="flex items-center gap-2">
+            Asociar nuevo requerimiento
+          </ModalHeader>
+          <ModalBody>
+            <form className="flex flex-col gap-6" onSubmit={handleCreate}>
+              <div className="col-span-2 relative z-0 w-full group">
+                <input
+                  type="text"
+                  name="nombre"
+                  id="floating_nombre"
+                  value={formData.requirementName}
+                  onChange={handleRequirementNameChange}
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
+                  placeholder=""
+                />
+                <label
+                  htmlFor="floating_nombre"
+                  className="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Nombre
+                </label>
+                {requirementNameInputError && (
+                  <p className="mt-2 text-sm text-red">
+                    {requirementNameInputError}
+                  </p>
+                )}
+              </div>
+
+              <div className="w-full">
+                <Autocomplete
+                  size="sm"
+                  variant="bordered"
+                  label="Requerimiento"
+                  selectedKey={formData.requirement}
+                  onSelectionChange={handleRequirementChange}
+                  listboxProps={{
+                    emptyContent: "No se encontró el requerimiento",
+                  }}
+                  defaultItems={requirements}
+                >
+                  {(requirement) => (
+                    <AutocompleteItem
+                      key={requirement.id}
+                      value={requirement.id}
+                    >
+                      {requirement.requirement_name}
+                    </AutocompleteItem>
+                  )}
+                </Autocomplete>
+                {requirementInputError && (
+                  <p className="mt-2 text-sm text-red">
+                    {requirementInputError}
+                  </p>
+                )}
+              </div>
+
+              <div className="w-full">
+                <Select
+                  size="sm"
+                  variant="bordered"
+                  label="Tipos de requerimiento"
+                  selectionMode="multiple"
+                  selectedKeys={formData.requirementTypeIds}
+                  onSelectionChange={handleRequirementTypesChange}
+                  items={requirementTypes}
+                  listboxProps={{
+                    emptyContent: "No se encontraron tipos de requerimiento",
+                  }}
+                >
+                  {(type) => (
+                    <SelectItem key={type.id} value={type.name}>
+                      {type.name}
+                    </SelectItem>
+                  )}
+                </Select>
+              </div>
+              {formData.legalVerbs.map((verb) => (
+                <div key={verb.id} className="relative col-span-2 w-full group">
+                  <Textarea
+                    value={verb.translation}
+                    onChange={(e) =>
+                      handleLegalVerbTranslationChange(verb.id, e.target.value)
+                    }
+                    label={`Traducción del Verbo Legal: ${verb.name}`}
+                    placeholder="Escribir traducción"
+                    variant="bordered"
+                    minRows={2}
+                    maxRows={4}
+                    classNames={{
+                      input:
+                        "resize-y min-h-[80px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                    }}
                   />
-                  <label
-                    htmlFor="floating_nombre"
-                    className="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                  >
-                    Nombre
-                  </label>
-                  {requirementNameInputError && (
-                    <p className="mt-2 text-sm text-red">
-                      {requirementNameInputError}
+                  {legalVerbsInputErrors?.[verb.id] && (
+                    <p className="mt-1 text-xs text-red">
+                      {legalVerbsInputErrors[verb.id]}
                     </p>
                   )}
-                </div>
-
-                <div className="w-full">
-                  <Autocomplete
-                    size="sm"
-                    variant="bordered"
-                    label="Requerimiento"
-                    selectedKey={formData.requirement}
-                    onSelectionChange={handleRequirementChange}
-                    listboxProps={{
-                      emptyContent: "No se encontró el requerimiento",
-                    }}
-                    defaultItems={requirements}
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveLegalVerb(verb.id)}
+                    className="absolute right-1 top-1 text-gray-400 hover:text-red text-lg"
+                    title="Eliminar este verbo"
                   >
-                    {(requirement) => (
-                      <AutocompleteItem
-                        key={requirement.id}
-                        value={requirement.id}
-                      >
-                        {requirement.requirement_name}
-                      </AutocompleteItem>
-                    )}
-                  </Autocomplete>
-                  {requirementInputError && (
-                    <p className="mt-2 text-sm text-red">
-                      {requirementInputError}
-                    </p>
+                    &times;
+                  </button>
+                </div>
+              ))}
+              <div className="flex justify-end">
+                <Button
+                  type="submit"
+                  color="primary"
+                  disabled={isLoading}
+                  className="w-full rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
+                >
+                  {isLoading ? (
+                    <Spinner size="sm" color="white" />
+                  ) : (
+                    "Asociar requerimiento"
                   )}
-                </div>
-
-                <div className="w-full">
-                  <Select
-                    size="sm"
-                    variant="bordered"
-                    label="Tipos de requerimiento"
-                    selectionMode="multiple"
-                    selectedKeys={formData.requirementTypeIds}
-                    onSelectionChange={handleRequirementTypesChange}
-                    items={requirementTypes}
-                    listboxProps={{
-                      emptyContent: "No se encontraron tipos de requerimiento",
-                    }}
-                  >
-                    {(type) => (
-                      <SelectItem key={type.id} value={type.name}>
-                        {type.name}
-                      </SelectItem>
-                    )}
-                  </Select>
-                </div>
-
-                <div className="flex justify-end">
-                  <Button
-                    type="submit"
-                    color="primary"
-                    disabled={isLoading}
-                    className="w-full rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
-                  >
-                    {isLoading ? (
-                      <Spinner size="sm" color="white" />
-                    ) : (
-                      "Asociar requerimiento"
-                    )}
-                  </Button>
-                </div>
-              </form>
-            </ModalBody>
-          </>
+                </Button>
+              </div>
+            </form>
+          </ModalBody>
+        </>
       </ModalContent>
     </Modal>
   );
@@ -241,6 +293,15 @@ CreateReqIdentificationRequirementModal.propTypes = {
       requirementTypeIds: PropTypes.arrayOf(
         PropTypes.oneOfType([PropTypes.string, PropTypes.number])
       ),
+      legalVerbs: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+            .isRequired,
+          name: PropTypes.string,
+          description: PropTypes.string,
+          translation: PropTypes.string,
+        })
+      ),
     }).isRequired,
     addRequirement: PropTypes.func.isRequired,
     requirementNameInputError: PropTypes.string,
@@ -250,8 +311,12 @@ CreateReqIdentificationRequirementModal.propTypes = {
     setRequirementInputError: PropTypes.func.isRequired,
     handleRequirementChange: PropTypes.func.isRequired,
     handleRequirementTypesChange: PropTypes.func.isRequired,
+    legalVerbsInputErrors: PropTypes.string,
+    setLegalVerbsInputErrors: PropTypes.func.isRequired,
+    handleLegalVerbTranslationChange: PropTypes.func.isRequired,
     requirements: PropTypes.array,
     requirementTypes: PropTypes.array,
+    setFormDataRequirement: PropTypes.func.isRequired,
   }).isRequired,
 };
 
