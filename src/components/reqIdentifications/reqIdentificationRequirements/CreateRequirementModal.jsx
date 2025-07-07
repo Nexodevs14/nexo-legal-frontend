@@ -89,7 +89,8 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
     const newLegalVerbsInputErrors = {};
     formData.legalVerbs.forEach((verb) => {
       if (verb.translation.trim() === "") {
-        newLegalVerbsInputErrors[verb.id] = "Este campo es obligatorio. Si no aplica, Por favor, elimína este campo.";
+        newLegalVerbsInputErrors[verb.id] =
+          "Este campo es obligatorio. Si no aplica, Por favor, elimína este campo.";
       } else {
         if (legalVerbsInputErrors?.[verb.id]) {
           delete newLegalVerbsInputErrors[verb.id];
@@ -163,7 +164,6 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
             Asociar nuevo requerimiento
           </ModalHeader>
           <ModalBody className="overflow-y-auto max-h-[50vh] px-6">
-
             <form className="flex flex-col gap-6" onSubmit={handleCreate}>
               <div className="col-span-2 relative z-0 w-full group">
                 <input

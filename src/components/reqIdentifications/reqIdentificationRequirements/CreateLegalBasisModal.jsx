@@ -182,7 +182,7 @@ CreateReqIdentificationLegalBasisModal.propTypes = {
             aspect_name: PropTypes.string.isRequired,
           })
         ),
-      }).isRequired,
+      }).isRequired
     ).isRequired,
     legalBasisInputError: PropTypes.string,
     setLegalBasisInputError: PropTypes.func.isRequired,

@@ -7,7 +7,7 @@ import useReqIdentificationRequirements from "../../../hooks/reqIdentifications/
 import useRequirements from "../../../hooks/requirement/useRequirements";
 import useRequirementTypes from "../../../hooks/requirementTypes/useRequirementTypes";
 import useLegalVerbs from "../../../hooks/legalVerbs/useLegalVerbs";
-import useLegalBasis from "../../../hooks/legalBasis/useLegalBasis"
+import useLegalBasis from "../../../hooks/legalBasis/useLegalBasis";
 import DescriptionModal from "../../requirements/TextArea/DescriptionModal";
 import Error from "../../utils/Error";
 import ReqIdentificationCell from "./ReqIdentificationCell";
@@ -66,24 +66,13 @@ export default function ReqIdentificationRequirements() {
     deleteLegalBasis,
     addArticle,
     editArticle,
-    deleteArticle
+    deleteArticle,
   } = useReqIdentificationRequirements();
-  const {
-    requirements,
-    error: requirementError,
-  } = useRequirements();
-  const {
-    requirementTypes,
-    error: requirementTypeError,
-  } = useRequirementTypes();
-  const {
-    legalVerbs,
-    error: legalVerbsError,
-  } = useLegalVerbs();
-  const {
-    legalBasis,
-    error: legalBasisError,
-  } = useLegalBasis()
+  const { requirements, error: requirementError } = useRequirements();
+  const { requirementTypes, error: requirementTypeError } =
+    useRequirementTypes();
+  const { legalVerbs, error: legalVerbsError } = useLegalVerbs();
+  const { legalBasis, error: legalBasisError } = useLegalBasis();
   const [reqIdentification, setReqIdentification] = useState(null);
   const [reqIdentificationError, setReqIdentificationError] = useState(null);
   const [isFirstRender, setIsFirstRender] = useState(true);
@@ -98,15 +87,19 @@ export default function ReqIdentificationRequirements() {
   const [filterByLegalBasisName, setFilterByLegalBasisName] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const debounceTimeout = useRef(null);
-  const [isCreateModalRequirementOpen, setIsCreateModalRequirementOpen] = useState(false);
-  const [isEditModalRequirementOpen, setIsEditModalRequirementOpen] = useState(false);
-  const [isCreateLegalBasisModalOpen, setIsCreateLegalBasisModalOpen] = useState(false);
+  const [isCreateModalRequirementOpen, setIsCreateModalRequirementOpen] =
+    useState(false);
+  const [isEditModalRequirementOpen, setIsEditModalRequirementOpen] =
+    useState(false);
+  const [isCreateLegalBasisModalOpen, setIsCreateLegalBasisModalOpen] =
+    useState(false);
   const [legalBasisInputError, setLegalBasisInputError] = useState(null);
-  const [isCreateArticlesModalOpen, setIsCreateArticlesModalOpen] = useState(null)
-  const [isEditModalArticleOpen, setIsEditArticlesModalOpen] = useState(null)
-  const [articleInputError, setArticleInputError] = useState(null)
-  const [articleTypeInputError, setArticleTypeInputError] = useState(null)
-  const [articleScoreInputError, setArticleScoreInputError] = useState(null)
+  const [isCreateArticlesModalOpen, setIsCreateArticlesModalOpen] =
+    useState(null);
+  const [isEditModalArticleOpen, setIsEditArticlesModalOpen] = useState(null);
+  const [articleInputError, setArticleInputError] = useState(null);
+  const [articleTypeInputError, setArticleTypeInputError] = useState(null);
+  const [articleScoreInputError, setArticleScoreInputError] = useState(null);
   const [selectedRequirement, setSelectedRequirement] = useState(null);
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [formDataRequirement, setFormDataRequirement] = useState({
@@ -129,7 +122,6 @@ export default function ReqIdentificationRequirements() {
     articleType: "",
     score: 0,
   });
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -368,7 +360,7 @@ export default function ReqIdentificationRequirements() {
     setRequirementNameInputError("");
     setRequirementInputError("");
     setLegalVerbsInputErrors("");
-  }
+  };
 
   const closeModalDescription = () => {
     setShowDescriptionModal(false);
@@ -386,7 +378,7 @@ export default function ReqIdentificationRequirements() {
 
   const closeCreateLegalBasisModal = () => {
     setIsCreateLegalBasisModalOpen(false);
-    setLegalBasisInputError("")
+    setLegalBasisInputError("");
   };
 
   const handleLegalBasisChange = useCallback(
@@ -426,11 +418,10 @@ export default function ReqIdentificationRequirements() {
 
   const closeCreateArticleModal = () => {
     setIsCreateArticlesModalOpen(false);
-    setArticleInputError("")
-    setArticleTypeInputError("")
-    setArticleScoreInputError("")
+    setArticleInputError("");
+    setArticleTypeInputError("");
+    setArticleScoreInputError("");
   };
-
 
   const handleArticleChange = useCallback(
     (value) => {
@@ -475,11 +466,7 @@ export default function ReqIdentificationRequirements() {
         setArticleTypeInputError(null);
       }
     },
-    [
-      articleTypeInputError,
-      setFormDataArticle,
-      setArticleTypeInputError,
-    ]
+    [articleTypeInputError, setFormDataArticle, setArticleTypeInputError]
   );
 
   const handleArticleScoreChange = useCallback(
@@ -496,7 +483,13 @@ export default function ReqIdentificationRequirements() {
     [articleScoreInputError, setFormDataArticle, setArticleScoreInputError]
   );
 
-  const openEditArticleModal = (requirementId, legalBasisId, articleId, articleType, score) => {
+  const openEditArticleModal = (
+    requirementId,
+    legalBasisId,
+    articleId,
+    articleType,
+    score
+  ) => {
     setFormDataArticle({
       reqIdentificationId: id,
       requirementId: requirementId,
@@ -510,9 +503,9 @@ export default function ReqIdentificationRequirements() {
 
   const closeEditArticleModal = () => {
     setIsEditArticlesModalOpen(false);
-    setArticleInputError("")
-    setArticleTypeInputError("")
-    setArticleScoreInputError("")
+    setArticleInputError("");
+    setArticleTypeInputError("");
+    setArticleScoreInputError("");
   };
 
   const handleDeleteRequirement = useCallback(
@@ -573,7 +566,6 @@ export default function ReqIdentificationRequirements() {
     [id, deleteRequirement]
   );
 
-
   const handleDeleteLegalBasis = useCallback(
     async (requirementId, legalBasisId) => {
       const toastId = toast.loading("Eliminando fundamento legal...", {
@@ -583,7 +575,11 @@ export default function ReqIdentificationRequirements() {
         },
       });
       try {
-        const { success, error } = await deleteLegalBasis(id, requirementId, legalBasisId);
+        const { success, error } = await deleteLegalBasis(
+          id,
+          requirementId,
+          legalBasisId
+        );
         if (success) {
           toast.update(toastId, {
             render: "Fundamento legal eliminado con éxito",
@@ -632,7 +628,7 @@ export default function ReqIdentificationRequirements() {
     [id, deleteLegalBasis]
   );
 
-    const handleDeleteArticle = useCallback(
+  const handleDeleteArticle = useCallback(
     async (requirementId, legalBasisId, articleId) => {
       const toastId = toast.loading("Eliminando artículo...", {
         icon: <Spinner size="sm" />,
@@ -641,7 +637,12 @@ export default function ReqIdentificationRequirements() {
         },
       });
       try {
-        const { success, error } = await deleteArticle(id, requirementId, legalBasisId, articleId);
+        const { success, error } = await deleteArticle(
+          id,
+          requirementId,
+          legalBasisId,
+          articleId
+        );
         if (success) {
           toast.update(toastId, {
             render: "Artículo eliminado con éxito",
@@ -677,8 +678,7 @@ export default function ReqIdentificationRequirements() {
       } catch (error) {
         console.error(error);
         toast.update(toastId, {
-          render:
-            "Algo mal sucedió al eliminar el artículo. Intente de nuevo.",
+          render: "Algo mal sucedió al eliminar el artículo. Intente de nuevo.",
           type: "error",
           icon: null,
           progressStyle: {},
@@ -690,9 +690,7 @@ export default function ReqIdentificationRequirements() {
     [id, deleteArticle]
   );
 
-  if (
-    loading && isFirstRender
-  ) {
+  if (loading && isFirstRender) {
     return (
       <div
         role="status"
@@ -862,13 +860,12 @@ export default function ReqIdentificationRequirements() {
               handleRequirementTypesChange: handleRequirementTypesChange,
               legalVerbsInputErrors: legalVerbsInputErrors,
               setLegalVerbsInputErrors: setLegalVerbsInputErrors,
-              handleLegalVerbTranslationChange: handleLegalVerbTranslationChange,
+              handleLegalVerbTranslationChange:
+                handleLegalVerbTranslationChange,
               requirements: requirements,
               requirementTypes: requirementTypes,
               legalVerbs: legalVerbs,
               handleRemoveLegalVerb: handleRemoveLegalVerb,
-
-
             }}
           />
         )}

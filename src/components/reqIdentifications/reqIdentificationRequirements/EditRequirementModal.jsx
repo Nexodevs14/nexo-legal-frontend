@@ -223,7 +223,7 @@ const EditRequirementModal = ({ config }) => {
                   isReadOnly
                   value={
                     requirements.find((r) => r.id === Number(formData.requirement))
-                      ?.requirement_name || "No disponible"
+                      ?.requirement_name || "Requerimiento no Encontrado. Recargue la app."
                   }
                 />
               </div>

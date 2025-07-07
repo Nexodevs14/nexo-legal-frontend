@@ -201,11 +201,10 @@ const EditReqIdentificationArticleModal = ({ config }) => {
                       isReadOnly
                       value={
                         articles.find((a) => a.id === Number(formData.articleId))
-                          ?.article_name || "No disponible"
+                          ?.article_name || "Articulo no encontrado. Recargue la app."
                       }
                     />
                   </div>
-
                   <div className="w-full">
                     <Autocomplete
                       size="sm"

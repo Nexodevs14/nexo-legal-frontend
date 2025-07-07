@@ -19,6 +19,7 @@ class ReqIdentificationRequirementsErrors {
   static REQUIREMENT_ALREADY_LINKED = "REQUIREMENT_ALREADY_LINKED";
   static REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION =
     "REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION";
+  static REQUIREMENT_SUBJECTS_NOT_MATCH = "REQUIREMENT_SUBJECTS_NOT_MATCH";
   static REQUIREMENT_REQ_IDENTIFICATION_JOBS_CONFLICT =
     "REQUIREMENT_REQ_IDENTIFICATION_JOBS_CONFLICT";
   static LEGAL_BASIS_NOT_FOUND = "LEGAL_BASIS_NOT_FOUND";
@@ -27,13 +28,18 @@ class ReqIdentificationRequirementsErrors {
     "LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT";
   static LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT =
     "LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT";
-  static SUBJECTS_NOT_MATCH = "SUBJECTS_NOT_MATCH";
-  static JURISDICTIONS_NOT_MATCH = "JURISDICTIONS_NOT_MATCH";
-  static STATES_NOT_MATCH = "STATES_NOT_MATCH";
-  static MUNICIPALITIES_NOT_MATCH = "MUNICIPALITIES_NOT_MATCH";
+  static LEGAL_BASIS_SUBJECTS_NOT_MATCH = "LEGAL_BASIS_SUBJECTS_NOT_MATCH";
+  static LEGAL_BASIS_JURISDICTIONS_NOT_MATCH =
+    "LEGAL_BASIS_JURISDICTIONS_NOT_MATCH";
+  static LEGAL_BASIS_STATES_NOT_MATCH = "LEGAL_BASIS_STATES_NOT_MATCH";
+  static LEGAL_BASIS_MUNICIPALITIES_NOT_MATCH =
+    "LEGAL_BASIS_MUNICIPALITIES_NOT_MATCH";
   static ARTICLE_NOT_FOUND = "ARTICLE_NOT_FOUND";
   static ARTICLE_ALREADY_LINKED = "ARTICLE_ALREADY_LINKED";
-  static ARTICLE_NOT_LINKED_IN_LEGAL_BASIS_REQUIREMENT = "ARTICLE_NOT_LINKED_IN_LEGAL_BASIS_REQUIREMENT";
+  static ARTICLE_NOT_LINKED_IN_LEGAL_BASIS_REQUIREMENT =
+    "ARTICLE_NOT_LINKED_IN_LEGAL_BASIS_REQUIREMENT";
+  static ARTICLE_REQ_IDENTIFICATION_JOBS_CONFLICT =
+    "ARTICLE_REQ_IDENTIFICATION_JOBS_CONFLICT";
 
   /**
    * A map of error constants to user-friendly error objects.
@@ -115,6 +121,11 @@ class ReqIdentificationRequirementsErrors {
         message:
           "El requerimiento no está vinculado a la identificación actual. Verifique su asociación recargando la app e intente de nuevo.",
       },
+    [ReqIdentificationRequirementsErrors.REQUIREMENT_SUBJECTS_NOT_MATCH]: {
+      title: "Conflicto de materias",
+      message:
+        "Todos los requerimientos seleccionados deben pertenecer a la misma materia. Verifique e intente de nuevo.",
+    },
     [ReqIdentificationRequirementsErrors.REQUIREMENT_REQ_IDENTIFICATION_JOBS_CONFLICT]:
       {
         title: "Conflicto con trabajos pendientes",
@@ -143,26 +154,27 @@ class ReqIdentificationRequirementsErrors {
         message:
           "Este fundamento legal no puede ser eliminado porque actualmente se están identificando requerimientos. Por favor, espere a que se complete la identificación e intente nuevamente.",
       },
-    [ReqIdentificationRequirementsErrors.SUBJECTS_NOT_MATCH]: {
+    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_SUBJECTS_NOT_MATCH]: {
       title: "Conflicto de materias",
       message:
         "Todos los fundamentos legales seleccionados deben pertenecer a la misma materia. Verifique e intente de nuevo.",
     },
-    [ReqIdentificationRequirementsErrors.JURISDICTIONS_NOT_MATCH]: {
+    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_JURISDICTIONS_NOT_MATCH]: {
       title: "Conflicto de jurisdicción",
       message:
         "Todos los fundamentos legales seleccionados deben tener la misma jurisdicción. Verifique e intente de nuevo.",
     },
-    [ReqIdentificationRequirementsErrors.STATES_NOT_MATCH]: {
+    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_STATES_NOT_MATCH]: {
       title: "Conflicto de estado",
       message:
         "Todos los fundamentos legales seleccionados deben pertenecer al mismo estado si la jurisdicción es Estatal. Verifique e intente de nuevo.",
     },
-    [ReqIdentificationRequirementsErrors.MUNICIPALITIES_NOT_MATCH]: {
-      title: "Conflicto de municipio",
-      message:
-        "Todos los fundamentos legales seleccionados deben pertenecer al mismo municipio si la jurisdicción es Municipal. Verifique e intente de nuevo.",
-    },
+    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_MUNICIPALITIES_NOT_MATCH]:
+      {
+        title: "Conflicto de municipio",
+        message:
+          "Todos los fundamentos legales seleccionados deben pertenecer al mismo municipio si la jurisdicción es Municipal. Verifique e intente de nuevo.",
+      },
     [ReqIdentificationRequirementsErrors.ARTICLE_NOT_FOUND]: {
       title: "Artículo no encontrado",
       message:
@@ -173,11 +185,18 @@ class ReqIdentificationRequirementsErrors {
       message:
         "El artículo ya está vinculado a este fundamento legal y requerimiento. No se puede agregar nuevamente.",
     },
-    [ReqIdentificationRequirementsErrors.ARTICLE_NOT_LINKED_IN_LEGAL_BASIS_REQUIREMENT]: {
-      title: "Artículo no vinculado en el fundamento legal y requerimiento",
-      message:
-        "El artículo no está vinculado al fundamento legal y requerimiento actual. Verifique su asociación recargando la app e intente de nuevo.",
-    },
+    [ReqIdentificationRequirementsErrors.ARTICLE_NOT_LINKED_IN_LEGAL_BASIS_REQUIREMENT]:
+      {
+        title: "Artículo no vinculado en el fundamento legal y requerimiento",
+        message:
+          "El artículo no está vinculado al fundamento legal y requerimiento actual. Verifique su asociación recargando la app e intente de nuevo.",
+      },
+    [ReqIdentificationRequirementsErrors.ARTICLE_REQ_IDENTIFICATION_JOBS_CONFLICT]:
+      {
+        title: "Conflicto con trabajos pendientes",
+        message:
+          "Este artículo no puede ser eliminado porque actualmente se están identificando requerimientos. Por favor, espere a que se complete la identificación e intente nuevamente.",
+      },
   };
 
   /**
@@ -200,6 +219,8 @@ class ReqIdentificationRequirementsErrors {
       ReqIdentificationRequirementsErrors.REQUIREMENT_ALREADY_LINKED,
     "Requirement is not linked to the requirement identification":
       ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION,
+    "All selected requirements must have the same subject":
+      ReqIdentificationRequirementsErrors.REQUIREMENT_SUBJECTS_NOT_MATCH,
     "Cannot delete Requirement with pending Requirement Identification jobs":
       ReqIdentificationRequirementsErrors.REQUIREMENT_REQ_IDENTIFICATION_JOBS_CONFLICT,
     "LegalBasis not found":
@@ -211,18 +232,20 @@ class ReqIdentificationRequirementsErrors {
     "Cannot delete LegalBasis with pending Requirement Identification jobs":
       ReqIdentificationRequirementsErrors.LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT,
     "All selected legal bases must have the same subject":
-      ReqIdentificationRequirementsErrors.SUBJECTS_NOT_MATCH,
+      ReqIdentificationRequirementsErrors.LEGAL_BASIS_SUBJECTS_NOT_MATCH,
     "All selected legal bases must have the same jurisdiction":
-      ReqIdentificationRequirementsErrors.JURISDICTIONS_NOT_MATCH,
+      ReqIdentificationRequirementsErrors.LEGAL_BASIS_JURISDICTIONS_NOT_MATCH,
     "All selected legal bases must have the same state":
-      ReqIdentificationRequirementsErrors.STATES_NOT_MATCH,
+      ReqIdentificationRequirementsErrors.LEGAL_BASIS_STATES_NOT_MATCH,
     "All selected legal bases must have the same municipality":
-      ReqIdentificationRequirementsErrors.MUNICIPALITIES_NOT_MATCH,
+      ReqIdentificationRequirementsErrors.LEGAL_BASIS_MUNICIPALITIES_NOT_MATCH,
     "Article not found": ReqIdentificationRequirementsErrors.ARTICLE_NOT_FOUND,
     "Article is already linked to this legal basis and requirement in the requirement identification":
       ReqIdentificationRequirementsErrors.ARTICLE_ALREADY_LINKED,
     "Article is not linked to this legal basis and requirement in the requirement identification":
-      ReqIdentificationRequirementsErrors.ARTICLE_NOT_LINKED_IN_LEGAL_BASIS_REQUIREMENT
+      ReqIdentificationRequirementsErrors.ARTICLE_NOT_LINKED_IN_LEGAL_BASIS_REQUIREMENT,
+    "Cannot delete Article with pending Requirement Identification jobs":
+      ReqIdentificationRequirementsErrors.ARTICLE_REQ_IDENTIFICATION_JOBS_CONFLICT,
   };
 
   /**

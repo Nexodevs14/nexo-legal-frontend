@@ -52,7 +52,7 @@ export default function ReqIdentificationCell({
   handleDeleteLegalBasis,
   openCreateArticleModal,
   openEditArticleModal,
-  handleDeleteArticle
+  handleDeleteArticle,
 }) {
   const {
     requirement,
@@ -224,7 +224,9 @@ export default function ReqIdentificationCell({
                     className="hover:bg-primary/20"
                     key="update"
                     textValue="Editar Identificación"
-                    onPress={() => openEditRequirmentModal(reqIdentificatioRequirement)}
+                    onPress={() =>
+                      openEditRequirmentModal(reqIdentificatioRequirement)
+                    }
                   >
                     <p className="font-normal text-primary">
                       Editar Requerimiento
@@ -260,7 +262,7 @@ export default function ReqIdentificationCell({
       isExpanded,
       openEditRequirmentModal,
       handleDeleteRequirement,
-      openCreateLegalBasisModal
+      openCreateLegalBasisModal,
     ]
   );
 
@@ -326,7 +328,14 @@ export default function ReqIdentificationCell({
               </div>
               <Collapse in={showLegalBasis} timeout="auto" unmountOnExit>
                 <Box sx={{ marginTop: 2 }}>
-                  <LegalBasisTable requirement={requirement} legalBasis={legalBasis} handleDeleteLegalBasis={handleDeleteLegalBasis} openCreateArticleModal={openCreateArticleModal} openEditArticleModal={openEditArticleModal} handleDeleteArticle={handleDeleteArticle} />
+                  <LegalBasisTable
+                    requirement={requirement}
+                    legalBasis={legalBasis}
+                    handleDeleteLegalBasis={handleDeleteLegalBasis}
+                    openCreateArticleModal={openCreateArticleModal}
+                    openEditArticleModal={openEditArticleModal}
+                    handleDeleteArticle={handleDeleteArticle}
+                  />
                 </Box>
               </Collapse>
             </Box>
@@ -354,5 +363,5 @@ ReqIdentificationCell.propTypes = {
   handleDeleteLegalBasis: PropTypes.func.isRequired,
   openCreateArticleModal: PropTypes.func.isRequired,
   openEditArticleModal: PropTypes.func.isRequired,
-  handleDeleteArticle: PropTypes.func.isRequired
+  handleDeleteArticle: PropTypes.func.isRequired,
 };

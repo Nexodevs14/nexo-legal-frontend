@@ -26,7 +26,7 @@ import delete_icon from "../../assets/eliminar.png";
 const statusBgColors = {
   Activo: "bg-green",
   Completado: "bg-primary",
-  Fallido: "bg-red"
+  Fallido: "bg-red",
 };
 
 /** * Status colors mapping for different requirement identification states.
@@ -34,12 +34,12 @@ const statusBgColors = {
  * @property {string} Activo - Color class for active status.
  * @property {string} Fallido - Color class for failed status.
  * @property {string} Completado - Color class for completed status.
- *  
+ *
  */
 const statusProgressColors = {
   Activo: "success",
   Completado: "primary",
-  Fallido: "danger"
+  Fallido: "danger",
 };
 
 /**
