@@ -39,6 +39,7 @@ import link_blue_icon from "../../../assets/enlace_blue.png";
  * @param {Function} props.handleDeleteLegalBasis - Callback to handle delete legal basis action.
  * @param {Function} props.openCreateArticleModal - Callback to open the create article modal.
  * @param {Function} props.openEditArticleModal - Callback to open the edit article modal.
+ * @param {Function} props.handleDeleteArticle - Callback to handle delete article action.
  * @returns {JSX.Element} Rendered table row with collapsible content.
  */
 export default function ReqIdentificationCell({
@@ -50,7 +51,8 @@ export default function ReqIdentificationCell({
   openCreateLegalBasisModal,
   handleDeleteLegalBasis,
   openCreateArticleModal,
-  openEditArticleModal
+  openEditArticleModal,
+  handleDeleteArticle
 }) {
   const {
     requirement,
@@ -324,7 +326,7 @@ export default function ReqIdentificationCell({
               </div>
               <Collapse in={showLegalBasis} timeout="auto" unmountOnExit>
                 <Box sx={{ marginTop: 2 }}>
-                  <LegalBasisTable requirement={requirement} legalBasis={legalBasis} handleDeleteLegalBasis={handleDeleteLegalBasis} openCreateArticleModal={openCreateArticleModal} openEditArticleModal={openEditArticleModal} />
+                  <LegalBasisTable requirement={requirement} legalBasis={legalBasis} handleDeleteLegalBasis={handleDeleteLegalBasis} openCreateArticleModal={openCreateArticleModal} openEditArticleModal={openEditArticleModal} handleDeleteArticle={handleDeleteArticle} />
                 </Box>
               </Collapse>
             </Box>
@@ -352,4 +354,5 @@ ReqIdentificationCell.propTypes = {
   handleDeleteLegalBasis: PropTypes.func.isRequired,
   openCreateArticleModal: PropTypes.func.isRequired,
   openEditArticleModal: PropTypes.func.isRequired,
+  handleDeleteArticle: PropTypes.func.isRequired
 };

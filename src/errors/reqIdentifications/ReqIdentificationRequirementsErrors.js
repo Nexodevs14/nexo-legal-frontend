@@ -33,6 +33,7 @@ class ReqIdentificationRequirementsErrors {
   static MUNICIPALITIES_NOT_MATCH = "MUNICIPALITIES_NOT_MATCH";
   static ARTICLE_NOT_FOUND = "ARTICLE_NOT_FOUND";
   static ARTICLE_ALREADY_LINKED = "ARTICLE_ALREADY_LINKED";
+  static ARTICLE_NOT_LINKED_IN_LEGAL_BASIS_REQUIREMENT = "ARTICLE_NOT_LINKED_IN_LEGAL_BASIS_REQUIREMENT";
 
   /**
    * A map of error constants to user-friendly error objects.
@@ -172,6 +173,11 @@ class ReqIdentificationRequirementsErrors {
       message:
         "El artículo ya está vinculado a este fundamento legal y requerimiento. No se puede agregar nuevamente.",
     },
+    [ReqIdentificationRequirementsErrors.ARTICLE_NOT_LINKED_IN_LEGAL_BASIS_REQUIREMENT]: {
+      title: "Artículo no vinculado en el fundamento legal y requerimiento",
+      message:
+        "El artículo no está vinculado al fundamento legal y requerimiento actual. Verifique su asociación recargando la app e intente de nuevo.",
+    },
   };
 
   /**
@@ -215,6 +221,8 @@ class ReqIdentificationRequirementsErrors {
     "Article not found": ReqIdentificationRequirementsErrors.ARTICLE_NOT_FOUND,
     "Article is already linked to this legal basis and requirement in the requirement identification":
       ReqIdentificationRequirementsErrors.ARTICLE_ALREADY_LINKED,
+    "Article is not linked to this legal basis and requirement in the requirement identification":
+      ReqIdentificationRequirementsErrors.ARTICLE_NOT_LINKED_IN_LEGAL_BASIS_REQUIREMENT
   };
 
   /**

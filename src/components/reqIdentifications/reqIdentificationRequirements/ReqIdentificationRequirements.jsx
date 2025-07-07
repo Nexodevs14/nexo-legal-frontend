@@ -65,7 +65,8 @@ export default function ReqIdentificationRequirements() {
     addLegalBasis,
     deleteLegalBasis,
     addArticle,
-    editArticle
+    editArticle,
+    deleteArticle
   } = useReqIdentificationRequirements();
   const {
     requirements,
@@ -631,6 +632,64 @@ export default function ReqIdentificationRequirements() {
     [id, deleteLegalBasis]
   );
 
+    const handleDeleteArticle = useCallback(
+    async (requirementId, legalBasisId, articleId) => {
+      const toastId = toast.loading("Eliminando artículo...", {
+        icon: <Spinner size="sm" />,
+        progressStyle: {
+          background: "#113c53",
+        },
+      });
+      try {
+        const { success, error } = await deleteArticle(id, requirementId, legalBasisId, articleId);
+        if (success) {
+          toast.update(toastId, {
+            render: "Artículo eliminado con éxito",
+            type: "info",
+            icon: <img src={check} alt="Success Icon" />,
+            progressStyle: {
+              background: "#113c53",
+            },
+            isLoading: false,
+            autoClose: 3000,
+          });
+        } else {
+          toast.update(toastId, {
+            render: (
+              <div
+                style={{
+                  maxHeight: 200,
+                  overflowY: "auto",
+                  whiteSpace: "pre-wrap",
+                }}
+              >
+                {error}
+              </div>
+            ),
+            className: "toast-scroll-red",
+            type: "error",
+            icon: null,
+            progressStyle: {},
+            isLoading: false,
+            autoClose: 5000,
+          });
+        }
+      } catch (error) {
+        console.error(error);
+        toast.update(toastId, {
+          render:
+            "Algo mal sucedió al eliminar el artículo. Intente de nuevo.",
+          type: "error",
+          icon: null,
+          progressStyle: {},
+          isLoading: false,
+          autoClose: 5000,
+        });
+      }
+    },
+    [id, deleteArticle]
+  );
+
   if (
     loading && isFirstRender
   ) {
@@ -744,6 +803,7 @@ export default function ReqIdentificationRequirements() {
                         handleDeleteLegalBasis={handleDeleteLegalBasis}
                         openCreateArticleModal={openCreateArticleModal}
                         openEditArticleModal={openEditArticleModal}
+                        handleDeleteArticle={handleDeleteArticle}
                       />
                     ))
                   )}

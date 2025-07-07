@@ -80,7 +80,7 @@ const CreateReqIdentificationArticleModal = ({ config }) => {
     e.preventDefault();
     setIsLoading(true);
     if (!formData.articleId) {
-      setArticleInputError("Este campo es obligatorio.");
+      setArticleInputError("Debe seleccionar un artículo.");
       setIsLoading(false);
       return;
     } else {
@@ -94,7 +94,7 @@ const CreateReqIdentificationArticleModal = ({ config }) => {
       setArticleTypeInputError(null);
     }
     if (!formData.score) {
-      setArticleScoreInputError("Este campo es obligatorio.");
+      setArticleScoreInputError("Debe ser mayor a 0.");
       setIsLoading(false);
       return;
     } else if (isNaN(formData.score)) {
@@ -113,6 +113,10 @@ const CreateReqIdentificationArticleModal = ({ config }) => {
       setArticleScoreInputError("Este campo debe tener máximo 2 decimales.");
       setIsLoading(false);
       return;
+    } else if (/^0\d/.test(formData.score)) {
+      setArticleScoreInputError("El valor no debe comenzar con ceros.");
+      setIsLoading(false);
+      return;
     } else {
       setArticleScoreInputError(null);
     }
@@ -127,7 +131,7 @@ const CreateReqIdentificationArticleModal = ({ config }) => {
       });
 
       if (success) {
-        toast.info("Artículo asociado correctamente", {
+        toast.info("Artículo asociado exitosamente", {
           icon: () => <img src={check} alt="Success Icon" />,
           progressStyle: { background: "#113c53" },
         });

@@ -31,9 +31,10 @@ import delete_icon from "../../../assets/eliminar.png";
  * @param {Function} props.handleDeleteLegalBasis - Callback function to handle deletion of a legal basis.
  * @param {Function} props.openCreateArticleModal - Callback to open the create article modal. 
  * @param {Function} props.openEditArticleModal - Callback to open the edit article modal.
+ * @param {Function} props.handleDeleteArticle - Callback to handle deletion of an article.
 * @returns {JSX.Element} Rendered table of legal basis.
  */
-export default function LegalBasisTable({ requirement, legalBasis, handleDeleteLegalBasis, openCreateArticleModal, openEditArticleModal }) {
+export default function LegalBasisTable({ requirement, legalBasis, handleDeleteLegalBasis, openCreateArticleModal, openEditArticleModal, handleDeleteArticle }) {
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [descriptionData, setDescriptionData] = useState("");
@@ -255,6 +256,11 @@ export default function LegalBasisTable({ requirement, legalBasis, handleDeleteL
                                             }
                                             key="delete-article"
                                             className="hover:bg-red/20"
+                                            onPress={() => handleDeleteArticle(
+                                              requirement.id,
+                                              item.legalBasis.id,
+                                              article.id,
+                                            )}
                                           >
                                             <p className="font-normal text-red">
                                               Eliminar Artículo
@@ -357,4 +363,5 @@ LegalBasisTable.propTypes = {
   handleDeleteLegalBasis: PropTypes.func.isRequired,
   openCreateArticleModal: PropTypes.func.isRequired,
   openEditArticleModal: PropTypes.func.isRequired,
+  handleDeleteArticle: PropTypes.func.isRequired
 };

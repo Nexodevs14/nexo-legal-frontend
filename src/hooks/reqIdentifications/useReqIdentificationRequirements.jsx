@@ -12,6 +12,8 @@ import addLegalBasisToRequirementInReqIdentification from "../../services/reqIde
 import deleteLegalBasisFromRequirementInReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/deleteLegalBasisFromRequirementInReqIdentification.js";
 import ReqIdentificationRequirementsErrors from "../../errors/reqIdentifications/ReqIdentificationRequirementsErrors.js";
 import addArticleToLegalBasisRequirementInReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/addArticleToLegalBasisRequirementInReqIdentification.js";
+import editArticleFromLegalBasisRequirementInReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/editArticleFromLegalBasisRequirementInReqIdentification.js";
+import deleteArticleFromLegalBasisRequirementInReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/deleteArticleFromLegalBasisRequirementInReqIdentification.js";
 
 /**
  * Custom hook for managing requirements within a requirement identification.
@@ -531,6 +533,126 @@ export default function useReqIdentificationRequirements() {
     [jwt]
   );
 
+  /**
+   * Edits a legal basis article associated with a requirement within a specific requirement identification.
+   * @async
+   * @function editArticle
+   * @param {Object} params - Parameters for the association.
+   * @param {number} params.reqIdentificationId - The ID of the requirement identification.
+   * @param {number} params.requirementId - The ID of the requirement within the identification.
+   * @param {number} params.legalBasisId - The ID of the legal basis.
+   * @param {number} params.articleId - The ID of the article to associate.
+   * @param {string} params.articleType - The type of the article.
+   * @param {number} params.score - The score associated with the article.
+   * @returns {Promise<{ success: true } | { success: false, error: string }>}
+   * */
+  const editArticle = useCallback(
+    async ({
+      reqIdentificationId,
+      requirementId,
+      legalBasisId,
+      articleId,
+      articleType,
+      score,
+    }) => {
+      try {
+        const reqIdentificationRequirement =
+          await editArticleFromLegalBasisRequirementInReqIdentification({
+            reqIdentificationId,
+            requirementId,
+            legalBasisId,
+            articleId,
+            articleType,
+            score,
+            token: jwt,
+          });
+        setReqIdentificationRequirements((prev) =>
+          prev.map((req) =>
+            req.requirement.id === requirementId
+              ? reqIdentificationRequirement
+              : req
+          )
+        );
+        return { success: true };
+      } catch (error) {
+        const errorCode = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+        const clientMessage = error.message;
+
+        const handledError = ReqIdentificationRequirementsErrors.handleError({
+          code: errorCode,
+          error: serverMessage,
+          httpError: clientMessage,
+          items: [reqIdentificationId, requirementId],
+        });
+        return { success: false, error: handledError.message };
+      }
+    },
+    [jwt]
+  );
+  
+  /**
+   * Deletes a legal basis article associated with a requirement within a specific requirement identification.
+   * @async
+   * @function deleteArticle
+   * @param {number} reqIdentificationId - The ID of the requirement identification.
+   * @param {number} requirementId - The ID of the requirement within the identification.
+   * @param {number} legalBasisId - The ID of the legal basis.
+   * @param {number} articleId - The ID of the article to remove.
+   * @returns {Promise<{ success: true } | { success: false, error: string }>}
+   */
+  const deleteArticle = useCallback(
+    async (
+      reqIdentificationId,
+      requirementId,
+      legalBasisId,
+      articleId,
+    ) => {
+      try {
+        await deleteArticleFromLegalBasisRequirementInReqIdentification({
+          reqIdentificationId,
+          requirementId,
+          legalBasisId,
+          articleId,
+          token: jwt,
+        });
+        setReqIdentificationRequirements((prev) =>
+          prev.map((req) =>
+            req.requirement.id === requirementId
+              ? {
+                  ...req,
+                  legalBasis: req.legalBasis.map((lb) =>
+                    lb.legalBasis.id === legalBasisId
+                      ? {
+                          ...lb,
+                          articles: lb.articles.filter(
+                            (article) => article.article.id !== articleId
+                          ),
+                        }
+                      : lb
+                  ),
+                }
+              : req
+          )
+        );
+        return { success: true };
+      } catch (error) {
+        const errorCode = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+        const clientMessage = error.message;
+
+        const handledError = ReqIdentificationRequirementsErrors.handleError({
+          code: errorCode,
+          error: serverMessage,
+          httpError: clientMessage,
+          items: [reqIdentificationId, requirementId],
+        });
+        return { success: false, error: handledError.message };
+      }
+    },
+    [jwt]
+  );
+
   return {
     reqIdentificationRequirements,
     loading: state.loading,
@@ -545,6 +667,8 @@ export default function useReqIdentificationRequirements() {
     deleteRequirement,
     addLegalBasis,
     deleteLegalBasis,
-    addArticle
+    addArticle,
+    editArticle,
+    deleteArticle
   };
 }
