@@ -30,9 +30,10 @@ import delete_icon from "../../../assets/eliminar.png";
  * @param {Array} props.legalBasis - An array of legal basis objects with nested articles.
  * @param {Function} props.handleDeleteLegalBasis - Callback function to handle deletion of a legal basis.
  * @param {Function} props.openCreateArticleModal - Callback to open the create article modal. 
+ * @param {Function} props.openEditArticleModal - Callback to open the edit article modal.
 * @returns {JSX.Element} Rendered table of legal basis.
  */
-export default function LegalBasisTable({ requirement, legalBasis, handleDeleteLegalBasis, openCreateArticleModal }) {
+export default function LegalBasisTable({ requirement, legalBasis, handleDeleteLegalBasis, openCreateArticleModal, openEditArticleModal }) {
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [descriptionData, setDescriptionData] = useState("");
@@ -238,6 +239,7 @@ export default function LegalBasisTable({ requirement, legalBasis, handleDeleteL
                                             }
                                             key="edit-article"
                                             className="hover:bg-primary/20"
+                                            onPress={() => openEditArticleModal(requirement.id, item.legalBasis.id, article.id, articleType, score)}
                                           >
                                             <p className="font-normal text-primary">
                                               Editar Artículo
@@ -353,5 +355,6 @@ LegalBasisTable.propTypes = {
     })
   ).isRequired,
   handleDeleteLegalBasis: PropTypes.func.isRequired,
-  openCreateArticleModal: PropTypes.func.isRequired
+  openCreateArticleModal: PropTypes.func.isRequired,
+  openEditArticleModal: PropTypes.func.isRequired,
 };

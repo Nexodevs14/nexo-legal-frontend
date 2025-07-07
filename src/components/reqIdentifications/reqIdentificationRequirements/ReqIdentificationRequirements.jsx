@@ -15,6 +15,7 @@ import check from "../../../assets/check.png";
 import { toast } from "react-toastify";
 import CreateReqIdentificationRequirementModal from "./CreateRequirementModal";
 import EditReqIdentificationRequirementModal from "./EditRequirementModal";
+import EditReqIdentificationArticleModal from "./EditArticlesModal";
 import CreateReqIdentificationLegalBasisModal from "./CreateLegalBasisModal";
 import CreateReqIdentificationArticlesModal from "./CreateArticlesModal";
 
@@ -63,7 +64,8 @@ export default function ReqIdentificationRequirements() {
     deleteRequirement,
     addLegalBasis,
     deleteLegalBasis,
-    addArticle
+    addArticle,
+    editArticle
   } = useReqIdentificationRequirements();
   const {
     requirements,
@@ -100,6 +102,7 @@ export default function ReqIdentificationRequirements() {
   const [isCreateLegalBasisModalOpen, setIsCreateLegalBasisModalOpen] = useState(false);
   const [legalBasisInputError, setLegalBasisInputError] = useState(null);
   const [isCreateArticlesModalOpen, setIsCreateArticlesModalOpen] = useState(null)
+  const [isEditModalArticleOpen, setIsEditArticlesModalOpen] = useState(null)
   const [articleInputError, setArticleInputError] = useState(null)
   const [articleTypeInputError, setArticleTypeInputError] = useState(null)
   const [articleScoreInputError, setArticleScoreInputError] = useState(null)
@@ -382,7 +385,7 @@ export default function ReqIdentificationRequirements() {
 
   const closeCreateLegalBasisModal = () => {
     setIsCreateLegalBasisModalOpen(false);
-    setLegalBasisInputError(null)
+    setLegalBasisInputError("")
   };
 
   const handleLegalBasisChange = useCallback(
@@ -422,6 +425,9 @@ export default function ReqIdentificationRequirements() {
 
   const closeCreateArticleModal = () => {
     setIsCreateArticlesModalOpen(false);
+    setArticleInputError("")
+    setArticleTypeInputError("")
+    setArticleScoreInputError("")
   };
 
 
@@ -488,6 +494,25 @@ export default function ReqIdentificationRequirements() {
     },
     [articleScoreInputError, setFormDataArticle, setArticleScoreInputError]
   );
+
+  const openEditArticleModal = (requirementId, legalBasisId, articleId, articleType, score) => {
+    setFormDataArticle({
+      reqIdentificationId: id,
+      requirementId: requirementId,
+      legalBasisId: legalBasisId,
+      articleId: articleId.toString(),
+      articleType: articleType,
+      score: score,
+    });
+    setIsEditArticlesModalOpen(true);
+  };
+
+  const closeEditArticleModal = () => {
+    setIsEditArticlesModalOpen(false);
+    setArticleInputError("")
+    setArticleTypeInputError("")
+    setArticleScoreInputError("")
+  };
 
   const handleDeleteRequirement = useCallback(
     async (requirementId) => {
@@ -718,6 +743,7 @@ export default function ReqIdentificationRequirements() {
                         handleDeleteRequirement={handleDeleteRequirement}
                         handleDeleteLegalBasis={handleDeleteLegalBasis}
                         openCreateArticleModal={openCreateArticleModal}
+                        openEditArticleModal={openEditArticleModal}
                       />
                     ))
                   )}
@@ -807,6 +833,25 @@ export default function ReqIdentificationRequirements() {
               closeModalCreate: closeCreateArticleModal,
               formData: formDataArticle,
               addArticle: addArticle,
+              articleInputError: articleInputError,
+              setArticleInputError: setArticleInputError,
+              handleArticleChange: handleArticleChange,
+              articleTypeInputError: articleTypeInputError,
+              setArticleTypeInputError: setArticleTypeInputError,
+              handleArticleTypeChange: handleArticleTypeChange,
+              articleScoreInputError: articleScoreInputError,
+              setArticleScoreInputError: setArticleScoreInputError,
+              handleArticleScoreChange: handleArticleScoreChange,
+            }}
+          />
+        )}
+        {isEditModalArticleOpen && (
+          <EditReqIdentificationArticleModal
+            config={{
+              isOpen: isEditModalArticleOpen,
+              closeModalEdit: closeEditArticleModal,
+              formData: formDataArticle,
+              editArticle: editArticle,
               articleInputError: articleInputError,
               setArticleInputError: setArticleInputError,
               handleArticleChange: handleArticleChange,
