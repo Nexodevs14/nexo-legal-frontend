@@ -3,6 +3,7 @@ import Context from "../../context/userContext.jsx";
 import addRequirementToReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/addRequirementToReqIdentification.js";
 import getRequirementFromReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/getRequirementFromReqIdentification.js";
 import getAllRequirementsFromReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/getAllRequirementsFromReqIdentification.js";
+import getAllRequirementsFromReqIdentificationFile from "../../services/reqIdentificationService/reqIdentificationRequirements/getAllRequirementsFromReqIdentificationFile.js"
 import getRequirementsFromReqIdentificationByName from "../../services/reqIdentificationService/reqIdentificationRequirements/getRequirementsFromReqIdentificationByName.js";
 import getRequirementsFromReqIdentificationByRequirementName from "../../services/reqIdentificationService/reqIdentificationRequirements/getRequirementsFromReqIdentificationByRequirementName.js";
 import getRequirementsFromReqIdentificationByLegalBasisName from "../../services/reqIdentificationService/reqIdentificationRequirements/getRequirementsFromReqIdentificationByLegalBasisName.js";
@@ -653,6 +654,40 @@ export default function useReqIdentificationRequirements() {
     [jwt]
   );
 
+  /**
+ * Descarga el archivo Excel con todos los requerimientos de una identificación.
+ * @async
+ * @function downloadRequirementsFile
+ * @param {number} reqIdentificationId - ID de la identificación de requerimientos.
+ * @returns {Promise<{ success: true, blob: Blob, fileName: string } | { success: false, error: string }>}
+ */
+const downloadRequirementsFile = useCallback(
+  async (reqIdentificationId) => {
+    try {
+      const { blob, fileName } = await getAllRequirementsFromReqIdentificationFile({
+        reqIdentificationId,
+        token: jwt,
+      });
+      return { success: true, blob, fileName };
+    } catch (error) {
+      const errorCode = error.response?.status;
+      const serverMessage = error.response?.data?.message;
+      const clientMessage = error.message;
+
+      const handledError = ReqIdentificationRequirementsErrors.handleError({
+        code: errorCode,
+        error: serverMessage,
+        httpError: clientMessage,
+        items: [reqIdentificationId],
+      });
+
+      return { success: false, error: handledError.message };
+    }
+  },
+  [jwt]
+);
+
+
   return {
     reqIdentificationRequirements,
     loading: state.loading,
@@ -669,6 +704,7 @@ export default function useReqIdentificationRequirements() {
     deleteLegalBasis,
     addArticle,
     editArticle,
-    deleteArticle
+    deleteArticle,
+    downloadRequirementsFile
   };
 }
