@@ -7,8 +7,7 @@ import {
   ModalBody,
   Button,
   Spinner,
-  Autocomplete,
-  AutocompleteItem,
+  Input,
   Select,
   SelectItem,
   Textarea,
@@ -32,9 +31,7 @@ import check from "../../../assets/check.png";
  * @param {string|null} props.config.requirementNameInputError - Error message for the name field.
  * @param {Function} props.config.setRequirementNameInputError - Setter for name field error.
  * @param {Function} props.config.handleRequirementNameChange - Handler for name input change.
- * @param {string|null} props.config.requirementInputError - Error message for the requirement field.
  * @param {Function} props.config.setRequirementInputError - Setter for requirement field error.
- * @param {Function} props.config.handleRequirementChange - Handler for selecting a requirement.
  * @param {Function} props.config.handleRequirementTypesChange - Handler for selecting requirement types.
  * @param {Object} props.config.legalVerbsInputErrors - Object containing errors for legal verb translations.
  * @param {Function} props.config.setLegalVerbsInputErrors - Setter for legal verb
@@ -58,9 +55,7 @@ const EditRequirementModal = ({ config }) => {
     requirementNameInputError,
     setRequirementNameInputError,
     handleRequirementNameChange,
-    requirementInputError,
     setRequirementInputError,
-    handleRequirementChange,
     handleRequirementTypesChange,
     legalVerbsInputErrors,
     setLegalVerbsInputErrors,
@@ -221,31 +216,16 @@ const EditRequirementModal = ({ config }) => {
               </div>
 
               <div className="w-full">
-                <Autocomplete
-                  size="sm"
-                  variant="bordered"
+                <Input
                   label="Requerimiento"
-                  selectedKey={formData.requirement}
-                  onSelectionChange={handleRequirementChange}
-                  listboxProps={{
-                    emptyContent: "No se encontró el requerimiento",
-                  }}
-                  defaultItems={requirements}
-                >
-                  {(requirement) => (
-                    <AutocompleteItem
-                      key={requirement.id}
-                      value={requirement.id}
-                    >
-                      {requirement.requirement_name}
-                    </AutocompleteItem>
-                  )}
-                </Autocomplete>
-                {requirementInputError && (
-                  <p className="mt-2 text-sm text-red">
-                    {requirementInputError}
-                  </p>
-                )}
+                  variant="bordered"
+                  size="sm"
+                  isReadOnly
+                  value={
+                    requirements.find((r) => r.id === Number(formData.requirement))
+                      ?.requirement_name || "No disponible"
+                  }
+                />
               </div>
 
               <div className="w-full">
@@ -337,9 +317,7 @@ EditRequirementModal.propTypes = {
     requirementNameInputError: PropTypes.string,
     setRequirementNameInputError: PropTypes.func.isRequired,
     handleRequirementNameChange: PropTypes.func.isRequired,
-    requirementInputError: PropTypes.string,
     setRequirementInputError: PropTypes.func.isRequired,
-    handleRequirementChange: PropTypes.func.isRequired,
     handleRequirementTypesChange: PropTypes.func.isRequired,
     legalVerbsInputErrors: PropTypes.string,
     setLegalVerbsInputErrors: PropTypes.func.isRequired,

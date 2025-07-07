@@ -10,6 +10,7 @@ import {
   Autocomplete,
   AutocompleteItem,
   Alert,
+  Input,
 } from "@heroui/react";
 import { toast } from "react-toastify";
 import check from "../../../assets/check.png";
@@ -31,9 +32,7 @@ import useArticles from "../../../hooks/articles/useArticles";
  * @param {string} [props.config.formData.articleType] - Selected article type.
  * @param {string|number} [props.config.formData.score] - Score value for the article.
  * @param {Function} props.config.editArticle - Function to update the article.
- * @param {string} [props.config.articleInputError] - Error message for the article input.
  * @param {Function} props.config.setArticleInputError - Setter for article input error.
- * @param {Function} props.config.handleArticleChange - Handler for article selection change.
  * @param {string} [props.config.articleTypeInputError] - Error message for the article type input.
  * @param {Function} props.config.setArticleTypeInputError - Setter for article type input error.
  * @param {Function} props.config.handleArticleTypeChange - Handler for article type selection change.
@@ -49,9 +48,7 @@ const EditReqIdentificationArticleModal = ({ config }) => {
     closeModalEdit,
     formData,
     editArticle,
-    articleInputError,
     setArticleInputError,
-    handleArticleChange,
     articleTypeInputError,
     setArticleTypeInputError,
     handleArticleTypeChange,
@@ -197,30 +194,18 @@ const EditReqIdentificationArticleModal = ({ config }) => {
               <ModalBody className="overflow-y-auto px-6">
                 <form className="flex flex-col gap-4" onSubmit={handleUpdate}>
                   <div className="w-full">
-                    <Autocomplete
+                    <Input
                       size="sm"
                       variant="bordered"
-                      label="Seleccionar artículo"
-                      placeholder="Buscar artículo"
-                      isDisabled
-                      selectedKey={formData.articleId}
-                      onSelectionChange={handleArticleChange}
-                      listboxProps={{
-                        emptyContent: "No se encontraron artículos",
-                      }}
-                    >
-                      {articles.map((article) => (
-                        <AutocompleteItem key={article.id}>
-                          {article.article_name}
-                        </AutocompleteItem>
-                      ))}
-                    </Autocomplete>
-                    {articleInputError && (
-                      <p className="mt-2 text-sm text-red">
-                        {articleInputError}
-                      </p>
-                    )}
+                      label="Artículo"
+                      isReadOnly
+                      value={
+                        articles.find((a) => a.id === Number(formData.articleId))
+                          ?.article_name || "No disponible"
+                      }
+                    />
                   </div>
+
                   <div className="w-full">
                     <Autocomplete
                       size="sm"
@@ -303,9 +288,7 @@ EditReqIdentificationArticleModal.propTypes = {
       score: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     }).isRequired,
     editArticle: PropTypes.func.isRequired,
-    articleInputError: PropTypes.string,
     setArticleInputError: PropTypes.func.isRequired,
-    handleArticleChange: PropTypes.func.isRequired,
     articleTypeInputError: PropTypes.string,
     setArticleTypeInputError: PropTypes.func.isRequired,
     handleArticleTypeChange: PropTypes.func.isRequired,
