@@ -71,22 +71,22 @@ class ReqIdentificationErrors {
     [ReqIdentificationErrors.SUBJECTS_NOT_MATCH]: {
       title: "Conflicto de materias",
       message:
-        "Todos los fundamentos legales seleccionados deben pertenecer a la misma materia. Recargue la app e intente de nuevo.",
+        "Todos los fundamentos legales seleccionados deben pertenecer a la misma materia. Verifique e intente de nuevo.",
     },
     [ReqIdentificationErrors.JURISDICTIONS_NOT_MATCH]: {
       title: "Conflicto de jurisdicción",
       message:
-        "Todos los fundamentos legales seleccionados deben tener la misma jurisdicción. Recargue la app e intente de nuevo.",
+        "Todos los fundamentos legales seleccionados deben tener la misma jurisdicción. Verifique e intente de nuevo.",
     },
     [ReqIdentificationErrors.STATES_NOT_MATCH]: {
       title: "Conflicto de estado",
       message:
-        "Todos los fundamentos legales seleccionados deben pertenecer al mismo estado si la jurisdicción es Estatal. Recargue la app e intente de nuevo.",
+        "Todos los fundamentos legales seleccionados deben pertenecer al mismo estado si la jurisdicción es Estatal. Verifique e intente de nuevo.",
     },
     [ReqIdentificationErrors.MUNICIPALITIES_NOT_MATCH]: {
       title: "Conflicto de municipio",
       message:
-        "Todos los fundamentos legales seleccionados deben pertenecer al mismo municipio si la jurisdicción es Municipal. Recargue la app e intente de nuevo.",
+        "Todos los fundamentos legales seleccionados deben pertenecer al mismo municipio si la jurisdicción es Municipal. Verifique e intente de nuevo.",
     },
     [ReqIdentificationErrors.REQUIREMENTS_NOT_FOUND]: {
       title: "Requerimientos no encontrados",

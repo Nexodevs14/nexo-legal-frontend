@@ -65,22 +65,18 @@ export default function ReqIdentificationRequirements() {
   } = useReqIdentificationRequirements();
   const {
     requirements,
-    loading: requirementsLoading,
     error: requirementError,
   } = useRequirements();
   const {
     requirementTypes,
-    loading: requirementTypesLoading,
     error: requirementTypeError,
   } = useRequirementTypes();
   const {
     legalVerbs,
-    loading: legalVerbsLoading,
     error: legalVerbsError,
   } = useLegalVerbs();
   const {
     legalBasis,
-    loading: legalBasisLoading,
     error: legalBasisError,
   } = useLegalBasis()
   const [reqIdentification, setReqIdentification] = useState(null);
@@ -522,11 +518,7 @@ export default function ReqIdentificationRequirements() {
   );
 
   if (
-    (loading && isFirstRender) ||
-    requirementsLoading ||
-    requirementTypesLoading ||
-    legalVerbsLoading ||
-    legalBasisLoading
+    loading && isFirstRender
   ) {
     return (
       <div

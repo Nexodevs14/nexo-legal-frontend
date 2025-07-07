@@ -14,6 +14,7 @@ export default {
         secondary: '#3d7692',
         primary: '#113c53',
         green: '#4eaf8f',
+        success: '#4eaf8f',
         warning: '#2581cc',
         red: '#d1302b',
         danger: '#d1302b'

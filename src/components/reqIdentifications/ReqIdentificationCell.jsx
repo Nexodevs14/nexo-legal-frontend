@@ -7,6 +7,7 @@ import {
   DropdownTrigger,
   DropdownMenu,
   User,
+  CircularProgress,
 } from "@heroui/react";
 import defaultAvatar from "../../assets/usuario.png";
 import menu_icon from "../../assets/aplicaciones.png";
@@ -22,10 +23,23 @@ import delete_icon from "../../assets/eliminar.png";
  * @property {string} Fallido - Color class for failed status.
  * @property {string} Completado - Color class for completed status.
  */
-const statusColors = {
+const statusBgColors = {
   Activo: "bg-green",
-  Fallido: "bg-red",
-  Completado: "bg-blue-500",
+  Completado: "bg-primary",
+  Fallido: "bg-red"
+};
+
+/** * Status colors mapping for different requirement identification states.
+ * @constant {Object}
+ * @property {string} Activo - Color class for active status.
+ * @property {string} Fallido - Color class for failed status.
+ * @property {string} Completado - Color class for completed status.
+ *  
+ */
+const statusProgressColors = {
+  Activo: "success",
+  Completado: "primary",
+  Fallido: "danger"
 };
 
 /**
@@ -74,8 +88,7 @@ const ReqIdentificationCell = ({
         return (
           <div className="flex flex-col">
             <p className="text-bold text-sm capitalize">
-              {reqIdentification.subject?.subject_name ||
-                "Por definirse"}
+              {reqIdentification.subject?.subject_name || "Por definirse"}
             </p>
           </div>
         );
@@ -100,8 +113,7 @@ const ReqIdentificationCell = ({
         return (
           <div className="flex flex-col">
             <p className="text-sm capitalize">
-              {reqIdentification.jurisdiction ||
-                "Por definirse"}
+              {reqIdentification.jurisdiction || "Por definirse"}
             </p>
           </div>
         );
@@ -130,12 +142,24 @@ const ReqIdentificationCell = ({
 
       case "status": {
         const status = reqIdentification.status || "N/A";
-        const colorClass = statusColors[status] || "bg-gray-400";
+        const progress = reqIdentification.progress;
+        const colorBgClass = statusBgColors[status] || "bg-gray-400";
+        const value = progress ? parseFloat(progress) : 0;
+        const colorProgressClass = statusProgressColors[status] || "primary";
 
         return (
           <div className="flex items-center gap-2">
-            <div className={`w-2.5 h-2.5 rounded-full ${colorClass}`} />
+            <div className={`w-2.5 h-2.5 rounded-full ${colorBgClass}`} />
             <span className="text-sm font-semibold capitalize">{status}</span>
+            {progress ? (
+              <CircularProgress
+                aria-label="Cargando..."
+                color={colorProgressClass}
+                showValueLabel={true}
+                size="lg"
+                value={value}
+              />
+            ) : null}
           </div>
         );
       }
@@ -239,7 +263,13 @@ const ReqIdentificationCell = ({
       default:
         return null;
     }
-  }, [columnKey, reqIdentification,viewRequirementDetails,  openEditModal, handleDelete]);
+  }, [
+    columnKey,
+    reqIdentification,
+    viewRequirementDetails,
+    openEditModal,
+    handleDelete,
+  ]);
 
   return renderCell();
 };
@@ -272,7 +302,7 @@ ReqIdentificationCell.propTypes = {
     }),
   }).isRequired,
   columnKey: PropTypes.string.isRequired,
-  viewRequirementDetails: PropTypes.func.isRequired, 
+  viewRequirementDetails: PropTypes.func.isRequired,
   openEditModal: PropTypes.func.isRequired,
   goToDetails: PropTypes.func,
   handleDelete: PropTypes.func.isRequired,

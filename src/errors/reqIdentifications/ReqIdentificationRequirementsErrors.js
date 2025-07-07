@@ -11,21 +11,28 @@ class ReqIdentificationRequirementsErrors {
   static MULTIPLE_NOT_FOUND = "MULTIPLE_NOT_FOUND";
   static CONFLICT = "CONFLICT";
   static UNEXPECTED_ERROR = "UNEXPECTED_ERROR";
-  static REQ_IDENTIFICATION_NOT_FOUND = 'REQ_IDENTIFICATION_NOT_FOUND';
-  static REQUIREMENT_NOT_FOUND = 'REQUIREMENT_NOT_FOUND';
-  static REQUIREMENT_TYPES_NOT_FOUND = 'REQUIREMENT_TYPES_NOT_FOUND';
-  static LEGAL_VERBS_NOT_FOUND = 'LEGAL_VERBS_NOT_FOUND';
-  static REQUIREMENT_NAME_CONFLICT = 'REQUIREMENT_NAME_CONFLICT';
-  static REQUIREMENT_ALREADY_LINKED = 'REQUIREMENT_ALREADY_LINKED';
-  static REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION = 'REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION';
-  static REQUIREMENT_REQ_IDENTIFICATION_JOBS_CONFLICT = "REQUIREMENT_REQ_IDENTIFICATION_JOBS_CONFLICT";
-  static LEGAL_BASIS_NOT_FOUND = 'LEGAL_BASIS_NOT_FOUND';
-  static LEGAL_BASIS_ALREADY_LINKED = 'LEGAL_BASIS_ALREADY_LINKED';
-  static LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT = 'LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT';
-  static LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT = "LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT";
-  static ARTICLE_NOT_FOUND = 'ARTICLE_NOT_FOUND';
-  static ARTICLE_ALREADY_LINKED = 'ARTICLE_ALREADY_LINKED';
-
+  static REQ_IDENTIFICATION_NOT_FOUND = "REQ_IDENTIFICATION_NOT_FOUND";
+  static REQUIREMENT_NOT_FOUND = "REQUIREMENT_NOT_FOUND";
+  static REQUIREMENT_TYPES_NOT_FOUND = "REQUIREMENT_TYPES_NOT_FOUND";
+  static LEGAL_VERBS_NOT_FOUND = "LEGAL_VERBS_NOT_FOUND";
+  static REQUIREMENT_NAME_CONFLICT = "REQUIREMENT_NAME_CONFLICT";
+  static REQUIREMENT_ALREADY_LINKED = "REQUIREMENT_ALREADY_LINKED";
+  static REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION =
+    "REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION";
+  static REQUIREMENT_REQ_IDENTIFICATION_JOBS_CONFLICT =
+    "REQUIREMENT_REQ_IDENTIFICATION_JOBS_CONFLICT";
+  static LEGAL_BASIS_NOT_FOUND = "LEGAL_BASIS_NOT_FOUND";
+  static LEGAL_BASIS_ALREADY_LINKED = "LEGAL_BASIS_ALREADY_LINKED";
+  static LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT =
+    "LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT";
+  static LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT =
+    "LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT";
+  static SUBJECTS_NOT_MATCH = "SUBJECTS_NOT_MATCH";
+  static JURISDICTIONS_NOT_MATCH = "JURISDICTIONS_NOT_MATCH";
+  static STATES_NOT_MATCH = "STATES_NOT_MATCH";
+  static MUNICIPALITIES_NOT_MATCH = "MUNICIPALITIES_NOT_MATCH";
+  static ARTICLE_NOT_FOUND = "ARTICLE_NOT_FOUND";
+  static ARTICLE_ALREADY_LINKED = "ARTICLE_ALREADY_LINKED";
 
   /**
    * A map of error constants to user-friendly error objects.
@@ -52,14 +59,14 @@ class ReqIdentificationRequirementsErrors {
         "Revisa los datos introducidos. Uno o más campos no son válidos.",
     },
     [ReqIdentificationRequirementsErrors.NOT_FOUND]: {
-        title: "Recurso no encontrado",
-        message:
-            "El recurso no fue encontrado. Verifique su existencia recargando la app e intente de nuevo.",
+      title: "Recurso no encontrado",
+      message:
+        "El recurso no fue encontrado. Verifique su existencia recargando la app e intente de nuevo.",
     },
     [ReqIdentificationRequirementsErrors.MULTIPLE_NOT_FOUND]: {
-        title: "Recursos no encontrados",
-        message:
-            "Uno o más recursos no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
+      title: "Recursos no encontrados",
+      message:
+        "Uno o más recursos no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
     },
     [ReqIdentificationRequirementsErrors.CONFLICT]: {
       title: "Conflicto de datos",
@@ -73,61 +80,97 @@ class ReqIdentificationRequirementsErrors {
     },
     [ReqIdentificationRequirementsErrors.REQ_IDENTIFICATION_NOT_FOUND]: {
       title: "Identificación de requerimientos no encontrada",
-      message: "La identificación de requerimientos no fue encontrada. Verifique su existencia recargando la app e intente de nuevo.",
+      message:
+        "La identificación de requerimientos no fue encontrada. Verifique su existencia recargando la app e intente de nuevo.",
     },
     [ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_FOUND]: {
       title: "Requerimiento no encontrado",
-      message: "El requerimiento no fue encontrado. Verifique su existencia recargando la app e intente de nuevo.",
+      message:
+        "El requerimiento no fue encontrado. Verifique su existencia recargando la app e intente de nuevo.",
     },
     [ReqIdentificationRequirementsErrors.REQUIREMENT_TYPES_NOT_FOUND]: {
       title: "Tipos de requerimiento no encontrados",
-      message: "Uno o más tipos de requerimiento no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
+      message:
+        "Uno o más tipos de requerimiento no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
     },
     [ReqIdentificationRequirementsErrors.LEGAL_VERBS_NOT_FOUND]: {
       title: "Verbos legales no encontrados",
-      message: "Uno o más verbos legales no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
+      message:
+        "Uno o más verbos legales no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
     },
     [ReqIdentificationRequirementsErrors.REQUIREMENT_NAME_CONFLICT]: {
       title: "Conflicto de nombre de requerimiento",
-      message: "Ya existe un requerimiento con el mismo nombre. Por favor, utiliza otro.",
+      message:
+        "Ya existe un requerimiento con el mismo nombre. Por favor, utiliza otro.",
     },
     [ReqIdentificationRequirementsErrors.REQUIREMENT_ALREADY_LINKED]: {
       title: "Requerimiento ya vinculado",
-      message: "El requerimiento ya está vinculado a esta identificación. No se puede agregar nuevamente.",
-    },
-    [ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION]: {
-      title: "Requerimiento no vinculado en la identificación",
-      message: "El requerimiento no está vinculado a la identificación actual. Verifique su asociación recargando la app e intente de nuevo.",
-    },
-    [ReqIdentificationRequirementsErrors.REQUIREMENT_REQ_IDENTIFICATION_JOBS_CONFLICT]: {
-      title: "Conflicto con trabajos pendientes",
       message:
-        "Este requerimiento no puede ser eliminado porque actualmente se están identificando requerimientos. Por favor, espere a que se complete la identificación e intente nuevamente.",
+        "El requerimiento ya está vinculado a esta identificación. No se puede agregar nuevamente.",
     },
+    [ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION]:
+      {
+        title: "Requerimiento no vinculado en la identificación",
+        message:
+          "El requerimiento no está vinculado a la identificación actual. Verifique su asociación recargando la app e intente de nuevo.",
+      },
+    [ReqIdentificationRequirementsErrors.REQUIREMENT_REQ_IDENTIFICATION_JOBS_CONFLICT]:
+      {
+        title: "Conflicto con trabajos pendientes",
+        message:
+          "Este requerimiento no puede ser eliminado porque actualmente se están identificando requerimientos. Por favor, espere a que se complete la identificación e intente nuevamente.",
+      },
     [ReqIdentificationRequirementsErrors.LEGAL_BASIS_NOT_FOUND]: {
       title: "Fundamento legal no encontrado",
-      message: "El fundamento legal no fue encontrado. Verifique su existencia recargando la app e intente de nuevo.",
+      message:
+        "El fundamento legal no fue encontrado. Verifique su existencia recargando la app e intente de nuevo.",
     },
     [ReqIdentificationRequirementsErrors.LEGAL_BASIS_ALREADY_LINKED]: {
       title: "Fundamento legal ya vinculado",
-      message: "El fundamento legal ya está vinculado a este requerimiento. No se puede agregar nuevamente.",
-    },
-    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT]: {
-      title: "Fundamento legal no vinculado en el requerimiento",
-      message: "El fundamento legal no está vinculado al requerimiento actual. Verifique su asociación recargando la app e intente de nuevo.",
-    },
-    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT]: {
-      title: "Conflicto con trabajos pendientes",
       message:
-        "Este fundamento legal no puede ser eliminado porque actualmente se están identificando requerimientos. Por favor, espere a que se complete la identificación e intente nuevamente.",
+        "El fundamento legal ya está vinculado a este requerimiento. No se puede agregar nuevamente.",
+    },
+    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT]:
+      {
+        title: "Fundamento legal no vinculado en el requerimiento",
+        message:
+          "El fundamento legal no está vinculado al requerimiento actual. Verifique su asociación recargando la app e intente de nuevo.",
+      },
+    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT]:
+      {
+        title: "Conflicto con trabajos pendientes",
+        message:
+          "Este fundamento legal no puede ser eliminado porque actualmente se están identificando requerimientos. Por favor, espere a que se complete la identificación e intente nuevamente.",
+      },
+    [ReqIdentificationRequirementsErrors.SUBJECTS_NOT_MATCH]: {
+      title: "Conflicto de materias",
+      message:
+        "Todos los fundamentos legales seleccionados deben pertenecer a la misma materia. Verifique e intente de nuevo.",
+    },
+    [ReqIdentificationRequirementsErrors.JURISDICTIONS_NOT_MATCH]: {
+      title: "Conflicto de jurisdicción",
+      message:
+        "Todos los fundamentos legales seleccionados deben tener la misma jurisdicción. Verifique e intente de nuevo.",
+    },
+    [ReqIdentificationRequirementsErrors.STATES_NOT_MATCH]: {
+      title: "Conflicto de estado",
+      message:
+        "Todos los fundamentos legales seleccionados deben pertenecer al mismo estado si la jurisdicción es Estatal. Verifique e intente de nuevo.",
+    },
+    [ReqIdentificationRequirementsErrors.MUNICIPALITIES_NOT_MATCH]: {
+      title: "Conflicto de municipio",
+      message:
+        "Todos los fundamentos legales seleccionados deben pertenecer al mismo municipio si la jurisdicción es Municipal. Verifique e intente de nuevo.",
     },
     [ReqIdentificationRequirementsErrors.ARTICLE_NOT_FOUND]: {
       title: "Artículo no encontrado",
-      message: "El artículo no fue encontrado. Verifique su existencia recargando la app e intente de nuevo.",
+      message:
+        "El artículo no fue encontrado. Verifique su existencia recargando la app e intente de nuevo.",
     },
     [ReqIdentificationRequirementsErrors.ARTICLE_ALREADY_LINKED]: {
       title: "Artículo ya vinculado",
-      message: "El artículo ya está vinculado a este fundamento legal y requerimiento. No se puede agregar nuevamente.",
+      message:
+        "El artículo ya está vinculado a este fundamento legal y requerimiento. No se puede agregar nuevamente.",
     },
   };
 
@@ -135,24 +178,44 @@ class ReqIdentificationRequirementsErrors {
    * A map of specific error messages to their corresponding error constants.
    * @type {Object.<string, ReqIdentificationErrors>}
    */
-    static ErrorMessagesMap = {
-    'Network Error': ReqIdentificationRequirementsErrors.NETWORK_ERROR,
-    'Requirement identification not found': ReqIdentificationRequirementsErrors.REQ_IDENTIFICATION_NOT_FOUND,
-    'Requirement not found': ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_FOUND,
-    'Requirement types not found for IDs': ReqIdentificationRequirementsErrors.REQUIREMENT_TYPES_NOT_FOUND,
-    'Legal verbs not found for IDs': ReqIdentificationRequirementsErrors.LEGAL_VERBS_NOT_FOUND,
-    'Requirement name already exists in the requirement identification': ReqIdentificationRequirementsErrors.REQUIREMENT_NAME_CONFLICT,
-    'Requirement is already linked to the requirement identification': ReqIdentificationRequirementsErrors.REQUIREMENT_ALREADY_LINKED,
-    'Requirement is not linked to the requirement identification': ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION,
-    'Cannot delete Requirement with pending Requirement Identification jobs' : ReqIdentificationRequirementsErrors.REQUIREMENT_REQ_IDENTIFICATION_JOBS_CONFLICT,
-    'LegalBasis not found': ReqIdentificationRequirementsErrors.LEGAL_BASIS_NOT_FOUND,
-    'LegalBasis is already linked to this requirement in the requirement identification': ReqIdentificationRequirementsErrors.LEGAL_BASIS_ALREADY_LINKED,
-    'LegalBasis is not linked to this requirement in the requirement identification': ReqIdentificationRequirementsErrors.LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT,
-    'Cannot delete LegalBasis with pending Requirement Identification jobs': ReqIdentificationRequirementsErrors.LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT,
-    'Article not found': ReqIdentificationRequirementsErrors.ARTICLE_NOT_FOUND,
-    'Article is already linked to this legal basis and requirement in the requirement identification': ReqIdentificationRequirementsErrors.ARTICLE_ALREADY_LINKED
+  static ErrorMessagesMap = {
+    "Network Error": ReqIdentificationRequirementsErrors.NETWORK_ERROR,
+    "Requirement identification not found":
+      ReqIdentificationRequirementsErrors.REQ_IDENTIFICATION_NOT_FOUND,
+    "Requirement not found":
+      ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_FOUND,
+    "Requirement types not found for IDs":
+      ReqIdentificationRequirementsErrors.REQUIREMENT_TYPES_NOT_FOUND,
+    "Legal verbs not found for IDs":
+      ReqIdentificationRequirementsErrors.LEGAL_VERBS_NOT_FOUND,
+    "Requirement name already exists in the requirement identification":
+      ReqIdentificationRequirementsErrors.REQUIREMENT_NAME_CONFLICT,
+    "Requirement is already linked to the requirement identification":
+      ReqIdentificationRequirementsErrors.REQUIREMENT_ALREADY_LINKED,
+    "Requirement is not linked to the requirement identification":
+      ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION,
+    "Cannot delete Requirement with pending Requirement Identification jobs":
+      ReqIdentificationRequirementsErrors.REQUIREMENT_REQ_IDENTIFICATION_JOBS_CONFLICT,
+    "LegalBasis not found":
+      ReqIdentificationRequirementsErrors.LEGAL_BASIS_NOT_FOUND,
+    "LegalBasis is already linked to this requirement in the requirement identification":
+      ReqIdentificationRequirementsErrors.LEGAL_BASIS_ALREADY_LINKED,
+    "LegalBasis is not linked to this requirement in the requirement identification":
+      ReqIdentificationRequirementsErrors.LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT,
+    "Cannot delete LegalBasis with pending Requirement Identification jobs":
+      ReqIdentificationRequirementsErrors.LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT,
+    "All selected legal bases must have the same subject":
+      ReqIdentificationRequirementsErrors.SUBJECTS_NOT_MATCH,
+    "All selected legal bases must have the same jurisdiction":
+      ReqIdentificationRequirementsErrors.JURISDICTIONS_NOT_MATCH,
+    "All selected legal bases must have the same state":
+      ReqIdentificationRequirementsErrors.STATES_NOT_MATCH,
+    "All selected legal bases must have the same municipality":
+      ReqIdentificationRequirementsErrors.MUNICIPALITIES_NOT_MATCH,
+    "Article not found": ReqIdentificationRequirementsErrors.ARTICLE_NOT_FOUND,
+    "Article is already linked to this legal basis and requirement in the requirement identification":
+      ReqIdentificationRequirementsErrors.ARTICLE_ALREADY_LINKED,
   };
-
 
   /**
    * Handles errors by mapping error codes or messages to a user-friendly error object.
@@ -165,11 +228,14 @@ class ReqIdentificationRequirementsErrors {
    * @returns {Object} - A user-friendly error object containing a title and message.
    */
   static handleError({ code, error, httpError, items }) {
-     const message = error || httpError;
-      if (message && ReqIdentificationRequirementsErrors.ErrorMessagesMap[message]) {
-        const key = ReqIdentificationRequirementsErrors.ErrorMessagesMap[message];
-        return ReqIdentificationRequirementsErrors.errorMap[key];
-      }
+    const message = error || httpError;
+    if (
+      message &&
+      ReqIdentificationRequirementsErrors.ErrorMessagesMap[message]
+    ) {
+      const key = ReqIdentificationRequirementsErrors.ErrorMessagesMap[message];
+      return ReqIdentificationRequirementsErrors.errorMap[key];
+    }
 
     switch (code) {
       case 400:

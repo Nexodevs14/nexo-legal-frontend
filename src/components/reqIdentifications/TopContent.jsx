@@ -173,7 +173,7 @@ function TopContent({ config }) {
           </AutocompleteItem>
           <AutocompleteItem
             key="Completado"
-            startContent={<div className="w-2 h-2 rounded-full bg-blue-500" />}
+            startContent={<div className="w-2 h-2 rounded-full bg-primary" />}
           >
             Completado
           </AutocompleteItem>
