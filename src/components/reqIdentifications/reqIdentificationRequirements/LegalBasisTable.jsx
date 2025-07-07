@@ -29,9 +29,10 @@ import delete_icon from "../../../assets/eliminar.png";
  * @param {Object} props.requirement - The requirement object associated with the legal basis.
  * @param {Array} props.legalBasis - An array of legal basis objects with nested articles.
  * @param {Function} props.handleDeleteLegalBasis - Callback function to handle deletion of a legal basis.
- * @returns {JSX.Element} Rendered table of legal basis.
+ * @param {Function} props.openCreateArticleModal - Callback to open the create article modal. 
+* @returns {JSX.Element} Rendered table of legal basis.
  */
-export default function LegalBasisTable({ requirement, legalBasis, handleDeleteLegalBasis }) {
+export default function LegalBasisTable({ requirement, legalBasis, handleDeleteLegalBasis, openCreateArticleModal }) {
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [descriptionData, setDescriptionData] = useState("");
@@ -117,6 +118,7 @@ export default function LegalBasisTable({ requirement, legalBasis, handleDeleteL
                           }
                           className="hover:bg-primary/20"
                           key="associate-article"
+                          onPress={() => openCreateArticleModal(requirement.id, item.legalBasis.id)}
                         >
                           <p className="font-normal text-primary">
                             Asociar Artículo
@@ -291,28 +293,28 @@ export default function LegalBasisTable({ requirement, legalBasis, handleDeleteL
 LegalBasisTable.propTypes = {
   requirement: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-       requirement_number: PropTypes.string,
-       requirement_name: PropTypes.string,
-       requirement_condition: PropTypes.string,
-       evidence: PropTypes.string,
-       periodicity: PropTypes.string,
-       subject: PropTypes.shape({
-         subject_name: PropTypes.string,
-       }),
-       aspects: PropTypes.arrayOf(
-         PropTypes.shape({
-           aspect_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-             .isRequired,
-           aspect_name: PropTypes.string.isRequired,
-         })
-       ),
-       acceptance_criteria: PropTypes.string,
-       mandatory_description: PropTypes.string,
-       complementary_description: PropTypes.string,
-       mandatory_sentences: PropTypes.string,
-       complementary_sentences: PropTypes.string,
-       mandatory_keywords: PropTypes.string,
-       complementary_keywords: PropTypes.string,
+    requirement_number: PropTypes.string,
+    requirement_name: PropTypes.string,
+    requirement_condition: PropTypes.string,
+    evidence: PropTypes.string,
+    periodicity: PropTypes.string,
+    subject: PropTypes.shape({
+      subject_name: PropTypes.string,
+    }),
+    aspects: PropTypes.arrayOf(
+      PropTypes.shape({
+        aspect_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+          .isRequired,
+        aspect_name: PropTypes.string.isRequired,
+      })
+    ),
+    acceptance_criteria: PropTypes.string,
+    mandatory_description: PropTypes.string,
+    complementary_description: PropTypes.string,
+    mandatory_sentences: PropTypes.string,
+    complementary_sentences: PropTypes.string,
+    mandatory_keywords: PropTypes.string,
+    complementary_keywords: PropTypes.string,
   }).isRequired,
   legalBasis: PropTypes.arrayOf(
     PropTypes.shape({
@@ -351,4 +353,5 @@ LegalBasisTable.propTypes = {
     })
   ).isRequired,
   handleDeleteLegalBasis: PropTypes.func.isRequired,
+  openCreateArticleModal: PropTypes.func.isRequired
 };

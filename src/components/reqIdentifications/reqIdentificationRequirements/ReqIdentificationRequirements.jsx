@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import CreateReqIdentificationRequirementModal from "./CreateRequirementModal";
 import EditReqIdentificationRequirementModal from "./EditRequirementModal";
 import CreateReqIdentificationLegalBasisModal from "./CreateLegalBasisModal";
+import CreateReqIdentificationArticlesModal from "./CreateArticlesModal";
 
 const columns = [
   { name: "", uid: "expand", align: "center" },
@@ -61,7 +62,8 @@ export default function ReqIdentificationRequirements() {
     editRequirement,
     deleteRequirement,
     addLegalBasis,
-    deleteLegalBasis
+    deleteLegalBasis,
+    addArticle
   } = useReqIdentificationRequirements();
   const {
     requirements,
@@ -97,6 +99,10 @@ export default function ReqIdentificationRequirements() {
   const [isEditModalRequirementOpen, setIsEditModalRequirementOpen] = useState(false);
   const [isCreateLegalBasisModalOpen, setIsCreateLegalBasisModalOpen] = useState(false);
   const [legalBasisInputError, setLegalBasisInputError] = useState(null);
+  const [isCreateArticlesModalOpen, setIsCreateArticlesModalOpen] = useState(null)
+  const [articleInputError, setArticleInputError] = useState(null)
+  const [articleTypeInputError, setArticleTypeInputError] = useState(null)
+  const [articleScoreInputError, setArticleScoreInputError] = useState(null)
   const [selectedRequirement, setSelectedRequirement] = useState(null);
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [formDataRequirement, setFormDataRequirement] = useState({
@@ -110,6 +116,14 @@ export default function ReqIdentificationRequirements() {
     reqIdentificationId: null,
     requirementId: null,
     legalBasisId: null,
+  });
+  const [formDataArticle, setFormDataArticle] = useState({
+    reqIdentificationId: null,
+    requirementId: null,
+    legalBasisId: null,
+    articleId: null,
+    articleType: "",
+    score: 0,
   });
 
 
@@ -357,7 +371,7 @@ export default function ReqIdentificationRequirements() {
     setSelectedRequirement(null);
   };
 
-    const openCreateLegalBasisModal = (requirementId) => {
+  const openCreateLegalBasisModal = (requirementId) => {
     setFormDataLegalBasis({
       reqIdentificationId: id,
       requirementId: requirementId,
@@ -368,12 +382,7 @@ export default function ReqIdentificationRequirements() {
 
   const closeCreateLegalBasisModal = () => {
     setIsCreateLegalBasisModalOpen(false);
-    setFormDataLegalBasis({
-      reqIdentificationId: null,
-      requirementId: null,
-      legalBasisId: null,
-    });
-    setLegalBasisInputError(null);
+    setLegalBasisInputError(null)
   };
 
   const handleLegalBasisChange = useCallback(
@@ -399,6 +408,86 @@ export default function ReqIdentificationRequirements() {
     [legalBasisInputError, setLegalBasisInputError, setFormDataLegalBasis]
   );
 
+  const openCreateArticleModal = (requirementId, legalBasisId) => {
+    setFormDataArticle({
+      reqIdentificationId: id,
+      requirementId,
+      legalBasisId,
+      articleId: null,
+      articleType: "",
+      score: 0,
+    });
+    setIsCreateArticlesModalOpen(true);
+  };
+
+  const closeCreateArticleModal = () => {
+    setIsCreateArticlesModalOpen(false);
+  };
+
+
+  const handleArticleChange = useCallback(
+    (value) => {
+      if (!value) {
+        setFormDataArticle((prevFormData) => ({
+          ...prevFormData,
+          articleId: null,
+        }));
+        if (articleInputError) {
+          setArticleInputError(null);
+        }
+        return;
+      }
+      setFormDataArticle((prevFormData) => ({
+        ...prevFormData,
+        articleId: value,
+      }));
+      if (articleInputError && value.trim() !== "") {
+        setArticleInputError(null);
+      }
+    },
+    [articleInputError, setArticleInputError, setFormDataArticle]
+  );
+
+  const handleArticleTypeChange = useCallback(
+    (value) => {
+      if (!value) {
+        setFormDataArticle((prevFormData) => ({
+          ...prevFormData,
+          articleType: "",
+        }));
+        if (articleTypeInputError) {
+          setArticleTypeInputError(null);
+        }
+        return;
+      }
+      setFormDataArticle((prevFormData) => ({
+        ...prevFormData,
+        articleType: value,
+      }));
+      if (articleTypeInputError && value.trim() !== "") {
+        setArticleTypeInputError(null);
+      }
+    },
+    [
+      articleTypeInputError,
+      setFormDataArticle,
+      setArticleTypeInputError,
+    ]
+  );
+
+  const handleArticleScoreChange = useCallback(
+    (e) => {
+      const { value } = e.target;
+      setFormDataArticle((prevFormData) => ({
+        ...prevFormData,
+        score: value,
+      }));
+      if (articleScoreInputError && value.trim() !== "") {
+        setArticleScoreInputError(null);
+      }
+    },
+    [articleScoreInputError, setFormDataArticle, setArticleScoreInputError]
+  );
 
   const handleDeleteRequirement = useCallback(
     async (requirementId) => {
@@ -628,6 +717,7 @@ export default function ReqIdentificationRequirements() {
                         openCreateLegalBasisModal={openCreateLegalBasisModal}
                         handleDeleteRequirement={handleDeleteRequirement}
                         handleDeleteLegalBasis={handleDeleteLegalBasis}
+                        openCreateArticleModal={openCreateArticleModal}
                       />
                     ))
                   )}
@@ -686,8 +776,7 @@ export default function ReqIdentificationRequirements() {
               handleRequirementTypesChange: handleRequirementTypesChange,
               legalVerbsInputErrors: legalVerbsInputErrors,
               setLegalVerbsInputErrors: setLegalVerbsInputErrors,
-              handleLegalVerbTranslationChange:
-                handleLegalVerbTranslationChange,
+              handleLegalVerbTranslationChange: handleLegalVerbTranslationChange,
               requirements: requirements,
               requirementTypes: requirementTypes,
               legalVerbs: legalVerbs,
@@ -708,6 +797,25 @@ export default function ReqIdentificationRequirements() {
               legalBasisInputError: legalBasisInputError,
               setLegalBasisInputError: setLegalBasisInputError,
               handleLegalBasisChange: handleLegalBasisChange,
+            }}
+          />
+        )}
+        {isCreateArticlesModalOpen && (
+          <CreateReqIdentificationArticlesModal
+            config={{
+              isOpen: isCreateArticlesModalOpen,
+              closeModalCreate: closeCreateArticleModal,
+              formData: formDataArticle,
+              addArticle: addArticle,
+              articleInputError: articleInputError,
+              setArticleInputError: setArticleInputError,
+              handleArticleChange: handleArticleChange,
+              articleTypeInputError: articleTypeInputError,
+              setArticleTypeInputError: setArticleTypeInputError,
+              handleArticleTypeChange: handleArticleTypeChange,
+              articleScoreInputError: articleScoreInputError,
+              setArticleScoreInputError: setArticleScoreInputError,
+              handleArticleScoreChange: handleArticleScoreChange,
             }}
           />
         )}
