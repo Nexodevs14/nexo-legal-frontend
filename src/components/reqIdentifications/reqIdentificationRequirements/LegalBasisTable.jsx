@@ -55,7 +55,7 @@ export default function LegalBasisTable({ requirement, legalBasis, handleDeleteL
 
   if (!legalBasis.length) {
     return (
-      <p className="text-base text-gray-500">
+      <p className="text-sm text-gray-500 px-2 py-2">
         No hay fundamentos legales disponibles.
       </p>
     );
@@ -64,10 +64,10 @@ export default function LegalBasisTable({ requirement, legalBasis, handleDeleteL
   return (
     <div className="overflow-x-auto mb-4">
       <table className="w-full text-sm border rounded">
-        <thead className="bg-gray-50 text-gray-600">
+        <thead className="bg-gray-100 text-gray-500">
           <tr>
-            <th className="px-10 py-2 text-left">Nombre</th>
-            <th className="px-3 py-2 text-center">Acciones</th>
+            <th className="px-10 py-2 text-left font-semibold">Nombre</th>
+            <th className="px-3 py-2 text-center font-semibold">Acciones</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
@@ -78,7 +78,7 @@ export default function LegalBasisTable({ requirement, legalBasis, handleDeleteL
                 className="hover:bg-gray-50 cursor-pointer border-b"
                 onClick={() => toggleExpand(index)}
               >
-                <td className="px-3 py-2 text-gray-800 font-medium">
+                <td className="px-3 py-2 text-gray-700 font-medium">
                   <div className="flex items-center gap-2">
                     {expandedIndex === index ? (
                       <KeyboardArrowUpIcon className="text-gray-600" />
@@ -154,17 +154,17 @@ export default function LegalBasisTable({ requirement, legalBasis, handleDeleteL
                     <Box sx={{ margin: 1 }}>
                       {item.articles?.length ? (
                         <table className="w-full text-sm border mt-2">
-                          <thead className="bg-gray-100 text-gray-600">
+                          <thead className="bg-gray-100 text-gray-500">
                             <tr>
-                              <th className="px-3 py-2 text-left">Nombre</th>
-                              <th className="px-3 py-2 text-left">Tipo</th>
-                              <th className="px-3 py-2 text-left">
+                              <th className="px-3 py-2 text-left font-semibold">Nombre</th>
+                              <th className="px-3 py-2 text-left font-semibold">Tipo</th>
+                              <th className="px-3 py-2 text-left font-semibold">
                                 Puntuación
                               </th>
-                              <th className="px-3 py-2 text-center">
+                              <th className="px-3 py-2 text-center font-semibold">
                                 Descripción
                               </th>
-                              <th className="px-3 py-2 text-center">
+                              <th className="px-3 py-2 text-center font-semibold">
                                 Acciones
                               </th>
                             </tr>

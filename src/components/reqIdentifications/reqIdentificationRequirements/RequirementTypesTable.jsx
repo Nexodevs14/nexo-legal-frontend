@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 export default function RequirementTypesTable({ requirementTypes }) {
   if (!requirementTypes.length)
     return (
-      <p className="text-base text-gray-500">
+      <p className="text-sm text-gray-500 px-2 py-2">
         No hay tipos de requerimiento disponibles.
       </p>
     );

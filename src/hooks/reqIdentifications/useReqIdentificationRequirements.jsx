@@ -11,6 +11,7 @@ import deleteRequirementFromReqIdentification from "../../services/reqIdentifica
 import addLegalBasisToRequirementInReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/addLegalBasisToRequirementInReqIdentification.js";
 import deleteLegalBasisFromRequirementInReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/deleteLegalBasisFromRequirementInReqIdentification.js";
 import ReqIdentificationRequirementsErrors from "../../errors/reqIdentifications/ReqIdentificationRequirementsErrors.js";
+import addArticleToLegalBasisRequirementInReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/addArticleToLegalBasisRequirementInReqIdentification.js";
 
 /**
  * Custom hook for managing requirements within a requirement identification.
@@ -382,7 +383,7 @@ export default function useReqIdentificationRequirements() {
    * @param {number} params.reqIdentificationId - The ID of the requirement identification.
    * @param {number} params.requirementId - The ID of the requirement.
    * @param {number} params.legalBasisId - The ID of the legal basis to associate.
-   * @returns {Promise<{ success: true, data: Object } | { success: false, error: string }>}
+   * @returns {Promise<{ success: true } | { success: false, error: string }>}
    */
   const addLegalBasis = useCallback(
     async (reqIdentificationId, requirementId, legalBasisId) => {
@@ -402,7 +403,7 @@ export default function useReqIdentificationRequirements() {
               : req
           )
         );
-        return { success: true, data: reqIdentificationRequirement };
+        return { success: true };
       } catch (error) {
         const errorCode = error.response?.status;
         const serverMessage = error.response?.data?.message;
@@ -433,7 +434,7 @@ export default function useReqIdentificationRequirements() {
    * @returns {Promise<{ success: true } | { success: false, error: string }>}
    */
   const deleteLegalBasis = useCallback(
-    async (reqIdentificationId, requirementId, legalBasisId ) => {
+    async (reqIdentificationId, requirementId, legalBasisId) => {
       try {
         await deleteLegalBasisFromRequirementInReqIdentification({
           reqIdentificationId,
@@ -472,6 +473,64 @@ export default function useReqIdentificationRequirements() {
     [jwt]
   );
 
+  /**
+   * Associates a legal basis article to a requirement within a specific requirement identification.
+   * @async
+   * @function addArticle
+   * @param {Object} params - Parameters for the association.
+   * @param {number} params.reqIdentificationId - The ID of the requirement identification.
+   * @param {number} params.requirementId - The ID of the requirement within the identification.
+   * @param {number} params.legalBasisId - The ID of the legal basis
+   * @param {number} params.articleId - The ID of the article to associate.
+   * @param {string} params.articleType - The type of the article.
+   * @param {number} params.score - The score associated with the article.
+   * @returns {Promise<{ success: true } | { success: false, error: string }>}
+   */
+  const addArticle = useCallback(
+    async ({
+      reqIdentificationId,
+      requirementId,
+      legalBasisId,
+      articleId,
+      articleType,
+      score,
+    }) => {
+      try {
+        const reqIdentificationRequirement =
+          await addArticleToLegalBasisRequirementInReqIdentification({
+            reqIdentificationId,
+            requirementId,
+            legalBasisId,
+            articleId,
+            articleType,
+            score,
+            token: jwt,
+          });
+        setReqIdentificationRequirements((prev) =>
+          prev.map((req) =>
+            req.requirement.id === requirementId
+              ? reqIdentificationRequirement
+              : req
+          )
+        );
+        return { success: true };
+      } catch (error) {
+        const errorCode = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+        const clientMessage = error.message;
+
+        const handledError = ReqIdentificationRequirementsErrors.handleError({
+          code: errorCode,
+          error: serverMessage,
+          httpError: clientMessage,
+          items: [reqIdentificationId, requirementId],
+        });
+        return { success: false, error: handledError.message };
+      }
+    },
+    [jwt]
+  );
+
   return {
     reqIdentificationRequirements,
     loading: state.loading,
@@ -486,5 +545,6 @@ export default function useReqIdentificationRequirements() {
     deleteRequirement,
     addLegalBasis,
     deleteLegalBasis,
+    addArticle
   };
 }

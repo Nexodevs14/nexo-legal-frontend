@@ -377,6 +377,7 @@ export default function ReqIdentificationRequirements() {
       requirementId: null,
       legalBasisId: null,
     });
+    setLegalBasisInputError(null);
   };
 
   const handleLegalBasisChange = useCallback(

@@ -23,6 +23,9 @@ class ReqIdentificationRequirementsErrors {
   static LEGAL_BASIS_ALREADY_LINKED = 'LEGAL_BASIS_ALREADY_LINKED';
   static LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT = 'LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT';
   static LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT = "LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT";
+  static ARTICLE_NOT_FOUND = 'ARTICLE_NOT_FOUND';
+  static ARTICLE_ALREADY_LINKED = 'ARTICLE_ALREADY_LINKED';
+
 
   /**
    * A map of error constants to user-friendly error objects.
@@ -118,6 +121,14 @@ class ReqIdentificationRequirementsErrors {
       message:
         "Este fundamento legal no puede ser eliminado porque actualmente se están identificando requerimientos. Por favor, espere a que se complete la identificación e intente nuevamente.",
     },
+    [ReqIdentificationRequirementsErrors.ARTICLE_NOT_FOUND]: {
+      title: "Artículo no encontrado",
+      message: "El artículo no fue encontrado. Verifique su existencia recargando la app e intente de nuevo.",
+    },
+    [ReqIdentificationRequirementsErrors.ARTICLE_ALREADY_LINKED]: {
+      title: "Artículo ya vinculado",
+      message: "El artículo ya está vinculado a este fundamento legal y requerimiento. No se puede agregar nuevamente.",
+    },
   };
 
   /**
@@ -138,6 +149,8 @@ class ReqIdentificationRequirementsErrors {
     'LegalBasis is already linked to this requirement in the requirement identification': ReqIdentificationRequirementsErrors.LEGAL_BASIS_ALREADY_LINKED,
     'LegalBasis is not linked to this requirement in the requirement identification': ReqIdentificationRequirementsErrors.LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT,
     'Cannot delete LegalBasis with pending Requirement Identification jobs': ReqIdentificationRequirementsErrors.LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT,
+    'Article not found': ReqIdentificationRequirementsErrors.ARTICLE_NOT_FOUND,
+    'Article is already linked to this legal basis and requirement in the requirement identification': ReqIdentificationRequirementsErrors.ARTICLE_ALREADY_LINKED
   };
 
 

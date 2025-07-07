@@ -276,7 +276,7 @@ export default function ReqIdentificationCell({
           <Collapse in={isExpanded} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <div
-                className="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-t font-semibold text-xs text-gray-500 mt-4 flex items-center gap-2"
+                className="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-t font-semibold text-xs text-gray-600 mt-4 flex items-center gap-2"
                 onClick={() => setShowRequirementTypes((prev) => !prev)}
               >
                 {showRequirementTypes ? (
@@ -292,7 +292,7 @@ export default function ReqIdentificationCell({
                 </Box>
               </Collapse>
               <div
-                className="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-t font-semibold text-xs text-gray-500 mt-4 flex items-center gap-2"
+                className="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-t font-semibold text-xs text-gray-600 mt-4 flex items-center gap-2"
                 onClick={() => setShowLegalVerbs((prev) => !prev)}
               >
                 {showLegalVerbs ? (
@@ -308,7 +308,7 @@ export default function ReqIdentificationCell({
                 </Box>
               </Collapse>
               <div
-                className="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-t font-semibold text-xs text-gray-500 mt-4 flex items-center gap-2"
+                className="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-t font-semibold text-xs text-gray-600 mt-4 flex items-center gap-2"
                 onClick={() => setShowLegalBasis((prev) => !prev)}
               >
                 {showLegalBasis ? (
