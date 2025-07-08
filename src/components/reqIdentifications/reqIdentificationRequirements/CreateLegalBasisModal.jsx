@@ -61,7 +61,7 @@ const CreateReqIdentificationLegalBasisModal = ({ config }) => {
         Number(formData.legalBasisId)
       );
       if (success) {
-        toast.info("Fundamento legal asociado correctamente", {
+        toast.info("El fundamento legal ha sido asociado correctamente", {
           icon: () => <img src={check} alt="Success Icon" />,
           progressStyle: { background: "#113c53" },
         });

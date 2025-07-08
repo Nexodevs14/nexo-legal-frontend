@@ -118,7 +118,7 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
       };
       const { success, error } = await addRequirement(requirementData);
       if (success) {
-        toast.info("El requerimiento asociado ha sido creado correctamente", {
+        toast.info("El requerimiento ha sido asociado correctamente", {
           icon: () => <img src={check} alt="Success Icon" />,
           progressStyle: { background: "#113c53" },
         });
@@ -140,7 +140,7 @@ const CreateReqIdentificationRequirementModal = ({ config }) => {
     } catch (error) {
       console.error(error);
       toast.error(
-        "Hubo un error al crear el requerimiento asociado. Intente de nuevo."
+        "Hubo un error al asociar el requerimiento. Intente de nuevo."
       );
     } finally {
       setIsLoading(false);

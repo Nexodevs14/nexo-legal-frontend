@@ -131,7 +131,7 @@ const CreateReqIdentificationArticleModal = ({ config }) => {
       });
 
       if (success) {
-        toast.info("Artículo asociado exitosamente", {
+        toast.info("El artículo ha sido asociado exitosamente", {
           icon: () => <img src={check} alt="Success Icon" />,
           progressStyle: { background: "#113c53" },
         });

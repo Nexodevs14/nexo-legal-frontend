@@ -125,7 +125,7 @@ const EditReqIdentificationArticleModal = ({ config }) => {
       });
 
       if (success) {
-        toast.info("Artículo asociado actualizado exitosamente", {
+        toast.info("EL artículo asociado ha sido actualizado exitosamente", {
           icon: () => <img src={check} alt="Success Icon" />,
           progressStyle: { background: "#113c53" },
         });
