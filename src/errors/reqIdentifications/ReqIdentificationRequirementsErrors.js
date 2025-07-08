@@ -15,7 +15,6 @@ class ReqIdentificationRequirementsErrors {
   static REQUIREMENT_NOT_FOUND = "REQUIREMENT_NOT_FOUND";
   static REQUIREMENT_TYPES_NOT_FOUND = "REQUIREMENT_TYPES_NOT_FOUND";
   static LEGAL_VERBS_NOT_FOUND = "LEGAL_VERBS_NOT_FOUND";
-  static REQUIREMENT_NAME_CONFLICT = "REQUIREMENT_NAME_CONFLICT";
   static REQUIREMENT_ALREADY_LINKED = "REQUIREMENT_ALREADY_LINKED";
   static REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION =
     "REQUIREMENT_NOT_LINKED_IN_IDENTIFICATION";
@@ -104,11 +103,6 @@ class ReqIdentificationRequirementsErrors {
       title: "Verbos legales no encontrados",
       message:
         "Uno o más verbos legales no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
-    },
-    [ReqIdentificationRequirementsErrors.REQUIREMENT_NAME_CONFLICT]: {
-      title: "Conflicto de nombre de requerimiento",
-      message:
-        "Ya existe un requerimiento con el mismo nombre. Por favor, utiliza otro.",
     },
     [ReqIdentificationRequirementsErrors.REQUIREMENT_ALREADY_LINKED]: {
       title: "Requerimiento ya vinculado",
@@ -213,8 +207,6 @@ class ReqIdentificationRequirementsErrors {
       ReqIdentificationRequirementsErrors.REQUIREMENT_TYPES_NOT_FOUND,
     "Legal verbs not found for IDs":
       ReqIdentificationRequirementsErrors.LEGAL_VERBS_NOT_FOUND,
-    "Requirement name already exists in the requirement identification":
-      ReqIdentificationRequirementsErrors.REQUIREMENT_NAME_CONFLICT,
     "Requirement is already linked to the requirement identification":
       ReqIdentificationRequirementsErrors.REQUIREMENT_ALREADY_LINKED,
     "Requirement is not linked to the requirement identification":
