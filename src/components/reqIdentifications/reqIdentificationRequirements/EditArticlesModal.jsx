@@ -153,6 +153,10 @@ const EditReqIdentificationArticleModal = ({ config }) => {
     }
   };
 
+    const handleReload = () => {
+    window.location.reload();
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -187,6 +191,17 @@ const EditReqIdentificationArticleModal = ({ config }) => {
                 iconWrapper: "bg-red/20",
                 alertIcon: "text-red",
               }}
+              endContent={
+              <Button
+                color="danger"
+                size="sm"
+                variant="faded"
+                className="mt-20 w-full"
+                onPress={handleReload}
+              >
+                Intentar de nuevo
+              </Button>
+            }
             />
           ) : (
             <>

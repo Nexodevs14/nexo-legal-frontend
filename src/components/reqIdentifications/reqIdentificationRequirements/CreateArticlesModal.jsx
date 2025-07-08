@@ -163,6 +163,7 @@ const CreateReqIdentificationArticleModal = ({ config }) => {
   const handleReload = () => {
     window.location.reload();
   };
+  
   return (
     <Modal
       isOpen={isOpen}
