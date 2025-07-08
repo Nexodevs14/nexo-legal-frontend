@@ -59,7 +59,7 @@ function DeleteModal({ config }) {
       const { success, error } = await deleteAspectsBatch(aspectIds);
 
       if (success) {
-        toast.success(
+        toast.info(
           aspectIds.length <= 1
             ? "Aspecto eliminado con éxito"
             : "Aspectos eliminados con éxito",
