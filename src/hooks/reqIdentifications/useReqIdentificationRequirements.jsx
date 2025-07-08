@@ -3,7 +3,7 @@ import Context from "../../context/userContext.jsx";
 import addRequirementToReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/addRequirementToReqIdentification.js";
 import getRequirementFromReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/getRequirementFromReqIdentification.js";
 import getAllRequirementsFromReqIdentification from "../../services/reqIdentificationService/reqIdentificationRequirements/getAllRequirementsFromReqIdentification.js";
-import getAllRequirementsFromReqIdentificationFile from "../../services/reqIdentificationService/reqIdentificationRequirements/getAllRequirementsFromReqIdentificationFile.js"
+import getAllRequirementsFromReqIdentificationFile from "../../services/reqIdentificationService/reqIdentificationRequirements/getAllRequirementsFromReqIdentificationFile.js";
 import getRequirementsFromReqIdentificationByName from "../../services/reqIdentificationService/reqIdentificationRequirements/getRequirementsFromReqIdentificationByName.js";
 import getRequirementsFromReqIdentificationByRequirementName from "../../services/reqIdentificationService/reqIdentificationRequirements/getRequirementsFromReqIdentificationByRequirementName.js";
 import getRequirementsFromReqIdentificationByLegalBasisName from "../../services/reqIdentificationService/reqIdentificationRequirements/getRequirementsFromReqIdentificationByLegalBasisName.js";
@@ -591,7 +591,7 @@ export default function useReqIdentificationRequirements() {
     },
     [jwt]
   );
-  
+
   /**
    * Deletes a legal basis article associated with a requirement within a specific requirement identification.
    * @async
@@ -603,12 +603,7 @@ export default function useReqIdentificationRequirements() {
    * @returns {Promise<{ success: true } | { success: false, error: string }>}
    */
   const deleteArticle = useCallback(
-    async (
-      reqIdentificationId,
-      requirementId,
-      legalBasisId,
-      articleId,
-    ) => {
+    async (reqIdentificationId, requirementId, legalBasisId, articleId) => {
       try {
         await deleteArticleFromLegalBasisRequirementInReqIdentification({
           reqIdentificationId,
@@ -655,38 +650,40 @@ export default function useReqIdentificationRequirements() {
   );
 
   /**
- * Descarga el archivo Excel con todos los requerimientos de una identificación.
- * @async
- * @function downloadRequirementsFile
- * @param {number} reqIdentificationId - ID de la identificación de requerimientos.
- * @returns {Promise<{ success: true, blob: Blob, fileName: string } | { success: false, error: string }>}
- */
-const downloadRequirementsFile = useCallback(
-  async (reqIdentificationId) => {
-    try {
-      const { blob, fileName } = await getAllRequirementsFromReqIdentificationFile({
-        reqIdentificationId,
-        token: jwt,
-      });
-      return { success: true, blob, fileName };
-    } catch (error) {
-      const errorCode = error.response?.status;
-      const serverMessage = error.response?.data?.message;
-      const clientMessage = error.message;
+   * Downloads a file containing all requirements from a specific requirement identification.
+   * @async
+   * @function downloadRequirementsFile
+   * @param {number} reqIdentificationId -  The ID of the requirement identification.
+   * @param {string} [fileType] - The type of file to download
+   * @returns {Promise<{ success: true, file: string, fileName: string, contentType: string } | { success: false, error: string }>}
+   */
+  const fetchRequirementsFile = useCallback(
+    async (reqIdentificationId, fileType) => {
+      try {
+        const { file, fileName, contentType } =
+          await getAllRequirementsFromReqIdentificationFile({
+            reqIdentificationId,
+            fileType,
+            token: jwt,
+          });
+        return { success: true, file, fileName, contentType };
+      } catch (error) {
+        const errorCode = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+        const clientMessage = error.message;
 
-      const handledError = ReqIdentificationRequirementsErrors.handleError({
-        code: errorCode,
-        error: serverMessage,
-        httpError: clientMessage,
-        items: [reqIdentificationId],
-      });
+        const handledError = ReqIdentificationRequirementsErrors.handleError({
+          code: errorCode,
+          error: serverMessage,
+          httpError: clientMessage,
+          items: [reqIdentificationId],
+        });
 
-      return { success: false, error: handledError.message };
-    }
-  },
-  [jwt]
-);
-
+        return { success: false, error: handledError.message };
+      }
+    },
+    [jwt]
+  );
 
   return {
     reqIdentificationRequirements,
@@ -695,6 +692,7 @@ const downloadRequirementsFile = useCallback(
     addRequirement,
     fetchRequirement,
     fetchRequirements,
+    fetchRequirementsFile,
     fetchRequirementsByName,
     fetchRequirementsByRequirementName,
     fetchRequirementsByLegalBasisName,
@@ -704,7 +702,6 @@ const downloadRequirementsFile = useCallback(
     deleteLegalBasis,
     addArticle,
     editArticle,
-    deleteArticle,
-    downloadRequirementsFile
+    deleteArticle
   };
 }

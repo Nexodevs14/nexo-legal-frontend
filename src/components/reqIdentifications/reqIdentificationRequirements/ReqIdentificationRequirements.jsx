@@ -8,6 +8,7 @@ import useRequirements from "../../../hooks/requirement/useRequirements";
 import useRequirementTypes from "../../../hooks/requirementTypes/useRequirementTypes";
 import useLegalVerbs from "../../../hooks/legalVerbs/useLegalVerbs";
 import useLegalBasis from "../../../hooks/legalBasis/useLegalBasis";
+import { useFiles } from "../../../hooks/files/useFiles";
 import DescriptionModal from "../../requirements/TextArea/DescriptionModal";
 import Error from "../../utils/Error";
 import ReqIdentificationCell from "./ReqIdentificationCell";
@@ -57,6 +58,7 @@ export default function ReqIdentificationRequirements() {
     error,
     addRequirement,
     fetchRequirements,
+    fetchRequirementsFile,
     fetchRequirementsByName,
     fetchRequirementsByRequirementName,
     fetchRequirementsByLegalBasisName,
@@ -66,13 +68,14 @@ export default function ReqIdentificationRequirements() {
     deleteLegalBasis,
     addArticle,
     editArticle,
-    deleteArticle,
+    deleteArticle
   } = useReqIdentificationRequirements();
   const { requirements, error: requirementError } = useRequirements();
   const { requirementTypes, error: requirementTypeError } =
     useRequirementTypes();
   const { legalVerbs, error: legalVerbsError } = useLegalVerbs();
   const { legalBasis, error: legalBasisError } = useLegalBasis();
+  const { downloadBase64File } = useFiles();
   const [reqIdentification, setReqIdentification] = useState(null);
   const [reqIdentificationError, setReqIdentificationError] = useState(null);
   const [isFirstRender, setIsFirstRender] = useState(true);
@@ -508,6 +511,70 @@ export default function ReqIdentificationRequirements() {
     setArticleScoreInputError("");
   };
 
+
+  const handleDownloadRequirementsFile = useCallback(
+    async (fileType) => {
+      const toastId = toast.loading(
+        "Descargando archivo de requerimientos...",
+        {
+          icon: <Spinner size="sm" />,
+          progressStyle: {
+            background: "#113c53",
+          },
+        }
+      );
+
+      try {
+        const { success, file, fileName, contentType, error } =
+          await fetchRequirementsFile(id, fileType);
+        if (success) {
+          downloadBase64File(file, contentType, fileName);
+          toast.update(toastId, {
+            render: "Archivo descargado con éxito.",
+            type: "info",
+            icon: <img src={check} alt="Success Icon" />,
+            progressStyle: {
+              background: "#113c53",
+            },
+            isLoading: false,
+            autoClose: 3000,
+          });
+        } else {
+          toast.update(toastId, {
+            render: (
+              <div
+                style={{
+                  maxHeight: 200,
+                  overflowY: "auto",
+                  whiteSpace: "pre-wrap",
+                }}
+              >
+                {error}
+              </div>
+            ),
+            className: "toast-scroll-red",
+            type: "error",
+            icon: null,
+            progressStyle: {},
+            isLoading: false,
+            autoClose: 5000,
+          });
+        }
+      } catch (err) {
+        console.error(err);
+        toast.update(toastId, {
+          render: "Algo salió mal al descargar el archivo. Intente de nuevo.",
+          type: "error",
+          icon: null,
+          progressStyle: {},
+          isLoading: false,
+          autoClose: 5000,
+        });
+      }
+    },
+    [id, fetchRequirementsFile, downloadBase64File]
+  );
+
   const handleDeleteRequirement = useCallback(
     async (requirementId) => {
       const toastId = toast.loading("Eliminando requerimiento...", {
@@ -751,6 +818,7 @@ export default function ReqIdentificationRequirements() {
             onClear: handleClear,
             totalRequirements: reqIdentificationRequirements.length,
             openModalCreateRequirement: openModalCreateRequirement,
+            handleDownloadRequirementsFile: handleDownloadRequirementsFile
           }}
         />
 

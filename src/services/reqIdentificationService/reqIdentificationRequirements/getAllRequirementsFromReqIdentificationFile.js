@@ -1,44 +1,43 @@
 import server from "../../../config/server.js";
 
 /**
- * Downloads an Excel file containing all requirements associated with a specific requirement identification.
- * Sends a GET request to the backend with responseType 'blob'.
+ * Downloads a file containing all requirements associated with a specific requirement identification.
  *
  * @async
  * @function getAllRequirementsFromReqIdentificationFile
  * @param {Object} params - Parameters for the request.
  * @param {number|string} params.reqIdentificationId - The ID of the requirement identification.
  * @param {string} params.token - Authorization token for the request.
+ * @param {string} [params.fileType='xlsx'] - Type of file to download.
  *
- * @returns {Promise<{ blob: Blob, fileName: string }>} The downloaded Excel file as a Blob and its file name.
+ * @returns {Promise<{ file: string, fileName: string, contentType: string }>} - Resolves with an object containing the file.
  * @throws {Error} If the request fails or the file cannot be downloaded.
  */
 export default async function getAllRequirementsFromReqIdentificationFile({
   reqIdentificationId,
   token,
+  fileType,
 }) {
   try {
     const response = await server.get(
-      `/req-identification/${reqIdentificationId}/requirements/download`,
+      `/req-identification/${reqIdentificationId}/requirements/download/file`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        responseType: "blob",
+        params: {
+          fileType,
+        },
       }
     );
-
     if (response.status !== 200) {
       throw new Error("Failed to download requirements file");
     }
-
-    const contentDisposition = response.headers["content-disposition"];
-    const fileNameMatch = contentDisposition?.match(/filename="(.+)"/);
-    const fileName = fileNameMatch ? decodeURIComponent(fileNameMatch[1]) : "requerimientos.xlsx";
-
+    const { file, fileName, contentType } = response.data;
     return {
-      blob: response.data,
+      file,
       fileName,
+      contentType,
     };
   } catch (error) {
     console.error(

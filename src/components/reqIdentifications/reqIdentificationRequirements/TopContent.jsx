@@ -1,5 +1,13 @@
 import PropTypes from "prop-types";
-import { Input, Button, ScrollShadow } from "@heroui/react";
+import {
+  Input,
+  Button,
+  ScrollShadow,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@heroui/react";
 import { useNavigate } from "react-router-dom";
 import search_icon from "../../../assets/busqueda_blue.png";
 import link_white_icon from "../../../assets/enlace_white.png";
@@ -24,6 +32,7 @@ import download_icon from "../../../assets/descargar_white.png";
  * @param {Function} props.config.onClear - Clears all filters.
  * @param {number} props.config.totalRequirements - Total number of filtered requirements.
  * @param  {Function} props.config.openModalCreateRequirement - Function to open the create requirement modal.
+ * @param {Function} props.config.handleDownloadRequirementsFile - Function to handle downloading the requirements file.
  *
  * @returns {JSX.Element} Rendered TopContent component.
  */
@@ -38,7 +47,8 @@ function TopContent({ config }) {
     onFilterByLegalBasisName,
     onClear,
     totalRequirements,
-    openModalCreateRequirement
+    openModalCreateRequirement,
+    handleDownloadRequirementsFile,
   } = config;
   const navigate = useNavigate();
 
@@ -138,19 +148,29 @@ function TopContent({ config }) {
             >
               Asociar Requerimiento
             </Button>
-
-            <Button
-              className="bg-secondary text-white w-full sm:w-auto"
-              endContent={
-                <img
-                  src={download_icon}
-                  alt="Download Icon"
-                  className="w-4 h-4 flex-shrink-0 object-contain"
-                />
-              }
-            >
-              Exportar
-            </Button>
+            <Dropdown>
+              <DropdownTrigger>
+                <Button
+                  className="bg-secondary text-white w-full sm:w-auto"
+                  endContent={
+                    <img
+                      src={download_icon}
+                      alt="Download Icon"
+                      className="w-4 h-4 flex-shrink-0 object-contain"
+                    />
+                  }
+                >
+                  Exportar
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                aria-label="Download options"
+                onAction={(key) => handleDownloadRequirementsFile(key)}
+              >
+                <DropdownItem key="xlsx">Excel (.xlsx)</DropdownItem>
+                <DropdownItem key="csv">CSV (.csv)</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           </div>
         </div>
       </div>
@@ -170,6 +190,7 @@ TopContent.propTypes = {
     onClear: PropTypes.func.isRequired,
     totalRequirements: PropTypes.number.isRequired,
     openModalCreateRequirement: PropTypes.func.isRequired,
+    handleDownloadRequirementsFile: PropTypes.func.isRequired,
   }).isRequired,
 };
 

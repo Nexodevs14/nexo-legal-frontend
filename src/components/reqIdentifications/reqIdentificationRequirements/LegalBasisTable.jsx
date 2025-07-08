@@ -301,7 +301,7 @@ export default function LegalBasisTable({ requirement, legalBasis, handleDeleteL
 LegalBasisTable.propTypes = {
   requirement: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    requirement_number: PropTypes.string,
+    requirement_number: PropTypes.number,
     requirement_name: PropTypes.string,
     requirement_condition: PropTypes.string,
     evidence: PropTypes.string,

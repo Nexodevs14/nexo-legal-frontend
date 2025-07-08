@@ -84,6 +84,7 @@ A continuación se detalla la estructura del proyecto:
    VITE_TINYMCE=Clave API de TINYMCE para el rich text
 
    # Configuración de la API de COPOMEX
+   VITE_COPOMEX_API_URL=URL de la API para acceder a los servicios de COPOMEX.
    VITE_COPOMEX_API_KEY=Clave de API para acceder a los servicios de COPOMEX.
    ```
 
