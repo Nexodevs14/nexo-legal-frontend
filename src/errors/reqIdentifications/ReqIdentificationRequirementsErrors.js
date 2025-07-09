@@ -7,11 +7,10 @@ class ReqIdentificationRequirementsErrors {
   static UNAUTHORIZED = "UNAUTHORIZED";
   static SERVER_ERROR = "SERVER_ERROR";
   static VALIDATION_ERROR = "VALIDATION_ERROR";
-  static NOT_FOUND = "NOT_FOUND";
-  static MULTIPLE_NOT_FOUND = "MULTIPLE_NOT_FOUND";
   static CONFLICT = "CONFLICT";
   static UNEXPECTED_ERROR = "UNEXPECTED_ERROR";
   static REQ_IDENTIFICATION_NOT_FOUND = "REQ_IDENTIFICATION_NOT_FOUND";
+  static MULTIPLE_REQ_IDENTIFICATION_NOT_FOUND = "MULTIPLE_REQ_IDENTIFICATION_NOT_FOUND";
   static REQUIREMENT_NOT_FOUND = "REQUIREMENT_NOT_FOUND";
   static REQUIREMENT_TYPES_NOT_FOUND = "REQUIREMENT_TYPES_NOT_FOUND";
   static LEGAL_VERBS_NOT_FOUND = "LEGAL_VERBS_NOT_FOUND";
@@ -64,16 +63,6 @@ class ReqIdentificationRequirementsErrors {
       message:
         "Revisa los datos introducidos. Uno o más campos no son válidos.",
     },
-    [ReqIdentificationRequirementsErrors.NOT_FOUND]: {
-      title: "Recurso no encontrado",
-      message:
-        "El recurso no fue encontrado. Verifique su existencia recargando la app e intente de nuevo.",
-    },
-    [ReqIdentificationRequirementsErrors.MULTIPLE_NOT_FOUND]: {
-      title: "Recursos no encontrados",
-      message:
-        "Uno o más recursos no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
-    },
     [ReqIdentificationRequirementsErrors.CONFLICT]: {
       title: "Conflicto de datos",
       message:
@@ -88,6 +77,11 @@ class ReqIdentificationRequirementsErrors {
       title: "Identificación de requerimientos no encontrada",
       message:
         "La identificación de requerimientos no fue encontrada. Verifique su existencia recargando la app e intente de nuevo.",
+    },
+    [ReqIdentificationRequirementsErrors.MULTIPLE_REQ_IDENTIFICATION_NOT_FOUND]: {
+      title: "Identificaciones de requerimientos no encontradas",
+      message:
+        "Una o más identificaciones de requerimientos no fueron encontradas. Verifique su existencia recargando la app e intente de nuevo.",
     },
     [ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_FOUND]: {
       title: "Requerimiento no encontrado",
@@ -199,8 +193,6 @@ class ReqIdentificationRequirementsErrors {
    */
   static ErrorMessagesMap = {
     "Network Error": ReqIdentificationRequirementsErrors.NETWORK_ERROR,
-    "Requirement Identification not found":
-      ReqIdentificationRequirementsErrors.REQ_IDENTIFICATION_NOT_FOUND,
     "Requirement not found":
       ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_FOUND,
     "Requirement types not found for IDs":
@@ -274,14 +266,14 @@ class ReqIdentificationRequirementsErrors {
         if (items?.length > 0) {
           return items.length === 1
             ? ReqIdentificationRequirementsErrors.errorMap[
-                ReqIdentificationRequirementsErrors.NOT_FOUND
+                ReqIdentificationRequirementsErrors.REQ_IDENTIFICATION_NOT_FOUND
               ]
             : ReqIdentificationRequirementsErrors.errorMap[
-                ReqIdentificationRequirementsErrors.MULTIPLE_NOT_FOUND
+                ReqIdentificationRequirementsErrors.MULTIPLE_REQ_IDENTIFICATION_NOT_FOUND
               ];
         }
         return ReqIdentificationRequirementsErrors.errorMap[
-          ReqIdentificationRequirementsErrors.MULTIPLE_NOT_FOUND
+          ReqIdentificationRequirementsErrors.MULTIPLE_REQ_IDENTIFICATION_NOT_FOUND
         ];
       case 409:
         return ReqIdentificationRequirementsErrors.errorMap[

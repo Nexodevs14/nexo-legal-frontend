@@ -73,7 +73,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId, requirementId],
+          items: [reqIdentificationId]
         });
         return { success: false, error: handledError.message };
       }
@@ -108,7 +108,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId, requirementId],
+          items: [reqIdentificationId]
         });
         return {
           success: false,
@@ -147,13 +147,49 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId],
+          items: [reqIdentificationId]
         });
 
         setState({
           loading: false,
           error: handledError,
         });
+      }
+    },
+    [jwt]
+  );
+
+    /**
+   * Downloads a file containing all requirements from a specific requirement identification.
+   * @async
+   * @function downloadRequirementsFile
+   * @param {number} reqIdentificationId -  The ID of the requirement identification.
+   * @param {string} [fileType] - The type of file to download
+   * @returns {Promise<{ success: true, file: string, fileName: string, contentType: string } | { success: false, error: string }>}
+   */
+  const fetchRequirementsFile = useCallback(
+    async (reqIdentificationId, fileType) => {
+      try {
+        const { file, fileName, contentType } =
+          await getAllRequirementsFromReqIdentificationFile({
+            reqIdentificationId,
+            fileType,
+            token: jwt,
+          });
+        return { success: true, file, fileName, contentType };
+      } catch (error) {
+        const errorCode = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+        const clientMessage = error.message;
+
+        const handledError = ReqIdentificationRequirementsErrors.handleError({
+          code: errorCode,
+          error: serverMessage,
+          httpError: clientMessage,
+          items: [reqIdentificationId]
+        });
+
+        return { success: false, error: handledError.message };
       }
     },
     [jwt]
@@ -188,7 +224,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId],
+          items: [reqIdentificationId]
         });
         setState({
           loading: false,
@@ -230,7 +266,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId],
+          items: [reqIdentificationId]
         });
         setState({
           loading: false,
@@ -271,7 +307,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId],
+          items: [reqIdentificationId]
         });
         setState({
           loading: false,
@@ -330,7 +366,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId, requirementId],
+          items: [reqIdentificationId]
         });
         return { success: false, error: handledError.message };
       }
@@ -369,7 +405,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId, requirementId],
+          items: [reqIdentificationId]
         });
         return { success: false, error: handledError.message };
       }
@@ -416,7 +452,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId, requirementId],
+          items: [reqIdentificationId]
         });
 
         return { success: false, error: handledError.message };
@@ -467,7 +503,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId, requirementId],
+          items: [reqIdentificationId]
         });
 
         return { success: false, error: handledError.message };
@@ -526,7 +562,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId, requirementId],
+          items: [reqIdentificationId]
         });
         return { success: false, error: handledError.message };
       }
@@ -584,7 +620,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId, requirementId],
+          items: [reqIdentificationId]
         });
         return { success: false, error: handledError.message };
       }
@@ -641,7 +677,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId, requirementId],
+          items: [reqIdentificationId]
         });
         return { success: false, error: handledError.message };
       }
@@ -649,41 +685,6 @@ export default function useReqIdentificationRequirements() {
     [jwt]
   );
 
-  /**
-   * Downloads a file containing all requirements from a specific requirement identification.
-   * @async
-   * @function downloadRequirementsFile
-   * @param {number} reqIdentificationId -  The ID of the requirement identification.
-   * @param {string} [fileType] - The type of file to download
-   * @returns {Promise<{ success: true, file: string, fileName: string, contentType: string } | { success: false, error: string }>}
-   */
-  const fetchRequirementsFile = useCallback(
-    async (reqIdentificationId, fileType) => {
-      try {
-        const { file, fileName, contentType } =
-          await getAllRequirementsFromReqIdentificationFile({
-            reqIdentificationId,
-            fileType,
-            token: jwt,
-          });
-        return { success: true, file, fileName, contentType };
-      } catch (error) {
-        const errorCode = error.response?.status;
-        const serverMessage = error.response?.data?.message;
-        const clientMessage = error.message;
-
-        const handledError = ReqIdentificationRequirementsErrors.handleError({
-          code: errorCode,
-          error: serverMessage,
-          httpError: clientMessage,
-          items: [reqIdentificationId],
-        });
-
-        return { success: false, error: handledError.message };
-      }
-    },
-    [jwt]
-  );
 
   return {
     reqIdentificationRequirements,
