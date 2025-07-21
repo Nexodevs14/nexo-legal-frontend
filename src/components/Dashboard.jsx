@@ -261,7 +261,7 @@ function Dashboard() {
                   src={think_icon}
                   className="flex-shrink-0 w-5 h-5 transition duration-75"
                 />
-                <span className="ms-3 font-medium">Requerimiento Legales</span>
+                <span className="ms-3 font-medium">Requerimientos Legales</span>
               </Link>
             </li>
             <li>
