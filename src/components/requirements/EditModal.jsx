@@ -420,7 +420,7 @@ const EditModal = ({ config }) => {
       isDismissable={false}
       size="5xl"
       classNames={{
-        base: "max-w-[75%] h-[90vh] w-full",
+         base: "max-w-[75%] max-h-[95vh] w-full",
         closeButton: "hover:bg-primary/20 text-primary active:bg-primary/10",
       }}
     >
@@ -445,11 +445,11 @@ const EditModal = ({ config }) => {
             </>
           )}
         </ModalHeader>
-        <ModalBody className="overflow-y-auto">
+         <ModalBody>
           <div className="transition-opacity duration-300 ease-in-out">
             {step === 1 ? (
               <form onSubmit={handleEdit}>
-                <div className="grid grid-cols-2 gap-14">
+                <div className="grid grid-cols-2 gap-12">
                   <div className="relative z-0 w-full group">
                     <input
                       type="number"
@@ -679,12 +679,12 @@ const EditModal = ({ config }) => {
                     </p>
                   )}
                 </div>
-                <div className="w-full mt-9">
+                <div className="w-full mt-4">
                   <Button
                     type="submit"
                     color="primary"
                     disabled={isLoading}
-                    className="w-full text-lg rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
+                    className="w-full text-base rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
                   >
                     {isLoading ? (
                       <Spinner size="sm" color="white" />
@@ -696,7 +696,7 @@ const EditModal = ({ config }) => {
               </form>
             ) : (
               <form onSubmit={handleEdit}>
-                <div className="grid  grid-cols-2 gap-12">
+                <div className="grid  grid-cols-2 gap-6">
                   <div className="w-full">
                     <Textarea
                       disableAnimation
@@ -828,12 +828,12 @@ const EditModal = ({ config }) => {
                     )}
                   </div>
                 </div>
-                <div className="w-full mt-9">
+                <div className="w-full mt-4">
                   <Button
                     type="submit"
                     color="primary"
                     disabled={isLoading}
-                    className="w-full text-lg rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
+                    className="w-full text-base rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
                   >
                     {isLoading ? (
                       <Spinner size="sm" color="white" />
