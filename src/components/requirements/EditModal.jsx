@@ -420,6 +420,7 @@ const EditModal = ({ config }) => {
       isDismissable={false}
       size="5xl"
       classNames={{
+         base: "max-w-[75%] max-h-[120vh] w-full",
         closeButton: "hover:bg-primary/20 text-primary active:bg-primary/10",
       }}
     >
@@ -432,7 +433,7 @@ const EditModal = ({ config }) => {
               <button
                 onClick={handleBack}
                 type="button"
-                className="text-sm text-primary hover:text-primary/60 transition-colors flex items-center gap-2"
+                className="text-base text-primary hover:text-primary/60 transition-colors flex items-center gap-2"
               >
                 <img
                   src={go_back}
@@ -444,11 +445,11 @@ const EditModal = ({ config }) => {
             </>
           )}
         </ModalHeader>
-        <ModalBody>
+         <ModalBody>
           <div className="transition-opacity duration-300 ease-in-out">
             {step === 1 ? (
               <form onSubmit={handleEdit}>
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-12">
                   <div className="relative z-0 w-full group">
                     <input
                       type="number"
@@ -456,17 +457,17 @@ const EditModal = ({ config }) => {
                       id="floating_order"
                       value={formData.number}
                       onChange={handleNumberChange}
-                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
+                      className="block py-4 px-2 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
                       placeholder=""
                     />
                     <label
                       htmlFor="floating_number"
-                      className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-focus:dark:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      className="absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-focus:dark:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                     >
                       Orden
                     </label>
                     {numberError && (
-                      <p className="mt-2 text-sm text-red">{numberError}</p>
+                      <p className="mt-2 text-base text-red">{numberError}</p>
                     )}
                   </div>
                   <div className="relative z-0 w-full group">
@@ -476,22 +477,22 @@ const EditModal = ({ config }) => {
                       id="floating_nombre"
                       value={formData.name}
                       onChange={handleNameChange}
-                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
+                      className="block py-4 px-2 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
                       placeholder=""
                     />
                     <label
                       htmlFor="floating_nombre"
-                      className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-focus:dark:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      className="absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-focus:dark:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                     >
                       Requerimiento
                     </label>
                     {nameError && (
-                      <p className="mt-2 text-sm text-red">{nameError}</p>
+                      <p className="mt-2 text-base text-red">{nameError}</p>
                     )}
                   </div>
                   <div className="w-full">
                     <Autocomplete
-                      size="sm"
+                      size="lg"
                       variant="bordered"
                       label="Condición"
                       selectedKey={formData.condition}
@@ -512,12 +513,12 @@ const EditModal = ({ config }) => {
                       </AutocompleteItem>
                     </Autocomplete>
                     {conditionError && (
-                      <p className="mt-2 text-sm text-red">{conditionError}</p>
+                      <p className="mt-2 text-base text-red">{conditionError}</p>
                     )}
                   </div>
                   <div className="w-full">
                     <Autocomplete
-                      size="sm"
+                      size="lg"
                       variant="bordered"
                       label="Evidencia"
                       selectedKey={formData.evidence}
@@ -539,10 +540,9 @@ const EditModal = ({ config }) => {
                       <AutocompleteItem key="Física">Física</AutocompleteItem>
                     </Autocomplete>
                     {evidenceError && (
-                      <p className="mt-2 text-sm text-red">{evidenceError}</p>
+                      <p className="mt-2 text-base text-red">{evidenceError}</p>
                     )}
                   </div>
-
                   {formData.evidence === "Específica" && (
                     <div className="relative z-0 w-full group">
                       <input
@@ -551,25 +551,26 @@ const EditModal = ({ config }) => {
                         id="floating_specify_evidence"
                         value={formData.specifyEvidence}
                         onChange={handleSpecifyEvidenceChange}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
+                        className="block py-4 px-2 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
                         placeholder=""
                       />
                       <label
                         htmlFor="floating_specify_evidence"
-                        className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-focus:dark:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        className="absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-focus:dark:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                       >
                         Especificar Evidencia
                       </label>
                       {specifyEvidenceError && (
-                        <p className="mt-2 text-sm text-red">
+                        <p className="mt-2 text-base text-red">
                           {specifyEvidenceError}
                         </p>
                       )}
                     </div>
                   )}
+
                   <div className="w-full">
                     <Autocomplete
-                      size="sm"
+                      size="lg"
                       variant="bordered"
                       label="Materia"
                       selectedKey={formData.subject}
@@ -586,7 +587,7 @@ const EditModal = ({ config }) => {
                       )}
                     </Autocomplete>
                     {subjectInputError && (
-                      <p className="mt-2 text-sm text-red">
+                      <p className="mt-2 text-base text-red">
                         {subjectInputError}
                       </p>
                     )}
@@ -598,7 +599,7 @@ const EditModal = ({ config }) => {
                     >
                       <div className="w-full">
                         <Select
-                          size="sm"
+                          size="lg"
                           variant="bordered"
                           label="Aspectos"
                           selectionMode="multiple"
@@ -621,18 +622,18 @@ const EditModal = ({ config }) => {
                     </Tooltip>
 
                     {errorAspects && (
-                      <p className="mt-2 text-sm text-red">
+                      <p className="mt-2 text-base text-red">
                         {errorAspects.message}
                       </p>
                     )}
                     {!errorAspects && aspectError && (
-                      <p className="mt-2 text-sm text-red">{aspectError}</p>
+                      <p className="mt-2 text-base text-red">{aspectError}</p>
                     )}
                   </div>
                 </div>
-                <div className="w-full mt-4">
+                <div className="w-full mt-10 mb-10">
                   <Autocomplete
-                    size="sm"
+                    size="lg"
                     variant="bordered"
                     label="Periodicidad"
                     selectedKey={formData.periodicity}
@@ -654,25 +655,26 @@ const EditModal = ({ config }) => {
                     </AutocompleteItem>
                   </Autocomplete>
                   {periodicityError && (
-                    <p className="mt-2 text-sm text-red">{periodicityError}</p>
+                    <p className="mt-2 text-base text-red">{periodicityError}</p>
                   )}
                 </div>
-                <div className="w-full mt-4">
+                <div className="w-full  mt-4">
                   <Textarea
                     disableAnimation
                     disableAutosize
                     value={formData.acceptanceCriteria}
                     onChange={handleAcceptanceCriteriaChange}
                     classNames={{
+                      label: "text-lg",
                       input:
-                        "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                        "resize-y min-h-[150px] py-1 px-2 w-full text-base text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                     }}
                     label="Criterio de Aceptación"
                     placeholder="Escribir el criterio..."
                     variant="bordered"
                   />
                   {acceptanceCriteriaError && (
-                    <p className="mt-2 text-sm text-red">
+                    <p className="mt-2 text-base text-red">
                       {acceptanceCriteriaError}
                     </p>
                   )}
@@ -682,7 +684,7 @@ const EditModal = ({ config }) => {
                     type="submit"
                     color="primary"
                     disabled={isLoading}
-                    className="w-full rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
+                    className="w-full text-base rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
                   >
                     {isLoading ? (
                       <Spinner size="sm" color="white" />
@@ -702,15 +704,16 @@ const EditModal = ({ config }) => {
                       value={formData.mandatoryDescription}
                       onChange={handleMandatoryDescriptionChange}
                       classNames={{
+                        label: "text-lg",
                         input:
-                          "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                          "resize-y min-h-[150px] py-1 px-2 w-full text-base text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                       }}
-                      label="Instrucción Descripción/Artículo Obligatorio"
-                      placeholder=""
+                      label="Descripción Obligatoria"
+                      placeholder="Escribir la descripción."
                       variant="bordered"
                     />
                     {mandatoryDescriptionError && (
-                      <p className="mt-2 text-sm text-red">
+                      <p className="mt-2 text-base text-red">
                         {mandatoryDescriptionError}
                       </p>
                     )}
@@ -722,15 +725,16 @@ const EditModal = ({ config }) => {
                       value={formData.complementaryDescription}
                       onChange={handleComplementaryDescriptionChange}
                       classNames={{
+                        label: "text-lg",
                         input:
-                          "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                          "resize-y min-h-[150px] py-1 px-2 w-full text-base text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                       }}
-                      label="Instrucción Descripción/Artículo Complementario"
-                      placeholder=""
+                      label="Descripción Complementaria"
+                      placeholder="Escribir la descripción."
                       variant="bordered"
                     />
                     {complementaryDescriptionError && (
-                      <p className="mt-2 text-sm text-red">
+                      <p className="mt-2 text-base text-red">
                         {complementaryDescriptionError}
                       </p>
                     )}
@@ -743,15 +747,16 @@ const EditModal = ({ config }) => {
                       value={formData.mandatorySentences}
                       onChange={handleMandatorySentencesChange}
                       classNames={{
+                        label: "text-lg",
                         input:
-                          "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                          "resize-y min-h-[150px] py-1 px-2 w-full text-base text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                       }}
                       label="Frases Obligatorias"
-                      placeholder=""
+                      placeholder="Escribir las frases separadas por espacio."
                       variant="bordered"
                     />
                     {mandatorySentencesError && (
-                      <p className="mt-2 text-sm text-red">
+                      <p className="mt-2 text-base text-red">
                         {mandatorySentencesError}
                       </p>
                     )}
@@ -764,15 +769,16 @@ const EditModal = ({ config }) => {
                       value={formData.complementarySentences}
                       onChange={handleComplementarySentencesChange}
                       classNames={{
+                        label: "text-lg",
                         input:
-                          "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                          "resize-y min-h-[150px] py-1 px-2 w-full text-base text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                       }}
                       label="Frases Complementarias"
-                      placeholder=""
+                      placeholder="Escribir las frases separadas por espacio."
                       variant="bordered"
                     />
                     {complementarySentencesError && (
-                      <p className="mt-2 text-sm text-red">
+                      <p className="mt-2 text-base text-red">
                         {complementarySentencesError}
                       </p>
                     )}
@@ -785,15 +791,16 @@ const EditModal = ({ config }) => {
                       value={formData.mandatoryKeywords}
                       onChange={handleMandatoryKeywordsChange}
                       classNames={{
+                        label: "text-lg",
                         input:
-                          "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                          "resize-y min-h-[150px] py-1 px-2 w-full text-base text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                       }}
                       label="Palabras Clave Obligatorias"
-                      placeholder=""
+                      placeholder="Escribir las palabras claves separadas por coma."
                       variant="bordered"
                     />
                     {mandatoryKeywordsError && (
-                      <p className="mt-2 text-sm text-red">
+                      <p className="mt-2 text-base text-red">
                         {mandatoryKeywordsError}
                       </p>
                     )}
@@ -806,15 +813,16 @@ const EditModal = ({ config }) => {
                       value={formData.complementaryKeywords}
                       onChange={handleComplementaryKeywordsChange}
                       classNames={{
+                        label: "text-lg",
                         input:
-                          "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                          "resize-y min-h-[150px] py-1 px-2 w-full text-base text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                       }}
                       label="Palabras Clave Complementarias"
-                      placeholder=""
+                      placeholder="Escribir las palabras claves separadas por coma."
                       variant="bordered"
                     />
                     {complementaryKeywordsError && (
-                      <p className="mt-2 text-sm text-red">
+                      <p className="mt-2 text-base text-red">
                         {complementaryKeywordsError}
                       </p>
                     )}
@@ -825,7 +833,7 @@ const EditModal = ({ config }) => {
                     type="submit"
                     color="primary"
                     disabled={isLoading}
-                    className="w-full rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
+                    className="w-full text-base rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
                   >
                     {isLoading ? (
                       <Spinner size="sm" color="white" />
