@@ -368,7 +368,7 @@ const CreateModal = ({ config }) => {
       placement="center"
       size="5xl"
       classNames={{
-         base: "max-w-[75%] max-h-[120vh] w-full",
+         base: "max-w-[75%] h-[90vh] w-full",
         closeButton: "hover:bg-primary/20 text-primary active:bg-primary/10",
       }}
     >
@@ -393,11 +393,11 @@ const CreateModal = ({ config }) => {
             </>
           )}
         </ModalHeader>
-        <ModalBody>
+        <ModalBody className="overflow-y-auto">
           <div className="transition-opacity duration-300 ease-in-out">
             {step === 1 ? (
               <form onSubmit={handleCreate}>
-                <div className="grid grid-cols-2 gap-12">
+                <div className="grid grid-cols-2 gap-14">
                   <div className="relative z-0 w-full group">
                     <input
                       type="number"
@@ -615,7 +615,7 @@ const CreateModal = ({ config }) => {
                     classNames={{
                       label: "text-lg",
                       input:
-                        "resize-y min-h-[150px] py-1 px-2 w-full text-base text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                        "resize-y min-h-[180px] py-1 px-2 w-full text-base text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                     }}
                     label="Criterio de Aceptación"
                     placeholder="Escribir el criterio..."
@@ -627,12 +627,12 @@ const CreateModal = ({ config }) => {
                     </p>
                   )}
                 </div>
-                <div className="w-full mt-4">
+                <div className="w-full mt-9">
                   <Button
                     type="submit"
                     color="primary"
                     disabled={isLoading}
-                    className="w-full text-base rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
+                    className="w-full text-lg rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
                   >
                     {isLoading ? (
                       <Spinner size="sm" color="white" />
@@ -644,7 +644,7 @@ const CreateModal = ({ config }) => {
               </form>
             ) : (
               <form onSubmit={handleCreate}>
-                <div className="grid  grid-cols-2 gap-6">
+                <div className="grid  grid-cols-2 gap-12">
                   <div className="w-full">
                     <Textarea
                       disableAnimation
@@ -776,12 +776,12 @@ const CreateModal = ({ config }) => {
                     )}
                   </div>
                 </div>
-                <div className="w-full mt-4">
+                <div className="w-full mt-9">
                   <Button
                     type="submit"
                     color="primary"
                     disabled={isLoading}
-                    className="w-full text-base rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
+                    className="w-full text-lg rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
                   >
                     {isLoading ? (
                       <Spinner size="sm" color="white" />
