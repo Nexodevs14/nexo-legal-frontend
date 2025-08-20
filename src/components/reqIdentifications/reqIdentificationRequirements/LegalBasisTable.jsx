@@ -120,7 +120,12 @@ export default function LegalBasisTable({ requirement, legalBasis, handleDeleteL
                           }
                           className="hover:bg-primary/20"
                           key="associate-article"
-                          onPress={() => openCreateArticleModal(requirement.id, item.legalBasis.id)}
+                          onPress={() =>
+                            openCreateArticleModal(
+                              requirement.id,
+                              item.legalBasis.id
+                            )
+                          }
                         >
                           <p className="font-normal text-primary">
                             Asociar Artículo
@@ -136,7 +141,12 @@ export default function LegalBasisTable({ requirement, legalBasis, handleDeleteL
                             />
                           }
                           className="hover:bg-red/20"
-                          onPress={() => handleDeleteLegalBasis(requirement.id, item.legalBasis.id)}
+                          onPress={() =>
+                            handleDeleteLegalBasis(
+                              requirement.id,
+                              item.legalBasis.id
+                            )
+                          }
                         >
                           <p className="font-normal text-red">
                             Eliminar Fundamento
@@ -160,8 +170,12 @@ export default function LegalBasisTable({ requirement, legalBasis, handleDeleteL
                         <table className="w-full text-sm border mt-2">
                           <thead className="bg-gray-100 text-gray-500">
                             <tr>
-                              <th className="px-3 py-2 text-left font-semibold">Nombre</th>
-                              <th className="px-3 py-2 text-left font-semibold">Tipo</th>
+                              <th className="px-3 py-2 text-left font-semibold">
+                                Nombre
+                              </th>
+                              <th className="px-3 py-2 text-left font-semibold">
+                                Tipo
+                              </th>
                               <th className="px-3 py-2 text-left font-semibold">
                                 Puntuación
                               </th>
@@ -175,14 +189,40 @@ export default function LegalBasisTable({ requirement, legalBasis, handleDeleteL
                           </thead>
                           <tbody className="bg-white divide-y divide-gray-200">
                             {item.articles.map(
-                              ({ article, articleType, score }, idx) => (
+                              (
+                                { article, articleType, score, reasoning },
+                                idx
+                              ) => (
                                 <tr key={idx} className="hover:bg-gray-50">
                                   <td className="px-3 py-2">
                                     {article.article_name}
                                   </td>
                                   <td className="px-3 py-2">{articleType}</td>
-                                  <td className="px-10 py-2">
-                                    <span>{score}</span>
+                                  <td className="px-4 py-2">
+                                    <div className="flex items-start space-x-2">
+                                      <span>{score}</span>
+                                      <Tooltip content="Ver explicación">
+                                        <Button
+                                          isIconOnly
+                                          aria-label="Ver explicación"
+                                          color="secondary"
+                                          variant="light"
+                                          onPress={() =>
+                                            openDescriptionModal(
+                                              reasoning || "No hay explicación disponible",
+                                              article.article_name
+                                            )
+                                          }
+                                          className="relative -mt-2.5"
+                                        >
+                                          <img
+                                            src={watch_icon}
+                                            alt="Ver explicación"
+                                            className="w-5 h-5"
+                                          />
+                                        </Button>
+                                      </Tooltip>
+                                    </div>
                                   </td>
                                   <td className="px-3 py-2 text-center">
                                     <div className="flex justify-center items-center">
@@ -240,7 +280,15 @@ export default function LegalBasisTable({ requirement, legalBasis, handleDeleteL
                                             }
                                             key="edit-article"
                                             className="hover:bg-primary/20"
-                                            onPress={() => openEditArticleModal(requirement.id, item.legalBasis.id, article.id, articleType, score)}
+                                            onPress={() =>
+                                              openEditArticleModal(
+                                                requirement.id,
+                                                item.legalBasis.id,
+                                                article.id,
+                                                articleType,
+                                                score
+                                              )
+                                            }
                                           >
                                             <p className="font-normal text-primary">
                                               Editar Artículo
@@ -256,11 +304,13 @@ export default function LegalBasisTable({ requirement, legalBasis, handleDeleteL
                                             }
                                             key="delete-article"
                                             className="hover:bg-red/20"
-                                            onPress={() => handleDeleteArticle(
-                                              requirement.id,
-                                              item.legalBasis.id,
-                                              article.id,
-                                            )}
+                                            onPress={() =>
+                                              handleDeleteArticle(
+                                                requirement.id,
+                                                item.legalBasis.id,
+                                                article.id
+                                              )
+                                            }
                                           >
                                             <p className="font-normal text-red">
                                               Eliminar Artículo
