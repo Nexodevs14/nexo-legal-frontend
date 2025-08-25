@@ -167,7 +167,11 @@ const CreateReqIdentificationArticleModal = ({ config }) => {
   return (
     <Modal
       isOpen={isOpen}
-      onOpenChange={closeModalCreate}
+           onOpenChange={(open) => {
+        if (!isLoading) {
+          closeModalCreate(open);
+        }
+      }}
       backdrop="opaque"
       isDismissable={false}
       placement="center"

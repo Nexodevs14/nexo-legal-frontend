@@ -32,7 +32,7 @@ export default function LegalVerbsTable({ legalVerbs }) {
           {legalVerbs.map(({ legalVerb, translation }, idx) => (
             <tr key={idx} className="hover:bg-gray-50">
               <td className="px-4 py-2">{legalVerb.name}</td>
-              <td className="px-4 py-2">{translation}</td>
+              <td className="px-4 py-2 whitespace-pre-line">{translation}</td>
             </tr>
           ))}
         </tbody>

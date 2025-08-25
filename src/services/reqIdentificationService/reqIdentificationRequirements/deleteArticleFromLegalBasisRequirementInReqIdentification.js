@@ -12,6 +12,7 @@ import server from "../../../config/server.js";
  * @param {number} params.legalBasisId - The ID of the legal basis.
  * @param {number} params.articleId - The ID of the article to delete.
  * @param {string} params.token - Authorization token for the request.
+ * @returns {Promise<Object>} The updated requirement object from the response.
  * @throws {Error} If the request fails or the response status is not 200.
  */
 export default async function deleteArticleFromLegalBasisRequirementInReqIdentification({
@@ -30,9 +31,12 @@ export default async function deleteArticleFromLegalBasisRequirementInReqIdentif
         },
       }
     );
-    if (response.status !== 204) {
+    if (response.status !== 200) {
       throw new Error("Failed to delete article from legal basis requirement");
     }
+
+    const { reqIdentificationRequirement } = response.data;
+    return reqIdentificationRequirement;
   } catch (error) {
     console.error(
       "Error deleting article from legal basis requirement:",

@@ -393,7 +393,7 @@ const CreateModal = ({ config }) => {
             </>
           )}
         </ModalHeader>
-        <ModalBody>
+       <ModalBody className="overflow-y-auto max-h-[75vh] px-6 pb-6">
           <div className="transition-opacity duration-300 ease-in-out">
             {step === 1 ? (
               <form onSubmit={handleCreate}>

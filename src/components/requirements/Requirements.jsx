@@ -33,37 +33,7 @@ const columns = [
   { name: "Periodicidad", uid: "periodicity", align: "start" },
   { name: "Materia", uid: "subject", align: "start" },
   { name: "Aspectos", uid: "aspects", align: "start" },
-  {
-    name: "Criterio de Aceptación",
-    uid: "acceptance_criteria",
-    align: "start",
-  },
-  {
-    name: "Descripción Obligatoria",
-    uid: "mandatory_description",
-    align: "start",
-  },
-  {
-    name: "Descripción Complementaria",
-    uid: "complementary_description",
-    align: "start",
-  },
-  { name: "Frases Obligatorias", uid: "mandatory_sentences", align: "start" },
-  {
-    name: "Frases Complementarias",
-    uid: "complementary_sentences",
-    align: "start",
-  },
-  {
-    name: "Palabras Clave Obligatorias",
-    uid: "mandatory_keywords",
-    align: "start",
-  },
-  {
-    name: "Palabras Clave Complementarias",
-    uid: "complementary_keywords",
-    align: "start",
-  },
+  { name: "Criterio de Aceptación", uid: "acceptance_criteria", align: "start", },
   { name: "Acciones", uid: "actions", align: "center" },
 ];
 

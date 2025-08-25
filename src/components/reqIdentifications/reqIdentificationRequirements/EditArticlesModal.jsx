@@ -125,7 +125,7 @@ const EditReqIdentificationArticleModal = ({ config }) => {
       });
 
       if (success) {
-        toast.info("EL artículo asociado ha sido actualizado exitosamente", {
+        toast.info("El artículo asociado ha sido actualizado exitosamente", {
           icon: () => <img src={check} alt="Success Icon" />,
           progressStyle: { background: "#113c53" },
         });
@@ -153,14 +153,18 @@ const EditReqIdentificationArticleModal = ({ config }) => {
     }
   };
 
-    const handleReload = () => {
+  const handleReload = () => {
     window.location.reload();
   };
 
   return (
     <Modal
       isOpen={isOpen}
-      onOpenChange={closeModalEdit}
+      onOpenChange={(open) => {
+        if (!isLoading) {
+          closeModalEdit(open);
+        }
+      }}
       backdrop="opaque"
       isDismissable={false}
       placement="center"
@@ -192,16 +196,16 @@ const EditReqIdentificationArticleModal = ({ config }) => {
                 alertIcon: "text-red",
               }}
               endContent={
-              <Button
-                color="danger"
-                size="sm"
-                variant="faded"
-                className="mt-20 w-full"
-                onPress={handleReload}
-              >
-                Intentar de nuevo
-              </Button>
-            }
+                <Button
+                  color="danger"
+                  size="sm"
+                  variant="faded"
+                  className="mt-20 w-full"
+                  onPress={handleReload}
+                >
+                  Intentar de nuevo
+                </Button>
+              }
             />
           ) : (
             <>
@@ -215,8 +219,10 @@ const EditReqIdentificationArticleModal = ({ config }) => {
                       label="Artículo"
                       isReadOnly
                       value={
-                        articles.find((a) => a.id === Number(formData.articleId))
-                          ?.article_name || "Articulo no encontrado. Recargue la app."
+                        articles.find(
+                          (a) => a.id === Number(formData.articleId)
+                        )?.article_name ||
+                        "Articulo no encontrado. Recargue la app."
                       }
                     />
                   </div>

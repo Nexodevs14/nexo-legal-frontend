@@ -73,7 +73,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId]
+          items: [reqIdentificationId],
         });
         return { success: false, error: handledError.message };
       }
@@ -108,7 +108,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId]
+          items: [reqIdentificationId],
         });
         return {
           success: false,
@@ -147,7 +147,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId]
+          items: [reqIdentificationId],
         });
 
         setState({
@@ -159,7 +159,7 @@ export default function useReqIdentificationRequirements() {
     [jwt]
   );
 
-    /**
+  /**
    * Downloads a file containing all requirements from a specific requirement identification.
    * @async
    * @function downloadRequirementsFile
@@ -186,7 +186,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId]
+          items: [reqIdentificationId],
         });
 
         return { success: false, error: handledError.message };
@@ -224,7 +224,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId]
+          items: [reqIdentificationId],
         });
         setState({
           loading: false,
@@ -266,7 +266,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId]
+          items: [reqIdentificationId],
         });
         setState({
           loading: false,
@@ -307,7 +307,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId]
+          items: [reqIdentificationId],
         });
         setState({
           loading: false,
@@ -366,7 +366,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId]
+          items: [reqIdentificationId],
         });
         return { success: false, error: handledError.message };
       }
@@ -405,7 +405,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId]
+          items: [reqIdentificationId],
         });
         return { success: false, error: handledError.message };
       }
@@ -452,7 +452,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId]
+          items: [reqIdentificationId],
         });
 
         return { success: false, error: handledError.message };
@@ -503,7 +503,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId]
+          items: [reqIdentificationId],
         });
 
         return { success: false, error: handledError.message };
@@ -562,7 +562,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId]
+          items: [reqIdentificationId],
         });
         return { success: false, error: handledError.message };
       }
@@ -620,7 +620,7 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId]
+          items: [reqIdentificationId],
         });
         return { success: false, error: handledError.message };
       }
@@ -641,29 +641,18 @@ export default function useReqIdentificationRequirements() {
   const deleteArticle = useCallback(
     async (reqIdentificationId, requirementId, legalBasisId, articleId) => {
       try {
-        await deleteArticleFromLegalBasisRequirementInReqIdentification({
-          reqIdentificationId,
-          requirementId,
-          legalBasisId,
-          articleId,
-          token: jwt,
-        });
+        const reqIdentificationRequirement =
+          await deleteArticleFromLegalBasisRequirementInReqIdentification({
+            reqIdentificationId,
+            requirementId,
+            legalBasisId,
+            articleId,
+            token: jwt,
+          });
         setReqIdentificationRequirements((prev) =>
           prev.map((req) =>
             req.requirement.id === requirementId
-              ? {
-                  ...req,
-                  legalBasis: req.legalBasis.map((lb) =>
-                    lb.legalBasis.id === legalBasisId
-                      ? {
-                          ...lb,
-                          articles: lb.articles.filter(
-                            (article) => article.article.id !== articleId
-                          ),
-                        }
-                      : lb
-                  ),
-                }
+              ? reqIdentificationRequirement
               : req
           )
         );
@@ -677,14 +666,13 @@ export default function useReqIdentificationRequirements() {
           code: errorCode,
           error: serverMessage,
           httpError: clientMessage,
-          items: [reqIdentificationId]
+          items: [reqIdentificationId],
         });
         return { success: false, error: handledError.message };
       }
     },
     [jwt]
   );
-
 
   return {
     reqIdentificationRequirements,
@@ -703,6 +691,6 @@ export default function useReqIdentificationRequirements() {
     deleteLegalBasis,
     addArticle,
     editArticle,
-    deleteArticle
+    deleteArticle,
   };
 }
