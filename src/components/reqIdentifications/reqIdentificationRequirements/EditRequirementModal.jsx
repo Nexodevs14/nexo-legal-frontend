@@ -294,7 +294,7 @@ const EditRequirementModal = ({ config }) => {
                   {isLoading ? (
                     <Spinner size="sm" color="white" />
                   ) : (
-                    "Asociar requerimiento"
+                    "Actualizar requerimiento"
                   )}
                 </Button>
               </div>
