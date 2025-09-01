@@ -523,6 +523,7 @@ export default function useReqIdentificationRequirements() {
    * @param {number} params.articleId - The ID of the article to associate.
    * @param {string} params.articleType - The type of the article.
    * @param {number} params.score - The score associated with the article.
+   * @param {boolean} params.refreshMetadata - Flag to indicate if metadata should be refreshed.
    * @returns {Promise<{ success: true } | { success: false, error: string }>}
    */
   const addArticle = useCallback(
@@ -533,6 +534,7 @@ export default function useReqIdentificationRequirements() {
       articleId,
       articleType,
       score,
+      refreshMetadata
     }) => {
       try {
         const reqIdentificationRequirement =
@@ -543,6 +545,7 @@ export default function useReqIdentificationRequirements() {
             articleId,
             articleType,
             score,
+            refreshMetadata,
             token: jwt,
           });
         setReqIdentificationRequirements((prev) =>
@@ -581,6 +584,7 @@ export default function useReqIdentificationRequirements() {
    * @param {number} params.articleId - The ID of the article to associate.
    * @param {string} params.articleType - The type of the article.
    * @param {number} params.score - The score associated with the article.
+   * @param {boolean} params.refreshMetadata - Flag to indicate if metadata should be refreshed.
    * @returns {Promise<{ success: true } | { success: false, error: string }>}
    * */
   const editArticle = useCallback(
@@ -591,6 +595,7 @@ export default function useReqIdentificationRequirements() {
       articleId,
       articleType,
       score,
+      refreshMetadata
     }) => {
       try {
         const reqIdentificationRequirement =
@@ -601,6 +606,7 @@ export default function useReqIdentificationRequirements() {
             articleId,
             articleType,
             score,
+            refreshMetadata,
             token: jwt,
           });
         setReqIdentificationRequirements((prev) =>
@@ -636,10 +642,11 @@ export default function useReqIdentificationRequirements() {
    * @param {number} requirementId - The ID of the requirement within the identification.
    * @param {number} legalBasisId - The ID of the legal basis.
    * @param {number} articleId - The ID of the article to remove.
+   * @param {boolean} refreshMetadata - Flag to indicate if metadata should be refreshed.
    * @returns {Promise<{ success: true } | { success: false, error: string }>}
    */
   const deleteArticle = useCallback(
-    async (reqIdentificationId, requirementId, legalBasisId, articleId) => {
+    async (reqIdentificationId, requirementId, legalBasisId, articleId, refreshMetadata) => {
       try {
         const reqIdentificationRequirement =
           await deleteArticleFromLegalBasisRequirementInReqIdentification({
@@ -647,6 +654,7 @@ export default function useReqIdentificationRequirements() {
             requirementId,
             legalBasisId,
             articleId,
+            refreshMetadata,
             token: jwt,
           });
         setReqIdentificationRequirements((prev) =>

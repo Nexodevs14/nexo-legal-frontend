@@ -10,6 +10,8 @@ import {
   Autocomplete,
   AutocompleteItem,
   Alert,
+  Checkbox,
+  Input,
 } from "@heroui/react";
 import { toast } from "react-toastify";
 import check from "../../../assets/check.png";
@@ -27,13 +29,16 @@ import useArticles from "../../../hooks/articles/useArticles";
  * @param {Object} props.config - Configuration object containing state, data, and handlers.
  * @param {boolean} props.config.isOpen - Indicates whether the modal is open.
  * @param {Function} props.config.closeModalCreate - Function to close the modal.
- * @param {Object} props.config.formData - Form data including article selection, type, and score.
- * @param {string} props.config.formData.reqIdentificationId - ID of the requirement identification.
- * @param {string} props.config.formData.requirementId - ID of the base requirement.
- * @param {string} props.config.formData.legalBasisId - ID of the associated legal basis.
- * @param {string|null} props.config.formData.articleId - Selected article ID.
- * @param {string|null} props.config.formData.articleType - Selected article type.
- * @param {string|number|null} props.config.formData.score - Numeric score associated with the article.
+ * @param {Object} props.config.formData - Form data including article selection and optional changes.
+ * @param {string|number|null} props.config.formData.reqIdentificationId - ID of the requirement identification.
+ * @param {string|number|null} props.config.formData.requirementId - ID of the base requirement.
+ * @param {string|number|null} props.config.formData.legalBasisId - ID of the associated legal basis.
+ * @param {string|number|null} props.config.formData.articleId - ID of the selected article (can be null if not selected yet).
+ * @param {string|null} props.config.formData.articleType - Current article type (read-only. Can be null).
+ * @param {string|number|null} props.config.formData.score - Current score associated with the article (read-only. Can be null).
+ * @param {string|null} [props.config.formData.newArticleType] - **New type (optional)** to save if specified by the user. If empty or null, the current type is preserved.
+ * @param {string|number|null} [props.config.formData.newScore] - **New score (optional)** to save if specified by the user. If empty or null, the current score is preserved.
+ * @param {boolean} props.config.formData.refreshMetadata - The flag to indicate if metadata should be refreshed.
  * @param {Function} props.config.addArticle - Function to associate the selected article.
  * @param {string|null} props.config.articleInputError - Error message for the article field.
  * @param {Function} props.config.setArticleInputError - Setter for article field error.
@@ -44,6 +49,7 @@ import useArticles from "../../../hooks/articles/useArticles";
  * @param {string|null} props.config.articleScoreInputError - Error message for the score field.
  * @param {Function} props.config.setArticleScoreInputError - Setter for score field error.
  * @param {Function} props.config.handleArticleScoreChange - Handler for changing the score value.
+ * @param {Function} props.config.handleRefreshMetaDataChange - Handler for changing the refresh metadata checkbox.
  *
  * @returns {JSX.Element} Rendered modal component.
  */
@@ -63,6 +69,7 @@ const CreateReqIdentificationArticleModal = ({ config }) => {
     articleScoreInputError,
     setArticleScoreInputError,
     handleArticleScoreChange,
+    handleRefreshMetaDataChange
   } = config;
   const { articles, loading, error, fetchArticles } = useArticles();
   const [isLoading, setIsLoading] = useState(false);
@@ -79,6 +86,7 @@ const CreateReqIdentificationArticleModal = ({ config }) => {
   const handleCreate = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
     if (!formData.articleId) {
       setArticleInputError("Debe seleccionar un artículo.");
       setIsLoading(false);
@@ -86,48 +94,68 @@ const CreateReqIdentificationArticleModal = ({ config }) => {
     } else {
       setArticleInputError(null);
     }
-    if (!formData.articleType) {
+
+    if (
+      (formData.newArticleType === null ||
+        formData.newArticleType === undefined ||
+        String(formData.newArticleType) === "")
+    ) {
       setArticleTypeInputError("Este campo es obligatorio");
       setIsLoading(false);
       return;
     } else {
       setArticleTypeInputError(null);
     }
-    if (!formData.score) {
-      setArticleScoreInputError("Debe ser mayor a 0.");
-      setIsLoading(false);
-      return;
-    } else if (isNaN(formData.score)) {
-      setArticleScoreInputError("Este campo debe ser un número válido.");
-      setIsLoading(false);
-      return;
-    } else if (Number(formData.score) <= 0) {
-      setArticleScoreInputError("Este campo debe ser mayor a 0.");
-      setIsLoading(false);
-      return;
-    } else if (Number(formData.score) > 10) {
-      setArticleScoreInputError("Este campo no debe ser mayor a 10.");
-      setIsLoading(false);
-      return;
-    } else if (!/^\d+(\.\d{1,2})?$/.test(formData.score)) {
-      setArticleScoreInputError("Este campo debe tener máximo 2 decimales.");
-      setIsLoading(false);
-      return;
-    } else if (/^0\d/.test(formData.score)) {
-      setArticleScoreInputError("El valor no debe comenzar con ceros.");
-      setIsLoading(false);
-      return;
+
+    if (
+      formData.newScore !== null &&
+      formData.newScore !== undefined &&
+      String(formData.newScore) !== ""
+    ) {
+      const scoreString = String(formData.newScore);
+
+      if (isNaN(scoreString)) {
+        setArticleScoreInputError("Este campo debe ser un número válido.");
+        setIsLoading(false);
+        return;
+      }
+      const scoreNumber = Number(scoreString);
+      if (scoreNumber <= 0) {
+        setArticleScoreInputError("Este campo debe ser mayor a 0.");
+        setIsLoading(false);
+        return;
+      }
+      if (scoreNumber > 10) {
+        setArticleScoreInputError("Este campo no debe ser mayor a 10.");
+        setIsLoading(false);
+        return;
+      }
+      if (!/^\d+(\.\d{1,2})?$/.test(scoreString)) {
+        setArticleScoreInputError("Este campo debe tener máximo 2 decimales.");
+        setIsLoading(false);
+        return;
+      }
+      if (/^0\d/.test(scoreString)) {
+        setArticleScoreInputError("El valor no debe comenzar con ceros.");
+        setIsLoading(false);
+        return;
+      }
     } else {
-      setArticleScoreInputError(null);
+      setArticleScoreInputError("Este campo es obligatorio.");
+      setIsLoading(false);
+      return;
     }
+    setArticleScoreInputError(null);
+
     try {
       const { success, error } = await addArticle({
         reqIdentificationId: Number(formData.reqIdentificationId),
         requirementId: Number(formData.requirementId),
         legalBasisId: Number(formData.legalBasisId),
         articleId: Number(formData.articleId),
-        articleType: formData.articleType,
-        score: Number(formData.score),
+        articleType: formData.newArticleType,
+        score: Number(formData.newScore),
+        refreshMetadata: formData.refreshMetadata
       });
 
       if (success) {
@@ -139,7 +167,6 @@ const CreateReqIdentificationArticleModal = ({ config }) => {
       } else {
         toast.error(
           <div
-            className="toast-scroll-red"
             style={{
               maxHeight: 200,
               overflowY: "auto",
@@ -163,11 +190,11 @@ const CreateReqIdentificationArticleModal = ({ config }) => {
   const handleReload = () => {
     window.location.reload();
   };
-  
+
   return (
     <Modal
       isOpen={isOpen}
-           onOpenChange={(open) => {
+      onOpenChange={(open) => {
         if (!isLoading) {
           closeModalCreate(open);
         }
@@ -243,58 +270,65 @@ const CreateReqIdentificationArticleModal = ({ config }) => {
                       </p>
                     )}
                   </div>
-                  <div className="w-full">
-                    <Autocomplete
-                      size="sm"
-                      variant="bordered"
-                      label="Tipo"
-                      selectedKey={formData.articleType || ""}
-                      onSelectionChange={handleArticleTypeChange}
-                      listboxProps={{
-                        emptyContent: "Tipos de artículos de encontrados",
-                      }}
-                    >
-                      <AutocompleteItem key="Obligatorio">
-                        Obligatorio
-                      </AutocompleteItem>
-                      <AutocompleteItem key="Complementario">
-                        Complementario
-                      </AutocompleteItem>
-                      <AutocompleteItem key="General">General</AutocompleteItem>
-                    </Autocomplete>
-                    {articleTypeInputError && (
-                      <p className="mt-2 text-sm text-red">
-                        {articleTypeInputError}
-                      </p>
-                    )}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="w-full">
+                      <Autocomplete
+                        label="Tipo"
+                        placeholder="Selecciona un tipo"
+                        selectedKey={formData.newArticleType ?? ""}
+                        onSelectionChange={handleArticleTypeChange}
+                        size="sm"
+                        variant="bordered"
+                        isClearable
+                        className="w-full"
+                      >
+                        <AutocompleteItem key="Obligatorio">
+                          Obligatorio
+                        </AutocompleteItem>
+                        <AutocompleteItem key="Complementario">
+                          Complementario
+                        </AutocompleteItem>
+                        <AutocompleteItem key="General">
+                          General
+                        </AutocompleteItem>
+                      </Autocomplete>
+                      {articleTypeInputError && (
+                        <p className="mt-2 text-sm text-red">{articleTypeInputError}</p>
+                      )}
+                    </div>
+                    <div className="relative w-full">
+                      <Input
+                        size="sm"
+                        type="number"
+                        variant="bordered"
+                        label="Puntuación"
+                        placeholder="Ingresa una puntuación (1-10)"
+                        value={formData.newScore ?? ""}
+                        onChange={handleArticleScoreChange}
+                      />
+                      {articleScoreInputError && (
+                        <p className="mt-2 text-sm text-red">{articleScoreInputError}</p>
+                      )}
+                    </div>
                   </div>
-                  <div className="relative z-0 w-full group">
-                    <input
-                      type="number"
-                      name="number"
-                      id="floating_order"
-                      value={formData.score}
-                      onChange={handleArticleScoreChange}
-                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
-                      placeholder=""
-                    />
-                    <label
-                      htmlFor="floating_number"
-                      className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-focus:dark:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                    >
-                      Puntuación
-                    </label>
-                    {articleScoreInputError && (
-                      <p className="mt-2 text-sm text-red">
-                        {articleScoreInputError}
-                      </p>
-                    )}
+                  <div className="w-full flex items-start">
+                    <div className="flex flex-col">
+                      <Checkbox
+                        size="md"
+                        isSelected={formData.refreshMetadata}
+                        onValueChange={handleRefreshMetaDataChange}
+                      >
+                        <span className="text-md text-black">
+                          Actualizar Verbos Legales y Tipos de Requerimiento
+                        </span>
+                      </Checkbox>
+                    </div>
                   </div>
                   <Button
                     type="submit"
                     color="primary"
                     disabled={isLoading}
-                    className="w-full rounded border mb-4 mt-2 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
+                    className="w-full rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
                   >
                     {isLoading ? (
                       <Spinner size="sm" color="white" />
@@ -317,12 +351,27 @@ CreateReqIdentificationArticleModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     closeModalCreate: PropTypes.func.isRequired,
     formData: PropTypes.shape({
-      reqIdentificationId: PropTypes.string.isRequired,
-      requirementId: PropTypes.string.isRequired,
-      legalBasisId: PropTypes.string.isRequired,
-      articleId: PropTypes.string,
-      articleType: PropTypes.string,
-      score: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // puede ser string inicialmente
+      reqIdentificationId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      requirementId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      legalBasisId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      articleId: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.oneOf([null]),
+      ]),
+      articleType: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
+      score: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.oneOf([null]),
+      ]),
+      newArticleType: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
+      newScore: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.oneOf([null]),
+      ]),
+      refreshMetadata: PropTypes.bool.isRequired,
     }).isRequired,
     addArticle: PropTypes.func.isRequired,
     articleInputError: PropTypes.string,
@@ -334,6 +383,7 @@ CreateReqIdentificationArticleModal.propTypes = {
     articleScoreInputError: PropTypes.string,
     setArticleScoreInputError: PropTypes.func.isRequired,
     handleArticleScoreChange: PropTypes.func.isRequired,
+    handleRefreshMetaDataChange: PropTypes.func.isRequired,
   }).isRequired,
 };
 

@@ -30,11 +30,7 @@ const columns = [
   { name: "Periodicidad", uid: "periodicity", align: "start" },
   { name: "Materia", uid: "subject", align: "start" },
   { name: "Aspectos", uid: "aspects", align: "start" },
-  {
-    name: "Criterio de Aceptación",
-    uid: "acceptance_criteria",
-    align: "center",
-  },
+  { name: "Criterio de Aceptación", uid: "acceptance_criteria", align: "center" },
   { name: "Acciones", uid: "actions", align: "center" },
 ];
 
@@ -118,8 +114,11 @@ export default function ReqIdentificationRequirements() {
     requirementId: null,
     legalBasisId: null,
     articleId: null,
-    articleType: "",
-    score: 0,
+    articleType: null,
+    score: null,
+    newArticleType: null,
+    newScore: null,
+    refreshMetadata: false
   });
 
 
@@ -410,8 +409,11 @@ export default function ReqIdentificationRequirements() {
       requirementId,
       legalBasisId,
       articleId: null,
-      articleType: "",
-      score: 0,
+      articleType: null,
+      score: null,
+      newArticleType: null,
+      newScore: null,
+      refreshMetadata: false
     });
     setIsCreateArticlesModalOpen(true);
   };
@@ -452,7 +454,7 @@ export default function ReqIdentificationRequirements() {
       if (!value) {
         setFormDataArticle((prevFormData) => ({
           ...prevFormData,
-          articleType: "",
+          newArticleType: "",
         }));
         if (articleTypeInputError) {
           setArticleTypeInputError(null);
@@ -461,7 +463,7 @@ export default function ReqIdentificationRequirements() {
       }
       setFormDataArticle((prevFormData) => ({
         ...prevFormData,
-        articleType: value,
+        newArticleType: value,
       }));
       if (articleTypeInputError && value.trim() !== "") {
         setArticleTypeInputError(null);
@@ -479,13 +481,23 @@ export default function ReqIdentificationRequirements() {
       const { value } = e.target;
       setFormDataArticle((prevFormData) => ({
         ...prevFormData,
-        score: value,
+        newScore: value,
       }));
       if (articleScoreInputError && value.trim() !== "") {
         setArticleScoreInputError(null);
       }
     },
     [articleScoreInputError, setFormDataArticle, setArticleScoreInputError]
+  );
+
+  const handleRefreshMetaDataChange = useCallback(
+    (isChecked) => {
+      setFormDataArticle((prevFormData) => ({
+        ...prevFormData,
+        refreshMetadata: isChecked,
+      }));
+    },
+    [setFormDataArticle]
   );
 
   const openEditArticleModal = (requirementId, legalBasisId, articleId, articleType, score) => {
@@ -496,6 +508,9 @@ export default function ReqIdentificationRequirements() {
       articleId: articleId.toString(),
       articleType: articleType,
       score: score,
+      newArticleType: null,
+      newScore: null,
+      refreshMetadata: false
     });
     setIsEditArticlesModalOpen(true);
   };
@@ -688,40 +703,60 @@ export default function ReqIdentificationRequirements() {
     [id, deleteLegalBasis]
   );
 
-    const handleDeleteArticle = useCallback(
+  const handleDeleteArticle = useCallback(
     async (requirementId, legalBasisId, articleId) => {
-      const toastId = toast.loading("Eliminando artículo...", {
-        icon: <Spinner size="sm" />,
-        progressStyle: {
-          background: "#113c53",
-        },
-      });
-      try {
-        const { success, error } = await deleteArticle(id, requirementId, legalBasisId, articleId);
-        if (success) {
-          toast.update(toastId, {
-            render: "Artículo eliminado con éxito",
-            type: "info",
-            icon: <img src={check} alt="Success Icon" />,
-            progressStyle: {
-              background: "#113c53",
-            },
-            isLoading: false,
-            autoClose: 3000,
-          });
-        } else {
-          toast.update(toastId, {
-            render: (
-              <div
-                style={{
-                  maxHeight: 200,
-                  overflowY: "auto",
-                  whiteSpace: "pre-wrap",
-                }}
-              >
-                {error}
-              </div>
-            ),
+      let actionTaken = false; 
+
+      const performDelete = async (refreshMetadata) => {
+        actionTaken = true;
+        const loadingId = toast.loading("Eliminando artículo...", {
+          icon: <Spinner size="sm" />,
+          progressStyle: { background: "#113c53" },
+        });
+
+        try {
+          const { success, error } = await deleteArticle(
+            id,
+            requirementId,
+            legalBasisId,
+            articleId,
+            refreshMetadata
+          );
+
+          if (success) {
+            toast.update(loadingId, {
+              render: "Artículo eliminado con éxito",
+              type: "info",
+              icon: <img src={check} alt="Success Icon" />,
+              progressStyle: { background: "#113c53" },
+              isLoading: false,
+              autoClose: 3000,
+            });
+          } else {
+            toast.update(loadingId, {
+              render: (
+                <div
+                  style={{
+                    maxHeight: 200,
+                    overflowY: "auto",
+                    whiteSpace: "pre-wrap",
+                  }}
+                >
+                  {error}
+                </div>
+              ),
+              className: "toast-scroll-red",
+              type: "error",
+              icon: null,
+              progressStyle: {},
+              isLoading: false,
+              autoClose: 5000,
+            });
+          }
+        } catch (error) {
+          console.error(error);
+          toast.update(loadingId, {
+            render: "Algo mal sucedió al eliminar el artículo. Intente de nuevo.",
             className: "toast-scroll-red",
             type: "error",
             icon: null,
@@ -730,21 +765,56 @@ export default function ReqIdentificationRequirements() {
             autoClose: 5000,
           });
         }
-      } catch (error) {
-        console.error(error);
-        toast.update(toastId, {
-          render:
-            "Algo mal sucedió al eliminar el artículo. Intente de nuevo.",
-          type: "error",
-          icon: null,
-          progressStyle: {},
-          isLoading: false,
-          autoClose: 5000,
-        });
-      }
+      };
+
+      toast(
+        ({ closeToast }) => (
+          <div className="flex flex-col gap-2">
+            <p className="text-sm text-gray-600">
+              ¿Deseas actualizar los Verbos Legales y Tipos de Requerimiento?
+            </p>
+            <div className="flex gap-4 mt-1">
+              <button
+                onClick={async () => {
+                  closeToast();
+                  await performDelete(true);
+                }}
+                className="text-primary text-sm font-bold hover:underline"
+              >
+                Sí, sí actualizar
+              </button>
+              <button
+                onClick={async () => {
+                  closeToast();
+                  await performDelete(false);
+                }}
+                className="text-gray-600 text-sm font-bold hover:underline"
+              >
+                No, no actualizar
+              </button>
+            </div>
+          </div>
+        ),
+        {
+          autoClose: 10000,
+          icon: false,
+          hideProgressBar: true,
+          onClose: () => {
+            if (!actionTaken) {
+              toast.info("Acción cancelada", {
+                icon: <img src={check} alt="Cancel Icon" />,
+                progressStyle: { background: "#113c53" },
+                autoClose: 3000,
+                isLoading: false,
+              });
+            }
+          },
+        }
+      );
     },
     [id, deleteArticle]
   );
+
 
   if (
     loading && isFirstRender
@@ -959,6 +1029,7 @@ export default function ReqIdentificationRequirements() {
               articleScoreInputError: articleScoreInputError,
               setArticleScoreInputError: setArticleScoreInputError,
               handleArticleScoreChange: handleArticleScoreChange,
+              handleRefreshMetaDataChange: handleRefreshMetaDataChange,
             }}
           />
         )}
@@ -978,6 +1049,7 @@ export default function ReqIdentificationRequirements() {
               articleScoreInputError: articleScoreInputError,
               setArticleScoreInputError: setArticleScoreInputError,
               handleArticleScoreChange: handleArticleScoreChange,
+              handleRefreshMetaDataChange: handleRefreshMetaDataChange,
             }}
           />
         )}

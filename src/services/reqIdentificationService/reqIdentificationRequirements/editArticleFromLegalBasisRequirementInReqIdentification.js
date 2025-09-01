@@ -13,6 +13,7 @@ import server from "../../../config/server.js";
  * @param {number} params.articleId - The ID of the article to associate.
  * @param {string} params.articleType - The type of the article.
  * @param {number} params.score - The score associated with the article.
+ * @param {boolean} params.refreshMetadata - Flag to indicate if metadata should be refreshed.
  * @param {string} params.token - Authorization token for the request.
  *
  * @returns {Promise<Object>} The updated requirement object from the response.
@@ -25,12 +26,13 @@ export default async function editArticleFromLegalBasisRequirementInReqIdentific
   articleId,
   articleType,
   score,
+  refreshMetadata,
   token,
 }) {
   try {
     const response = await server.patch(
       `/req-identification/${reqIdentificationId}/requirements/${requirementId}/legal-basis/${legalBasisId}/articles/${articleId}`,
-      { articleType, score },
+      { articleType, score, refreshMetadata },
       {
         headers: {
           Authorization: `Bearer ${token}`,
