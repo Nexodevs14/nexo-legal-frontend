@@ -584,6 +584,7 @@ export default function useReqIdentificationRequirements() {
    * @param {number} params.articleId - The ID of the article to associate.
    * @param {string} params.articleType - The type of the article.
    * @param {number} params.score - The score associated with the article.
+   * @param {string} params.feedback - Feedback text about the change.
    * @param {boolean} params.refreshMetadata - Flag to indicate if metadata should be refreshed.
    * @returns {Promise<{ success: true } | { success: false, error: string }>}
    * */
@@ -595,6 +596,7 @@ export default function useReqIdentificationRequirements() {
       articleId,
       articleType,
       score,
+      feedback,
       refreshMetadata
     }) => {
       try {
@@ -606,6 +608,7 @@ export default function useReqIdentificationRequirements() {
             articleId,
             articleType,
             score,
+            feedback,
             refreshMetadata,
             token: jwt,
           });

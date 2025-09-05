@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Modal,
   ModalContent,
@@ -12,10 +12,16 @@ import {
   Alert,
   Checkbox,
   Input,
+  Textarea,
+  Accordion,
+  AccordionItem,
+  Avatar,
 } from "@heroui/react";
 import { toast } from "react-toastify";
 import check from "../../../assets/check.png";
+import defaultAvatar from "../../../assets/usuario.png";
 import useArticles from "../../../hooks/articles/useArticles";
+import useArticleFeedbacks from "../../../hooks/articles/useArticleFeedbacks";
 
 /**
  * Modal component for editing an associated article in the identification requirements.
@@ -34,6 +40,7 @@ import useArticles from "../../../hooks/articles/useArticles";
  * @param {string|number|null} props.config.formData.score - Current score associated with the article (read-only. Can be null).
  * @param {string|null} [props.config.formData.newArticleType] - **New type (optional)** to save if specified by the user. If empty or null, the current type is preserved.
  * @param {string|number|null} [props.config.formData.newScore] - **New score (optional)** to save if specified by the user. If empty or null, the current score is preserved.
+ * @param {string|null} [props.config.formData.feedback] - **Optional** feedback text about the change.
  * @param {boolean} props.config.formData.refreshMetadata - The flag to indicate if metadata should be refreshed.
  * @param {Function} props.config.editArticle - Function to update the article.
  * @param {Function} props.config.setArticleInputError - Setter for article input error.
@@ -44,7 +51,9 @@ import useArticles from "../../../hooks/articles/useArticles";
  * @param {Function} props.config.setArticleScoreInputError - Setter for score input error.
  * @param {Function} props.config.handleArticleScoreChange - Handler for score input change.
  * @param {Function} props.config.handleRefreshMetaDataChange - Handler for changing the refresh metadata checkbox.
- *
+ * @param {string} [props.config.feedbackInputError] - Error message for the feedback input.
+ * @param {Function} props.config.setFeedbackScoreInputError - Setter for feedback input error.
+ * @param {Function} props.config.handleArticleFeedbackChange - Handler for feedback input change.
  * @returns {JSX.Element} The modal for editing an associated article.
  */
 const EditReqIdentificationArticleModal = ({ config }) => {
@@ -60,17 +69,88 @@ const EditReqIdentificationArticleModal = ({ config }) => {
     articleScoreInputError,
     setArticleScoreInputError,
     handleArticleScoreChange,
-    handleRefreshMetaDataChange
+    handleRefreshMetaDataChange,
+    feedbackInputError,
+    setFeedbackScoreInputError,
+    handleArticleFeedbackChange,
   } = config;
-  const { articles, loading, error, fetchArticles } = useArticles();
-
+  const { articles, loading: articlesLoading, error: articlesError, fetchArticles } = useArticles();
+  const { feedbacks, loading: feedbacksLoading, error: feedbacksError, fetchFeedbacks, removeFeedback } = useArticleFeedbacks();
   const [isLoading, setIsLoading] = useState(false);
+  const loading = articlesLoading || feedbacksLoading;
+  const error = articlesError || feedbacksError;
+  const { reqIdentificationId, requirementId, legalBasisId, articleId } = formData;
 
   useEffect(() => {
-    if (formData.legalBasisId) {
-      fetchArticles(formData.legalBasisId);
+    if (isOpen && legalBasisId) {
+      fetchArticles(legalBasisId);
     }
-  }, [isOpen, formData.legalBasisId, fetchArticles]);
+  }, [isOpen, legalBasisId, fetchArticles]);
+
+  useEffect(() => {
+    if (isOpen && reqIdentificationId && requirementId && legalBasisId && articleId) {
+      fetchFeedbacks(reqIdentificationId, requirementId, legalBasisId, articleId);
+    }
+  }, [isOpen, reqIdentificationId, requirementId, legalBasisId, articleId, fetchFeedbacks]);
+
+
+  const handleArticleFeedbackDelete = useCallback(
+    async (id) => {
+      const toastId = toast.loading("Eliminando feedback...", {
+        icon: <Spinner size="sm" />,
+        progressStyle: {
+          background: "#113c53",
+        },
+      });
+      try {
+        const { success, error } = await removeFeedback(id);
+        if (success) {
+          toast.update(toastId, {
+            render: "Feedback eliminado con éxito",
+            type: "info",
+            icon: <img src={check} alt="Success Icon" />,
+            progressStyle: {
+              background: "#113c53",
+            },
+            isLoading: false,
+            autoClose: 3000,
+          });
+        } else {
+          toast.update(toastId, {
+            render: (
+              <div
+                style={{
+                  maxHeight: 200,
+                  overflowY: "auto",
+                  whiteSpace: "pre-wrap",
+                }}
+              >
+                {error}
+              </div>
+            ),
+            className: "toast-scroll-red",
+            type: "error",
+            icon: null,
+            progressStyle: {},
+            isLoading: false,
+            autoClose: 5000,
+          });
+        }
+      } catch (error) {
+        console.error(error);
+        toast.update(toastId, {
+          render:
+            "Algo mal sucedió al eliminar el feedback. Intente de nuevo.",
+          type: "error",
+          icon: null,
+          progressStyle: {},
+          isLoading: false,
+          autoClose: 5000,
+        });
+      }
+    },
+    [removeFeedback]
+  );
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -128,9 +208,27 @@ const EditReqIdentificationArticleModal = ({ config }) => {
       }
     }
 
+    if (hasNewType || hasNewScore) {
+      if (!formData.feedback || formData.feedback.trim() === "") {
+        setFeedbackScoreInputError(
+          "El feedback es obligatorio si se modifica el tipo o la puntuación."
+        );
+        setIsLoading(false);
+        return;
+      }
+    } else {
+      if (formData.feedback && formData.feedback.trim() !== "") {
+        setFeedbackScoreInputError(
+          "No puede ingresar feedback si no hay cambios en tipo o puntuación."
+        );
+        setIsLoading(false);
+        return;
+      }
+    }
     setArticleInputError(null);
     setArticleTypeInputError(null);
     setArticleScoreInputError(null);
+    setFeedbackScoreInputError(null);
 
     try {
       const { success, error } = await editArticle({
@@ -140,6 +238,7 @@ const EditReqIdentificationArticleModal = ({ config }) => {
         articleId: Number(formData.articleId),
         articleType: hasNewType ? formData.newArticleType : null,
         score: hasNewScore ? Number(formData.newScore) : null,
+        feedback: formData.feedback ? formData.feedback.trim() : null,
         refreshMetadata: formData.refreshMetadata,
       });
 
@@ -305,6 +404,67 @@ const EditReqIdentificationArticleModal = ({ config }) => {
                       )}
                     </div>
                   </div>
+                  <div className="col-span-2 w-full">
+                    <Textarea
+                      disableAnimation
+                      disableAutosize
+                      id="floating_feedback"
+                      value={formData.feedback ?? ""}
+                      onChange={(e) => handleArticleFeedbackChange(e.target.value)}
+                      classNames={{
+                        base: "max-w",
+                        input:
+                          "resize-y min-h-[80px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                      }}
+                      label="Feedback de la edición"
+                      placeholder="Describe brevemente el motivo del cambio"
+                      variant="bordered"
+                    />
+                    {feedbackInputError && (
+                      <p className="mt-2 text-sm text-red">{feedbackInputError}</p>
+                    )}
+                  </div>
+                  {feedbacks && feedbacks.length > 0 && (
+                    <Accordion variant="bordered" selectionMode="multiple" className="my-4">
+                      {feedbacks.map((feedback) => (
+                        <AccordionItem
+                          key={feedback.id}
+                          aria-label={feedback.user?.name || "Usuario"}
+                          startContent={
+                            <Avatar
+                              isBordered
+                              radius="lg"
+                              src={feedback.user?.profile_picture || defaultAvatar}
+                              name={feedback.user?.name || "Usuario"}
+                            />
+                          }
+                          subtitle={feedback.changed_at || "Fecha no disponible"}
+                          title={feedback.user?.name || "Usuario desconocido"}
+                        >
+                          <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                            {feedback.feedback || "Sin feedback registrado."}
+                          </p>
+                          <div className="mt-2 text-xs text-gray-500">
+                            <span className="font-semibold">Tipo anterior:</span>{" "}
+                            {feedback.old_article_type || "N/A"} ({feedback.old_score || "N/A"}) →{" "}
+                            <span className="font-semibold">Nuevo:</span>{" "}
+                            {feedback.new_article_type || "N/A"} ({feedback.new_score || "N/A"})
+                          </div>
+                          <div className="mt-3 flex justify-start">
+                            <button
+                              type="button"
+                              onClick={() => handleArticleFeedbackDelete(feedback.id)}
+                              className="text-red text-sm underline-offset-2 hover:underline"
+                            >
+                              Eliminar Feedback
+                            </button>
+                          </div>
+                        </AccordionItem>
+
+                      ))}
+                    </Accordion>
+                  )}
+
                   <div className="w-full flex items-start">
                     <div className="flex flex-col">
                       <Checkbox
@@ -365,6 +525,7 @@ EditReqIdentificationArticleModal.propTypes = {
         PropTypes.number,
         PropTypes.oneOf([null]),
       ]),
+      feedback: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
       refreshMetadata: PropTypes.bool.isRequired,
     }).isRequired,
     editArticle: PropTypes.func.isRequired,
@@ -375,7 +536,10 @@ EditReqIdentificationArticleModal.propTypes = {
     articleScoreInputError: PropTypes.string,
     setArticleScoreInputError: PropTypes.func.isRequired,
     handleArticleScoreChange: PropTypes.func.isRequired,
-    handleRefreshMetaDataChange: PropTypes.func.isRequired
+    handleRefreshMetaDataChange: PropTypes.func.isRequired,
+    feedbackInputError: PropTypes.string,
+    setFeedbackScoreInputError: PropTypes.func.isRequired,
+    handleArticleFeedbackChange: PropTypes.func.isRequired
   }).isRequired,
 };
 

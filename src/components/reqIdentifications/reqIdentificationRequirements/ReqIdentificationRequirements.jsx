@@ -95,6 +95,7 @@ export default function ReqIdentificationRequirements() {
   const [articleInputError, setArticleInputError] = useState(null)
   const [articleTypeInputError, setArticleTypeInputError] = useState(null)
   const [articleScoreInputError, setArticleScoreInputError] = useState(null)
+  const [feedbackInputError, setFeedbackScoreInputError] = useState(null)
   const [selectedRequirement, setSelectedRequirement] = useState(null);
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [formDataRequirement, setFormDataRequirement] = useState({
@@ -118,6 +119,7 @@ export default function ReqIdentificationRequirements() {
     score: null,
     newArticleType: null,
     newScore: null,
+    feedback: null,
     refreshMetadata: false
   });
 
@@ -413,6 +415,7 @@ export default function ReqIdentificationRequirements() {
       score: null,
       newArticleType: null,
       newScore: null,
+      feedback: null,
       refreshMetadata: false
     });
     setIsCreateArticlesModalOpen(true);
@@ -423,6 +426,7 @@ export default function ReqIdentificationRequirements() {
     setArticleInputError("")
     setArticleTypeInputError("")
     setArticleScoreInputError("")
+    setFeedbackScoreInputError("")
   };
 
 
@@ -500,6 +504,27 @@ export default function ReqIdentificationRequirements() {
     [setFormDataArticle]
   );
 
+  const handleArticleFeedbackChange = useCallback(
+    (value) => {
+      if (!value) {
+        setFormDataArticle((prevFormData) => ({
+          ...prevFormData,
+          feedback: "",
+        }));
+        return;
+      }
+      setFormDataArticle((prevFormData) => ({
+        ...prevFormData,
+        feedback: value,
+      }));
+      if (feedbackInputError && value.trim() !== "") {
+        setFeedbackScoreInputError(null);
+      }
+    },
+    [setFormDataArticle, feedbackInputError, setFeedbackScoreInputError]
+  );
+
+
   const openEditArticleModal = (requirementId, legalBasisId, articleId, articleType, score) => {
     setFormDataArticle({
       reqIdentificationId: id,
@@ -510,6 +535,7 @@ export default function ReqIdentificationRequirements() {
       score: score,
       newArticleType: null,
       newScore: null,
+      feedback: null,
       refreshMetadata: false
     });
     setIsEditArticlesModalOpen(true);
@@ -520,6 +546,7 @@ export default function ReqIdentificationRequirements() {
     setArticleInputError("")
     setArticleTypeInputError("")
     setArticleScoreInputError("")
+    setFeedbackScoreInputError("")
   };
 
 
@@ -705,7 +732,7 @@ export default function ReqIdentificationRequirements() {
 
   const handleDeleteArticle = useCallback(
     async (requirementId, legalBasisId, articleId) => {
-      let actionTaken = false; 
+      let actionTaken = false;
 
       const performDelete = async (refreshMetadata) => {
         actionTaken = true;
@@ -1050,6 +1077,9 @@ export default function ReqIdentificationRequirements() {
               setArticleScoreInputError: setArticleScoreInputError,
               handleArticleScoreChange: handleArticleScoreChange,
               handleRefreshMetaDataChange: handleRefreshMetaDataChange,
+              feedbackInputError: feedbackInputError,
+              setFeedbackScoreInputError: setFeedbackScoreInputError,
+              handleArticleFeedbackChange: handleArticleFeedbackChange
             }}
           />
         )}

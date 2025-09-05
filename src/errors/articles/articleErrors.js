@@ -127,8 +127,6 @@ class ArticleErrors {
    */
   static ErrorMessagesMap = {
     "Network Error": ArticleErrors.NETWORK_ERROR,
-    "Validation failed": ArticleErrors.VALIDATION_ERROR,
-    Unauthorized: ArticleErrors.UNAUTHORIZED,
     "LegalBasis not found": ArticleErrors.LEGAL_BASIS_NOT_FOUND,
     "The Article is associated with one or more requirement identifications":
       ArticleErrors.ASSOCIATED_TO_REQ_IDENTIFICATIONS_CONFLICT,
