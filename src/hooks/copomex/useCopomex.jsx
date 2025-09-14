@@ -5,9 +5,11 @@ import CopomexErrors from "../../errors/copomex/CopomexErrors";
 
 /**
  * Custom hook for managing States and Municipalities.
+ * @param {Object} options - Configuration options.
+ * @param {boolean} options.autoFetch - If true, fetches states on mount. Default is true.
  * @returns {Object} - Contains States and Municipalities list, loading state, error state.
  */
-export default function useCopomex() {
+export default function useCopomex({ autoFetch = true } = {}) {
     const [states, setStates] = useState([]);
     const [stateStates, setStateStates] = useState({
         loading: true,
@@ -81,8 +83,10 @@ export default function useCopomex() {
     }, []);
 
     useEffect(() => {
-        fetchStates();
-    }, [fetchStates]);
+        if (autoFetch) {
+            fetchStates();
+        }
+    }, [fetchStates, autoFetch]);
 
     return {
         states,

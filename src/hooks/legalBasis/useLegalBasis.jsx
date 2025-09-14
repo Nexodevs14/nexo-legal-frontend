@@ -22,9 +22,11 @@ import LegalBasisErrors from "../../errors/legalBasis/LegalBasisErrors";
 
 /**
  * Custom hook for managing LegalBasis and performing CRUD operations.
+ * @param {Object} options - Configuration options.
+ * @param {boolean} options.autoFetch - If true, fetches LegalBasis on mount. Default is true.
  * @returns {Object} - Contains LegalBasis list, loading state, error state, and functions for LegalBasis operations.
  */
-export default function useLegalBasis() {
+export default function useLegalBasis({ autoFetch = true } = {}) {
   const { jwt } = useContext(Context);
   const [legalBasis, setLegalBasis] = useState([]);
   const [stateLegalBasis, setStateLegalBasis] = useState({
@@ -713,8 +715,10 @@ export default function useLegalBasis() {
   );
 
   useEffect(() => {
-    fetchLegalBasis();
-  }, [fetchLegalBasis]);
+    if (autoFetch) {
+      fetchLegalBasis();
+    }
+  }, [fetchLegalBasis, autoFetch]);
 
   return {
     legalBasis,

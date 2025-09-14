@@ -13,9 +13,11 @@ import UserErrors from "../../errors/users/UserErrors.js";
 /**
  * Custom hook for managing users and performing CRUD operations.
  * Centralizes error handling using the UserErrors class.
+ * @param {Object} options - Configuration options.
+ * @param {boolean} options.autoFetch - If true, fetches users on mount. Default is true.
  * @returns {Object} - Contains user list, loading state, error state, and functions for user operations.
  */
-export default function useUsers() {
+export default function useUsers({ autoFetch = true } = {}) {
   const { jwt, logout, updateUserContext } = useContext(Context);
   const [users, setUsers] = useState([]);
   const [stateUsers, setStateUsers] = useState({ loading: true, error: null });
@@ -239,8 +241,10 @@ export default function useUsers() {
   );
 
   useEffect(() => {
-    fetchUsers();
-  }, [jwt, fetchUsers]);
+    if (autoFetch) {
+      fetchUsers();
+    }
+  }, [jwt, fetchUsers, autoFetch]);
 
   return {
     users,

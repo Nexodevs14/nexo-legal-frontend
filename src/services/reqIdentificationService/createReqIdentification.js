@@ -9,6 +9,7 @@ import server from "../../config/server.js";
  * @param {string} params.reqIdentificationName - Name of the requirement identification.
  * @param {string} params.reqIdentificationDescription - Description of the requirement identification.
  * @param {number[]} params.legalBasisIds - Array of legal basis IDs to be associated.
+ * @param {number[]} params.requirementIds - Array of Requirement IDs to be associate.
  * @param {string} params.intelligenceLevel - Intelligence level for requirement analysis ("High" or "Low").
  * @param {string} params.token - Authorization token for the request.
  *
@@ -19,6 +20,7 @@ export default async function createReqIdentification({
   reqIdentificationName,
   reqIdentificationDescription,
   legalBasisIds,
+  requirementIds,
   intelligenceLevel,
   token,
 }) {
@@ -29,6 +31,7 @@ export default async function createReqIdentification({
         reqIdentificationName,
         reqIdentificationDescription,
         legalBasisIds,
+        requirementIds,
         intelligenceLevel,
       },
       {

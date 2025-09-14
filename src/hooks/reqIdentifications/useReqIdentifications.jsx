@@ -22,9 +22,11 @@ import ReqIdentificationErrors from "../../errors/reqIdentifications/ReqIdentifi
 
 /**
  * Custom hook for managing requirement identifications.
+ * @param {Object} options - Configuration options.
+ * @param {boolean} options.autoFetch - If true, fetches requirement identifications on mount. Default is true.
  * @returns {Object} - Contains state and functions for requirement identifications.
  */
-export default function useReqIdentifications() {
+export default function useReqIdentifications({ autoFetch = true } = {}) {
   const { jwt } = useContext(Context);
   const [reqIdentifications, setReqIdentifications] = useState([]);
   const [state, setState] = useState({
@@ -41,6 +43,7 @@ export default function useReqIdentifications() {
    * @param {string} params.reqIdentificationName - Name of the requirement identification.
    * @param {string} [params.reqIdentificationDescription] - Description (optional).
    * @param {number[]} params.legalBasisIds - Associated legal basis IDs.
+   * @param {number[]} params.requirementIds - Associated requirement IDs.
    * @param {string} params.intelligenceLevel - Intelligence level.
    * @returns {Promise<{ success: true, jobId: number|string, reqIdentificationId: number } | { success: false, error: string }>}
    */
@@ -49,6 +52,7 @@ export default function useReqIdentifications() {
       reqIdentificationName,
       reqIdentificationDescription,
       legalBasisIds,
+      requirementIds,
       intelligenceLevel,
     }) => {
       try {
@@ -56,6 +60,7 @@ export default function useReqIdentifications() {
           reqIdentificationName,
           reqIdentificationDescription,
           legalBasisIds,
+          requirementIds,
           intelligenceLevel,
           token: jwt,
         });
@@ -709,8 +714,10 @@ export default function useReqIdentifications() {
 
   // Fetch all requirement identifications on initial load
   useEffect(() => {
-    fetchReqIdentifications();
-  }, [fetchReqIdentifications]);
+    if (autoFetch) {
+      fetchReqIdentifications();
+    }
+  }, [fetchReqIdentifications, autoFetch]);
 
   return {
     reqIdentifications,

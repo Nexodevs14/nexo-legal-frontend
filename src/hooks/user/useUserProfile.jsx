@@ -64,6 +64,7 @@ export default function useUserProfile() {
     name,
     email,
     profilePicture,
+    fetchUserProfile,
     loading: stateProfile.loading,
     error: stateProfile.error,
   };

@@ -16,6 +16,7 @@ class ReqIdentificationErrors {
   static STATES_NOT_MATCH = "STATES_NOT_MATCH";
   static MUNICIPALITIES_NOT_MATCH = "MUNICIPALITIES_NOT_MATCH";
   static REQUIREMENTS_NOT_FOUND = "REQUIREMENTS_NOT_FOUND";
+  static REQUIREMENTS_SUBJECTS_NOT_MATCH = "REQUIREMENTS_SUBJECTS_NOT_MATCH";
   static USER_NOT_FOUND = "USER_NOT_FOUND";
   static SUBJECT_NOT_FOUND = "SUBJECT_NOT_FOUND";
   static ASPECTS_NOT_FOUND = "ASPECTS_NOT_FOUND";
@@ -91,7 +92,12 @@ class ReqIdentificationErrors {
     [ReqIdentificationErrors.REQUIREMENTS_NOT_FOUND]: {
       title: "Requerimientos no encontrados",
       message:
-        "No se encontraron requerimientos aplicables a la materia y aspectos seleccionados. Por favor, verifique que existen requerimientos registrados para la materia correspondiente y que los aspectos seleccionados estén correctamente asociados.",
+        "Uno o más requerimientos seleccionados no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
+    },
+    [ReqIdentificationErrors.REQUIREMENTS_SUBJECTS_NOT_MATCH]: {
+      title: "Conflicto de materias en requerimientos",
+      message:
+        "Todos los requerimientos seleccionados deben pertenecer a la misma materia que los fundamentos legales. Verifique e intente de nuevo.",
     },
     [ReqIdentificationErrors.USER_NOT_FOUND]: {
       title: "Usuario no encontrado",
@@ -152,7 +158,8 @@ class ReqIdentificationErrors {
       ReqIdentificationErrors.STATES_NOT_MATCH,
     "All selected legal bases must have the same municipality":
       ReqIdentificationErrors.MUNICIPALITIES_NOT_MATCH,
-    "Requirements not found": ReqIdentificationErrors.REQUIREMENTS_NOT_FOUND,
+    "Requirements not found for IDs": ReqIdentificationErrors.REQUIREMENTS_NOT_FOUND,
+    "All requirements must have the same subject as the legal bases": ReqIdentificationErrors.REQUIREMENTS_SUBJECTS_NOT_MATCH,
     "User not found": ReqIdentificationErrors.USER_NOT_FOUND,
     "Subject not found": ReqIdentificationErrors.SUBJECT_NOT_FOUND,
     "Aspects not found for IDs": ReqIdentificationErrors.ASPECTS_NOT_FOUND,

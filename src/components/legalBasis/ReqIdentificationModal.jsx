@@ -11,12 +11,17 @@ import {
   Button,
   Radio,
   RadioGroup,
+  Alert,
+  Autocomplete,
+  AutocompleteItem,
+  Chip,
 } from "@heroui/react";
 import { toast } from "react-toastify";
 import check from "../../assets/check.png";
 import Progress from "./reqIdentificationProgress/Progress";
 import { useNavigate } from "react-router-dom";
 import useReqIdentifications from "../../hooks/reqIdentifications/useReqIdentifications";
+import useRequirements from "../../hooks/requirement/useRequirements";
 
 /**
  * ReqIdentificationModal.jsx
@@ -53,33 +58,77 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showProgress, setShowProgress] = useState(false);
   const [reqIdentificationId, setReqIdentificationId] = useState(null);
+  const {
+    requirements,
+    loading: requirementsLoading,
+    error: requirementsError,
+    fetchRequirementsBySubjectAndAspects,
+  } = useRequirements({ autoFetch: false });
+  const [selectedRequirements, setSelectedRequirements] = useState([]);
+  const [requirementInputError, setRequirementInputError] = useState("");
   const [jobId, setJobId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isOpen) return;
-    if (!selectLegalBasis || selectLegalBasis.length === 0) {
-      toast.error("Debe seleccionar al menos un fundamento legal.");
+    if (!isOpen || !selectLegalBasis?.length) {
+      if (isOpen) toast.error("Debe seleccionar al menos un fundamento legal.");
+      return;
     }
+
     const [legalBase] = selectLegalBasis;
-    const legalBasisIds = selectLegalBasis.map((legalBase) => legalBase.id);
-    const aspects = Array.from(
+    const legalBasisIds = selectLegalBasis.map((lb) => lb.id);
+
+    const aspectsName = Array.from(
       new Set(
         selectLegalBasis.flatMap(
-          (legalBase) =>
-            legalBase.aspects?.map((aspect) => aspect.aspect_name) || []
+          (lb) => lb.aspects?.map((a) => a.aspect_name) || []
         )
       )
     );
+
+    const aspectsIds = Array.from(
+      new Set(
+        selectLegalBasis.flatMap(
+          (lb) => lb.aspects?.map((a) => a.aspect_id) || []
+        )
+      )
+    );
+
     setFormValues({
-      legalBasisIds: legalBasisIds,
+      legalBasisIds,
       jurisdiction: legalBase.jurisdiction || "",
       state: legalBase.state || "",
       municipality: legalBase.municipality || "",
       subject: legalBase.subject?.subject_name || "",
-      aspects: aspects,
+      aspects: aspectsName,
     });
-  }, [isOpen, selectLegalBasis]);
+
+    if (legalBase.subject?.subject_id && aspectsIds.length > 0) {
+      fetchRequirementsBySubjectAndAspects(
+        legalBase.subject.subject_id,
+        aspectsIds
+      );
+    }
+  }, [isOpen, selectLegalBasis, fetchRequirementsBySubjectAndAspects]);
+
+  useEffect(() => {
+    if (isOpen && requirements.length > 0) {
+      setSelectedRequirements(requirements.map((requirement) => String(requirement.id)));
+    }
+  }, [isOpen, requirements]);
+
+  const handleSelectRequirement = (key) => {
+    if (key && !selectedRequirements.includes(key)) {
+      setSelectedRequirements((prev) => [...prev, key]);
+    }
+    setRequirementInputError("");
+  };
+
+  const handleRemoveRequirement = (id) => {
+    setSelectedRequirements((prev) =>
+      prev.filter((requirement_id) => requirement_id !== id)
+    );
+  };
 
   const handleChange = (field, value) => {
     setForm({ ...form, [field]: value });
@@ -120,6 +169,14 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
       setIsLoading(false);
       return;
     }
+    if (selectedRequirements.length === 0) {
+      setRequirementInputError("Debe seleccionar al menos un requerimiento.");
+      setIsLoading(false);
+      return;
+    } else {
+      setRequirementInputError("");
+    }
+
     if (!form.intelligenceLevel.trim()) {
       setErrors({
         name: "",
@@ -135,6 +192,7 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
           reqIdentificationName: form.name,
           reqIdentificationDescription: form.description,
           legalBasisIds: formValues.legalBasisIds,
+          requirementIds: selectedRequirements.map(Number),
           intelligenceLevel: form.intelligenceLevel,
         });
       if (success) {
@@ -162,7 +220,7 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
             style={{
               maxHeight: 200,
               overflowY: "auto",
-              whiteSpace: "pre-wrap"
+              whiteSpace: "pre-wrap",
             }}
           >
             {error}
@@ -179,11 +237,15 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
     }
   };
 
+  const handleReload = () => {
+    window.location.reload();
+  };
+
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      size="lg"
+      size={showProgress ? "lg" : "4xl"}
       backdrop="opaque"
       placement="center"
       isDismissable={false}
@@ -198,8 +260,30 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
             jobId={jobId}
             onComplete={onComplete}
             onClose={onClose}
-            labelTop="Cuando se complete la identificación, podrás ver los resultados de la identificación de requerimientos."
+            labelTop="Cuando se complete la identificación, podrás ver los resultados."
             labelButton="Ver resultados"
+          />
+        ) : requirementsLoading ? (
+          <div className="flex items-center justify-center h-64">
+            <Spinner color="secondary" />
+          </div>
+        ) : requirementsError ? (
+          <Alert
+            color="danger"
+            title="Error al cargar requerimientos"
+            description={
+              requirementsError.message || "Intenta de nuevo más tarde."
+            }
+            endContent={
+              <Button
+                color="danger"
+                size="sm"
+                variant="faded"
+                onPress={handleReload}
+              >
+                Reintentar
+              </Button>
+            }
           />
         ) : (
           <>
@@ -207,7 +291,7 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
               Identificación de Requerimientos
             </ModalHeader>
 
-            <ModalBody>
+            <ModalBody className="max-h-[70vh] overflow-y-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-2 relative z-0 w-full group">
                   <input
@@ -299,7 +383,47 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
                     className="w-full"
                   />
                 </div>
-
+                <div className="col-span-2 flex flex-col gap-2">
+                  <Autocomplete
+                    label="Buscar requerimientos"
+                    placeholder="Escribe para buscar..."
+                    variant="bordered"
+                    allowsCustomValue={false}
+                    onSelectionChange={handleSelectRequirement}
+                  >
+                    {requirements.map((requirement) => (
+                      <AutocompleteItem key={String(requirement.id)}>
+                        {requirement.requirement_name}
+                      </AutocompleteItem>
+                    ))}
+                  </Autocomplete>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {selectedRequirements.map((id) => {
+                      const requirement = requirements.find(
+                        (requirement) => String(requirement.id) === id
+                      );
+                      return (
+                        <Chip
+                          key={id}
+                          onClose={() => handleRemoveRequirement(id)}
+                          variant="bordered"
+                          color="primary"
+                          className="cursor-pointer max-w-full !whitespace-normal !h-auto !items-start"
+                          title={requirement?.requirement_name}
+                        >
+                          <span className="block whitespace-normal break-words leading-snug">
+                            {requirement?.requirement_name}
+                          </span>
+                        </Chip>
+                      );
+                    })}
+                  </div>
+                  {requirementInputError && (
+                    <p className="mt-1 text-sm text-red">
+                      {requirementInputError}
+                    </p>
+                  )}
+                </div>
                 <div className="col-span-2 w-full mt-2 mb-4 flex items-start">
                   <div className="flex flex-col">
                     <RadioGroup

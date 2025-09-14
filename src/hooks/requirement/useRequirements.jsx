@@ -24,9 +24,11 @@ import delereRequirementBatch from "../../services/requirementService/deleteRequ
 import RequirementErrors from "../../errors/requirements/RequirementErrors";
 /**
  * Custom hook for managing Requirements and performing CRUD operations.
+ * @param {Object} options - Configuration options.
+ * @param {boolean} options.autoFetch - If true, fetches Requirements on mount. Default is true.
  * @returns {Object} - Contains  Requirements list, loading state, error state, and functions for Requirements operations.
  */
-export default function useRequirement() {
+export default function useRequirement({ autoFetch = true } = {}) {
   const { jwt } = useContext(Context);
   const [requirements, setRequirements] = useState([]);
   const [stateRequirements, setStateRequirements] = useState({
@@ -760,8 +762,10 @@ export default function useRequirement() {
     }, [jwt]);
 
   useEffect(() => {
-    fetchRequirements();
-  }, [fetchRequirements]);
+    if (autoFetch) {
+      fetchRequirements();
+    }
+  }, [fetchRequirements, autoFetch]);
 
   return {
     requirements,

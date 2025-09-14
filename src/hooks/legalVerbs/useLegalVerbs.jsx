@@ -13,9 +13,11 @@ import LegalVerbsErrors from "../../errors/legalVerbs/LegalVerbsErrors.js";
 
 /**
  * Custom hook for managing legal verbs and performing CRUD operations.
+ * @param {Object} options - Configuration options.
+ * @param {boolean} options.autoFetch - If true, fetches legal verbs on mount. Default is true.
  * @returns {Object} - Contains legal verbs list, loading state, error state, and functions for operations.
  */
-export default function useLegalVerbs() {
+export default function useLegalVerbs({ autoFetch = true } = {}) {
   const { jwt } = useContext(Context);
   const [legalVerbs, setLegalVerbs] = useState([]);
   const [state, setState] = useState({
@@ -324,8 +326,10 @@ export default function useLegalVerbs() {
   );
 
   useEffect(() => {
-    fetchLegalVerbs();
-  }, [fetchLegalVerbs]);
+    if (autoFetch) {
+      fetchLegalVerbs();
+    }
+  }, [fetchLegalVerbs, autoFetch]);
 
   return {
     legalVerbs,
