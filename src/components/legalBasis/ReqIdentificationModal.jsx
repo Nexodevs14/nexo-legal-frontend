@@ -113,7 +113,9 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
 
   useEffect(() => {
     if (isOpen && requirements.length > 0) {
-      setSelectedRequirements(requirements.map((requirement) => String(requirement.id)));
+      setSelectedRequirements(
+        requirements.map((requirement) => String(requirement.id))
+      );
     }
   }, [isOpen, requirements]);
 
@@ -390,6 +392,9 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
                     variant="bordered"
                     allowsCustomValue={false}
                     onSelectionChange={handleSelectRequirement}
+                    listboxProps={{
+                      emptyContent: "No se encontraron requerimientos.",
+                    }}
                   >
                     {requirements.map((requirement) => (
                       <AutocompleteItem key={String(requirement.id)}>
