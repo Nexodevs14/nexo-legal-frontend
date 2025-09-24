@@ -299,7 +299,6 @@ const CreateReqIdentificationArticleModal = ({ config }) => {
                     <div className="relative w-full">
                       <Input
                         size="sm"
-                        type="number"
                         variant="bordered"
                         label="Puntuación"
                         placeholder="Ingresa una puntuación (1-10)"

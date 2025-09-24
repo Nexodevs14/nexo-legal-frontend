@@ -356,7 +356,6 @@ const EditReqIdentificationArticleModal = ({ config }) => {
 
                     <Input
                       size="sm"
-                      type="number"
                       variant="bordered"
                       label="Puntuación actual"
                       isReadOnly
@@ -392,7 +391,6 @@ const EditReqIdentificationArticleModal = ({ config }) => {
                     <div className="relative w-full">
                       <Input
                         size="sm"
-                        type="number"
                         variant="bordered"
                         label="Nueva Puntuación"
                         placeholder="Ingresa una puntuación (1-10)"
