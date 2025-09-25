@@ -103,7 +103,9 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
 
   useEffect(() => {
     if (isOpen && requirements.length > 0) {
-      setSelectedRequirements([]);
+      setSelectedRequirements(
+        requirements.map((requirement) => String(requirement.id))
+      );
     }
   }, [isOpen, requirements]);
 
