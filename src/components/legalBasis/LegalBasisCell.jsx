@@ -30,7 +30,7 @@ import think_icon_blue from "../../assets/ia-blue.png";
  * @param {Function} props.handleDelete - Function to handle deletion of the legal basis.
  * @param {Function} props.handleDownloadDocument - Function to handle the download of the legal base document.
  * @param {Function} props.openSendModalFromRow - Function to open the send modal from the row.
- * @param {Function} props.openReqIdentificationModalFromRow - Function to open the requirement identification modal from the row.
+ * @param {Function} props.openReqIdentificationModal - Function to open the requirement identification modal.
  * @returns {JSX.Element|null} Rendered cell content based on the column key.
  */
 const LegalBasisCell = ({
@@ -41,7 +41,7 @@ const LegalBasisCell = ({
   handleDelete,
   handleDownloadDocument,
   openSendModalFromRow,
-  openReqIdentificationModalFromRow,
+  openReqIdentificationModal,
 }) => {
   const renderCell = useCallback(() => {
     switch (columnKey) {
@@ -215,7 +215,7 @@ const LegalBasisCell = ({
                   className="hover:bg-primary/20"
                   key="send-requirements"
                   textValue="Identificar Requerimientos"
-                  onPress={() => openReqIdentificationModalFromRow(legalBase)}
+                  onPress={() => openReqIdentificationModal(legalBase)}
                 >
                   <p className="font-normal text-primary">Identificar Requerimientos</p>
                 </DropdownItem>
@@ -268,7 +268,7 @@ const LegalBasisCell = ({
     handleDelete,
     handleDownloadDocument,
     openSendModalFromRow,
-    openReqIdentificationModalFromRow,
+    openReqIdentificationModal,
   ]);
 
   return renderCell();
@@ -301,7 +301,7 @@ LegalBasisCell.propTypes = {
   goToArticles: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
   handleDownloadDocument: PropTypes.func.isRequired,
-  openReqIdentificationModalFromRow: PropTypes.func,
+  openReqIdentificationModal: PropTypes.func,
 };
 
 export default LegalBasisCell;

@@ -11,10 +11,6 @@ class ReqIdentificationErrors {
   static MULTIPLE_NOT_FOUND = "MULTIPLE_NOT_FOUND";
   static DUPLICATED_NAME = "DUPLICATED_NAME";
   static LEGAL_BASIS_NOT_FOUND = "LEGAL_BASIS_NOT_FOUND";
-  static SUBJECTS_NOT_MATCH = "SUBJECTS_NOT_MATCH";
-  static JURISDICTIONS_NOT_MATCH = "JURISDICTIONS_NOT_MATCH";
-  static STATES_NOT_MATCH = "STATES_NOT_MATCH";
-  static MUNICIPALITIES_NOT_MATCH = "MUNICIPALITIES_NOT_MATCH";
   static REQUIREMENTS_NOT_FOUND = "REQUIREMENTS_NOT_FOUND";
   static REQUIREMENTS_SUBJECTS_NOT_MATCH = "REQUIREMENTS_SUBJECTS_NOT_MATCH";
   static USER_NOT_FOUND = "USER_NOT_FOUND";
@@ -67,27 +63,7 @@ class ReqIdentificationErrors {
     [ReqIdentificationErrors.LEGAL_BASIS_NOT_FOUND]: {
       title: "Fundamentos legales no encontrados",
       message:
-        "Uno o más fundamentos legales seleccionados no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
-    },
-    [ReqIdentificationErrors.SUBJECTS_NOT_MATCH]: {
-      title: "Conflicto de materias",
-      message:
-        "Todos los fundamentos legales seleccionados deben pertenecer a la misma materia. Verifique e intente de nuevo.",
-    },
-    [ReqIdentificationErrors.JURISDICTIONS_NOT_MATCH]: {
-      title: "Conflicto de jurisdicción",
-      message:
-        "Todos los fundamentos legales seleccionados deben tener la misma jurisdicción. Verifique e intente de nuevo.",
-    },
-    [ReqIdentificationErrors.STATES_NOT_MATCH]: {
-      title: "Conflicto de estado",
-      message:
-        "Todos los fundamentos legales seleccionados deben pertenecer al mismo estado si la jurisdicción es Estatal. Verifique e intente de nuevo.",
-    },
-    [ReqIdentificationErrors.MUNICIPALITIES_NOT_MATCH]: {
-      title: "Conflicto de municipio",
-      message:
-        "Todos los fundamentos legales seleccionados deben pertenecer al mismo municipio si la jurisdicción es Municipal. Verifique e intente de nuevo.",
+        "El fundamento legal seleccionado no fue encontrado. Verifique su existencia recargando la app e intente de nuevo.",
     },
     [ReqIdentificationErrors.REQUIREMENTS_NOT_FOUND]: {
       title: "Requerimientos no encontrados",
@@ -97,7 +73,7 @@ class ReqIdentificationErrors {
     [ReqIdentificationErrors.REQUIREMENTS_SUBJECTS_NOT_MATCH]: {
       title: "Conflicto de materias en requerimientos",
       message:
-        "Todos los requerimientos seleccionados deben pertenecer a la misma materia que los fundamentos legales. Verifique e intente de nuevo.",
+        "Todos los requerimientos seleccionados deben pertenecer a la misma materia que el fundamento legal. Verifique e intente de nuevo.",
     },
     [ReqIdentificationErrors.USER_NOT_FOUND]: {
       title: "Usuario no encontrado",
@@ -148,18 +124,10 @@ class ReqIdentificationErrors {
     "Network Error": ReqIdentificationErrors.NETWORK_ERROR,
     "Requirement Identification name already exists":
       ReqIdentificationErrors.DUPLICATED_NAME,
-    "LegalBasis not found for IDs":
+    "LegalBasis not found":
       ReqIdentificationErrors.LEGAL_BASIS_NOT_FOUND,
-    "All selected legal bases must have the same subject":
-      ReqIdentificationErrors.SUBJECTS_NOT_MATCH,
-    "All selected legal bases must have the same jurisdiction":
-      ReqIdentificationErrors.JURISDICTIONS_NOT_MATCH,
-    "All selected legal bases must have the same state":
-      ReqIdentificationErrors.STATES_NOT_MATCH,
-    "All selected legal bases must have the same municipality":
-      ReqIdentificationErrors.MUNICIPALITIES_NOT_MATCH,
     "Requirements not found for IDs": ReqIdentificationErrors.REQUIREMENTS_NOT_FOUND,
-    "All requirements must have the same subject as the legal bases": ReqIdentificationErrors.REQUIREMENTS_SUBJECTS_NOT_MATCH,
+    "All requirements must have the same subject as the legal base": ReqIdentificationErrors.REQUIREMENTS_SUBJECTS_NOT_MATCH,
     "User not found": ReqIdentificationErrors.USER_NOT_FOUND,
     "Subject not found": ReqIdentificationErrors.SUBJECT_NOT_FOUND,
     "Aspects not found for IDs": ReqIdentificationErrors.ASPECTS_NOT_FOUND,

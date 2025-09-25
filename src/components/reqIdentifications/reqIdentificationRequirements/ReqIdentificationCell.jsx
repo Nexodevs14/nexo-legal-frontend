@@ -324,7 +324,7 @@ export default function ReqIdentificationCell({
                 ) : (
                   <KeyboardArrowRightIcon fontSize="small" />
                 )}
-                Fundamentos legales
+                Fundamento legal
               </div>
               <Collapse in={showLegalBasis} timeout="auto" unmountOnExit>
                 <Box sx={{ marginTop: 2 }}>

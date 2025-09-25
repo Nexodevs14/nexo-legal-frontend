@@ -30,7 +30,9 @@ import useRequirements from "../../hooks/requirement/useRequirements";
  * @param {Object} props - Component properties.
  * @param {boolean} props.isOpen - Controls whether the modal is open.
  * @param {Function} props.closeModal - Function to close the modal.
- * @param {Object[]} props.selectLegalBasis - Array of selected legal basis.
+ * @param {Object} props.selectLegalBasis - Selected legal basis records for the identification.
+ *
+ * @returns {JSX.Element} Rendered ReqIdentificationModal component.
  */
 
 const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
@@ -41,7 +43,7 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
   });
 
   const [formValues, setFormValues] = useState({
-    legalBasisIds: [],
+    legalBasisId: null,
     jurisdiction: "",
     state: "",
     municipality: "",
@@ -54,58 +56,46 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
     description: "",
     intelligenceLevel: "",
   });
+
   const { addReqIdentification } = useReqIdentifications();
   const [isLoading, setIsLoading] = useState(false);
   const [showProgress, setShowProgress] = useState(false);
   const [reqIdentificationId, setReqIdentificationId] = useState(null);
+
   const {
     requirements,
     loading: requirementsLoading,
     error: requirementsError,
     fetchRequirementsBySubjectAndAspects,
   } = useRequirements({ autoFetch: false });
+
   const [selectedRequirements, setSelectedRequirements] = useState([]);
   const [requirementInputError, setRequirementInputError] = useState("");
   const [jobId, setJobId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isOpen || !selectLegalBasis?.length) {
-      if (isOpen) toast.error("Debe seleccionar al menos un fundamento legal.");
+    if (!isOpen || !selectLegalBasis) {
+      if (isOpen) toast.error("Debe seleccionar un fundamento legal.");
       return;
     }
 
-    const [legalBase] = selectLegalBasis;
-    const legalBasisIds = selectLegalBasis.map((lb) => lb.id);
-
-    const aspectsName = Array.from(
-      new Set(
-        selectLegalBasis.flatMap(
-          (lb) => lb.aspects?.map((a) => a.aspect_name) || []
-        )
-      )
-    );
-
-    const aspectsIds = Array.from(
-      new Set(
-        selectLegalBasis.flatMap(
-          (lb) => lb.aspects?.map((a) => a.aspect_id) || []
-        )
-      )
-    );
-
     setFormValues({
-      legalBasisIds,
-      jurisdiction: legalBase.jurisdiction || "",
-      state: legalBase.state || "",
-      municipality: legalBase.municipality || "",
-      subject: legalBase.subject?.subject_name || "",
-      aspects: aspectsName,
+      legalBasisId: selectLegalBasis.id,
+      jurisdiction: selectLegalBasis.jurisdiction || "",
+      state: selectLegalBasis.state || "",
+      municipality: selectLegalBasis.municipality || "",
+      subject: selectLegalBasis.subject?.subject_name || "",
+      aspects: (selectLegalBasis.aspects || []).map((a) => a.aspect_name),
     });
 
-    if (legalBase.subject?.subject_id && aspectsIds.length > 0) {
+    if (
+      selectLegalBasis.subject?.subject_id &&
+      selectLegalBasis.aspects?.length > 0
+    ) {
+      const aspectsIds = selectLegalBasis.aspects.map((a) => a.aspect_id);
       fetchRequirementsBySubjectAndAspects(
-        legalBase.subject.subject_id,
+        selectLegalBasis.subject.subject_id,
         aspectsIds
       );
     }
@@ -113,9 +103,7 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
 
   useEffect(() => {
     if (isOpen && requirements.length > 0) {
-      setSelectedRequirements(
-        requirements.map((requirement) => String(requirement.id))
-      );
+      setSelectedRequirements([]);
     }
   }, [isOpen, requirements]);
 
@@ -127,9 +115,7 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
   };
 
   const handleRemoveRequirement = (id) => {
-    setSelectedRequirements((prev) =>
-      prev.filter((requirement_id) => requirement_id !== id)
-    );
+    setSelectedRequirements((prev) => prev.filter((reqId) => reqId !== id));
   };
 
   const handleChange = (field, value) => {
@@ -153,6 +139,7 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
 
   const handleSubmit = async () => {
     setIsLoading(true);
+
     if (!form.name.trim()) {
       setErrors({
         name: "Este campo es obligatorio.",
@@ -162,6 +149,7 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
       setIsLoading(false);
       return;
     }
+
     if (!form.description.trim()) {
       setErrors({
         name: "",
@@ -171,12 +159,11 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
       setIsLoading(false);
       return;
     }
+
     if (selectedRequirements.length === 0) {
       setRequirementInputError("Debe seleccionar al menos un requerimiento.");
       setIsLoading(false);
       return;
-    } else {
-      setRequirementInputError("");
     }
 
     if (!form.intelligenceLevel.trim()) {
@@ -188,23 +175,23 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
       setIsLoading(false);
       return;
     }
+
     try {
       const { success, error, reqIdentificationId, jobId } =
         await addReqIdentification({
           reqIdentificationName: form.name,
           reqIdentificationDescription: form.description,
-          legalBasisIds: formValues.legalBasisIds,
+          legalBasisId: formValues.legalBasisId,
           requirementIds: selectedRequirements.map(Number),
           intelligenceLevel: form.intelligenceLevel,
         });
+
       if (success) {
         toast.info(
           "La identificación de requerimientos ha comenzado correctamente.",
           {
             icon: () => <img src={check} alt="Success Icon" />,
-            progressStyle: {
-              background: "#113c53",
-            },
+            progressStyle: { background: "#113c53" },
           }
         );
 
@@ -216,32 +203,19 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
           setReqIdentificationId(reqIdentificationId);
         }
       } else {
-        toast.error(
-          <div
-            className="toast-scroll-red"
-            style={{
-              maxHeight: 200,
-              overflowY: "auto",
-              whiteSpace: "pre-wrap",
-            }}
-          >
-            {error}
-          </div>
-        );
+        toast.error(error || "Ocurrió un error al iniciar la identificación.");
       }
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
       toast.error(
-        "Algo mal sucedió al comenzar la identificación de requerimientos. Intente de nuevo."
+        "Algo mal sucedió al comenzar la identificación. Intente de nuevo."
       );
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleReload = () => {
-    window.location.reload();
-  };
+  const handleReload = () => window.location.reload();
 
   return (
     <Modal
@@ -295,6 +269,7 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
 
             <ModalBody className="max-h-[70vh] overflow-y-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Nombre */}
                 <div className="col-span-2 relative z-0 w-full group">
                   <input
                     type="text"
@@ -306,7 +281,7 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
                   />
                   <label
                     htmlFor="floating_name"
-                    className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    className="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                   >
                     Nombre
                   </label>
@@ -317,20 +292,12 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
 
                 <div className="col-span-2 w-full">
                   <Textarea
-                    disableAnimation
-                    disableAutosize
                     id="floating_description"
                     value={form.description}
                     onChange={(e) =>
                       handleChange("description", e.target.value)
                     }
-                    classNames={{
-                      base: "max-w",
-                      input:
-                        "resize-y min-h-[80px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
-                    }}
                     label="Descripción de la identificación de requerimientos"
-                    placeholder=""
                     variant="bordered"
                   />
                   {errors.description && (
@@ -345,35 +312,28 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
                   label="Jurisdicción"
                   value={formValues.jurisdiction}
                   variant="bordered"
-                  className="w-full"
                 />
-
                 {formValues.state && (
                   <Input
                     isReadOnly
                     label="Estado"
                     value={formValues.state}
                     variant="bordered"
-                    className="w-full"
                   />
                 )}
-
                 {formValues.municipality && (
                   <Input
                     isReadOnly
                     label="Municipio"
                     value={formValues.municipality}
                     variant="bordered"
-                    className="w-full"
                   />
                 )}
-
                 <Input
                   isReadOnly
                   label="Materia"
                   value={formValues.subject}
                   variant="bordered"
-                  className="w-full"
                 />
 
                 <div className="col-span-2">
@@ -382,9 +342,9 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
                     label="Aspectos"
                     value={formValues.aspects.join(", ")}
                     variant="bordered"
-                    className="w-full"
                   />
                 </div>
+
                 <div className="col-span-2 flex flex-col gap-2">
                   <Autocomplete
                     label="Buscar requerimientos"
@@ -396,29 +356,23 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
                       emptyContent: "No se encontraron requerimientos.",
                     }}
                   >
-                    {requirements.map((requirement) => (
-                      <AutocompleteItem key={String(requirement.id)}>
-                        {requirement.requirement_name}
+                    {requirements.map((req) => (
+                      <AutocompleteItem key={String(req.id)}>
+                        {req.requirement_name}
                       </AutocompleteItem>
                     ))}
                   </Autocomplete>
                   <div className="flex flex-wrap gap-2 mt-2">
                     {selectedRequirements.map((id) => {
-                      const requirement = requirements.find(
-                        (requirement) => String(requirement.id) === id
-                      );
+                      const req = requirements.find((r) => String(r.id) === id);
                       return (
                         <Chip
                           key={id}
                           onClose={() => handleRemoveRequirement(id)}
                           variant="bordered"
                           color="primary"
-                          className="cursor-pointer max-w-full !whitespace-normal !h-auto !items-start"
-                          title={requirement?.requirement_name}
                         >
-                          <span className="block whitespace-normal break-words leading-snug">
-                            {requirement?.requirement_name}
-                          </span>
+                          {req?.requirement_name}
                         </Chip>
                       );
                     })}
@@ -429,37 +383,35 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
                     </p>
                   )}
                 </div>
-                <div className="col-span-2 w-full mt-2 mb-4 flex items-start">
-                  <div className="flex flex-col">
-                    <RadioGroup
-                      classNames={{ label: "text-md text-black" }}
-                      size="md"
-                      orientation="horizontal"
-                      label="Nivel de Inteligencia:"
-                      value={form.intelligenceLevel}
-                      onValueChange={(value) =>
-                        handleChange("intelligenceLevel", value)
-                      }
+
+                <div className="col-span-2 w-full mt-2 mb-4 flex flex-col items-start">
+                  <RadioGroup
+                    size="md"
+                    orientation="horizontal"
+                    label="Nivel de Inteligencia:"
+                    value={form.intelligenceLevel}
+                    onValueChange={(value) =>
+                      handleChange("intelligenceLevel", value)
+                    }
+                  >
+                    <Radio
+                      value="Low"
+                      description="Inteligencia baja: más rápida, pero menos precisa."
                     >
-                      <Radio
-                        description="Inteligencia baja: más rápida, pero menos precisa."
-                        value="Low"
-                      >
-                        Bajo
-                      </Radio>
-                      <Radio
-                        description="Inteligencia alta: más lenta, pero más precisa."
-                        value="High"
-                      >
-                        Alto
-                      </Radio>
-                    </RadioGroup>
-                    {errors.intelligenceLevel && (
-                      <p className="mt-1 text-sm text-red">
-                        {errors.intelligenceLevel}
-                      </p>
-                    )}
-                  </div>
+                      Bajo
+                    </Radio>
+                    <Radio
+                      value="High"
+                      description="Inteligencia alta: más lenta, pero más precisa."
+                    >
+                      Alto
+                    </Radio>
+                  </RadioGroup>
+                  {errors.intelligenceLevel && (
+                    <p className="mt-1 text-sm text-red">
+                      {errors.intelligenceLevel}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -488,30 +440,28 @@ const ReqIdentificationModal = ({ isOpen, closeModal, selectLegalBasis }) => {
 ReqIdentificationModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
-  selectLegalBasis: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      legal_name: PropTypes.string,
-      abbreviation: PropTypes.string,
-      classification: PropTypes.string,
-      jurisdiction: PropTypes.string,
-      state: PropTypes.string,
-      municipality: PropTypes.string,
-      last_reform: PropTypes.string,
-      url: PropTypes.string,
-      subject: PropTypes.shape({
-        id: PropTypes.number,
-        subject_name: PropTypes.string,
-      }),
-      aspects: PropTypes.arrayOf(
-        PropTypes.shape({
-          aspect_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-            .isRequired,
-          aspect_name: PropTypes.string.isRequired,
-        })
-      ),
-    })
-  ).isRequired,
+  selectLegalBasis: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    legal_name: PropTypes.string,
+    abbreviation: PropTypes.string,
+    classification: PropTypes.string,
+    jurisdiction: PropTypes.string,
+    state: PropTypes.string,
+    municipality: PropTypes.string,
+    last_reform: PropTypes.string,
+    url: PropTypes.string,
+    subject: PropTypes.shape({
+      subject_id: PropTypes.number,
+      subject_name: PropTypes.string,
+    }),
+    aspects: PropTypes.arrayOf(
+      PropTypes.shape({
+        aspect_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+          .isRequired,
+        aspect_name: PropTypes.string.isRequired,
+      })
+    ),
+  }),
 };
 
 export default ReqIdentificationModal;

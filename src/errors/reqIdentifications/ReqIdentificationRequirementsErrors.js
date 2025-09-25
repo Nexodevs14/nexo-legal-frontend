@@ -10,7 +10,8 @@ class ReqIdentificationRequirementsErrors {
   static CONFLICT = "CONFLICT";
   static UNEXPECTED_ERROR = "UNEXPECTED_ERROR";
   static REQ_IDENTIFICATION_NOT_FOUND = "REQ_IDENTIFICATION_NOT_FOUND";
-  static MULTIPLE_REQ_IDENTIFICATION_NOT_FOUND = "MULTIPLE_REQ_IDENTIFICATION_NOT_FOUND";
+  static MULTIPLE_REQ_IDENTIFICATION_NOT_FOUND =
+    "MULTIPLE_REQ_IDENTIFICATION_NOT_FOUND";
   static REQUIREMENT_NOT_FOUND = "REQUIREMENT_NOT_FOUND";
   static REQUIREMENT_TYPES_NOT_FOUND = "REQUIREMENT_TYPES_NOT_FOUND";
   static LEGAL_VERBS_NOT_FOUND = "LEGAL_VERBS_NOT_FOUND";
@@ -26,12 +27,8 @@ class ReqIdentificationRequirementsErrors {
     "LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT";
   static LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT =
     "LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT";
-  static LEGAL_BASIS_SUBJECTS_NOT_MATCH = "LEGAL_BASIS_SUBJECTS_NOT_MATCH";
-  static LEGAL_BASIS_JURISDICTIONS_NOT_MATCH =
-    "LEGAL_BASIS_JURISDICTIONS_NOT_MATCH";
-  static LEGAL_BASIS_STATES_NOT_MATCH = "LEGAL_BASIS_STATES_NOT_MATCH";
-  static LEGAL_BASIS_MUNICIPALITIES_NOT_MATCH =
-    "LEGAL_BASIS_MUNICIPALITIES_NOT_MATCH";
+  static LEGAL_BASIS_LIMIT_EXCEEDED = "LEGAL_BASIS_LIMIT_EXCEEDED";
+  static ONLY_BASE_LEGAL_BASIS_ALLOWED = "ONLY_BASE_LEGAL_BASIS_ALLOWED";
   static ARTICLE_NOT_FOUND = "ARTICLE_NOT_FOUND";
   static ARTICLE_ALREADY_LINKED = "ARTICLE_ALREADY_LINKED";
   static ARTICLE_NOT_LINKED_IN_LEGAL_BASIS_REQUIREMENT =
@@ -78,11 +75,12 @@ class ReqIdentificationRequirementsErrors {
       message:
         "La identificación de requerimientos no fue encontrada. Verifique su existencia recargando la app e intente de nuevo.",
     },
-    [ReqIdentificationRequirementsErrors.MULTIPLE_REQ_IDENTIFICATION_NOT_FOUND]: {
-      title: "Identificaciones de requerimientos no encontradas",
-      message:
-        "Una o más identificaciones de requerimientos no fueron encontradas. Verifique su existencia recargando la app e intente de nuevo.",
-    },
+    [ReqIdentificationRequirementsErrors.MULTIPLE_REQ_IDENTIFICATION_NOT_FOUND]:
+      {
+        title: "Identificaciones de requerimientos no encontradas",
+        message:
+          "Una o más identificaciones de requerimientos no fueron encontradas. Verifique su existencia recargando la app e intente de nuevo.",
+      },
     [ReqIdentificationRequirementsErrors.REQUIREMENT_NOT_FOUND]: {
       title: "Requerimiento no encontrado",
       message:
@@ -142,27 +140,16 @@ class ReqIdentificationRequirementsErrors {
         message:
           "Este fundamento legal no puede ser eliminado porque actualmente se están identificando requerimientos. Por favor, espere a que se complete la identificación e intente nuevamente.",
       },
-    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_SUBJECTS_NOT_MATCH]: {
-      title: "Conflicto de materias",
+    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_LIMIT_EXCEEDED]: {
+      title: "Límite de fundamentos legales excedido",
       message:
-        "Todos los fundamentos legales seleccionados deben pertenecer a la misma materia. Verifique e intente de nuevo.",
+        "No se pueden agregar más fundamentos legales a este requerimiento. Solo se permite 1 fundamento legal por requerimiento.",
     },
-    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_JURISDICTIONS_NOT_MATCH]: {
-      title: "Conflicto de jurisdicción",
+    [ReqIdentificationRequirementsErrors.ONLY_BASE_LEGAL_BASIS_ALLOWED]: {
+      title: "Solo se permite fundamento legal base",
       message:
-        "Todos los fundamentos legales seleccionados deben tener la misma jurisdicción. Verifique e intente de nuevo.",
+        "Solo se permite agregar el fundamento legal de tipo 'base'. Verifique el tipo de fundamento legal e intente de nuevo.",
     },
-    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_STATES_NOT_MATCH]: {
-      title: "Conflicto de estado",
-      message:
-        "Todos los fundamentos legales seleccionados deben pertenecer al mismo estado si la jurisdicción es Estatal. Verifique e intente de nuevo.",
-    },
-    [ReqIdentificationRequirementsErrors.LEGAL_BASIS_MUNICIPALITIES_NOT_MATCH]:
-      {
-        title: "Conflicto de municipio",
-        message:
-          "Todos los fundamentos legales seleccionados deben pertenecer al mismo municipio si la jurisdicción es Municipal. Verifique e intente de nuevo.",
-      },
     [ReqIdentificationRequirementsErrors.ARTICLE_NOT_FOUND]: {
       title: "Artículo no encontrado",
       message:
@@ -215,14 +202,10 @@ class ReqIdentificationRequirementsErrors {
       ReqIdentificationRequirementsErrors.LEGAL_BASIS_NOT_LINKED_IN_REQUIREMENT,
     "Cannot delete LegalBasis with pending Requirement Identification jobs":
       ReqIdentificationRequirementsErrors.LEGAL_BASIS_REQ_IDENTIFICATION_JOBS_CONFLICT,
-    "All selected legal bases must have the same subject":
-      ReqIdentificationRequirementsErrors.LEGAL_BASIS_SUBJECTS_NOT_MATCH,
-    "All selected legal bases must have the same jurisdiction":
-      ReqIdentificationRequirementsErrors.LEGAL_BASIS_JURISDICTIONS_NOT_MATCH,
-    "All selected legal bases must have the same state":
-      ReqIdentificationRequirementsErrors.LEGAL_BASIS_STATES_NOT_MATCH,
-    "All selected legal bases must have the same municipality":
-      ReqIdentificationRequirementsErrors.LEGAL_BASIS_MUNICIPALITIES_NOT_MATCH,
+    "This requirement already has a legal basis associated":
+      ReqIdentificationRequirementsErrors.LEGAL_BASIS_LIMIT_EXCEEDED,
+    "Only the base legal basis can be assigned to other requirements":
+      ReqIdentificationRequirementsErrors.ONLY_BASE_LEGAL_BASIS_ALLOWED,
     "Article not found": ReqIdentificationRequirementsErrors.ARTICLE_NOT_FOUND,
     "Article is already linked to this legal basis and requirement in the requirement identification":
       ReqIdentificationRequirementsErrors.ARTICLE_ALREADY_LINKED,
@@ -269,11 +252,13 @@ class ReqIdentificationRequirementsErrors {
                 ReqIdentificationRequirementsErrors.REQ_IDENTIFICATION_NOT_FOUND
               ]
             : ReqIdentificationRequirementsErrors.errorMap[
-                ReqIdentificationRequirementsErrors.MULTIPLE_REQ_IDENTIFICATION_NOT_FOUND
+                ReqIdentificationRequirementsErrors
+                  .MULTIPLE_REQ_IDENTIFICATION_NOT_FOUND
               ];
         }
         return ReqIdentificationRequirementsErrors.errorMap[
-          ReqIdentificationRequirementsErrors.MULTIPLE_REQ_IDENTIFICATION_NOT_FOUND
+          ReqIdentificationRequirementsErrors
+            .MULTIPLE_REQ_IDENTIFICATION_NOT_FOUND
         ];
       case 409:
         return ReqIdentificationRequirementsErrors.errorMap[
