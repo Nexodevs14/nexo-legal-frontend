@@ -84,7 +84,7 @@ const LegalVerbsCell = ({
                                     className="hover:bg-primary/20"
                                     onPress={() => openEditModal(legal_verbs)}
                                 >
-                                    <span className="text-primary">Editar  verbo legal</span>
+                                    <span className="text-primary">Editar  Verbo Legal</span>
                                 </DropdownItem>
                                 <DropdownItem
                                     key="delete"
@@ -93,7 +93,7 @@ const LegalVerbsCell = ({
                                     className="hover:bg-red/20"
                                     onPress={() => handleDelete(legal_verbs.id)}
                                 >
-                                    <span className="text-red">Eliminar  verbo legal</span>
+                                    <span className="text-red">Eliminar  Verbo Legal</span>
                                 </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>

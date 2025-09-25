@@ -23,7 +23,7 @@ import go_back from "../../assets/volver.png";
  *
  * This component allows users to edit a requirement.
  * It includes dynamic validations based on jurisdiction, management of
- * aspects, states, and municipalities, and supports file uploads.
+ * aspects, and supports file uploads.
  *
  * @component
  * @param {Object} props - Component properties.
@@ -48,7 +48,7 @@ import go_back from "../../assets/volver.png";
  * @param {Function} props.config.handleEvidenceChange - Change handler for the "Evidence" dropdown.
  * @param {string|null} props.config.specifyEvidenceError - Error message for the "Specify Evidence" input field (shown when evidence is set to "Específica").
  * @param {Function} props.config.setSpecifyEvidenceError - Setter function for the "Specify Evidence" input error.
- * @param {Function} props.config.handlSpecifyEvidenceChange - Handler for changes in the "Specify Evidence" input field.
+ * @param {Function} props.config.handleSpecifyEvidenceChange - Handler for changes in the "Specify Evidence" input field.
  * @param {string|null} props.config.periodicityError - Error message for the "Periodicity" dropdown.
  * @param {Function} props.config.setPeriodicityError - Setter for "Periodicity" field error.
  * @param {Function} props.config.handlePeriodicityChange - Change handler for the "Periodicity" dropdown.
@@ -87,7 +87,6 @@ import go_back from "../../assets/volver.png";
  * @param {Function} props.config.setIsMunicipalityActive - Setter to enable/disable municipality input.
  * @param {Function} props.config.setIsAspectsActive - Setter to enable/disable aspect input.
  * @param {Function} props.config.clearAspects - Clears the aspect list.
- * @param {Function} props.config.fetchMunicipalities - Fetches municipalities based on the state.
  * @param {Function} props.config.fetchAspects - Fetches aspects based on the subject.
  */
 const EditModal = ({ config }) => {
@@ -111,7 +110,7 @@ const EditModal = ({ config }) => {
     setEvidenceError,
     handleEvidenceChange,
     specifyEvidenceError,
-    handlSpecifyEvidenceChange,
+    handleSpecifyEvidenceChange,
     setSpecifyEvidenceError,
     periodicityError,
     setPeriodicityError,
@@ -164,7 +163,10 @@ const EditModal = ({ config }) => {
         name: selectedRequirement.requirement_name,
         condition: selectedRequirement.condition,
         evidence: selectedRequirement.evidence,
-        specifyEvidence: selectedRequirement.specify_evidence || "",
+        specifyEvidence:
+          selectedRequirement?.evidence === "Específica"
+            ? selectedRequirement?.specify_evidence || ""
+            : null,
         periodicity: selectedRequirement.periodicity,
         acceptanceCriteria: selectedRequirement.acceptance_criteria,
         subject: selectedRequirement.subject?.subject_id.toString(),
@@ -179,7 +181,6 @@ const EditModal = ({ config }) => {
         complementaryKeywords: selectedRequirement.complementary_keywords,
       });
 
-
       if (selectedRequirement.subject) {
         setIsAspectsActive(true);
         fetchAspects(selectedRequirement.subject.subject_id);
@@ -188,13 +189,13 @@ const EditModal = ({ config }) => {
         clearAspects();
       }
     }
-  }, [selectedRequirement,
+  }, [
+    selectedRequirement,
     setFormData,
     setIsAspectsActive,
     fetchAspects,
     clearAspects,
   ]);
-
 
   const handleEdit = async (e) => {
     e.preventDefault();
@@ -249,7 +250,9 @@ const EditModal = ({ config }) => {
         formData.evidence === "Específica" &&
         (!formData.specifyEvidence || !formData.specifyEvidence.trim())
       ) {
-        setSpecifyEvidenceError("Este campo es obligatorio si se selecciona el valor Específica.");
+        setSpecifyEvidenceError(
+          "Este campo es obligatorio si se selecciona el valor Específica."
+        );
         setIsLoading(false);
         return;
       } else {
@@ -372,16 +375,28 @@ const EditModal = ({ config }) => {
         });
         closeModalEdit();
       } else {
-        toast.error(error);
+        toast.error(
+          <div
+            className="toast-scroll-red"
+            style={{
+              maxHeight: 200,
+              overflowY: "auto",
+              whiteSpace: "pre-wrap",
+            }}
+          >
+            {error}
+          </div>
+        );
       }
     } catch (error) {
       console.error(error);
-      toast.error("Algo mal sucedió al actualizar el requerimiento. Intente de nuevo.");
+      toast.error(
+        "Algo mal sucedió al actualizar el requerimiento. Intente de nuevo."
+      );
     } finally {
       setIsLoading(false);
     }
   };
-
 
   const resetStepTwoErrors = () => {
     setMandatoryDescriptionError(null);
@@ -391,7 +406,6 @@ const EditModal = ({ config }) => {
     setMandatoryKeywordsError(null);
     setComplementaryKeywordsError(null);
   };
-
 
   const handleBack = () => {
     resetStepTwoErrors();
@@ -404,8 +418,9 @@ const EditModal = ({ config }) => {
       backdrop="opaque"
       placement="center"
       isDismissable={false}
-      className="w-full sm:w-[90vw] md:w-[80vw] lg:w-[60vw] max-w-4xl"
+      size="5xl"
       classNames={{
+         base: "max-w-[75%] max-h-[95vh] w-full",
         closeButton: "hover:bg-primary/20 text-primary active:bg-primary/10",
       }}
     >
@@ -418,7 +433,7 @@ const EditModal = ({ config }) => {
               <button
                 onClick={handleBack}
                 type="button"
-                className="text-sm text-primary hover:text-primary/60 transition-colors flex items-center gap-2"
+                className="text-base text-primary hover:text-primary/60 transition-colors flex items-center gap-2"
               >
                 <img
                   src={go_back}
@@ -430,11 +445,11 @@ const EditModal = ({ config }) => {
             </>
           )}
         </ModalHeader>
-        <ModalBody>
+         <ModalBody className="overflow-y-auto max-h-[75vh] px-6 pb-6">
           <div className="transition-opacity duration-300 ease-in-out">
             {step === 1 ? (
               <form onSubmit={handleEdit}>
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-12">
                   <div className="relative z-0 w-full group">
                     <input
                       type="number"
@@ -442,17 +457,17 @@ const EditModal = ({ config }) => {
                       id="floating_order"
                       value={formData.number}
                       onChange={handleNumberChange}
-                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
+                      className="block py-4 px-2 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
                       placeholder=""
                     />
                     <label
                       htmlFor="floating_number"
-                      className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-focus:dark:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      className="absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-focus:dark:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                     >
                       Orden
                     </label>
                     {numberError && (
-                      <p className="mt-2 text-sm text-red">{numberError}</p>
+                      <p className="mt-2 text-base text-red">{numberError}</p>
                     )}
                   </div>
                   <div className="relative z-0 w-full group">
@@ -462,22 +477,22 @@ const EditModal = ({ config }) => {
                       id="floating_nombre"
                       value={formData.name}
                       onChange={handleNameChange}
-                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
+                      className="block py-4 px-2 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
                       placeholder=""
                     />
                     <label
                       htmlFor="floating_nombre"
-                      className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-focus:dark:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      className="absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-focus:dark:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                     >
                       Requerimiento
                     </label>
                     {nameError && (
-                      <p className="mt-2 text-sm text-red">{nameError}</p>
+                      <p className="mt-2 text-base text-red">{nameError}</p>
                     )}
                   </div>
                   <div className="w-full">
                     <Autocomplete
-                      size="sm"
+                      size="lg"
                       variant="bordered"
                       label="Condición"
                       selectedKey={formData.condition}
@@ -487,19 +502,23 @@ const EditModal = ({ config }) => {
                       }}
                     >
                       <AutocompleteItem key="Crítica">Crítica</AutocompleteItem>
-                      <AutocompleteItem key="Operativa">Operativa</AutocompleteItem>
-                      <AutocompleteItem key="Recomendación">Recomendación</AutocompleteItem>
-                      <AutocompleteItem key="Pendiente">Pendiente</AutocompleteItem>
+                      <AutocompleteItem key="Operativa">
+                        Operativa
+                      </AutocompleteItem>
+                      <AutocompleteItem key="Recomendación">
+                        Recomendación
+                      </AutocompleteItem>
+                      <AutocompleteItem key="Pendiente">
+                        Pendiente
+                      </AutocompleteItem>
                     </Autocomplete>
                     {conditionError && (
-                      <p className="mt-2 text-sm text-red">
-                        {conditionError}
-                      </p>
+                      <p className="mt-2 text-base text-red">{conditionError}</p>
                     )}
                   </div>
                   <div className="w-full">
                     <Autocomplete
-                      size="sm"
+                      size="lg"
                       variant="bordered"
                       label="Evidencia"
                       selectedKey={formData.evidence}
@@ -509,48 +528,55 @@ const EditModal = ({ config }) => {
                       }}
                     >
                       <AutocompleteItem key="Trámite">Trámite</AutocompleteItem>
-                      <AutocompleteItem key="Registro">Registro</AutocompleteItem>
-                      <AutocompleteItem key="Específica">Específica</AutocompleteItem>
-                      <AutocompleteItem key="Documento">Documento</AutocompleteItem>
+                      <AutocompleteItem key="Registro">
+                        Registro
+                      </AutocompleteItem>
+                      <AutocompleteItem key="Específica">
+                        Específica
+                      </AutocompleteItem>
+                      <AutocompleteItem key="Documento">
+                        Documento
+                      </AutocompleteItem>
+                      <AutocompleteItem key="Física">Física</AutocompleteItem>
                     </Autocomplete>
                     {evidenceError && (
-                      <p className="mt-2 text-sm text-red">
-                        {evidenceError}
-                      </p>
+                      <p className="mt-2 text-base text-red">{evidenceError}</p>
                     )}
                   </div>
-
-                  {(formData.evidence === "Específica" || formData.specifyEvidence) && (
+                  {formData.evidence === "Específica" && (
                     <div className="relative z-0 w-full group">
                       <input
                         type="text"
                         name="specifyEvidence"
                         id="floating_specify_evidence"
                         value={formData.specifyEvidence}
-                        onChange={handlSpecifyEvidenceChange}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
+                        onChange={handleSpecifyEvidenceChange}
+                        className="block py-4 px-2 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer"
                         placeholder=""
                       />
                       <label
                         htmlFor="floating_specify_evidence"
-                        className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-focus:dark:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        className="absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-0 peer-focus:left-0 peer-focus:text-primary peer-focus:dark:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                       >
                         Especificar Evidencia
                       </label>
                       {specifyEvidenceError && (
-                        <p className="mt-2 text-sm text-red">{specifyEvidenceError}</p>
+                        <p className="mt-2 text-base text-red">
+                          {specifyEvidenceError}
+                        </p>
                       )}
                     </div>
                   )}
+
                   <div className="w-full">
                     <Autocomplete
-                      size="sm"
+                      size="lg"
                       variant="bordered"
                       label="Materia"
                       selectedKey={formData.subject}
                       onSelectionChange={handleSubjectChange}
                       listboxProps={{
-                        emptyContent: "Materia no encontrado",
+                        emptyContent: "Materia no encontrada",
                       }}
                       defaultItems={subjects}
                     >
@@ -561,7 +587,7 @@ const EditModal = ({ config }) => {
                       )}
                     </Autocomplete>
                     {subjectInputError && (
-                      <p className="mt-2 text-sm text-red">
+                      <p className="mt-2 text-base text-red">
                         {subjectInputError}
                       </p>
                     )}
@@ -573,7 +599,7 @@ const EditModal = ({ config }) => {
                     >
                       <div className="w-full">
                         <Select
-                          size="sm"
+                          size="lg"
                           variant="bordered"
                           label="Aspectos"
                           selectionMode="multiple"
@@ -596,18 +622,18 @@ const EditModal = ({ config }) => {
                     </Tooltip>
 
                     {errorAspects && (
-                      <p className="mt-2 text-sm text-red">
+                      <p className="mt-2 text-base text-red">
                         {errorAspects.message}
                       </p>
                     )}
                     {!errorAspects && aspectError && (
-                      <p className="mt-2 text-sm text-red">{aspectError}</p>
+                      <p className="mt-2 text-base text-red">{aspectError}</p>
                     )}
                   </div>
                 </div>
-                <div className="w-full mt-4">
+                <div className="w-full mt-10 mb-10">
                   <Autocomplete
-                    size="sm"
+                    size="lg"
                     variant="bordered"
                     label="Periodicidad"
                     selectedKey={formData.periodicity}
@@ -618,32 +644,39 @@ const EditModal = ({ config }) => {
                   >
                     <AutocompleteItem key="Anual">Anual</AutocompleteItem>
                     <AutocompleteItem key="2 años">2 años</AutocompleteItem>
-                    <AutocompleteItem key="Por evento">Por evento</AutocompleteItem>
-                    <AutocompleteItem key="Única vez">Única vez</AutocompleteItem>
-                    <AutocompleteItem key="Específica">Específica</AutocompleteItem>
+                    <AutocompleteItem key="Por evento">
+                      Por evento
+                    </AutocompleteItem>
+                    <AutocompleteItem key="Única vez">
+                      Única vez
+                    </AutocompleteItem>
+                    <AutocompleteItem key="Específica">
+                      Específica
+                    </AutocompleteItem>
                   </Autocomplete>
                   {periodicityError && (
-                    <p className="mt-2 text-sm text-red">
-                      {periodicityError}
-                    </p>
+                    <p className="mt-2 text-base text-red">{periodicityError}</p>
                   )}
                 </div>
-                <div className="w-full mt-4">
+                <div className="w-full  mt-4">
                   <Textarea
                     disableAnimation
                     disableAutosize
                     value={formData.acceptanceCriteria}
                     onChange={handleAcceptanceCriteriaChange}
                     classNames={{
-                      base: "max-w-4xl",
-                      input: "resize-y min-h-[100px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                      label: "text-lg",
+                      input:
+                        "resize-y min-h-[150px] py-1 px-2 w-full text-base text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                     }}
                     label="Criterio de Aceptación"
                     placeholder="Escribir el criterio..."
                     variant="bordered"
                   />
                   {acceptanceCriteriaError && (
-                    <p className="mt-2 text-sm text-red">{acceptanceCriteriaError}</p>
+                    <p className="mt-2 text-base text-red">
+                      {acceptanceCriteriaError}
+                    </p>
                   )}
                 </div>
                 <div className="w-full mt-4">
@@ -651,7 +684,7 @@ const EditModal = ({ config }) => {
                     type="submit"
                     color="primary"
                     disabled={isLoading}
-                    className="w-full rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
+                    className="w-full text-base rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
                   >
                     {isLoading ? (
                       <Spinner size="sm" color="white" />
@@ -671,15 +704,18 @@ const EditModal = ({ config }) => {
                       value={formData.mandatoryDescription}
                       onChange={handleMandatoryDescriptionChange}
                       classNames={{
-                        base: "max-w-lg",
-                        input: "resize-y py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                        label: "text-lg",
+                        input:
+                          "resize-y min-h-[150px] py-1 px-2 w-full text-base text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                       }}
                       label="Descripción Obligatoria"
-                      placeholder=""
+                      placeholder="Escribir la descripción."
                       variant="bordered"
                     />
                     {mandatoryDescriptionError && (
-                      <p className="mt-2 text-sm text-red">{mandatoryDescriptionError}</p>
+                      <p className="mt-2 text-base text-red">
+                        {mandatoryDescriptionError}
+                      </p>
                     )}
                   </div>
                   <div className="w-full">
@@ -689,15 +725,18 @@ const EditModal = ({ config }) => {
                       value={formData.complementaryDescription}
                       onChange={handleComplementaryDescriptionChange}
                       classNames={{
-                        base: "max-w",
-                        input: "resize-y py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                        label: "text-lg",
+                        input:
+                          "resize-y min-h-[150px] py-1 px-2 w-full text-base text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                       }}
                       label="Descripción Complementaria"
-                      placeholder=""
+                      placeholder="Escribir la descripción."
                       variant="bordered"
                     />
                     {complementaryDescriptionError && (
-                      <p className="mt-2 text-sm text-red">{complementaryDescriptionError}</p>
+                      <p className="mt-2 text-base text-red">
+                        {complementaryDescriptionError}
+                      </p>
                     )}
                   </div>
 
@@ -708,15 +747,18 @@ const EditModal = ({ config }) => {
                       value={formData.mandatorySentences}
                       onChange={handleMandatorySentencesChange}
                       classNames={{
-                        base: "max-w",
-                        input: "resize-y py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                        label: "text-lg",
+                        input:
+                          "resize-y min-h-[150px] py-1 px-2 w-full text-base text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                       }}
                       label="Frases Obligatorias"
-                      placeholder=""
+                      placeholder="Escribir las frases separadas por espacio."
                       variant="bordered"
                     />
                     {mandatorySentencesError && (
-                      <p className="mt-2 text-sm text-red">{mandatorySentencesError}</p>
+                      <p className="mt-2 text-base text-red">
+                        {mandatorySentencesError}
+                      </p>
                     )}
                   </div>
 
@@ -727,15 +769,18 @@ const EditModal = ({ config }) => {
                       value={formData.complementarySentences}
                       onChange={handleComplementarySentencesChange}
                       classNames={{
-                        base: "max-w",
-                        input: "resize-y py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                        label: "text-lg",
+                        input:
+                          "resize-y min-h-[150px] py-1 px-2 w-full text-base text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                       }}
                       label="Frases Complementarias"
-                      placeholder=""
+                      placeholder="Escribir las frases separadas por espacio."
                       variant="bordered"
                     />
                     {complementarySentencesError && (
-                      <p className="mt-2 text-sm text-red">{complementarySentencesError}</p>
+                      <p className="mt-2 text-base text-red">
+                        {complementarySentencesError}
+                      </p>
                     )}
                   </div>
 
@@ -746,15 +791,18 @@ const EditModal = ({ config }) => {
                       value={formData.mandatoryKeywords}
                       onChange={handleMandatoryKeywordsChange}
                       classNames={{
-                        base: "max-w",
-                        input: "resize-y py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                        label: "text-lg",
+                        input:
+                          "resize-y min-h-[150px] py-1 px-2 w-full text-base text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                       }}
                       label="Palabras Clave Obligatorias"
-                      placeholder=""
+                      placeholder="Escribir las palabras claves separadas por coma."
                       variant="bordered"
                     />
                     {mandatoryKeywordsError && (
-                      <p className="mt-2 text-sm text-red">{mandatoryKeywordsError}</p>
+                      <p className="mt-2 text-base text-red">
+                        {mandatoryKeywordsError}
+                      </p>
                     )}
                   </div>
 
@@ -765,27 +813,33 @@ const EditModal = ({ config }) => {
                       value={formData.complementaryKeywords}
                       onChange={handleComplementaryKeywordsChange}
                       classNames={{
-                        base: "max-w",
-                        input: "resize-y py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                        label: "text-lg",
+                        input:
+                          "resize-y min-h-[150px] py-1 px-2 w-full text-base text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                       }}
                       label="Palabras Clave Complementarias"
-                      placeholder=""
+                      placeholder="Escribir las palabras claves separadas por coma."
                       variant="bordered"
                     />
                     {complementaryKeywordsError && (
-                      <p className="mt-2 text-sm text-red">{complementaryKeywordsError}</p>
+                      <p className="mt-2 text-base text-red">
+                        {complementaryKeywordsError}
+                      </p>
                     )}
                   </div>
-
                 </div>
                 <div className="w-full mt-4">
                   <Button
                     type="submit"
                     color="primary"
                     disabled={isLoading}
-                    className="w-full rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
+                    className="w-full text-base rounded border mb-4 border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
                   >
-                    {isLoading ? <Spinner size="sm" color="white" /> : "Guardar Cambios"}
+                    {isLoading ? (
+                      <Spinner size="sm" color="white" />
+                    ) : (
+                      "Guardar Cambios"
+                    )}
                   </Button>
                 </div>
               </form>
@@ -805,89 +859,59 @@ EditModal.propTypes = {
     setFormData: PropTypes.func.isRequired,
     formData: PropTypes.object.isRequired,
     editRequirement: PropTypes.func.isRequired,
-
     numberError: PropTypes.string,
     setNumberError: PropTypes.func.isRequired,
     handleNumberChange: PropTypes.func.isRequired,
-
     nameError: PropTypes.string,
     setNameError: PropTypes.func.isRequired,
     handleNameChange: PropTypes.func.isRequired,
-
     conditionError: PropTypes.string,
     setConditionError: PropTypes.func.isRequired,
     handleConditionChange: PropTypes.func.isRequired,
-
     evidenceError: PropTypes.string,
     setEvidenceError: PropTypes.func.isRequired,
     handleEvidenceChange: PropTypes.func.isRequired,
-
     specifyEvidenceError: PropTypes.string,
     setSpecifyEvidenceError: PropTypes.func.isRequired,
-    handlSpecifyEvidenceChange: PropTypes.func.isRequired,
-
+    handleSpecifyEvidenceChange: PropTypes.func.isRequired,
     periodicityError: PropTypes.string,
     setPeriodicityError: PropTypes.func.isRequired,
     handlePeriodicityChange: PropTypes.func.isRequired,
-
     subjectInputError: PropTypes.string,
     setSubjectError: PropTypes.func.isRequired,
     handleSubjectChange: PropTypes.func.isRequired,
-
     aspectError: PropTypes.string,
     setAspectInputError: PropTypes.func.isRequired,
     handleAspectsChange: PropTypes.func.isRequired,
-
     acceptanceCriteriaError: PropTypes.string,
     setAcceptanceCriteriaError: PropTypes.func.isRequired,
     handleAcceptanceCriteriaChange: PropTypes.func.isRequired,
-
     mandatoryDescriptionError: PropTypes.string,
     setMandatoryDescriptionError: PropTypes.func.isRequired,
     handleMandatoryDescriptionChange: PropTypes.func.isRequired,
-
     complementaryDescriptionError: PropTypes.string,
     setComplementaryDescriptionError: PropTypes.func.isRequired,
     handleComplementaryDescriptionChange: PropTypes.func.isRequired,
-
     mandatorySentencesError: PropTypes.string,
     setMandatorySentencesError: PropTypes.func.isRequired,
     handleMandatorySentencesChange: PropTypes.func.isRequired,
-
     complementarySentencesError: PropTypes.string,
     setComplementarySentencesError: PropTypes.func.isRequired,
     handleComplementarySentencesChange: PropTypes.func.isRequired,
-
     mandatoryKeywordsError: PropTypes.string,
     setMandatoryKeywordsError: PropTypes.func.isRequired,
     handleMandatoryKeywordsChange: PropTypes.func.isRequired,
-
     complementaryKeywordsError: PropTypes.string,
     setComplementaryKeywordsError: PropTypes.func.isRequired,
     handleComplementaryKeywordsChange: PropTypes.func.isRequired,
-
-    states: PropTypes.array.isRequired,
-    isStateActive: PropTypes.bool.isRequired,
-    clearMunicipalities: PropTypes.func.isRequired,
-
-    municipalities: PropTypes.array.isRequired,
-    isMunicipalityActive: PropTypes.bool.isRequired,
-    loadingMunicipalities: PropTypes.bool.isRequired,
-    errorMunicipalities: PropTypes.object,
-
     subjects: PropTypes.array.isRequired,
     isAspectsActive: PropTypes.bool.isRequired,
     aspectsLoading: PropTypes.bool.isRequired,
     aspects: PropTypes.array.isRequired,
     errorAspects: PropTypes.object,
-
-    setIsStateActive: PropTypes.func.isRequired,
-    setIsMunicipalityActive: PropTypes.func.isRequired,
     setIsAspectsActive: PropTypes.func.isRequired,
     clearAspects: PropTypes.func.isRequired,
-    fetchMunicipalities: PropTypes.func.isRequired,
     fetchAspects: PropTypes.func.isRequired,
-
   }).isRequired,
 };
 

@@ -13,9 +13,11 @@ import RequirementTypesErrors from "../../errors/requirementTypes/RequirementTyp
 
 /**
  * Custom hook for managing requirement types and performing CRUD operations.
+ * @param {Object} options - Configuration options.
+ * @param {boolean} options.autoFetch - If true, fetches requirement types on mount. Default is true.
  * @returns {Object} - Contains requirement types list, loading state, error state, and functions for operations.
  */
-export default function useRequirementTypes() {
+export default function useRequirementTypes({ autoFetch = true } = {}) {
   const { jwt } = useContext(Context);
   const [requirementTypes, setRequirementTypes] = useState([]);
   const [state, setState] = useState({
@@ -325,8 +327,10 @@ export default function useRequirementTypes() {
   );
   
   useEffect(() => {
-    fetchRequirementTypes();
-  }, [fetchRequirementTypes]);
+    if (autoFetch) {
+      fetchRequirementTypes();
+    }
+  }, [fetchRequirementTypes, autoFetch]);
 
   return {
     requirementTypes,

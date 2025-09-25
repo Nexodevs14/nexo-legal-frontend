@@ -100,7 +100,18 @@ function CreateModal({ config }) {
         });
         closeModalCreate();
       } else {
-        toast.error(error);
+       toast.error(
+          <div
+            className="toast-scroll-red"
+            style={{
+              maxHeight: 200,
+              overflowY: "auto",
+              whiteSpace: "pre-wrap"
+            }}
+          >
+            {error}
+          </div>
+        );
       }
     } catch (error) {
       console.error(error);
@@ -117,6 +128,7 @@ function CreateModal({ config }) {
       isDismissable={false}
       backdrop="opaque"
       placement="center"
+      size="5xl"
       classNames={{
         closeButton: "hover:bg-primary/20 text-primary active:bg-primary/10",
       }}

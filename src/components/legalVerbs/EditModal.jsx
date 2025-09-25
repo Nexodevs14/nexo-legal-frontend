@@ -116,7 +116,18 @@ function EditModal({ config }) {
         });
         closeModalEdit();
       } else {
-        toast.error(error);
+        toast.error(
+          <div
+            className="toast-scroll-red"
+            style={{
+              maxHeight: 200,
+              overflowY: "auto",
+              whiteSpace: "pre-wrap"
+            }}
+          >
+            {error}
+          </div>
+        );
       }
     } catch (err) {
       console.error(err);
@@ -131,6 +142,7 @@ function EditModal({ config }) {
       isOpen={isOpen}
       onOpenChange={closeModalEdit}
       isDismissable={false}
+      size="4xl"
       backdrop="opaque"
       placement="center"
       classNames={{
@@ -171,9 +183,8 @@ function EditModal({ config }) {
                     value={formData.description}
                     onChange={handleDescriptionChange}
                     classNames={{
-                      base: "max-w-lg",
                       input:
-                        "resize-y min-h-[80px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                        "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                     }}
                     label="Descripción"
                     placeholder="Escribir la descripción."
@@ -191,12 +202,11 @@ function EditModal({ config }) {
                     value={formData.translation}
                     onChange={handleTranslationChange}
                     classNames={{
-                      base: "max-w-lg",
                       input:
-                        "resize-y min-h-[80px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
+                        "resize-y min-h-[150px] py-1 px-2 w-full text-xs text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-primary peer",
                     }}
                     label="Traducción"
-                    placeholder="Escribir la Traducción."
+                    placeholder="Escribir la traducción."
                     variant="bordered"
                   />
                   {translationError && (

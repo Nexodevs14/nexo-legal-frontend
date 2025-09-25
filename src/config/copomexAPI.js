@@ -1,5 +1,6 @@
 import axios from "axios";
 
+const COPOMEX_API_URL = import.meta.env.VITE_COPOMEX_API_URL;
 const API_KEY = import.meta.env.VITE_COPOMEX_API_KEY;
 
 /**
@@ -14,7 +15,7 @@ const API_KEY = import.meta.env.VITE_COPOMEX_API_KEY;
  * @see {@link https://api.copomex.com/} - For more information on the COPOMEX API.
  */
 const copomexAPI = axios.create({
-  baseURL: "https://api.copomex.com/query",
+  baseURL: COPOMEX_API_URL,
   headers: {
     'Content-Type': 'application/json'
   }

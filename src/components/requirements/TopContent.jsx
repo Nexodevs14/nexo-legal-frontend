@@ -107,7 +107,7 @@ function TopContent({ config }) {
           isClearable
           value={filterByName}
           className="w-full"
-          placeholder="Buscar por Requerimiento..."
+          placeholder="Buscar por requerimiento..."
           startContent={
             <img
               src={search_icon}
@@ -152,6 +152,7 @@ function TopContent({ config }) {
           <AutocompleteItem key="Registro">Registro</AutocompleteItem>
           <AutocompleteItem key="Específica">Específica</AutocompleteItem>
           <AutocompleteItem key="Documento">Documento</AutocompleteItem>
+          <AutocompleteItem key="Física">Física</AutocompleteItem>
         </Autocomplete>
         <Autocomplete
           color="primary"
@@ -380,8 +381,6 @@ TopContent.propTypes = {
     onRowsPerPageChange: PropTypes.func.isRequired,
     totalRequirements: PropTypes.number.isRequired,
     openModalCreate: PropTypes.func.isRequired,
-    filterByNumber: PropTypes.string.isRequired,
-    onFilterByNumber: PropTypes.func.isRequired,
     filterByName: PropTypes.string.isRequired,
     onFilterByName: PropTypes.func.isRequired,
     selectedCondition: PropTypes.string,

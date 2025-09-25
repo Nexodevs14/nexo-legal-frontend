@@ -1,4 +1,5 @@
 import server from "../../config/server.js";
+import qs from "qs";
 
 /**
  * Retrieves requirements filtered by a specific subject and optionally by aspects.
@@ -29,6 +30,8 @@ export default async function getRequirementsBySubjectAndAspects({
         params: {
           aspectIds: aspectsIds,
         },
+        paramsSerializer: (params) =>
+          qs.stringify(params, { arrayFormat: "repeat" }),
       }
     );
 

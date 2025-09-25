@@ -1,0 +1,240 @@
+/**
+ * Class for managing and mapping errors related to Requirement Identifications.
+ * Centralizes error handling, mapping error codes and messages to user-friendly messages.
+ */
+class ReqIdentificationErrors {
+  static NETWORK_ERROR = "NETWORK_ERROR";
+  static UNAUTHORIZED = "UNAUTHORIZED";
+  static SERVER_ERROR = "SERVER_ERROR";
+  static VALIDATION_ERROR = "VALIDATION_ERROR";
+  static NOT_FOUND = "NOT_FOUND";
+  static MULTIPLE_NOT_FOUND = "MULTIPLE_NOT_FOUND";
+  static DUPLICATED_NAME = "DUPLICATED_NAME";
+  static LEGAL_BASIS_NOT_FOUND = "LEGAL_BASIS_NOT_FOUND";
+  static SUBJECTS_NOT_MATCH = "SUBJECTS_NOT_MATCH";
+  static JURISDICTIONS_NOT_MATCH = "JURISDICTIONS_NOT_MATCH";
+  static STATES_NOT_MATCH = "STATES_NOT_MATCH";
+  static MUNICIPALITIES_NOT_MATCH = "MUNICIPALITIES_NOT_MATCH";
+  static REQUIREMENTS_NOT_FOUND = "REQUIREMENTS_NOT_FOUND";
+  static REQUIREMENTS_SUBJECTS_NOT_MATCH = "REQUIREMENTS_SUBJECTS_NOT_MATCH";
+  static USER_NOT_FOUND = "USER_NOT_FOUND";
+  static SUBJECT_NOT_FOUND = "SUBJECT_NOT_FOUND";
+  static ASPECTS_NOT_FOUND = "ASPECTS_NOT_FOUND";
+  static REQ_IDENTIFICATION_JOBS_CONFLICT = "REQ_IDENTIFICATION_JOBS_CONFLICT";
+  static MULTIPLE_REQ_IDENTIFICATION_JOBS_CONFLICT = "MULTIPLE_REQ_IDENTIFICATION_JOBS_CONFLICT";
+  static CONFLICT = "CONFLICT";
+  static UNEXPECTED_ERROR = "UNEXPECTED_ERROR";
+
+  /**
+   * A map of error constants to user-friendly error objects.
+   */
+  static errorMap = {
+    [ReqIdentificationErrors.NETWORK_ERROR]: {
+      title: "Error de conexión",
+      message:
+        "Hubo un problema de red. Verifique su conexión a internet e intente nuevamente.",
+    },
+    [ReqIdentificationErrors.UNAUTHORIZED]: {
+      title: "Acceso no autorizado",
+      message:
+        "No tiene permisos para realizar esta acción. Verifique su sesión.",
+    },
+    [ReqIdentificationErrors.SERVER_ERROR]: {
+      title: "Error interno del servidor",
+      message:
+        "Hubo un error en el servidor. Espere un momento e intente nuevamente.",
+    },
+    [ReqIdentificationErrors.VALIDATION_ERROR]: {
+      title: "Error de validación",
+      message:
+        "Revisa los datos introducidos. Uno o más campos no son válidos.",
+    },
+    [ReqIdentificationErrors.NOT_FOUND]: {
+      title: "Identificación de requerimientos no encontrada",
+      message:
+        "La identificación de requerimientos no fue encontrada. Verifique su existencia recargando la app e intente de nuevo.",
+    },
+    [ReqIdentificationErrors.MULTIPLE_NOT_FOUND]: {
+      title: "Identificaciones de requerimientos no encontradas",
+      message:
+        "Una o más identificaciones de requerimientos no fueron encontradas. Verifique su existencia recargando la app e intente de nuevo.",
+    },
+    [ReqIdentificationErrors.DUPLICATED_NAME]: {
+      title: "Nombre duplicado",
+      message:
+        "Ya existe una identificación de requerimientos con el mismo nombre. Por favor, utilice otro.",
+    },
+    [ReqIdentificationErrors.LEGAL_BASIS_NOT_FOUND]: {
+      title: "Fundamentos legales no encontrados",
+      message:
+        "Uno o más fundamentos legales seleccionados no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
+    },
+    [ReqIdentificationErrors.SUBJECTS_NOT_MATCH]: {
+      title: "Conflicto de materias",
+      message:
+        "Todos los fundamentos legales seleccionados deben pertenecer a la misma materia. Verifique e intente de nuevo.",
+    },
+    [ReqIdentificationErrors.JURISDICTIONS_NOT_MATCH]: {
+      title: "Conflicto de jurisdicción",
+      message:
+        "Todos los fundamentos legales seleccionados deben tener la misma jurisdicción. Verifique e intente de nuevo.",
+    },
+    [ReqIdentificationErrors.STATES_NOT_MATCH]: {
+      title: "Conflicto de estado",
+      message:
+        "Todos los fundamentos legales seleccionados deben pertenecer al mismo estado si la jurisdicción es Estatal. Verifique e intente de nuevo.",
+    },
+    [ReqIdentificationErrors.MUNICIPALITIES_NOT_MATCH]: {
+      title: "Conflicto de municipio",
+      message:
+        "Todos los fundamentos legales seleccionados deben pertenecer al mismo municipio si la jurisdicción es Municipal. Verifique e intente de nuevo.",
+    },
+    [ReqIdentificationErrors.REQUIREMENTS_NOT_FOUND]: {
+      title: "Requerimientos no encontrados",
+      message:
+        "Uno o más requerimientos seleccionados no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
+    },
+    [ReqIdentificationErrors.REQUIREMENTS_SUBJECTS_NOT_MATCH]: {
+      title: "Conflicto de materias en requerimientos",
+      message:
+        "Todos los requerimientos seleccionados deben pertenecer a la misma materia que los fundamentos legales. Verifique e intente de nuevo.",
+    },
+    [ReqIdentificationErrors.USER_NOT_FOUND]: {
+      title: "Usuario no encontrado",
+      message:
+        "El usuario seleccionado no fue encontrado. Verifique su existencia recargando la app e intente de nuevo.",
+    },
+    [ReqIdentificationErrors.SUBJECT_NOT_FOUND]: {
+      title: "Materia no encontrada",
+      message:
+        "La materia seleccionada no fue encontrada. Verifique su existencia recargando la app e intente de nuevo.",
+    },
+    [ReqIdentificationErrors.ASPECTS_NOT_FOUND]: {
+      title: "Aspectos no encontrados",
+      message:
+        "Uno o más aspectos seleccionados no fueron encontrados. Verifique su existencia recargando la app e intente de nuevo.",
+    },
+    [ReqIdentificationErrors.REQ_IDENTIFICATION_JOBS_CONFLICT]: {
+      title: "Conflicto con trabajos de identificación de requerimientos",
+      message:
+        "La identificación de requerimientos no puede ser eliminada porque actualmente se estan identificando requerimientos. Por favor, espere a que se complete la identificación e intente nuevamente.",
+    },
+    [ReqIdentificationErrors.MULTIPLE_REQ_IDENTIFICATION_JOBS_CONFLICT]: {
+      title: "Conflicto con trabajos de identificación de requerimientos",
+      message: ({ items }) =>
+        items.length === 1
+          ? `La identificación de requerimientos ${items[0]} no puede ser eliminada porque actualmente se está identificando requerimientos. Por favor, espere a que se complete la identificación e intente nuevamente.`
+          : `Las identificaciones de requerimientos ${items.join(
+              ", "
+            )}  no pueden ser eliminadas porque actualmente se están identificando requerimientos. Por favor, espere a que se complete la identificación e intente nuevamente.`,
+    },
+    [ReqIdentificationErrors.CONFLICT]: {
+      title: "Conflicto de datos",
+      message:
+        "Ocurrió un conflicto con la operación. Verifique la información e intente nuevamente.",
+    },
+    [ReqIdentificationErrors.UNEXPECTED_ERROR]: {
+      title: "Error inesperado",
+      message:
+        "Ocurrió un error inesperado. Por favor, intente nuevamente más tarde.",
+    },
+  };
+
+  /**
+   * A map of specific error messages to their corresponding error constants.
+   * @type {Object.<string, ReqIdentificationErrors>}
+   */
+  static ErrorMessagesMap = {
+    "Network Error": ReqIdentificationErrors.NETWORK_ERROR,
+    "Requirement Identification name already exists":
+      ReqIdentificationErrors.DUPLICATED_NAME,
+    "LegalBasis not found for IDs":
+      ReqIdentificationErrors.LEGAL_BASIS_NOT_FOUND,
+    "All selected legal bases must have the same subject":
+      ReqIdentificationErrors.SUBJECTS_NOT_MATCH,
+    "All selected legal bases must have the same jurisdiction":
+      ReqIdentificationErrors.JURISDICTIONS_NOT_MATCH,
+    "All selected legal bases must have the same state":
+      ReqIdentificationErrors.STATES_NOT_MATCH,
+    "All selected legal bases must have the same municipality":
+      ReqIdentificationErrors.MUNICIPALITIES_NOT_MATCH,
+    "Requirements not found for IDs": ReqIdentificationErrors.REQUIREMENTS_NOT_FOUND,
+    "All requirements must have the same subject as the legal bases": ReqIdentificationErrors.REQUIREMENTS_SUBJECTS_NOT_MATCH,
+    "User not found": ReqIdentificationErrors.USER_NOT_FOUND,
+    "Subject not found": ReqIdentificationErrors.SUBJECT_NOT_FOUND,
+    "Aspects not found for IDs": ReqIdentificationErrors.ASPECTS_NOT_FOUND,
+    "Cannot delete Requirement Identification with pending Requirement Identification jobs": ReqIdentificationErrors.REQ_IDENTIFICATION_JOBS_CONFLICT,
+    "Cannot delete Requirements Identifications with pending Requirement Identification jobs": ReqIdentificationErrors.MULTIPLE_REQ_IDENTIFICATION_JOBS_CONFLICT,
+  };
+
+  /**
+   * Handles errors by mapping error codes or messages to a user-friendly error object.
+   *
+   * @param {Object} params - Parameters for handling the error.
+   * @param {number} params.code - The HTTP status code.
+   * @param {string} [params.error] - The server error message.
+   * @param {string} [params.httpError] - The HTTP error message.
+   * @param {Array<string|number>} [params.items] - Optional parameter indicating the related items.
+   * @returns {Object} - A user-friendly error object containing a title and message.
+   */
+  static handleError({ code, error, httpError, items }) {
+    const message = error || httpError;
+    if (message && ReqIdentificationErrors.ErrorMessagesMap[message]) {
+      const key = ReqIdentificationErrors.ErrorMessagesMap[message];
+      const errorConfig = ReqIdentificationErrors.errorMap[key];
+      if (
+        [
+          ReqIdentificationErrors.MULTIPLE_REQ_IDENTIFICATION_JOBS_CONFLICT,
+        ].includes(key) &&
+        items &&
+        items.length > 0
+      ) {
+        return {
+          title: errorConfig.title,
+          message: errorConfig.message({ items }),
+        };
+      }
+
+      return errorConfig;
+    }
+
+    switch (code) {
+      case 400:
+        return ReqIdentificationErrors.errorMap[
+          ReqIdentificationErrors.VALIDATION_ERROR
+        ];
+      case 401:
+      case 403:
+        return ReqIdentificationErrors.errorMap[
+          ReqIdentificationErrors.UNAUTHORIZED
+        ];
+      case 404:
+        if (items?.length > 0) {
+          return items.length === 1
+            ? ReqIdentificationErrors.errorMap[
+                ReqIdentificationErrors.NOT_FOUND
+              ]
+            : ReqIdentificationErrors.errorMap[
+                ReqIdentificationErrors.MULTIPLE_NOT_FOUND
+              ];
+        }
+        return ReqIdentificationErrors.errorMap[
+          ReqIdentificationErrors.MULTIPLE_NOT_FOUND
+        ];
+      case 409:
+        return ReqIdentificationErrors.errorMap[
+          ReqIdentificationErrors.CONFLICT
+        ];
+      case 500:
+        return ReqIdentificationErrors.errorMap[
+          ReqIdentificationErrors.SERVER_ERROR
+        ];
+      default:
+        return ReqIdentificationErrors.errorMap[
+          ReqIdentificationErrors.UNEXPECTED_ERROR
+        ];
+    }
+  }
+}
+
+export default ReqIdentificationErrors;

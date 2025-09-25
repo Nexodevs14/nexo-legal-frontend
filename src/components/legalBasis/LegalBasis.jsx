@@ -24,7 +24,7 @@ import Error from "../utils/Error.jsx";
 import CreateModal from "./CreateModal.jsx";
 import EditModal from "./EditModal.jsx";
 import DeleteModal from "./deleteModal.jsx";
-import IdentificationModal from "./IdentificationModal.jsx";
+import ReqIdentificationModal from "./ReqIdentificationModal.jsx";
 import SendModal from "./sendModal.jsx";
 import { toast } from "react-toastify";
 import check from "../../assets/check.png";
@@ -121,7 +121,8 @@ export default function LegalBasis() {
   const [selectedLegalBase, setSelectedLegalBase] = useState(null);
   const [nameInputError, setNameInputError] = useState(null);
   const [abbreviationInputError, setAbbreviationInputError] = useState(null);
-  const [classificationInputError, setClassificationInputError] = useState(null);
+  const [classificationInputError, setClassificationInputError] =
+    useState(null);
   const [jurisdictionInputError, setJurisdictionInputError] = useState(null);
   const [stateInputError, setStateInputError] = useState(null);
   const [municipalityInputError, setMunicipalityInputError] = useState(null);
@@ -132,20 +133,25 @@ export default function LegalBasis() {
   const [isMunicipalityActive, setIsMunicipalityActive] = useState(false);
   const [isAspectsActive, setIsAspectsActive] = useState(false);
   const [fileError, setFileError] = useState(null);
-  const [extractArticlesInputError, setExtractArticlesInputError] = useState(null);
+  const [extractArticlesInputError, setExtractArticlesInputError] =
+    useState(null);
   const [isExtracArticlesChecked, setIsExtracArticlesChecked] = useState(false);
-  const [intelligenceLevelInputError, setIntelligenceLevelInputError] = useState(null);
+  const [intelligenceLevelInputError, setIntelligenceLevelInputError] =
+    useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(1);
   const [selectedKeys, setSelectedKeys] = useState(new Set());
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeletingBatch, setIsDeletingBatch] = useState(false);
   const [showSendModal, setShowSendModal] = useState(false);
+  const [singleSendLegalBaseId, setSingleSendLegalBaseId] = useState(null);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-  const [isIdentificationModalOpen, setIsIdentificationModalOpen] = useState(false);
-  const [selectedIdentificationRequirement, setSelectedIdentificationRequirement] = useState([]);
-  const [singleSendId, setSingleSendId] = useState(null);
-
+  const [isReqIdentificationModalOpen, setIsReqIdentificationModalOpen] =
+    useState(false);
+  const [
+    selectedLegalBasisToReqIdentification,
+    setSelectedLegalBasisToReqIdentification,
+  ] = useState([]);
 
   const [formData, setFormData] = useState({
     id: "",
@@ -454,6 +460,12 @@ export default function LegalBasis() {
         }
 
         const { start, end } = values;
+        setFilterByName("");
+        setFilterByAbbreviation("");
+        setSelectedClassification("");
+        setSelectedJurisdiction("");
+        resetSubjectAndAspects();
+        resetStatesAndMunicipalities();
         fetchLegalBasisByLastReform(start.toString(), end.toString());
         setLastReformRange(values);
       } else {
@@ -463,7 +475,7 @@ export default function LegalBasis() {
         setLastReformError("");
       }
     },
-    [fetchLegalBasisByLastReform, handleClear]
+    [fetchLegalBasisByLastReform, handleClear , resetSubjectAndAspects, resetStatesAndMunicipalities]
   );
 
   const openModalCreate = () => {
@@ -560,7 +572,6 @@ export default function LegalBasis() {
     clearMunicipalities();
     clearAspects();
   };
-
 
   const handleNameChange = useCallback(
     (e) => {
@@ -886,6 +897,93 @@ export default function LegalBasis() {
     [intelligenceLevelInputError, setFormData, setIntelligenceLevelInputError]
   );
 
+  const validateLegalBasisSelected = (legalBasis) => {
+    if (legalBasis.length === 0) {
+      toast.error("Selecciona al menos un fundamento legal.");
+      return false;
+    }
+
+    const [legalBase] = legalBasis;
+
+    const allMatchBy = (key, nestedKey = null) =>
+      legalBasis.every((lb) => {
+        const value = nestedKey ? lb[key]?.[nestedKey] : lb[key];
+        const baseValue = nestedKey ? legalBase[key]?.[nestedKey] : legalBase[key];
+        return value === baseValue;
+      });
+
+    if (!allMatchBy("subject", "subject_id")) {
+      toast.error("Todos los fundamentos deben tener la misma materia.");
+      return false;
+    }
+
+    if (!allMatchBy("jurisdiction")) {
+      toast.error("Todos los fundamentos deben tener la misma jurisdicción.");
+      return false;
+    }
+
+    const { jurisdiction } = legalBase;
+
+    if (jurisdiction === "Estatal" && !allMatchBy("state")) {
+      toast.error("Todos los fundamentos deben pertenecer al mismo estado si la jurisdicción es Estatal.");
+      return false;
+    }
+
+    if (
+      jurisdiction === "Local" &&
+      (!allMatchBy("state") || !allMatchBy("municipality"))
+    ) {
+      toast.error("Todos los fundamentos deben pertenecer al mismo estado y municipio si la jurisdicción es Local.");
+      return false;
+    }
+
+    return true;
+  };
+
+  const openReqIdentificationModal = () => {
+    let selectedLegalBasis = [];
+    if (selectedKeys.size === 0) {
+      toast.error("Selecciona al menos un fundamento legal.");
+      return;
+    }
+    if (selectedKeys === "all") {
+      selectedLegalBasis = legalBasis;
+    } else {
+      selectedLegalBasis = legalBasis.filter((legalBase) =>
+        selectedKeys.has(String(legalBase.id))
+      );
+    }
+    if (!validateLegalBasisSelected(selectedLegalBasis)) return;
+    setSelectedLegalBasisToReqIdentification(selectedLegalBasis);
+    setIsReqIdentificationModalOpen(true);
+  };
+
+
+  const openReqIdentificationModalFromRow = (legalBase) => {
+    setSelectedLegalBasisToReqIdentification([legalBase]);
+    setIsReqIdentificationModalOpen(true);
+  };
+
+  const closeReqIdentificationModal = () => {
+    setIsReqIdentificationModalOpen(false);
+    setSelectedLegalBasisToReqIdentification([]);
+  };
+
+
+  const openSendModalFromRow = (id) => {
+    setSingleSendLegalBaseId(id);
+    setShowSendModal(true);
+  };
+
+  const closeSendModal = () => {
+    setShowSendModal(false);
+    setSingleSendLegalBaseId(null);
+  };
+
+  const goToArticles = (legalBaseId) => {
+    navigate(`/legal_basis/${legalBaseId}/articles`);
+  };
+
   const totalPages = useMemo(
     () => Math.ceil(legalBasis.length / rowsPerPage),
     [legalBasis, rowsPerPage]
@@ -896,81 +994,9 @@ export default function LegalBasis() {
     setPage(1);
   }, []);
 
-  const goToArticles = (legalBaseId) => {
-    navigate(`/legal_basis/${legalBaseId}/articles`);
-  };
-
   const openDeleteModal = () => setShowDeleteModal(true);
   const closeDeleteModal = () => setShowDeleteModal(false);
   const openSendModal = () => setShowSendModal(true);
-  const closeSendModal = () => {
-    setShowSendModal(false);
-    setSingleSendId(null);
-  };
-
-
-  const validarLegalBasesSeleccionadas = (bases) => {
-    if (bases.length === 0) {
-      toast.error("Selecciona al menos un fundamento legal.");
-      return false;
-    }
-
-    const [first] = bases;
-
-    const allSame = (key, nested = false) =>
-      bases.every((b) =>
-        nested ? b[key]?.id === first[key]?.id : b[key] === first[key]
-      );
-
-    if (!allSame("subject", true)) {
-      toast.error("Todos los fundamentos deben tener la misma materia.");
-      return false;
-    }
-
-    if (!allSame("jurisdiction")) {
-      toast.error("Todos los fundamentos deben tener la misma jurisdicción.");
-      return false;
-    }
-
-    const { jurisdiction } = first;
-
-    if (jurisdiction === "Estatal" && !allSame("state")) {
-      toast.error("Todos los fundamentos deben pertenecer al mismo estado.");
-      return false;
-    }
-
-    if (
-      jurisdiction === "Local" &&
-      (!allSame("state") || !allSame("municipality"))
-    ) {
-      toast.error("Todos los fundamentos deben pertenecer al mismo estado y municipio.");
-      return false;
-    }
-
-    return true;
-  };
-
-  const openIdentificationModal = () => {
-
-    let bases = [];
-
-    if (selectedKeys === "all") {
-      bases = legalBasis;
-    } else {
-      bases = legalBasis.filter((b) => selectedKeys.has(String(b.id)));
-    }
-
-    if (!validarLegalBasesSeleccionadas(bases)) return;
-
-    setSelectedIdentificationRequirement(bases);
-    setIsIdentificationModalOpen(true);
-  };
-
-  const openSendModalFromRow = (id) => {
-    setSingleSendId(id);
-    setShowSendModal(true);
-  };
-
 
   const onPageChange = (newPage) => setPage(newPage);
   const onPreviousPage = () => setPage((prev) => Math.max(prev - 1, 1));
@@ -999,7 +1025,18 @@ export default function LegalBasis() {
           });
         } else {
           toast.update(toastId, {
-            render: error,
+            render: (
+              <div
+                style={{
+                  maxHeight: 200,
+                  overflowY: "auto",
+                  whiteSpace: "pre-wrap"
+                }}
+              >
+                {error}
+              </div>
+            ),
+            className: "toast-scroll-red",
             type: "error",
             icon: null,
             progressStyle: {},
@@ -1081,7 +1118,6 @@ export default function LegalBasis() {
     }
   };
 
-
   if (loading && isFirstRender) {
     return (
       <div
@@ -1098,12 +1134,22 @@ export default function LegalBasis() {
   if (error) return <Error title={error.title} message={error.message} />;
   if (subjectError)
     return <Error title={subjectError.title} message={subjectError.message} />;
-  if (aspectError && !isCreateModalOpen && !isEditModalOpen && !isFilterModalOpen)
+  if (
+    aspectError &&
+    !isCreateModalOpen &&
+    !isEditModalOpen &&
+    !isFilterModalOpen
+  )
     return <Error title={aspectError.title} message={aspectError.message} />;
   if (errorStates)
     return <Error title={errorStates.title} message={errorStates.message} />;
 
-  if (errorMunicipalities && !isCreateModalOpen && !isEditModalOpen && !isFilterModalOpen) {
+  if (
+    errorMunicipalities &&
+    !isCreateModalOpen &&
+    !isEditModalOpen &&
+    !isFilterModalOpen
+  ) {
     return (
       <Error
         title={errorMunicipalities.title}
@@ -1195,12 +1241,9 @@ export default function LegalBasis() {
                         handleDelete={handleDelete}
                         handleDownloadDocument={handleDownloadDocument}
                         openSendModalFromRow={openSendModalFromRow}
-                        openIdentificationModalFromRow={(row) => {
-                          if (!validarLegalBasesSeleccionadas([row])) return;
-                          setSelectedIdentificationRequirement([row]);
-                          setIsIdentificationModalOpen(true);
-                        }}
-
+                        openReqIdentificationModalFromRow={
+                          openReqIdentificationModalFromRow
+                        }
                       />
                     </TableCell>
                   )}
@@ -1229,7 +1272,7 @@ export default function LegalBasis() {
                   size="sm"
                   className="absolute left-12 bottom-0 ml-5 bg-secondary transform translate-y-32 sm:translate-y-24 md:translate-y-24 lg:translate-y-24 xl:translate-y-10"
                   aria-label="Identificar Requerimientos"
-                  onPress={openIdentificationModal}
+                  onPress={openReqIdentificationModal}
                 >
                   <img src={think_icon} alt="identificar" className="w-5 h-5" />
                 </Button>
@@ -1400,18 +1443,16 @@ export default function LegalBasis() {
             legalBasis: legalBasis,
             deleteLegalBasisBatch: removeLegalBasisBatch,
             setSelectedKeys: setSelectedKeys,
+            setPage: setPage,
             check: check,
           }}
         />
       )}
-      {isIdentificationModalOpen && (
-        <IdentificationModal
-          isOpen={isIdentificationModalOpen}
-          onClose={() => setIsIdentificationModalOpen(false)}
-          selectedIdentificationRequirement={selectedIdentificationRequirement}
-          onSuccess={(data) => {
-            console.log("Análisis generado:", data);
-          }}
+      {isReqIdentificationModalOpen && (
+        <ReqIdentificationModal
+          isOpen={isReqIdentificationModalOpen}
+          closeModal={closeReqIdentificationModal}
+          selectLegalBasis={selectedLegalBasisToReqIdentification}
         />
       )}
       {showSendModal && (
@@ -1424,10 +1465,9 @@ export default function LegalBasis() {
             selectedKeys: selectedKeys,
             setSelectedKeys: setSelectedKeys,
             check: check,
-            singleSendId: singleSendId,
+            singleSendId: singleSendLegalBaseId,
           }}
         />
-
       )}
       {isFilterModalOpen && (
         <FilterModal
@@ -1451,8 +1491,9 @@ export default function LegalBasis() {
             loadingMunicipalities: loadingMunicipalities,
             municipalities: municipalities,
             onClose: closeFilterModal,
+            setPage: setPage,
             states: states,
-            subjects: subjects
+            subjects: subjects,
           }}
         />
       )}

@@ -29,6 +29,7 @@ import { toast } from "react-toastify";
  * @param {Array} props.config.legalBasis - Array of all legalBasis objects.
  * @param {Function} props.config.deleteLegalBasisBatch - Function to delete multiple legalBasis by their IDs.
  * @param {Function} props.config.setSelectedKeys - Function to reset selected legalBasis after deletion.
+ * @param {Function} props.config.setPage - Function to set the current page.
  * @param {string} props.config.check - URL or path for the success icon displayed on toast notifications.
  *
  * @returns {JSX.Element} Rendered DeleteModal component with deletion confirmation and feedback.
@@ -44,6 +45,7 @@ function DeleteModal({ config }) {
     legalBasis,
     deleteLegalBasisBatch,
     setSelectedKeys,
+    setPage,
     check,
   } = config;
 
@@ -65,10 +67,22 @@ function DeleteModal({ config }) {
             progressStyle: { background: "#113c53" },
           }
         );
+        setPage(1);
         setSelectedKeys(new Set());
         closeDeleteModal();
       } else {
-        toast.error(error);
+        toast.error(
+          <div
+            className="toast-scroll-red"
+            style={{
+              maxHeight: 200,
+              overflowY: "auto",
+              whiteSpace: "pre-wrap"
+            }}
+          >
+            {error}
+          </div>
+        );
       }
     } catch (error) {
       console.error(error);
@@ -84,6 +98,7 @@ function DeleteModal({ config }) {
     legalBasis,
     setIsDeletingBatch,
     setSelectedKeys,
+    setPage,
     closeDeleteModal,
     check,
   ]);
@@ -158,6 +173,7 @@ DeleteModal.propTypes = {
       PropTypes.string,
       PropTypes.instanceOf(Set),
     ]).isRequired,
+    setPage: PropTypes.func.isRequired,
     legalBasis: PropTypes.array.isRequired,
     deleteLegalBasisBatch: PropTypes.func.isRequired,
     setSelectedKeys: PropTypes.func.isRequired,

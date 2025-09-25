@@ -1,4 +1,5 @@
 import server from "../../config/server.js";
+import qs from "qs";
 
 /**
  * Retrieves legal basis records by dynamic filters.
@@ -37,6 +38,8 @@ export default async function getLegalBasisByCriteria({
         subjectId,
         aspectIds,
       },
+      paramsSerializer: (params) =>
+        qs.stringify(params, { arrayFormat: "repeat" }),
     });
 
     if (response.status !== 200) {

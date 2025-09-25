@@ -25,11 +25,15 @@ function Error({ title, message }) {
   const handleReload = () => {
     const aspectsPath = /^\/subjects\/[^/]+\/aspects$/;
     const articlesPath = /^\/legal_basis\/[^/]+\/articles$/;
+    const reqIdentificationRequirementsPath = /^\/req_identifications\/[^/]+\/requirements$/;
     if (aspectsPath.test(currentPath)) {
       navigate("/subjects");
       window.location.reload();
     } else if (articlesPath.test(currentPath)) {
       navigate("/legal_basis");
+      window.location.reload();
+    } else if (reqIdentificationRequirementsPath.test(currentPath)) {
+      navigate("/req_identifications");
       window.location.reload();
     } else {
       window.location.reload();

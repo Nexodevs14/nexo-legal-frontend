@@ -29,6 +29,7 @@ import { toast } from "react-toastify";
  * @param {Array<Object>} props.config.legalVerbs - Full list of Legal Verbs available.
  * @param {Function} props.config.deleteLegalVerbsBatch - Function to delete Legal Verbs by ID array.
  * @param {Function} props.config.setSelectedKeys - Function to reset the selected items.
+ * @param {Function} props.config.setPage - Function to set the current page.
  * @param {string} props.config.check - Path or URL to the icon displayed on success toast.
  *
  * @returns {JSX.Element} Rendered DeleteModal component for confirming Legal Verb deletion.
@@ -43,6 +44,7 @@ function DeleteModal({ config }) {
         legalVerbs,
         deleteLegalVerbsBatch,
         setSelectedKeys,
+        setPage,
         check,
     } = config;
 
@@ -67,10 +69,22 @@ function DeleteModal({ config }) {
                         progressStyle: { background: "#113c53" },
                     }
                 );
+                setPage(1);
                 setSelectedKeys(new Set());
                 closeDeleteModal();
             } else {
-                toast.error(error);
+                toast.error(
+                    <div
+                        className="toast-scroll-red"
+                        style={{
+                            maxHeight: 200,
+                            overflowY: "auto",
+                            whiteSpace: "pre-wrap"
+                        }}
+                    >
+                        {error}
+                    </div>
+                );
             }
         } catch (err) {
             console.error(err);
@@ -84,6 +98,7 @@ function DeleteModal({ config }) {
         legalVerbs,
         setIsDeletingBatch,
         setSelectedKeys,
+        setPage,
         closeDeleteModal,
         check,
     ]);
@@ -165,6 +180,7 @@ DeleteModal.propTypes = {
                 translation: PropTypes.string,
             })
         ).isRequired,
+        setPage: PropTypes.func.isRequired,
         deleteLegalVerbsBatch: PropTypes.func.isRequired,
         setSelectedKeys: PropTypes.func.isRequired,
         check: PropTypes.string.isRequired,

@@ -251,19 +251,23 @@ function Dashboard() {
             </li>
             <li>
               <Link
-                className={'flex items-center p-2 text-white rounded-lg hover:bg-white/15 group'}
+              to="/req_identifications"
+               className={`flex items-center p-2 text-white rounded-lg hover:bg-white/15 group ${/\/req_identifications(\/\d+\/requirements)?$/.test(location.pathname)
+                  ? "bg-white/20"
+                  : ""
+                  }`}
               >
                 <img
                   src={think_icon}
                   className="flex-shrink-0 w-5 h-5 transition duration-75"
                 />
-                <span className="ms-3 font-medium">Requerimiento Legales</span>
+                <span className="ms-3 font-medium">Requerimientos Legales</span>
               </Link>
             </li>
             <li>
               <a
                 onClick={handleLogout}
-                className="flex items-center p-2 text-white hover:bg-white/15 rounded-lg group"
+                className="flex items-center p-2 text-white hover:bg-white/15 rounded-lg group "
               >
                 <img
                   src={left_arrow_icon}

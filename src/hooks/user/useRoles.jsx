@@ -6,9 +6,11 @@ import UserErrors from "../../errors/users/UserErrors.js";
 /**
  * Custom hook for fetching and managing user roles data.
  * Centralizes error handling using the UserErrors class.
+ * @param {Object} options - Configuration options.
+ * @param {boolean} options.autoFetch - If true, fetches roles on mount. Default is true.
  * @returns {Object} - Contains roles list, loading state, and error state.
  */
-export default function useRoles() {
+export default function useRoles({ autoFetch = true } = {}) {
   const { jwt } = useContext(Context);
   const [roles, setRoles] = useState([]);
   const [stateRoles, setStateRoles] = useState({ loading: false, error: null });
@@ -39,8 +41,10 @@ export default function useRoles() {
    * useEffect hook to fetch roles on component mount or when JWT token changes.
    */
   useEffect(() => {
-    fetchRoles();
-  }, [jwt, fetchRoles]);
+    if (autoFetch) {
+      fetchRoles();
+    }
+  }, [jwt, fetchRoles, autoFetch]);
 
   return {
     roles,

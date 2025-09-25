@@ -12,9 +12,11 @@ import SubjectErrors from "../../errors/subjects/SubjectErrors.js";
 
 /**
  * Custom hook for managing subjects and performing CRUD operations.
+ * @param {Object} options - Configuration options.
+ * @param {boolean} options.autoFetch - If true, fetches subjects on mount. Default is true.
  * @returns {Object} - Contains subject list, loading state, error state, and functions for subject operations.
  */
-export default function useSubjects() {
+export default function useSubjects({ autoFetch = true } = {}) {
   const { jwt } = useContext(Context);
   const [subjects, setSubjects] = useState([]);
   const [stateSubjects, setStateSubjects] = useState({
@@ -265,8 +267,10 @@ export default function useSubjects() {
   );
 
   useEffect(() => {
-    fetchSubjects();
-  }, [fetchSubjects]);
+    if (autoFetch) {
+      fetchSubjects();
+    }
+  }, [fetchSubjects, autoFetch]);
 
   return {
     subjects,

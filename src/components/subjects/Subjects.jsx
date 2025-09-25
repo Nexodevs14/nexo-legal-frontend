@@ -223,7 +223,18 @@ export default function Subjects() {
           });
         } else {
           toast.update(toastId, {
-            render: error,
+            render: (
+              <div
+                style={{
+                  maxHeight: 200,
+                  overflowY: "auto",
+                  whiteSpace: "pre-wrap"
+                }}
+              >
+                {error}
+              </div>
+            ),
+            className: "toast-scroll-red",
             type: "error",
             icon: null,
             progressStyle: {},
@@ -262,7 +273,7 @@ export default function Subjects() {
   }
 
   if (error) return <Error title={error.title} message={error.message} />;
-  
+
   return (
     <div className="mt-24 mb-4 -ml-60 mr-4 lg:-ml-0 lg:mr-0 xl:-ml-0 xl:mr-0 flex justify-center items-center flex-wrap">
       <TopContent
@@ -402,6 +413,7 @@ export default function Subjects() {
             subjects: subjects,
             deleteSubjectsBatch: deleteSubjectsBatch,
             setSelectedKeys: setSelectedKeys,
+            setPage: setPage,
             check: check,
           }}
         />

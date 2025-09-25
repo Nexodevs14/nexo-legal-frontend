@@ -475,7 +475,18 @@ function EditModal({ config }) {
           setLegalBaseId(legalBasis.id);
         }
       } else {
-        toast.error(error);
+       toast.error(
+          <div
+            className="toast-scroll-red"
+            style={{
+              maxHeight: 200,
+              overflowY: "auto",
+              whiteSpace: "pre-wrap"
+            }}
+          >
+            {error}
+          </div>
+        );
       }
     } catch (error) {
       console.error(error);
@@ -489,6 +500,7 @@ function EditModal({ config }) {
     <Modal
       isOpen={isOpen}
       onOpenChange={onClose}
+      size="lg"
       backdrop="opaque"
       placement="center"
       isDismissable={false}
@@ -737,7 +749,7 @@ function EditModal({ config }) {
                       selectedKey={formData.subject}
                       onSelectionChange={handleSubjectChange}
                       listboxProps={{
-                        emptyContent: "Materia no encontrado",
+                        emptyContent: "Materia no encontrada",
                       }}
                       defaultItems={subjects}
                     >
