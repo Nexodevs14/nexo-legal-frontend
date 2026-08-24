@@ -29,7 +29,6 @@ import SendModal from "./sendModal.jsx";
 import { toast } from "react-toastify";
 import check from "../../assets/check.png";
 import trash_icon from "../../assets/papelera-mas.png";
-import think_icon from "../../assets/ia.png";
 import send_icon from "../../assets/enviar.png";
 
 const columns = [
@@ -151,7 +150,7 @@ export default function LegalBasis() {
   const [
     selectedLegalBasisToReqIdentification,
     setSelectedLegalBasisToReqIdentification,
-  ] = useState([]);
+  ] = useState(null);
 
   const [formData, setFormData] = useState({
     id: "",
@@ -475,7 +474,12 @@ export default function LegalBasis() {
         setLastReformError("");
       }
     },
-    [fetchLegalBasisByLastReform, handleClear , resetSubjectAndAspects, resetStatesAndMunicipalities]
+    [
+      fetchLegalBasisByLastReform,
+      handleClear,
+      resetSubjectAndAspects,
+      resetStatesAndMunicipalities,
+    ]
   );
 
   const openModalCreate = () => {
@@ -897,78 +901,15 @@ export default function LegalBasis() {
     [intelligenceLevelInputError, setFormData, setIntelligenceLevelInputError]
   );
 
-  const validateLegalBasisSelected = (legalBasis) => {
-    if (legalBasis.length === 0) {
-      toast.error("Selecciona al menos un fundamento legal.");
-      return false;
-    }
-
-    const [legalBase] = legalBasis;
-
-    const allMatchBy = (key, nestedKey = null) =>
-      legalBasis.every((lb) => {
-        const value = nestedKey ? lb[key]?.[nestedKey] : lb[key];
-        const baseValue = nestedKey ? legalBase[key]?.[nestedKey] : legalBase[key];
-        return value === baseValue;
-      });
-
-    if (!allMatchBy("subject", "subject_id")) {
-      toast.error("Todos los fundamentos deben tener la misma materia.");
-      return false;
-    }
-
-    if (!allMatchBy("jurisdiction")) {
-      toast.error("Todos los fundamentos deben tener la misma jurisdicción.");
-      return false;
-    }
-
-    const { jurisdiction } = legalBase;
-
-    if (jurisdiction === "Estatal" && !allMatchBy("state")) {
-      toast.error("Todos los fundamentos deben pertenecer al mismo estado si la jurisdicción es Estatal.");
-      return false;
-    }
-
-    if (
-      jurisdiction === "Local" &&
-      (!allMatchBy("state") || !allMatchBy("municipality"))
-    ) {
-      toast.error("Todos los fundamentos deben pertenecer al mismo estado y municipio si la jurisdicción es Local.");
-      return false;
-    }
-
-    return true;
-  };
-
-  const openReqIdentificationModal = () => {
-    let selectedLegalBasis = [];
-    if (selectedKeys.size === 0) {
-      toast.error("Selecciona al menos un fundamento legal.");
-      return;
-    }
-    if (selectedKeys === "all") {
-      selectedLegalBasis = legalBasis;
-    } else {
-      selectedLegalBasis = legalBasis.filter((legalBase) =>
-        selectedKeys.has(String(legalBase.id))
-      );
-    }
-    if (!validateLegalBasisSelected(selectedLegalBasis)) return;
-    setSelectedLegalBasisToReqIdentification(selectedLegalBasis);
-    setIsReqIdentificationModalOpen(true);
-  };
-
-
-  const openReqIdentificationModalFromRow = (legalBase) => {
-    setSelectedLegalBasisToReqIdentification([legalBase]);
+  const openReqIdentificationModal = (legalBase) => {
+    setSelectedLegalBasisToReqIdentification(legalBase);
     setIsReqIdentificationModalOpen(true);
   };
 
   const closeReqIdentificationModal = () => {
     setIsReqIdentificationModalOpen(false);
-    setSelectedLegalBasisToReqIdentification([]);
+    setSelectedLegalBasisToReqIdentification(null);
   };
-
 
   const openSendModalFromRow = (id) => {
     setSingleSendLegalBaseId(id);
@@ -1030,7 +971,7 @@ export default function LegalBasis() {
                 style={{
                   maxHeight: 200,
                   overflowY: "auto",
-                  whiteSpace: "pre-wrap"
+                  whiteSpace: "pre-wrap",
                 }}
               >
                 {error}
@@ -1241,8 +1182,8 @@ export default function LegalBasis() {
                         handleDelete={handleDelete}
                         handleDownloadDocument={handleDownloadDocument}
                         openSendModalFromRow={openSendModalFromRow}
-                        openReqIdentificationModalFromRow={
-                          openReqIdentificationModalFromRow
+                        openReqIdentificationModal={
+                          openReqIdentificationModal
                         }
                       />
                     </TableCell>
@@ -1266,23 +1207,11 @@ export default function LegalBasis() {
                   <img src={trash_icon} alt="delete" className="w-5 h-5" />
                 </Button>
               </Tooltip>
-              <Tooltip content="Identificar Requerimientos" size="sm">
-                <Button
-                  isIconOnly
-                  size="sm"
-                  className="absolute left-12 bottom-0 ml-5 bg-secondary transform translate-y-32 sm:translate-y-24 md:translate-y-24 lg:translate-y-24 xl:translate-y-10"
-                  aria-label="Identificar Requerimientos"
-                  onPress={openReqIdentificationModal}
-                >
-                  <img src={think_icon} alt="identificar" className="w-5 h-5" />
-                </Button>
-              </Tooltip>
-
               <Tooltip content="Enviar a ACM Suite" size="sm">
                 <Button
                   isIconOnly
                   size="sm"
-                  className="absolute left-24 bottom-0 ml-5 bg-primary transform translate-y-32 sm:translate-y-24 md:translate-y-24 lg:translate-y-24 xl:translate-y-10"
+                  className="absolute left-12 bottom-0 ml-5 bg-primary transform translate-y-32 sm:translate-y-24 md:translate-y-24 lg:translate-y-24 xl:translate-y-10"
                   aria-label="Enviar a ACM Suite"
                   onPress={openSendModal}
                 >

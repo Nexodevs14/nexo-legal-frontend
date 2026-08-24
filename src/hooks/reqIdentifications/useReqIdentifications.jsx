@@ -42,7 +42,7 @@ export default function useReqIdentifications({ autoFetch = true } = {}) {
    * @param {Object} params - Data for the new requirement identification.
    * @param {string} params.reqIdentificationName - Name of the requirement identification.
    * @param {string} [params.reqIdentificationDescription] - Description (optional).
-   * @param {number[]} params.legalBasisIds - Associated legal basis IDs.
+   * @param {number} params.legalBasisId - Associated legal basis ID.
    * @param {number[]} params.requirementIds - Associated requirement IDs.
    * @param {string} params.intelligenceLevel - Intelligence level.
    * @returns {Promise<{ success: true, jobId: number|string, reqIdentificationId: number } | { success: false, error: string }>}
@@ -51,7 +51,7 @@ export default function useReqIdentifications({ autoFetch = true } = {}) {
     async ({
       reqIdentificationName,
       reqIdentificationDescription,
-      legalBasisIds,
+      legalBasisId,
       requirementIds,
       intelligenceLevel,
     }) => {
@@ -59,7 +59,7 @@ export default function useReqIdentifications({ autoFetch = true } = {}) {
         const { reqIdentificationId, jobId } = await createReqIdentification({
           reqIdentificationName,
           reqIdentificationDescription,
-          legalBasisIds,
+          legalBasisId,
           requirementIds,
           intelligenceLevel,
           token: jwt,
