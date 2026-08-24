@@ -13,7 +13,7 @@ import {
 import useReqIdentifications from "../../hooks/reqIdentifications/useReqIdentifications.jsx";
 import useSubjects from "../../hooks/subject/useSubjects";
 import useAspects from "../../hooks/aspect/useAspects";
-import useCopomex from "../../hooks/copomex/useCopomex";
+import useTerritory from "../../hooks/territory/useTerritory";
 import useUsers from "../../hooks/user/useUsers";
 import TopContent from "./TopContent.jsx";
 import ReqIdentificationCell from "./ReqIdentificationCell.jsx";
@@ -95,7 +95,7 @@ export default function ReqIdentification() {
     fetchMunicipalities,
     errorMunicipalities,
     clearMunicipalities,
-  } = useCopomex();
+  } = useTerritory();
   const navigate = useNavigate();
   const [filterByName, setFilterByName] = useState("");
   const [filterByDescription, setFilterByDescription] = useState("");

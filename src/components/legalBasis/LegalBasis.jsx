@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import useLegalBasis from "../../hooks/legalBasis/useLegalBasis.jsx";
 import useSubjects from "../../hooks/subject/useSubjects.jsx";
 import useAspects from "../../hooks/aspect/useAspects.jsx";
-import useCopomex from "../../hooks/copomex/useCopomex.jsx";
+import useTerritory from "../../hooks/territory/useTerritory.jsx";
 import { useFiles } from "../../hooks/files/useFiles.jsx";
 import TopContent from "./TopContent.jsx";
 import LegalBasisCell from "./LegalBasisCell.jsx";
@@ -98,7 +98,7 @@ export default function LegalBasis() {
     fetchMunicipalities,
     errorMunicipalities,
     clearMunicipalities,
-  } = useCopomex();
+  } = useTerritory();
   const { downloadFile, downloadBase64File } = useFiles();
   const navigate = useNavigate();
   const [filterByName, setFilterByName] = useState("");

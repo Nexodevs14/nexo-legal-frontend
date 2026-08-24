@@ -104,10 +104,6 @@ function CreateModal({ config }) {
       setEmailError("Este campo es obligatorio");
       setIsLoading(false);
       return;
-    } else if (!formData.email.endsWith("@isaambiental.com")) {
-      setEmailError("El correo debe terminar con @isaambiental.com");
-      setIsLoading(false);
-      return;
     } else {
       setEmailError(null);
     }
@@ -135,7 +131,7 @@ function CreateModal({ config }) {
         toast.info("El usuario ha sido registrado correctamente", {
           icon: () => <img src={check} alt="Success Icon" />,
           progressStyle: {
-            background: "#113c53",
+            background: "#142b44",
           },
         });
         closeModalCreate();

@@ -123,7 +123,7 @@ describe("CreateModal Component for Users", () => {
     });
 
     expect(mockSetEmailError).toHaveBeenCalledWith(
-      "El correo debe terminar con @isaambiental.com"
+      "El correo debe terminar con @nexovzla.com"
     );
   });
 
@@ -133,7 +133,7 @@ describe("CreateModal Component for Users", () => {
 
     const emailInput = screen.getByLabelText("Correo Electrónico");
     fireEvent.change(emailInput, {
-      target: { value: "usuario@isaambiental.com" },
+      target: { value: "usuario@nexovzla.com" },
     });
 
     const submitButton = screen.getByText("Registrar Usuario");
@@ -154,7 +154,7 @@ describe("CreateModal Component for Users", () => {
 
     const emailInput = screen.getByLabelText("Correo Electrónico");
     fireEvent.change(emailInput, {
-      target: { value: "usuario@isaambiental.com" },
+      target: { value: "usuario@nexovzla.com" },
     });
 
     const userTypeDropdown = screen.getByText("Selecciona el tipo de usuario");
@@ -181,7 +181,7 @@ describe("CreateModal Component for Users", () => {
 
     const emailInput = screen.getByLabelText("Correo Electrónico");
     fireEvent.change(emailInput, {
-      target: { value: "usuario@isaambiental.com" },
+      target: { value: "usuario@nexovzla.com" },
     });
 
     const userTypeDropdown = screen.getByText("Selecciona el tipo de usuario");

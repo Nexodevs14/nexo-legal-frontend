@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import useAuth from "../../../hooks/user/auth/useAuth.jsx";
 import { Spinner } from "@heroui/react";
 import { useNavigate, useLocation } from "react-router-dom";
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/logo3.png";
 import go_back from "../../../assets/volver.png";
 
 /**

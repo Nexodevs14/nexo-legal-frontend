@@ -1,6 +1,6 @@
-# Legal Eye APP (ISA AMBIENTAL)
+# Nexo Legal App
 
-**Legal Eye APP** es una aplicación web desarrollada en **React.js** con **Vite.js**. Este documento proporciona una guía rápida para configurar, ejecutar y entender el proyecto.
+**Nexo Legal App** es una aplicación web desarrollada en **React.js** con **Vite.js**. Este documento proporciona una guía rápida para configurar, ejecutar y entender el proyecto.
 
 ---
 
@@ -17,8 +17,8 @@
 1. **Clonar el repositorio** (si tienes Git instalado):
 
    ```
-   git clone https://github.com/itisaambiental/Legal_Eye_App.git
-   cd Legal_Eye_App
+   git clone https://github.com/Nexodevs14/Nexo_Legal_App.git
+   cd Nexo_Legal_App
    ```
 2. **Instalar dependencias** :
 
@@ -74,8 +74,8 @@ A continuación se detalla la estructura del proyecto:
    VITE_API_URL=URL base de la API backend.
 
    # Configuración de MSAL (Microsoft Authentication Library)
-   VITE_MSAL_ID=ID de la aplicación en Azure AD para autenticación con MSAL.
-   VITE_TENANT_ID=ID del tenant en Azure AD para autenticación con MSAL.
+   VITE_MSAL_ID=ID de la aplicación en Microsoft Entra ID para autenticación con MSAL.
+   VITE_TENANT_ID=ID del tenant en Microsoft Entra ID para autenticación con MSAL.
 
    # Configuración de la aplicación
    VITE_APP_URL=URL base de la aplicación frontend.
@@ -83,9 +83,9 @@ A continuación se detalla la estructura del proyecto:
    # Configuración de la API de TINYMCE para el rich text
    VITE_TINYMCE=Clave API de TINYMCE para el rich text
 
-   # Configuración de la API de COPOMEX
-   VITE_COPOMEX_API_URL=URL de la API para acceder a los servicios de COPOMEX.
-   VITE_COPOMEX_API_KEY=Clave de API para acceder a los servicios de COPOMEX.
+   # Datos territoriales de Venezuela
+   La aplicación usa la librería local `venezuela` para estados y municipios,
+   por lo que no requiere variables de entorno adicionales para catálogos territoriales.
    ```
 
 ## Ejecución
@@ -124,4 +124,4 @@ npm test
 
 ## Licencia
 
-Este proyecto es privado y propiedad de  **ISA AMBIENTAL** . No está disponible bajo ninguna licencia de código abierto.
+Este proyecto es privado y propiedad de **Nexo Legal**. No está disponible bajo ninguna licencia de código abierto.

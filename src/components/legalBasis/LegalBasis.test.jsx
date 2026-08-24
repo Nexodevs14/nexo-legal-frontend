@@ -5,7 +5,7 @@ import LegalBasis from "./LegalBasis";
 import useLegalBasis from "../../hooks/legalBasis/useLegalBasis";
 import useSubjects from "../../hooks/subject/useSubjects";
 import useAspects from "../../hooks/aspect/useAspects";
-import useCopomex from "../../hooks/copomex/useCopomex";
+import useTerritory from "../../hooks/territory/useTerritory";
 import { useFiles } from "../../hooks/files/useFiles";
 import { toast } from "react-toastify";
 import { vi } from "vitest";
@@ -13,7 +13,7 @@ import { vi } from "vitest";
 vi.mock("../../hooks/legalBasis/useLegalBasis");
 vi.mock("../../hooks/subject/useSubjects");
 vi.mock("../../hooks/aspect/useAspects");
-vi.mock("../../hooks/copomex/useCopomex");
+vi.mock("../../hooks/territory/useTerritory");
 vi.mock("../../hooks/files/useFiles");
 vi.mock("react-toastify");
 
@@ -55,7 +55,7 @@ describe("LegalBasis Component", () => {
         fetchAspects: vi.fn(),
     };
 
-    const mockCopomex = {
+    const mockTerritory = {
         states: [],
         loadingStates: false,
         errorStates: null,
@@ -75,7 +75,7 @@ describe("LegalBasis Component", () => {
         useLegalBasis.mockReturnValue(mockLegalBasis);
         useSubjects.mockReturnValue(mockSubjects);
         useAspects.mockReturnValue(mockAspects);
-        useCopomex.mockReturnValue(mockCopomex);
+        useTerritory.mockReturnValue(mockTerritory);
         useFiles.mockReturnValue(mockFiles);
         toast.loading = vi.fn();
         toast.update = vi.fn();

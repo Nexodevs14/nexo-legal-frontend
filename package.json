@@ -1,7 +1,7 @@
 {
-  "name": "legaleye-app",
+  "name": "nexo-legal-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -38,7 +38,8 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2",
     "react-toastify": "^10.0.5",
-    "serve": "^14.2.3"
+    "serve": "^14.2.3",
+    "venezuela": "^2.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
@@ -66,5 +67,6 @@
   },
   "eslintConfig": {
     "extends": "standard"
-  }
+  },
+  "description": "Nexo Legal frontend application"
 }

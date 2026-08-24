@@ -1,74 +1,108 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap");
 
 /* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-azul: #142b44;
+  --color-turquesa: #18a6a0;
+  --color-marfil: #f7f8fa;
+  --color-grafito: #29333d;
+  --color-ambar: #f2b84b;
+  --font-heading: "Poppins", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+}
+
+html {
+  background: var(--color-marfil);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ffffff 0%, var(--color-marfil) 100%);
+  color: var(--color-grafito);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-azul);
+  font-family: var(--font-heading);
+}
+
+a {
+  color: var(--color-turquesa);
+}
+
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   ::-webkit-scrollbar {
     width: 4px;
-    background: #fff;
+    background: var(--color-marfil);
   }
   ::-webkit-scrollbar-track {
-    background: #fff;
+    background: var(--color-marfil);
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb {
-    background: #113c53;
+    background: var(--color-azul);
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #194c68;
+    background: var(--color-turquesa);
   }
 }
 @-moz-document url-prefix() {
   * {
     scrollbar-width: thin;
-    scrollbar-color: #8d97a2 #fff;
+    scrollbar-color: var(--color-turquesa) var(--color-marfil);
   }
 }
 
 .toast-scroll-red::-webkit-scrollbar {
   width: 4px;
-  background: #fff;
+  background: var(--color-marfil);
 }
 
 .toast-scroll-red::-webkit-scrollbar-track {
-  background: #fff;
+  background: var(--color-marfil);
   border-radius: 10px;
 }
 
 .toast-scroll-red::-webkit-scrollbar-thumb {
-  background: #e53935;
+  background: var(--color-ambar);
   border-radius: 10px;
 }
 
 .toast-scroll-red::-webkit-scrollbar-thumb:hover {
-  background: #b71c1c; 
+  background: var(--color-turquesa);
 }
-
-
 
 .tox .tox-toolbar button,
 .tox .tox-button {
-  background-color: #113c53 !important;
-  border-color: #113c53 !important;
-  color: #fff !important;
+  background-color: var(--color-azul) !important;
+  border-color: var(--color-azul) !important;
+  color: var(--color-marfil) !important;
 }
 
 .tox .tox-scrollbar {
-  background-color: #113c53 !important;
+  background-color: var(--color-azul) !important;
 }
 
 .tox
   .tox-collection--list
   .tox-collection__item--active:not(.tox-collection__item--state-disabled) {
-  background-color: #113c53 !important;
-  color: #fff !important;
+  background-color: var(--color-turquesa) !important;
+  color: var(--color-marfil) !important;
 }
 
 .tox .tox-mbtn--active,
 .tox .tox-mbtn:not(:disabled).tox-mbtn--active:focus {
-  background: #d6dee2 !important;
+  background: rgba(24, 166, 160, 0.12) !important;
 }

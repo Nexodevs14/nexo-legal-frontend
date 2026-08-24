@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import useAuth from "../../../hooks/user/auth/useAuth.jsx";
 import { Spinner } from "@heroui/react";
 import { useNavigate } from "react-router-dom";
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/logo3.png";
 import eye from "../../../assets/ojo.png";
 import closed_eye from "../../../assets/ojo2.png";
 import microsoft from "../../../assets/microsoft.png";

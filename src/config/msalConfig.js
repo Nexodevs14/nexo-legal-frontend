@@ -2,7 +2,9 @@ import { PublicClientApplication } from '@azure/msal-browser'
 
 const clientId = import.meta.env.VITE_MSAL_ID
 const redirectUri = import.meta.env.VITE_APP_URL
-const tenant_ID = import.meta.env.VITE_TENANT_ID
+const authority =
+  import.meta.env.VITE_MSAL_AUTHORITY ||
+  'https://login.microsoftonline.com/common'
 
 /**
  * MSAL configuration for authenticating with Microsoft Identity Platform.
@@ -11,7 +13,7 @@ const tenant_ID = import.meta.env.VITE_TENANT_ID
  * @constant {Object} msalConfig
  * @property {Object} auth - The authentication configuration.
  * @property {string} auth.clientId - The client ID for the MSAL application, loaded from environment variables.
- * @property {string} auth.authority - The authority URL for the Microsoft login, pointing to a specific tenant.
+ * @property {string} auth.authority - The authority URL for the Microsoft login.
  * @property {string} auth.redirectUri - The URI where the application will redirect after authentication, loaded from environment variables.
  * @property {Object} cache - The caching configuration.
  * @property {string} cache.cacheLocation - Specifies where to store cache; "localStorage" for persisting cache across sessions.
@@ -20,7 +22,7 @@ const tenant_ID = import.meta.env.VITE_TENANT_ID
 const msalConfig = {
     auth: {
         clientId: clientId,
-        authority: `https://login.microsoftonline.com/${tenant_ID}`,
+        authority,
         redirectUri: redirectUri, 
     },
     cache: {

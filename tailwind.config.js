@@ -11,17 +11,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        secondary: '#3d7692',
-        primary: '#113c53',
-        green: '#4eaf8f',
-        success: '#4eaf8f',
-        warning: '#2581cc',
+        secondary: '#18a6a0',
+        primary: '#142b44',
+        green: '#18a6a0',
+        success: '#18a6a0',
+        warning: '#f2b84b',
         red: '#d1302b',
-        danger: '#d1302b'
+        danger: '#d1302b',
+        ivory: '#f7f8fa',
+        graphite: '#29333d'
       },
     },
   },
   darkMode: "class",
   plugins: [heroui(), 'flowbite/plugin', 'preline/plugin'],
 }
-

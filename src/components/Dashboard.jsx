@@ -118,7 +118,7 @@ function Dashboard() {
                             : "Invitado"}
                       </p>
                       <p className="font-normal mb-1 text-secondary">
-                        {email || "example@isaambiental.com"}
+                        {email || "example@nexovzla.com"}
                       </p>
                     </DropdownItem>
                     <DropdownItem
